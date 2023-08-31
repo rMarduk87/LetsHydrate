@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Memento Bibere</string>
+    <string name="btn_notific">Benachrichtigung</string>
+    <string name="fabb_add">Hinzufügen</string>
+    <string name="btn_stats">Statistiken</string>
+    <string name="title_activity_stats">StatsActivity</string>
+    <string name="pref_notification_message_value">Hey… Lass uns etwas Wasser trinken…</string>
+    <string name="add_info_text">Bitte geben Sie einige Informationen an, um das Erlebnis für Sie anzupassen…!!</string>
+    <string name="str_continue">Weiter</string>
+    <string name="enter_your_name_hint">Geben Sie Ihren Namen ein</string>
+    <string name="age_hint">Geben Sie Ihr Alter ein</string>
+    <string name="weight_hint">Geben Sie Ihr Gewicht in kg ein</string>
+    <string name="custom_intake_hint">Geben Sie Ihr benutzerdefiniertes Aufnahmeziel in ml ein</string>
+    <string name="workout_hint">Ihre tägliche Trainingszeit in Min./Tag</string>
+    <string name="wakeup_hint">Ihre Weckzeit</string>
+    <string name="sleeping_hint">Deine Schlafzeit</string>
+    <string name="tagline_text">Wir sorgen dafür, dass Sie ausreichend Flüssigkeit zu sich nehmen...</string>
+    <string name="get_started">Erste Schritte</string>
+    <string name="edit_info_text">Bearbeiten Sie Ihre Informationen</string>
+    <string name="update">Aktualisieren</string>
+    <string name="notif_setting_header">Benachrichtigungseinstellungen</string>
+    <string name="notif_messsage_hint">Benachrichtigungsnachricht</string>
+    <string name="notif_tone_hint">Benachrichtigungston</string>
+    <string name="notif_freq_hint">Benachrichtigungshäufigkeit</string>
+    <string name="walkthrough_text_one">Klar, rein, essentiell für Leben und Gesundheit. Wasser ist der Hauptbestandteil des menschlichen Körpers. Denken Sie nur daran, dass es bei erwachsenen Männern etwa 60 Prozent des Gewichts ausmacht, bei Frauen 50 bis 55 Prozent und bei Neugeborenen bis zu 75 Prozent
+     </string>
+    <string name="walkthough_text_two">Wassermangel kann zu Dehydrierung führen. Selbst eine leichte Dehydrierung kann Sie erschöpfen
+         mach dich müde.
+     </string>
+    <string name="walkthrough_text_three">Jede Zelle, jedes Gewebe und jedes Organ in Ihrem Körper benötigt Wasser, um richtig zu funktionieren, ein Element, das den wichtigsten körperlichen und kognitiven Funktionen zugrunde liegt
+     </string>
+    <string name="dot">Punkt</string>
+    <string name="dialog_OK_button">OK</string>
+    <string name="dialog_NO_button">Nein</string>
+    <string name="dialog_Later_button">Vielleicht später</string>
+    <string name="dialog_StarOnGitHub">Gefällt Ihnen diese App? Bitte geben Sie einen Stern auf GitHub oder kaufen Sie dem Entwickler über PayPal einen Kaffee.</string>
+    <string name="rationale_dialog_ok">Ok</string>
+    <string name="rationale_dialog_cancel">Abbrechen</string>
+    <string name="unhandled_request_code_exception_message" translatable="false">Request code %d is not handled by the RequestResultsDispatcher object. Please add a withRequestCode block to the buildRequestResultsDispatcher function.</string>
+    <string name="init_user_info_fragment_label">InitUserInfo</string>
+    <string name="generic_error">Es ist ein Fehler aufgetreten.</string>
+    <string name="close">Schließen</string>
+    <string name="showErrorFrag">Fehler</string>
+    <string name="select_wakeup_time">Weckzeit auswählen</string>
+    <string name="select_sleeping_time">Schlafzeit auswählen</string>
+    <string name="please_input_your_weight">Bitte geben Sie Ihr Gewicht ein</string>
+    <string name="please_input_a_valid_weight">Bitte geben Sie ein gültiges Gewicht ein</string>
+    <string name="please_input_your_workout_time">Bitte geben Sie Ihre Trainingszeit ein</string>
+    <string name="please_input_a_valid_workout_time">Bitte geben Sie eine gültige Trainingszeit ein</string>
+    <string name="hey_lets_drink_some_water">Hey... Lass uns etwas Wasser trinken...</string>
+    <string name="select_ringtone_for_notifications">Klingelton für Benachrichtigungen auswählen:</string>
+    <string name="please_a_notification_message">Bitte um eine Benachrichtigung</string>
+    <string name="please_select_a_notification_frequency">Bitte wählen Sie eine Benachrichtigungshäufigkeit aus</string>
+    <string name="please_input_your_custom_target">Bitte geben Sie Ihr benutzerdefiniertes Ziel ein</string>
+    <string name="values_updated_successfully">Werte erfolgreich aktualisiert</string>
+    <string name="please_click_back_again_to_exit">Bitte klicken Sie erneut auf ZURÜCK, um den Vorgang zu beenden</string>
+    <string name="you_achieved_the_goal">Du hast das Ziel erreicht</string>
+    <string name="your_water_intake_was_saved">Ihre Wasseraufnahme wurde gespart...!!</string>
+    <string name="you_already_achieved_the_goal">Sie haben das Ziel bereits erreicht</string>
+    <string name="please_select_an_option">Bitte wählen Sie eine Option</string>
+    <string name="notification_enabled">Benachrichtigung aktiviert..</string>
+    <string name="notification_disabled">Benachrichtigung deaktiviert..</string>
+    <string name="empty">Leer</string>
+    <string name="walkthough_text_four">Wie viel trinken?\nJugendliche, Erwachsene und ältere Menschen: Männer 2,5 Liter pro Tag, Frauen 2 Liter pro Tag</string>
+    <string name="back">Zurück</string>
+    <string name="_30_mins">30 Minuten</string>
+    <string name="_45_mins">45 Minuten</string>
+    <string name="_60_mins">60 Minuten</string>
+    <string name="_1100_ml">1100 ml</string>
+    <string name="_3100_ml">3100 ml</string>
+    <string name="remaining">Verbleibend</string>
+    <string name="target">Ziel</string>
+    <string name="summary">Zusammenfassung</string>
+    <string name="check_out_the_app_at">Hey, lade diese tolle App herunter!</string>
+    <string name="share_via">Teilen Sie es weiter</string>
+    <string name="no_app_available">Keine App verfügbar</string>
+    <string name="btn_settings">Settings</string>
+    <string name="_50_ml">50 ml</string>
+    <string name="_100_ml">100 ml</string>
+    <string name="_150_ml">150 ml</string>
+    <string name="_200_ml">200 ml</string>
+    <string name="_250_ml">250 ml</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO2</string>
+    <string name="daily_drink_target">Daily Drink Target</string>
+    <string name="custom">Custom</string>
+    <string name="_2000">2000</string>
+    <string name="_3500_ml">/3500 ml</string>
+    <string name="credits_text">Credits</string>
+    <string name="credits_list_text">So erstellen Sie diese App:\nDie Symbole wurden heruntergeladen von <a href="https://www.freepik.com">freepik</a>\nDie Animationen wurden heruntergeladen von <a href="https://lottiefiles.com">LottieFiles</a>\nFür verwendete Bibliotheken:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar und com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspiriert von der Bibliothek com.github.PhilJay:MPAndroidChart:v3.1.0</string>
+    <string name="send_mail">Mail senden</string>
+    <string name="dialog_mail_message">Haben Sie Vorschläge für die App?\n(Bugs, hinzuzufügende Dinge, Fehler, hinzuzufügende Übersetzungen usw. usw.)\nSenden Sie eine E-Mail!!! (Wenn möglich auf Englisch)</string>
+    <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
+    <string name="suggestions_for_memento_bibere">Suggestions for Memento Bibere</string>
+    <string name="your_message_here">Your message here</string>
+</resources>

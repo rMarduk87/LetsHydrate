@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Memento Bibere</string>
+    <string name="btn_notific">Notific</string>
+    <string name="fabb_add">Add</string>
+    <string name="btn_stats">Stats</string>
+    <string name="title_activity_stats">StatsActivity</string>
+    <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
+    <string name="add_info_text">Please provide some information to customize the experience for you…!!</string>
+    <string name="str_continue">Continue</string>
+    <string name="enter_your_name_hint">Enter your name</string>
+    <string name="age_hint">Enter your age</string>
+    <string name="weight_hint">Enter your weight in Kg</string>
+    <string name="custom_intake_hint">Enter your custom intake target in ml</string>
+    <string name="workout_hint">Your daily work out time in min/day</string>
+    <string name="wakeup_hint">Your wake up time</string>
+    <string name="sleeping_hint">Your Sleep time</string>
+    <string name="tagline_text">Lets keep you hydrated…</string>
+    <string name="get_started">Get Started</string>
+    <string name="edit_info_text">Edit Your Info</string>
+    <string name="update">Update</string>
+    <string name="notif_setting_header">Notification Settings</string>
+    <string name="notif_messsage_hint">Notification Message</string>
+    <string name="notif_tone_hint">Notification Tone</string>
+    <string name="notif_freq_hint">Notification Frequency</string>
+    <string name="walkthrough_text_one">Clear, pure, essential for life and health. Water is the main component of the human body, just think that it represents about 60 percent of the weight in adult males, while from 50 to 55 percent in women and up to 75 percent in a newborn
+    </string>
+    <string name="walkthough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
+        make you tired.
+    </string>
+    <string name="walkthrough_text_three">Every cell, tissue and organ in your body needs water to work properly, an element at the base of the main physical and cognitive functions
+    </string>
+    <string name="dot">dot</string>
+    <string name="dialog_OK_button">OK</string>
+    <string name="dialog_NO_button">No</string>
+    <string name="dialog_Later_button">Maybe later</string>
+    <string name="dialog_StarOnGitHub">Do you like this app? Please give a star on GitHub or buy the developer a coffee via PayPal.</string>
+    <string name="rationale_dialog_ok">Ok</string>
+    <string name="rationale_dialog_cancel">Cancel</string>
+    <string name="unhandled_request_code_exception_message" translatable="false">Request code %d is not handled by the RequestResultsDispatcher object. Please add a withRequestCode block to the buildRequestResultsDispatcher function.</string>
+    <string name="init_user_info_fragment_label">InitUserInfo</string>
+    <string name="generic_error">There was an error.</string>
+    <string name="close">Close</string>
+    <string name="showErrorFrag">Error</string>
+    <string name="select_wakeup_time">Select Wakeup Time</string>
+    <string name="select_sleeping_time">Select Sleeping Time</string>
+    <string name="please_input_your_weight">Please input your weight</string>
+    <string name="please_input_a_valid_weight">Please input a valid weight</string>
+    <string name="please_input_your_workout_time">Please input your workout time</string>
+    <string name="please_input_a_valid_workout_time">Please input a valid workout time</string>
+    <string name="hey_lets_drink_some_water">Hey... Lets drink some water....</string>
+    <string name="select_ringtone_for_notifications">Select ringtone for notifications:</string>
+    <string name="please_a_notification_message">Please a notification message</string>
+    <string name="please_select_a_notification_frequency">Please select a notification frequency</string>
+    <string name="please_input_your_custom_target">Please input your custom target</string>
+    <string name="values_updated_successfully">Values updated successfully</string>
+    <string name="please_click_back_again_to_exit">Please click BACK again to exit</string>
+    <string name="you_achieved_the_goal">You achieved the goal</string>
+    <string name="your_water_intake_was_saved">Your water intake was saved...!!</string>
+    <string name="you_already_achieved_the_goal">You already achieved the goal</string>
+    <string name="please_select_an_option">Please select an option</string>
+    <string name="notification_enabled">Notification Enabled..</string>
+    <string name="notification_disabled">Notification Disabled..</string>
+    <string name="empty">Empty</string>
+    <string name="walkthough_text_four">How much to drink?\nAdolescents, adults and the elderly: males 2.5 liters a day, females 2 liters a day</string>
+    <string name="back">Back</string>
+    <string name="_30_mins">30 Mins</string>
+    <string name="_45_mins">45 Mins</string>
+    <string name="_60_mins">60 Mins</string>
+    <string name="_1100_ml">1100 ml</string>
+    <string name="_3100_ml">3100 ml</string>
+    <string name="remaining">Remaining</string>
+    <string name="target">Target</string>
+    <string name="summary">Summary</string>
+    <string name="check_out_the_app_at">Hey, Download this awesome app!</string>
+    <string name="share_via">Share via</string>
+    <string name="no_app_available">No App Available</string>
+    <string name="btn_settings">Settings</string>
+    <string name="_50_ml">50 ml</string>
+    <string name="_100_ml">100 ml</string>
+    <string name="_150_ml">150 ml</string>
+    <string name="_200_ml">200 ml</string>
+    <string name="_250_ml">250 ml</string>
+    <string name="todo">TODO</string>
+    <string name="todo2">TODO2</string>
+    <string name="daily_drink_target">Daily Drink Target</string>
+    <string name="custom">Custom</string>
+    <string name="_2000">2000</string>
+    <string name="_3500_ml">/3500 ml</string>
+    <string name="credits_text">Credits</string>
+    <string name="credits_list_text">To make this app:\nThe icons were downloaded from <a href="https://www.freepik.com">freepik</a>\nThe animations were downloaded from <a href="https://lottiefiles.com">LottieFiles</a>\nFor libraries used:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar and com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspired by com.github.PhilJay:MPAndroidChart:v3.1.0 library</string>
+    <string name="send_mail">Send mail</string>
+    <string name="dialog_mail_message">Do you have any suggestions for the app?\n(bugs, things to add, errors, translations to add, etc, etc)\nSend an email!!!(In English if possible)</string>
+    <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
+    <string name="suggestions_for_memento_bibere">Suggestions for Memento Bibere</string>
+    <string name="your_message_here">Your message here</string>
+</resources>

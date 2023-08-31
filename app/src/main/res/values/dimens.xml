@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cardCornerRadius">24dp</dimen>
+    <dimen name="error_button_corner_radius">250dp</dimen>
+    <dimen name="close_error_button_corner_radius">250dp</dimen>
+</resources>
