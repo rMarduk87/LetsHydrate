@@ -1,9 +1,9 @@
 # MementoBibere
 
-![play_store_512](https://github.com/rMarduk87/MementoBibere/assets/30796324/79fa6d8a-3913-41ed-8486-b0c3166ed6b5)
+<img width="128" height="128" alt="store" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/79fa6d8a-3913-41ed-8486-b0c3166ed6b5">
 
 
-Memento Biber is an android app to remind you to drink water and track your water intake habit
+Memento Bibere is an android app to remind you to drink water and track your water intake habit
 
 ## ScreenShots
 
