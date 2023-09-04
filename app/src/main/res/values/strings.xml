@@ -5,7 +5,7 @@
     <string name="btn_stats">Stats</string>
     <string name="title_activity_stats">StatsActivity</string>
     <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
-    <string name="add_info_text">Please provide some information to customize the experience for you…!!</string>
+    <string name="add_info_text">Please enter some data to make your experience better!!!</string>
     <string name="str_continue">Continue</string>
     <string name="enter_your_name_hint">Enter your name</string>
     <string name="age_hint">Enter your age</string>
@@ -33,7 +33,6 @@
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">No</string>
     <string name="dialog_Later_button">Maybe later</string>
-    <string name="dialog_StarOnGitHub">Do you like this app? Please give a star on GitHub or buy the developer a coffee via PayPal.</string>
     <string name="rationale_dialog_ok">Ok</string>
     <string name="rationale_dialog_cancel">Cancel</string>
     <string name="unhandled_request_code_exception_message" translatable="false">Request code %d is not handled by the RequestResultsDispatcher object. Please add a withRequestCode block to the buildRequestResultsDispatcher function.</string>
@@ -87,10 +86,27 @@
     <string name="_2000">2000</string>
     <string name="_3500_ml">/3500 ml</string>
     <string name="credits_text">Credits</string>
-    <string name="credits_list_text">To make this app:\nThe icons were downloaded from <a href="https://www.freepik.com">freepik</a>\nThe animations were downloaded from <a href="https://lottiefiles.com">LottieFiles</a>\nFor libraries used:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar and com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspired by com.github.PhilJay:MPAndroidChart:v3.1.0 library</string>
+    <string name="credits_list_text">To make this app:\nThe icons were downloaded from <a href="https://www.freepik.com">freepik</a>\nThe animations were downloaded from <a href="https://lottiefiles.com">LottieFiles</a>\nFor libraries used:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar and com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspired by com.github.PhilJay:MPAndroidChart:v3.1.0 library\nBottomMenu by nl.joery.animatedbottombar:library:1.1.0\nSweetDialog by cn.pedant.sweetalert:library:1.3</string>
     <string name="send_mail">Send mail</string>
     <string name="dialog_mail_message">Do you have any suggestions for the app?\n(bugs, things to add, errors, translations to add, etc, etc)\nSend an email!!!(In English if possible)</string>
     <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
     <string name="suggestions_for_memento_bibere">Suggestions for Memento Bibere</string>
     <string name="your_message_here">Your message here</string>
+    <string name="notific">Alarm</string>
+    <string name="notificNo">No Alarm</string>
+    <string name="edit">Edit</string>
+    <string name="info">Info</string>
+    <string name="add">Add</string>
+    <string name="stats">Stats</string>
+    <string name="accessibility_description">Screen menu</string>
+    <string name="accessibility_item_description">%1$s menu item</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
+    <string name="default_progressbar">Default Progressbar:</string>
+    <string name="wathsnew">What\'s new</string>
+    <string name="dialog_new_message">\nNew menu\nAbility to select the frequency of notifications\nMinor changes to graphics and text</string>
+    <string name="dialog_new_version_message">What\'s new for the release </string>
+    <string name="intake_report">Intake Report</string>
 </resources>

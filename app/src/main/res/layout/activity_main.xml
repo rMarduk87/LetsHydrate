@@ -17,7 +17,7 @@
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/todo"
         android:padding="8dp"
-        android:src="@drawable/ic_edit"
+        android:src="@drawable/ic_share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ImageContrastCheck" />
@@ -29,107 +29,50 @@
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
         android:padding="8dp"
-        android:src="@drawable/ic_share"
+        android:src="@drawable/ic_news"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ImageContrastCheck"
         android:contentDescription="@string/todo2" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnNotific"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/btn_notific"
-        android:padding="8dp"
-        android:src="@drawable/ic_bell"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fabAdd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        tools:ignore="ImageContrastCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/btn_settings"
-        android:padding="8dp"
-        android:src="@drawable/ic_settings"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fabAdd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        tools:ignore="ImageContrastCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnStats"
-        android:layout_width="wrap_content"
+
+    <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+        android:id="@+id/bottom_bar_notify"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/btn_stats"
-        android:padding="8dp"
-        android:src="@drawable/ic_stats"
-        app:fabSize="mini"
+        android:layout_margin="20dp"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_backgroundColor="@color/white"
+        app:exb_itemInactiveColor="@color/black"
+        app:exb_notificationBadgeBackgroundColor="#757575"
+        app:exb_notificationBadgeTextColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fabAdd"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        tools:ignore="ImageContrastCheck" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnInfo"
-        android:layout_width="wrap_content"
+    <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+        android:id="@+id/bottom_bar_not_notify"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-100dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/btn_stats"
-        android:padding="8dp"
-        android:src="@drawable/ic_info"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fabAdd"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        tools:ignore="ImageContrastCheck" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:contentDescription="@string/fabb_add"
+        android:layout_margin="20dp"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_backgroundColor="@color/white"
+        app:exb_itemInactiveColor="@color/black"
+        app:exb_notificationBadgeBackgroundColor="@color/red"
+        app:exb_notificationBadgeTextColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:srcCompat="@drawable/ic_plus_solid"
-        tools:ignore="ImageContrastCheck"
-        android:focusable="true" />
+        android:visibility="gone"/>
+
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
+        android:layout_marginStart="110dp"
         android:layout_marginTop="16dp"
         android:text="@string/daily_drink_target"
         android:textColor="@color/colorWhite"
@@ -393,7 +336,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <rpt.tool.mementobibere.ui.progressview.RptProgressView
+    <rpt.tool.mementobibere.ui.libraries.progressview.RptProgressView
         android:id="@+id/intakeProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -421,7 +364,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:text="@string/_2000"
         android:textColor="@color/colorWhite"
         android:textSize="35sp"

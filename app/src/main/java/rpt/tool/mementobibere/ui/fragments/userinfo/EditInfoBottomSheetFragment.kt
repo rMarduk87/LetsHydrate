@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +19,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.EditInfoBottomSheetFragmentBinding
+import rpt.tool.mementobibere.ui.libraries.menu.Menu
+import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
@@ -28,6 +31,7 @@ import java.util.*
 
 class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
+    private lateinit var menu: Menu
     private lateinit var sharedPref: SharedPreferences
     private lateinit var binding: EditInfoBottomSheetFragmentBinding
     private var weight: String = ""
@@ -77,6 +81,18 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
             ).getTitle(requireContext())
         )
 
+        initBottomBar()
+
+        notificFrequency = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30)
+        when (notificFrequency) {
+            30 -> menu.select(R.id.icon_30)
+            45 -> menu.select(R.id.icon_45)
+            60 -> menu.select(R.id.icon_60)
+            else -> {
+                menu.select(R.id.icon_30)
+                notificFrequency = 30
+            }
+        }
 
         binding.etRingtone.editText!!.setOnClickListener {
             val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
@@ -226,6 +242,59 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
                     (activity as MainActivity?)!!.updateValues()
 
                 }
+            }
+        }
+    }
+
+    private fun initBottomBar() {
+        menu = binding.bottomBar.menu
+        menu.removeAll()
+
+        menu.add(
+            MenuItemDescriptor.Builder(
+                requireContext(),
+                R.id.icon_30,
+                R.drawable.ic_30,
+                R.string._30_mins, Color.GRAY
+            )
+                .build()
+        )
+
+        menu.add(
+            MenuItemDescriptor.Builder(
+                requireContext(),
+                R.id.icon_45,
+                R.drawable.ic_45,
+                R.string._45_mins, Color.GRAY
+            )
+                .colorRes(R.color.red)
+                .build()
+        )
+
+        menu.add(
+            MenuItemDescriptor.Builder(
+                requireContext(),
+                R.id.icon_60,
+                R.drawable.ic_60,
+                R.string._60_mins,
+                Color.parseColor("#18e682")
+            )
+                .build()
+        )
+
+        binding.bottomBar.onItemSelectedListener = { _, i, _ ->
+            when(i.id) {
+                R.id.icon_30 -> notificFrequency = 30
+                R.id.icon_45 -> notificFrequency = 45
+                R.id.icon_60 -> notificFrequency = 60
+            }
+        }
+
+        binding.bottomBar.onItemReselectedListener = { _, i, _ ->
+            when (i.id) {
+                R.id.icon_30 -> notificFrequency = 30
+                R.id.icon_45 -> notificFrequency = 45
+                R.id.icon_60 -> notificFrequency = 60
             }
         }
     }
