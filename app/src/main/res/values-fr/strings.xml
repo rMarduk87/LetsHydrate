@@ -5,7 +5,7 @@
     <string name="btn_stats">Statistiques</string>
     <string name="title_activity_stats">StatsActivité</string>
     <string name="pref_notification_message_value">Hé… Buvons de l\'eau…</string>
-    <string name="add_info_text">Veuillez fournir quelques informations pour personnaliser l\'expérience pour vous…!!</string>
+    <string name="add_info_text">Veuillez saisir quelques données pour améliorer votre expérience!!!</string>
     <string name="str_continue">Continuer</string>
     <string name="enter_your_name_hint">Entrez votre nom</string>
     <string name="age_hint">Entrez votre âge</string>
@@ -33,7 +33,6 @@
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">Non</string>
     <string name="dialog_Later_button">Peut-être plus tard</string>
-    <string name="dialog_StarOnGitHub">Aimez-vous cette application? Veuillez donner une étoile sur GitHub ou acheter un café au développeur via PayPal.</string>
     <string name="rationale_dialog_ok">D\'accord</string>
     <string name="rationale_dialog_cancel">Annuler</string>
     <string name="unhandled_request_code_exception_message" translatable="false">Request code %d is not handled by the RequestResultsDispatcher object. Please add a withRequestCode block to the buildRequestResultsDispatcher function.</string>
@@ -82,15 +81,32 @@
     <string name="_250_ml">250 ml</string>
     <string name="todo">TODO</string>
     <string name="todo2">TODO2</string>
-    <string name="daily_drink_target">Daily Drink Target</string>
+    <string name="daily_drink_target">Objectif de boisson quotidien</string>
     <string name="custom">Custom</string>
     <string name="_2000">2000</string>
     <string name="_3500_ml">/3500 ml</string>
     <string name="credits_text">Credits</string>
-    <string name="credits_list_text">Pour créer cette application:\nLes icônes ont été téléchargées depuis <a href="https://www.freepik.com">freepik</a>\nLes animations ont été téléchargées depuis <a href="https://lottiefiles.com">LottieFiles</a>\nPour les bibliothèques utilisée:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar et com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspiré de la bibliothèque com.github.PhilJay:MPAndroidChart:v3.1.0</string>
+    <string name="credits_list_text">Pour créer cette application:\nLes icônes ont été téléchargées depuis <a href="https://www.freepik.com">freepik</a>\nLes animations ont été téléchargées depuis <a href="https://lottiefiles.com">LottieFiles</a>\nPour les bibliothèques utilisée:\nTimber -> com.jakewharton.timber:timber:5.0.1\nLottie -> com.airbnb.android:lottie:6.1.0\nAndroid Animation -> com.daimajia.easing:library:2.0@aar et com.daimajia.androidanimations:library:2.3@aar\nDots Indicator -> com.tgoodman:dotsindicator:5.0\nChart inspiré de la bibliothèque com.github.PhilJay:MPAndroidChart:v3.1.0\nBottomMenu par nl.joery.animatedbottombar:library:1.1.0\nSweetDialog par cn.pedant.sweetalert:library:1.3</string>
     <string name="send_mail">Envoyer un mail</string>
     <string name="dialog_mail_message">Avez-vous des suggestions pour l\'application?\n(bugs, éléments à ajouter, erreurs, traductions à ajouter, etc, etc)\nEnvoyez un e-mail!!! (En anglais si possible)</string>
     <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
     <string name="suggestions_for_memento_bibere">Suggestions for Memento Bibere</string>
     <string name="your_message_here">Your message here</string>
+    <string name="notific">Alarm</string>
+    <string name="notificNo">No Alarm</string>
+    <string name="edit">Edit</string>
+    <string name="info">Info</string>
+    <string name="add">Add</string>
+    <string name="stats">Stats</string>
+    <string name="accessibility_description">Screen menu</string>
+    <string name="accessibility_item_description">%1$s menu item</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
+    <string name="default_progressbar">Default Progressbar:</string>
+    <string name="wathsnew">Quoi de neuf</string>
+    <string name="dialog_new_message">\nNouveau menu\nPossibilité de sélectionner la fréquence des notifications\nModifications mineures des graphiques et du texte</string>
+    <string name="dialog_new_version_message">Quoi de neuf pour la sortie </string>
+    <string name="intake_report">Rapport d\'admission</string>
 </resources>

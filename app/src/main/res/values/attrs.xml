@@ -333,4 +333,65 @@
         <attr name="chart_donutRoundCorners" format="boolean" />
         <attr name="chart_donutTotal" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="ExpandableBottomBarItem">
+        <attr name="android:id" />
+        <attr name="android:title" />
+        <attr name="android:icon" />
+        <attr name="exb_color" format="reference|color" />
+        <attr name="exb_badgeColor" format="color" />
+        <attr name="exb_badgeTextColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="ExpandableBottomBar">
+        <attr name="exb_itemInactiveColor" format="color" />
+        <attr name="exb_itemBackgroundCornerRadius" format="dimension" />
+        <attr name="exb_itemBackgroundOpacity" format="float" />
+        <attr name="exb_itemStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="outline" value="1" />
+            <enum name="stroked" value="2" />
+        </attr>
+        <attr name="exb_transitionDuration" format="integer" />
+        <attr name="exb_elevation" format="dimension" />
+        <attr name="exb_backgroundColor" format="color" />
+        <attr name="exb_backgroundCornerRadius" format="dimension" />
+
+        <attr name="exb_item_vertical_margin" format="dimension" />
+        <attr name="exb_item_horizontal_margin" format="dimension" />
+        <attr name="exb_item_vertical_padding" format="dimension" />
+        <attr name="exb_item_horizontal_padding" format="dimension" />
+
+        <attr name="exb_items" format="reference" />
+
+        <attr name="exb_notificationBadgeBackgroundColor" format="color" />
+        <attr name="exb_notificationBadgeTextColor" format="color" />
+    </declare-styleable>
+
+    <attr name="exb_expandableButtonBarDefaultStyle" format="reference" />
+
+    <declare-styleable name="Rotate3dAnimation">
+        <attr name="rollType" format="enum">
+            <enum name="x" value="0"/>
+            <enum name="y" value="1"/>
+            <enum name="z" value="2"/>
+        </attr>
+        <attr name="fromDeg" format="float" />
+        <attr name="toDeg" format="float" />
+        <attr name="pivotX" format="fraction"/>
+        <attr name="pivotY" format="fraction" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressWheel">
+        <attr name="wheel_progressIndeterminate" format="boolean" />
+        <attr name="wheel_barColor" format="color" />
+        <attr name="wheel_rimColor" format="color" />
+        <attr name="wheel_rimWidth" format="dimension" />
+        <attr name="wheel_spinSpeed" format="float" />
+        <attr name="wheel_barSpinCycleTime" format="integer" />
+        <attr name="wheel_circleRadius" format="dimension" />
+        <attr name="wheel_fillRadius" format="boolean" />
+        <attr name="wheel_barWidth" format="dimension" />
+        <attr name="wheel_linearProgress" format="boolean" />
+    </declare-styleable>
 </resources>

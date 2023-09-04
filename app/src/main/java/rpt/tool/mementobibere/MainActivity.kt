@@ -1,5 +1,6 @@
 package rpt.tool.mementobibere
 
+
 import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -12,6 +13,8 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -32,10 +35,19 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import rpt.tool.mementobibere.databinding.ActivityMainBinding
 import rpt.tool.mementobibere.ui.fragments.info.InfoBottomSheetFragment
-import rpt.tool.mementobibere.ui.fragments.settings.SettingsBottomSheetFragment
 import rpt.tool.mementobibere.ui.fragments.userinfo.EditInfoBottomSheetFragment
+import rpt.tool.mementobibere.ui.libraries.alert.dialog.SweetAlertDialog
+import rpt.tool.mementobibere.ui.libraries.menu.Menu
+import rpt.tool.mementobibere.ui.libraries.menu.MenuItem
+import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.AppUtils.Companion.intentRequestCode
+import rpt.tool.mementobibere.utils.AppUtils.Companion.listIconNotNotify
+import rpt.tool.mementobibere.utils.AppUtils.Companion.listIconNotify
+import rpt.tool.mementobibere.utils.AppUtils.Companion.listIds
+import rpt.tool.mementobibere.utils.AppUtils.Companion.listStringNotNotify
+import rpt.tool.mementobibere.utils.AppUtils.Companion.listStringNotify
+import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.d
@@ -49,6 +61,11 @@ import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.withRequestCode
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var menuNotify: Menu
+    private lateinit var menuNotNotify: Menu
+    private lateinit var outValue: TypedValue
+    private lateinit var view: View
+    private lateinit var alarm: AlarmHelper
     private var totalIntake: Int = 0
     private var inTook: Int = 0
     private lateinit var sharedPref: SharedPreferences
@@ -62,18 +79,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var installStateUpdatedListener: InstallStateUpdatedListener
     private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+    private var themeInt : Int = 0
 
     private val pm = PermissionManager(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
+        themeInt = sharedPref.getInt(AppUtils.THEME,0)
+        setTheme()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setBackGround()
         initPermissions()
         initInAppUpdate()
 
-        sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
+
         sqliteHelper = SqliteHelper(this)
 
         totalIntake = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)
@@ -88,6 +110,167 @@ class MainActivity : AppCompatActivity() {
 
         dateNow = AppUtils.getCurrentDate()!!
 
+        view = window.decorView.findViewById<View>(android.R.id.content)
+        initBottomBar()
+
+    }
+
+    private fun initBottomBar() {
+
+        menuNotify = binding.bottomBarNotify.menu
+        menuNotNotify = binding.bottomBarNotNotify.menu
+
+        createMenu()
+
+    }
+
+    private fun createMenu() {
+
+        for (i in listIds.indices) {
+            menuNotify.add(
+                MenuItemDescriptor.Builder(
+                    this,
+                    listIds[i],
+                    listIconNotify[i],
+                    listStringNotify[i],
+                    Color.parseColor("#41B279")
+                )
+                    .build()
+            )
+        }
+
+        for (i in listIds.indices) {
+            menuNotNotify.add(
+                MenuItemDescriptor.Builder(
+                    this,
+                    listIds[i],
+                    listIconNotNotify[i],
+                    listStringNotNotify[i],
+                    Color.parseColor("#41B279")
+                )
+                    .build()
+            )
+        }
+
+        binding.bottomBarNotify.onItemSelectedListener = { _, i, _ ->
+            manageListeners(i)
+
+        }
+
+        binding.bottomBarNotify.onItemReselectedListener = { _, i, _ ->
+            manageListeners(i)
+        }
+
+        binding.bottomBarNotNotify.onItemSelectedListener = { _, i, _ ->
+            manageListeners(i)
+
+        }
+
+        binding.bottomBarNotNotify.onItemReselectedListener = { _, i, _ ->
+            manageListeners(i)
+        }
+    }
+
+    private fun manageListeners(i: MenuItem) {
+        when(i.id) {
+            R.id.icon_bell -> manageNotification()
+            R.id.icon_edit -> goToBottomEdit()
+            R.id.icon_plus -> addDrinkedWater()
+            R.id.icon_other -> goToBottomInfo()
+            R.id.icon_stats -> goToStatsActivity()
+        }
+    }
+
+    private fun goToStatsActivity() {
+        Handler(this.mainLooper).postDelayed({
+
+            startActivity(Intent(this, StatsActivity::class.java))
+
+        }, TIME)
+
+    }
+
+    private fun goToBottomInfo() {
+        Handler(this.mainLooper).postDelayed({
+
+            val bottomSheetFragment = InfoBottomSheetFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+
+        }, TIME)
+
+    }
+
+    private fun addDrinkedWater() {
+        if (selectedOption != null) {
+            if ((inTook * 100 / totalIntake) <= 140) {
+                if (sqliteHelper.addIntook(dateNow, selectedOption!!) > 0) {
+                    inTook += selectedOption!!
+                    setWaterLevel(inTook, totalIntake)
+                    showMessage(getString(R.string.your_water_intake_was_saved),view,false,1)
+                }
+            } else {
+                showMessage(getString(R.string.you_already_achieved_the_goal), view)
+            }
+            selectedOption = null
+            binding.tvCustom.text = "Custom"
+            binding.op50ml.background = getDrawable(outValue.resourceId)
+            binding.op100ml.background = getDrawable(outValue.resourceId)
+            binding.op150ml.background = getDrawable(outValue.resourceId)
+            binding.op200ml.background = getDrawable(outValue.resourceId)
+            binding.op250ml.background = getDrawable(outValue.resourceId)
+            binding.opCustom.background = getDrawable(outValue.resourceId)
+
+            // remove pending notifications
+            val mNotificationManager : NotificationManager =
+                getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            mNotificationManager.cancelAll()
+        } else {
+            YoYo.with(Techniques.Shake)
+                .duration(700)
+                .playOn(binding.cardView)
+            showMessage(getString(R.string.please_select_an_option),view,true)
+        }
+    }
+
+    private fun goToBottomEdit() {
+        Handler(this.mainLooper).postDelayed({
+
+            val bottomSheetFragment = EditInfoBottomSheetFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+
+        }, TIME)
+    }
+
+    private fun manageNotification() {
+        notificStatus = !notificStatus
+        sharedPref.edit().putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus).apply()
+        if (notificStatus) {
+            binding.bottomBarNotNotify.visibility = GONE
+            binding.bottomBarNotify.visibility = VISIBLE
+            Snackbar.make(view, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
+            alarm.setAlarm(
+                this,
+                sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+            )
+        } else {
+            binding.bottomBarNotNotify.visibility = VISIBLE
+            binding.bottomBarNotify.visibility = GONE
+            Snackbar.make(view, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
+            alarm.cancelAlarm(this)
+        }
+    }
+
+    private fun setBackGround() {
+        when(themeInt){
+            0->binding.mainActivityParent.background = getDrawable(R.drawable.ic_app_bg)
+            1->binding.mainActivityParent.background = getDrawable(R.drawable.ic_app_bg_dark)
+        }
+    }
+
+    private fun setTheme() {
+        val theme = themeInt.toMainTheme()
+        setTheme(theme)
+
     }
 
     fun updateValues() {
@@ -101,7 +284,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val outValue = TypedValue()
+        outValue = TypedValue()
         applicationContext.theme.resolveAttribute(
             android.R.attr.selectableItemBackground,
             outValue,
@@ -109,19 +292,14 @@ class MainActivity : AppCompatActivity() {
         )
 
         notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
-        val alarm = AlarmHelper()
+        alarm = AlarmHelper()
         if (!alarm.checkAlarm(this) && notificStatus) {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
+            binding.bottomBarNotNotify.visibility = GONE
+            binding.bottomBarNotify.visibility = VISIBLE
             alarm.setAlarm(
                 this,
                 sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
             )
-        }
-
-        if (notificStatus) {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
-        } else {
-            binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell_disabled))
         }
 
         sqliteHelper.addAll(dateNow, 0, totalIntake)
@@ -129,77 +307,12 @@ class MainActivity : AppCompatActivity() {
         updateValues()
 
         binding.btnMenu.setOnClickListener {
-            val bottomSheetFragment = EditInfoBottomSheetFragment()
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-        }
-
-        binding.btnSettings.setOnClickListener {
-            val bottomSheetFragment = SettingsBottomSheetFragment()
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-        }
-
-        binding.btnInfo.setOnClickListener {
-            val bottomSheetFragment = InfoBottomSheetFragment()
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-        }
-
-        binding.btnMenu2.setOnClickListener {
             invite()
         }
 
-        binding.fabAdd.setOnClickListener {
-            if (selectedOption != null) {
-                if ((inTook * 100 / totalIntake) <= 140) {
-                    if (sqliteHelper.addIntook(dateNow, selectedOption!!) > 0) {
-                        inTook += selectedOption!!
-                        setWaterLevel(inTook, totalIntake)
-                        showMessage(getString(R.string.your_water_intake_was_saved),it,false,1)
-                    }
-                } else {
-                    showMessage(getString(R.string.you_already_achieved_the_goal), it)
-                }
-                selectedOption = null
-                binding.tvCustom.text = "Custom"
-                binding.op50ml.background = getDrawable(outValue.resourceId)
-                binding.op100ml.background = getDrawable(outValue.resourceId)
-                binding.op150ml.background = getDrawable(outValue.resourceId)
-                binding.op200ml.background = getDrawable(outValue.resourceId)
-                binding.op250ml.background = getDrawable(outValue.resourceId)
-                binding.opCustom.background = getDrawable(outValue.resourceId)
-
-                // remove pending notifications
-                val mNotificationManager : NotificationManager =
-                    getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-                mNotificationManager.cancelAll()
-            } else {
-                YoYo.with(Techniques.Shake)
-                    .duration(700)
-                    .playOn(binding.cardView)
-                showMessage(getString(R.string.please_select_an_option),it,true)
-            }
+        binding.btnMenu2.setOnClickListener {
+            whatsnew()
         }
-
-        binding.btnNotific.setOnClickListener {
-            notificStatus = !notificStatus
-            sharedPref.edit().putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus).apply()
-            if (notificStatus) {
-                binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell))
-                Snackbar.make(it, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
-                alarm.setAlarm(
-                    this,
-                    sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
-                )
-            } else {
-                binding.btnNotific.setImageDrawable(getDrawable(R.drawable.ic_bell_disabled))
-                Snackbar.make(it, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
-                alarm.cancelAlarm(this)
-            }
-        }
-
-        binding.btnStats.setOnClickListener {
-            startActivity(Intent(this, StatsActivity::class.java))
-        }
-
 
         binding.op50ml.setOnClickListener {
             if (snackbar != null) {
@@ -212,7 +325,10 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(outValue.resourceId)
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(outValue.resourceId)
-
+            val notification = binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification()
+            notification.show(selectedOption.toString())
+            val notificationNot = binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification()
+            notificationNot.show(selectedOption.toString())
         }
 
         binding.op100ml.setOnClickListener {
@@ -226,6 +342,7 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(outValue.resourceId)
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(outValue.resourceId)
+            setNotificationBadge()
 
         }
 
@@ -240,6 +357,7 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(outValue.resourceId)
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(outValue.resourceId)
+            setNotificationBadge()
 
         }
 
@@ -254,6 +372,7 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(R.drawable.option_select_bg)
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(outValue.resourceId)
+            setNotificationBadge()
 
         }
 
@@ -268,7 +387,7 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(outValue.resourceId)
             binding.op250ml.background = getDrawable(R.drawable.option_select_bg)
             binding.opCustom.background = getDrawable(outValue.resourceId)
-
+            setNotificationBadge()
         }
 
         binding.opCustom.setOnClickListener {
@@ -290,6 +409,7 @@ class MainActivity : AppCompatActivity() {
                 if (!TextUtils.isEmpty(inputText)) {
                     binding.tvCustom.text = "$inputText ml"
                     selectedOption = inputText.toInt()
+                    setNotificationBadge()
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
@@ -304,9 +424,24 @@ class MainActivity : AppCompatActivity() {
             binding.op200ml.background = getDrawable(outValue.resourceId)
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(R.drawable.option_select_bg)
-
         }
 
+    }
+
+    private fun setNotificationBadge() {
+        val notification = binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification()
+        notification.show(selectedOption.toString())
+        val notificationNot = binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification()
+        notificationNot.show(selectedOption.toString())
+    }
+
+    private fun whatsnew() {
+        SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+            .setTitleText(getString(R.string.wathsnew))
+            .setContentText(getString(R.string.dialog_new_version_message)
+                    +" " + BuildConfig.VERSION_NAME + getString(R.string.dialog_new_message))
+            .setConfirmText("Ok")
+            .show()
     }
 
     private fun invite() {
@@ -494,6 +629,11 @@ class MainActivity : AppCompatActivity() {
         snackbarLayout.setPadding(0, 0, 0, 0)
         snackbarLayout.addView(customSnackView, 0)
         snackBar.show()
+    }
+
+    companion object {
+
+        const val TIME: Long = 1000
     }
 
 }

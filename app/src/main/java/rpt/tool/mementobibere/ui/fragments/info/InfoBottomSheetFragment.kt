@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.InfoBottomSheetFragmentBinding
+import rpt.tool.mementobibere.ui.libraries.alert.dialog.SweetAlertDialog
+
 
 class InfoBottomSheetFragment: BottomSheetDialogFragment() {
 
@@ -30,33 +32,34 @@ class InfoBottomSheetFragment: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSendMail.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle(getString(R.string.send_mail))
-            builder.setMessage(getString(R.string.dialog_mail_message))
-//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
-            builder.setPositiveButton(android.R.string.yes) { _, _ ->
-                sendMail()
-            }
+            SweetAlertDialog(requireContext(), SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText(getString(R.string.send_mail))
+                .setContentText(getString(R.string.dialog_mail_message))
+                .setCancelText("No")
+                .setConfirmText("Ok")
+                .showCancelButton(true)
+                .setCancelClickListener { _ -> // reuse previous dialog instance, keep widget user state, reset them if you need
+                    Toast.makeText(requireContext(),
+                        android.R.string.no, Toast.LENGTH_SHORT).show()
 
-            builder.setNegativeButton(android.R.string.no) { _, _ ->
-                Toast.makeText(requireContext(),
-                    android.R.string.no, Toast.LENGTH_SHORT).show()
-            }
-
-            builder.show()
+                }
+                .setConfirmClickListener { _ ->
+                    sendMail()
+                }
+                .show()
         }
 
         binding.btnShowCredits.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle(getString(R.string.credits_text))
-            builder.setMessage(getString(R.string.credits_list_text))
-//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
-            builder.setPositiveButton(android.R.string.ok) { _, _ ->
-            }
-
-            builder.show()
+            SweetAlertDialog(requireContext(), SweetAlertDialog.NORMAL_TYPE)
+                .setTitleText(getString(R.string.credits_text))
+                .setContentText(getString(R.string.credits_list_text))
+                .setConfirmText("Ok")
+                .showCancelButton(true)
+                .setConfirmClickListener { _ ->
+                }
+                .show()
         }
 
     }

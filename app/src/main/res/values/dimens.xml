@@ -3,4 +3,7 @@
     <dimen name="cardCornerRadius">24dp</dimen>
     <dimen name="error_button_corner_radius">250dp</dimen>
     <dimen name="close_error_button_corner_radius">250dp</dimen>
+    <dimen name="alert_width">290dp</dimen>
+    <dimen name="common_circle_width">3dp</dimen>
+    <dimen name="progress_circle_radius">34dp</dimen>
 </resources>

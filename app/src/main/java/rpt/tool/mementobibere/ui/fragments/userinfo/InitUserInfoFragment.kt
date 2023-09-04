@@ -30,6 +30,7 @@ class InitUserInfoFragment:
     private var sleepingTime: Long = 0
     private lateinit var sharedPref: SharedPreferences
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val is24h = android.text.format.DateFormat.is24HourFormat(requireContext())

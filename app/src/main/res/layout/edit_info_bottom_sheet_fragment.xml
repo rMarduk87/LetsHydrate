@@ -54,14 +54,14 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:hint="@string/weight_hint"
             android:inputType="numberSigned"
             android:maxLength="3"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry,VisualLintTextFieldSize" />
+            tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -78,14 +78,14 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:hint="@string/workout_hint"
             android:inputType="numberSigned"
             android:maxLength="3"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -102,7 +102,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:clickable="true"
             android:focusable="false"
@@ -110,7 +110,7 @@
             android:inputType="numberSigned"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -127,7 +127,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:clickable="true"
             android:focusable="false"
@@ -135,7 +135,7 @@
             android:inputType="numberSigned"
             android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -167,13 +167,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:hint="@string/custom_intake_hint"
             android:inputType="numberSigned"
-            android:paddingStart="12dp"
+            android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -190,13 +190,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:hint="@string/notif_messsage_hint"
             android:inputType="text"
-            android:paddingStart="12dp"
+            android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -206,7 +206,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:theme="@style/TextInputLayoutAppearance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -214,16 +213,42 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@null"
             android:clickable="true"
-            android:focusable="true"
+            android:focusable="false"
             android:hint="@string/notif_tone_hint"
             android:inputType="text"
-            android:paddingStart="12dp"
+            android:paddingStart="10dp"
             android:paddingBottom="10dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etRingtone"
+        tools:ignore="TextContrastCheck"
+        tools:text="@string/notif_freq_hint" />
+
+    <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+        android:id="@+id/bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="15dp"
+        app:exb_backgroundCornerRadius="25dp"
+        app:exb_backgroundColor="@color/white"
+        app:exb_itemInactiveColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
