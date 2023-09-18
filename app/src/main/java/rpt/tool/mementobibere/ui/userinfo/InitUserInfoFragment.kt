@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.ui.fragments.userinfo
+package rpt.tool.mementobibere.ui.userinfo
 
 import android.app.TimePickerDialog
 import android.content.Context
@@ -16,6 +16,7 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.InitUserInfoFragmentBinding
+import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -29,6 +30,7 @@ class InitUserInfoFragment:
     private var wakeupTime: Long = 0
     private var sleepingTime: Long = 0
     private lateinit var sharedPref: SharedPreferences
+    private var unit : Int = 0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +43,7 @@ class InitUserInfoFragment:
 
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
 
-        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME, 1558323000000)
+        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY, 1558323000000)
         sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
 
         binding.etWakeUpTime.editText!!.setOnClickListener {
@@ -117,14 +119,14 @@ class InitUserInfoFragment:
                     val editor = sharedPref.edit()
                     editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
                     editor.putInt(AppUtils.WORK_TIME_KEY, workTime.toInt())
-                    editor.putLong(AppUtils.WAKEUP_TIME, wakeupTime)
+                    editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
                     editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
                     editor.putBoolean(AppUtils.FIRST_RUN_KEY, false)
 
                     val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt())
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
-                    editor.putInt(AppUtils.TOTAL_INTAKE, df.format(totalIntake).toInt())
+                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
 
                     editor.apply()
                     val intent = Intent(activity, MainActivity::class.java)
@@ -132,6 +134,62 @@ class InitUserInfoFragment:
                 }
             }
         }
+
+        initBottomBars()
+    }
+
+    private fun initBottomBars() {
+        val menu = binding.unitSystemBottomBar.menu
+
+
+        for (i in AppUtils.listIdsInfoSystem.indices) {
+            menu.add(
+                MenuItemDescriptor.Builder(
+                    requireContext(),
+                    AppUtils.listIdsInfoSystem[i],
+                    AppUtils.listInfoSystem[i],
+                    AppUtils.listStringInfoSystem[i],
+                    Color.parseColor("#41B279")
+                )
+                    .build()
+            )
+        }
+
+        binding.unitSystemBottomBar.onItemSelectedListener = { _, i, _ ->
+            when(i.id) {
+                R.id.icon_ml -> unit = 0
+                R.id.icon_oz_uk -> unit = 1
+                R.id.icon_oz_us -> unit = 2
+
+            }
+
+            setSystemUnit()
+
+        }
+
+        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+
+        when (unit) {
+            0 -> menu.select(R.id.icon_ml)
+            1 -> menu.select(R.id.icon_oz_uk)
+            2 -> menu.select(R.id.icon_oz_us)
+            else -> {
+                menu.select(R.id.icon_ml)
+                unit = 0
+            }
+        }
+
+    }
+
+    private fun setSystemUnit() {
+        val editor = sharedPref.edit()
+        editor.putFloat(AppUtils.VALUE_50_KEY,AppUtils.firstConversion(50f,unit))
+        editor.putFloat(AppUtils.VALUE_100_KEY,AppUtils.firstConversion(100f,unit))
+        editor.putFloat(AppUtils.VALUE_150_KEY,AppUtils.firstConversion(150f,unit))
+        editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unit))
+        editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unit))
+        editor.putInt(AppUtils.UNIT_NEW_KEY, unit)
+        editor.apply()
     }
 
     private fun showError(error: String, view: View) {

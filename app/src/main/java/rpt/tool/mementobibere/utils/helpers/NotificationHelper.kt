@@ -1,5 +1,6 @@
 package rpt.tool.mementobibere.utils.helpers
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,6 +14,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
@@ -55,15 +57,19 @@ class NotificationHelper(val ctx: Context) {
         }
     }
 
+    @SuppressLint("RemoteViewLayout")
     fun getNotification(
         title: String,
         body: String,
         notificationsTone: String?
     ): NotificationCompat.Builder? {
         createChannels()
+        val view = RemoteViews(ctx.packageName,R.layout.memento_bibere_notification_layout)
+        view.setTextViewText(R.id.title,title)
+        view.setTextViewText(R.id.text, body)
         val notification = NotificationCompat.Builder(ctx.applicationContext, CHANNEL_ONE_ID)
-            .setContentTitle(title)
-            .setContentText(body)
+            .setCustomContentView(view)
+            .setAutoCancel(true)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     ctx.resources,
@@ -71,11 +77,12 @@ class NotificationHelper(val ctx: Context) {
                 )
             )
             .setSmallIcon(R.drawable.ic_small_logo)
-            .setAutoCancel(true)
 
         notification.setShowWhen(true)
 
         notification.setSound(Uri.parse(notificationsTone))
+
+        notification.setContent(view)
 
         val notificationIntent = Intent(ctx, MainActivity::class.java)
 
@@ -92,14 +99,14 @@ class NotificationHelper(val ctx: Context) {
         val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         val sqliteHelper = SqliteHelper(ctx)
 
-        val startTimestamp = prefs.getLong(AppUtils.WAKEUP_TIME, 0)
-        val stopTimestamp = prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0)
-        val totalIntake = prefs.getInt(AppUtils.TOTAL_INTAKE, 0)
+        val startTimestamp = prefs.getLong(AppUtils.START_TIME_KEY, prefs.getLong(AppUtils.WAKEUP_TIME_KEY,0))
+        val stopTimestamp = prefs.getLong(AppUtils.STOP_TIME_KEY, prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0))
+        val totalIntake = prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
 
-        if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0)
+        if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
             return false
 
-        val percent = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / totalIntake
+        val percent = sqliteHelper.getIntook(AppUtils.getCurrentOnlyDate()!!) * 100 / totalIntake
 
         val now = Calendar.getInstance().time
 

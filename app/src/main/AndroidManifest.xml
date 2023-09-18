@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -16,14 +16,18 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".StatsActivity"
-            android:exported="false"
-            android:theme="@style/MainTheme"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".InitUserInfoActivity"
+            android:name=".InfoActivity"
             android:screenOrientation="portrait"
             android:exported="false" />
+        <activity
+            android:name=".StatsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+        <activity
+            android:name=".InitUserInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".WalkThroughActivity"
             android:screenOrientation="portrait"
@@ -31,8 +35,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/MainTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait"
@@ -43,11 +47,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".utils.recievers.NotifierReceiver"/>
-        <receiver android:name=".utils.recievers.BootReceiver"
+
+        <receiver android:name=".utils.recievers.NotifierReceiver" />
+        <receiver
+            android:name=".utils.recievers.BootReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
     </application>

@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPrincipal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@color/black"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/systemUnitTV">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
+
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view2"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etSendMail" />
+
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view3"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etStopSleep" />
+
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view4"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etPrivacy" />
+
+            <TextView
+                android:id="@+id/infoMiddleTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/info_title"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/etCredits"
+                tools:ignore="TextContrastCheck" />
+
+            <TextView
+                android:id="@+id/settingsTopTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/settings_title" />
+
+            <TextView
+                android:id="@+id/darkTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/settingsTopTitle"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/use_dark_theme" />
+
+            <TextView
+                android:id="@+id/systemUnitTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dark_theme_bottom_bar"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/type_unit" />
+
+            <TextView
+                android:id="@+id/notificationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/unit_system_bottom_bar"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/notif_setting_header" />
+            
+            <TextView
+                android:id="@+id/sleepTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etRingtone"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/notif_sleep_header">
+                
+            </TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etCredits"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoMiddleTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/credits_text"
+                    android:inputType="numberSigned"
+                    android:maxLength="3"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etSendMail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCredits">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:hint="@string/send_mail"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:inputType="numberSigned"
+                    android:maxLength="3"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/legal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/legal" />
+
+            <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+                android:id="@+id/dark_theme_bottom_bar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                android:theme="@style/BottomBarInfo"
+                app:exb_backgroundCornerRadius="15dp"
+                app:exb_backgroundColor="@color/white"
+                app:exb_itemInactiveColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/darkTV"/>
+
+            <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+                android:id="@+id/unit_system_bottom_bar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                android:theme="@style/BottomBarInfo"
+                app:exb_backgroundCornerRadius="15dp"
+                app:exb_backgroundColor="@color/white"
+                app:exb_itemInactiveColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/systemUnitTV"/>
+
+            <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+                android:id="@+id/notification_bottom_bar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                android:theme="@style/BottomBarInfo"
+                app:exb_backgroundCornerRadius="15dp"
+                app:exb_backgroundColor="@color/white"
+                app:exb_itemInactiveColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notificationTV"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etNotificationText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notification_bottom_bar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:hint="@string/notif_messsage_hint"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etRingtone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etNotificationText">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/notif_tone_hint"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etStartSleep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toStartOf="@+id/etStopSleep"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sleepTV">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/sleep_mode_start_hint"
+                    android:inputType="numberSigned"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etStopSleep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/etStartSleep"
+                app:layout_constraintTop_toBottomOf="@+id/sleepTV">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/sleep_mode_stop_hint"
+                    android:inputType="numberSigned"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etPrivacy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/legal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/privacy"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_circle_left_solid"
+        tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/infoTopTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        android:text="@string/info_settings" />
+
+    <View
+        style="@style/DividerHorizontal"
+        android:id="@+id/view1"
+        android:layout_marginTop="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infoTopTitle" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

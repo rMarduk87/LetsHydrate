@@ -16,7 +16,7 @@ class InitUserInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME,0)
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
         setTheme()
         super.onCreate(savedInstanceState)
         binding = ActivityInitUserInfoBinding.inflate(layoutInflater)

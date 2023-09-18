@@ -25,7 +25,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         savedInstanceState: Bundle?
     ): View {
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME,0)
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
         setTheme()
         _binding = inflate.invoke(inflater, container, false)
         return binding.root

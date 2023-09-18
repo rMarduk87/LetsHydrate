@@ -141,6 +141,48 @@
                 android:paddingStart="10dp"
                 android:paddingBottom="10dp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            style="@style/DividerHorizontal"
+            android:id="@+id/view1"
+            android:layout_marginTop="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etSleepTime" />
+
+        <View
+            style="@style/DividerHorizontal"
+            android:id="@+id/view2"
+            android:layout_marginTop="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unit_system_bottom_bar" />
+
+        <TextView
+            android:id="@+id/systemUnitTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view1"
+            tools:ignore="TextContrastCheck"
+            android:text="@string/type_unit" />
+
+        <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+            android:id="@+id/unit_system_bottom_bar"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:theme="@style/BottomBarInfo"
+            app:exb_backgroundCornerRadius="15dp"
+            app:exb_backgroundColor="@color/white"
+            app:exb_itemInactiveColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/systemUnitTV"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

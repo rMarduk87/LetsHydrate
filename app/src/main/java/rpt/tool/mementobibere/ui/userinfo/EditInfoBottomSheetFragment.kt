@@ -1,12 +1,7 @@
-package rpt.tool.mementobibere.ui.fragments.userinfo
+package rpt.tool.mementobibere.ui.userinfo
 
-import android.app.Activity
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
@@ -19,9 +14,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.EditInfoBottomSheetFragmentBinding
-import rpt.tool.mementobibere.ui.libraries.menu.Menu
-import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.AppUtils.Companion.NO_UPDATE_UNIT
+import rpt.tool.mementobibere.utils.AppUtils.Companion.calculateExtensions
+import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import java.math.RoundingMode
@@ -31,7 +27,6 @@ import java.util.*
 
 class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
-    private lateinit var menu: Menu
     private lateinit var sharedPref: SharedPreferences
     private lateinit var binding: EditInfoBottomSheetFragmentBinding
     private var weight: String = ""
@@ -39,9 +34,10 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
     private var customTarget: String = ""
     private var wakeupTime: Long = 0
     private var sleepingTime: Long = 0
-    private var notificMsg: String = ""
-    private var notificFrequency: Int = 45
-    private var currentToneUri: String? = ""
+    private var current_unitInt: Int = 0
+    private var new_unitInt: Int = 0
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,51 +59,21 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.etWeight.editText!!.setText("" + sharedPref.getInt(AppUtils.WEIGHT_KEY, 0))
         binding.etWorkTime.editText!!.setText("" + sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0))
-        binding.etTarget.editText!!.setText("" + sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0))
-        binding.etNotificationText.editText!!.setText(
-            sharedPref.getString(
-                AppUtils.NOTIFICATION_MSG_KEY,
-                getString(R.string.hey_lets_drink_some_water)
-            )
-        )
-        currentToneUri = sharedPref.getString(
-            AppUtils.NOTIFICATION_TONE_URI_KEY,
-            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString()
-        )
-        binding.etRingtone.editText!!.setText(
-            RingtoneManager.getRingtone(
-                requireContext(),
-                Uri.parse(currentToneUri)
-            ).getTitle(requireContext())
-        )
+        binding.etTarget.editText!!.setText("" + sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toNumberString())
 
-        initBottomBar()
+        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
 
-        notificFrequency = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30)
-        when (notificFrequency) {
-            30 -> menu.select(R.id.icon_30)
-            45 -> menu.select(R.id.icon_45)
-            60 -> menu.select(R.id.icon_60)
-            else -> {
-                menu.select(R.id.icon_30)
-                notificFrequency = 30
-            }
+        var unit = AppUtils.calculateExtensions(new_unitInt)
+        if(Locale.getDefault().language == "de"){
+            binding.etTarget.hint = getString(R.string.custom_intake_hint) + " " + unit + " ein"
+        }
+        else{
+            binding.etTarget.hint = getString(R.string.custom_intake_hint) + " " + unit
         }
 
-        binding.etRingtone.editText!!.setOnClickListener {
-            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
-            intent.putExtra(
-                RingtoneManager.EXTRA_RINGTONE_TITLE,
-                getString(R.string.select_ringtone_for_notifications)
-            )
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
-            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentToneUri)
-            startActivityForResult(intent, 999)
-        }
 
-        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME, 1558323000000)
+        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY, 1558323000000)
         sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
         val cal = Calendar.getInstance()
         cal.timeInMillis = wakeupTime
@@ -131,9 +97,9 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = wakeupTime
 
-                val mTimePicker: TimePickerDialog = TimePickerDialog(
+                val mTimePicker = TimePickerDialog(
                     requireContext(),
-                    TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                    { _, selectedHour, selectedMinute ->
 
                         val time = Calendar.getInstance()
                         time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -154,9 +120,9 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 requireContext(),
-                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -174,16 +140,13 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
         binding.btnUpdate.setOnClickListener {
 
-            val currentTarget = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)
+            val currentTarget = sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
 
             weight = binding.etWeight.editText!!.text.toString()
             workTime = binding.etWorkTime.editText!!.text.toString()
-            notificMsg = binding.etNotificationText.editText!!.text.toString()
             customTarget = binding.etTarget.editText!!.text.toString()
 
             when {
-                TextUtils.isEmpty(notificMsg) -> showError(getString(R.string.please_a_notification_message), it)
-                notificFrequency == 0 -> showError(getString(R.string.please_select_a_notification_frequency),it)
                 TextUtils.isEmpty(weight) -> showError(getString(R.string.please_input_your_weight),it)
 
                 weight.toInt() > 200 || weight.toInt() < 20 ->
@@ -203,31 +166,32 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
                     val editor = sharedPref.edit()
                     editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
                     editor.putInt(AppUtils.WORK_TIME_KEY, workTime.toInt())
-                    editor.putLong(AppUtils.WAKEUP_TIME, wakeupTime)
+                    editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
                     editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
-                    editor.putString(AppUtils.NOTIFICATION_MSG_KEY, notificMsg)
-                    editor.putInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, notificFrequency)
+
 
                     val sqliteHelper = SqliteHelper(requireContext())
 
-                    if (currentTarget != customTarget.toInt()) {
-                        editor.putInt(AppUtils.TOTAL_INTAKE, customTarget.toInt())
+                    if (currentTarget != customTarget.toFloat()) {
+                        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, customTarget.toFloat())
 
                         sqliteHelper.updateTotalIntake(
-                            AppUtils.getCurrentDate()!!,
-                            customTarget.toInt()
+                            AppUtils.getCurrentOnlyDate()!!,
+                            customTarget.toFloat(), calculateExtensions(new_unitInt)
                         )
                     } else {
                         val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt())
                         val df = DecimalFormat("#")
                         df.roundingMode = RoundingMode.CEILING
-                        editor.putInt(AppUtils.TOTAL_INTAKE, df.format(totalIntake).toInt())
+                        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
 
                         sqliteHelper.updateTotalIntake(
-                            AppUtils.getCurrentDate()!!,
-                            df.format(totalIntake).toInt()
+                            AppUtils.getCurrentOnlyDate()!!,
+                            df.format(totalIntake).toFloat(), calculateExtensions(new_unitInt)
                         )
                     }
+
+                    editor.putBoolean(NO_UPDATE_UNIT,true)
 
                     editor.apply()
 
@@ -246,59 +210,6 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun initBottomBar() {
-        menu = binding.bottomBar.menu
-        menu.removeAll()
-
-        menu.add(
-            MenuItemDescriptor.Builder(
-                requireContext(),
-                R.id.icon_30,
-                R.drawable.ic_30,
-                R.string._30_mins, Color.GRAY
-            )
-                .build()
-        )
-
-        menu.add(
-            MenuItemDescriptor.Builder(
-                requireContext(),
-                R.id.icon_45,
-                R.drawable.ic_45,
-                R.string._45_mins, Color.GRAY
-            )
-                .colorRes(R.color.red)
-                .build()
-        )
-
-        menu.add(
-            MenuItemDescriptor.Builder(
-                requireContext(),
-                R.id.icon_60,
-                R.drawable.ic_60,
-                R.string._60_mins,
-                Color.parseColor("#18e682")
-            )
-                .build()
-        )
-
-        binding.bottomBar.onItemSelectedListener = { _, i, _ ->
-            when(i.id) {
-                R.id.icon_30 -> notificFrequency = 30
-                R.id.icon_45 -> notificFrequency = 45
-                R.id.icon_60 -> notificFrequency = 60
-            }
-        }
-
-        binding.bottomBar.onItemReselectedListener = { _, i, _ ->
-            when (i.id) {
-                R.id.icon_30 -> notificFrequency = 30
-                R.id.icon_45 -> notificFrequency = 45
-                R.id.icon_60 -> notificFrequency = 60
-            }
-        }
-    }
-
     private fun showError(error: String, view: View?) {
         val toast = Toast(requireContext())
         toast.duration = Toast.LENGTH_SHORT
@@ -312,15 +223,5 @@ class EditInfoBottomSheetFragment : BottomSheetDialogFragment() {
         toast.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == 999) {
 
-            val uri = data!!.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI) as Uri
-            currentToneUri = uri.toString()
-            sharedPref.edit().putString(AppUtils.NOTIFICATION_TONE_URI_KEY, currentToneUri).apply()
-            val ringtone = RingtoneManager.getRingtone(requireContext(), uri)
-            binding.etRingtone.editText!!.setText(ringtone.getTitle(requireContext()))
-
-        }
-    }
 }
