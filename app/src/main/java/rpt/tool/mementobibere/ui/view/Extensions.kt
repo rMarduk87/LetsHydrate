@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.ui.fragments.view
+package rpt.tool.mementobibere.ui.view
 
 import android.view.View
 

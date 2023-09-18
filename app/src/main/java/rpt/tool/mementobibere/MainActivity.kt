@@ -1,6 +1,7 @@
 package rpt.tool.mementobibere
 
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -15,14 +16,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
@@ -34,20 +32,24 @@ import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import rpt.tool.mementobibere.databinding.ActivityMainBinding
-import rpt.tool.mementobibere.ui.fragments.info.InfoBottomSheetFragment
-import rpt.tool.mementobibere.ui.fragments.userinfo.EditInfoBottomSheetFragment
 import rpt.tool.mementobibere.ui.libraries.alert.dialog.SweetAlertDialog
 import rpt.tool.mementobibere.ui.libraries.menu.Menu
 import rpt.tool.mementobibere.ui.libraries.menu.MenuItem
 import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
+import rpt.tool.mementobibere.ui.userinfo.EditInfoBottomSheetFragment
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.AppUtils.Companion.NO_UPDATE_UNIT
+import rpt.tool.mementobibere.utils.AppUtils.Companion.extractIntConversion
 import rpt.tool.mementobibere.utils.AppUtils.Companion.intentRequestCode
 import rpt.tool.mementobibere.utils.AppUtils.Companion.listIconNotNotify
 import rpt.tool.mementobibere.utils.AppUtils.Companion.listIconNotify
 import rpt.tool.mementobibere.utils.AppUtils.Companion.listIds
 import rpt.tool.mementobibere.utils.AppUtils.Companion.listStringNotNotify
 import rpt.tool.mementobibere.utils.AppUtils.Companion.listStringNotify
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
+import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
+import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.d
@@ -57,36 +59,58 @@ import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.checkPermissions
 import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.doOnDenied
 import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.doOnGranted
 import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.withRequestCode
+import java.util.Calendar
+import java.util.Date
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : RPTBaseAppCompatActivity() {
 
+    private var enabled: Boolean = true
+    private var stopSleepTime: Long = 0
+    private var startSleepTime: Long = 0
+    private lateinit var unit: String
     private lateinit var menuNotify: Menu
     private lateinit var menuNotNotify: Menu
     private lateinit var outValue: TypedValue
     private lateinit var view: View
     private lateinit var alarm: AlarmHelper
-    private var totalIntake: Int = 0
-    private var inTook: Int = 0
+    private var totalIntake: Float = 0f
+    private var inTook: Float = 0f
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var dateNow: String
     private var notificStatus: Boolean = false
-    private var selectedOption: Int? = null
+    private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
     private var doubleBackToExitPressedOnce = false
     private lateinit var binding: ActivityMainBinding
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var installStateUpdatedListener: InstallStateUpdatedListener
     private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
-    private var themeInt : Int = 0
+    private var themeInt: Int = 0
+    private var current_unitInt: Int = 0
+    private var new_unitInt: Int = 0
+    private var value_50: Float = 50f
+    private var value_100: Float = 100f
+    private var value_150: Float = 150f
+    private var value_200: Float = 200f
+    private var value_250: Float = 250f
 
     private val pm = PermissionManager(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME,0)
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
+        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
+        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
+        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
+        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
+        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
+        startSleepTime = sharedPref.getLong(AppUtils.START_TIME_KEY, 1558323000000)
+        stopSleepTime = sharedPref.getLong(AppUtils.STOP_TIME_KEY,  1558323000000)
         setTheme()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -98,7 +122,19 @@ class MainActivity : AppCompatActivity() {
 
         sqliteHelper = SqliteHelper(this)
 
-        totalIntake = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)
+        totalIntake = try {
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
+        }catch (ex:Exception){
+            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = sharedPref.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
+        }
+
 
         if (sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true)) {
             startActivity(Intent(this, WalkThroughActivity::class.java))
@@ -108,11 +144,24 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
-        dateNow = AppUtils.getCurrentDate()!!
+        dateNow = AppUtils.getCurrentOnlyDate()!!
 
         view = window.decorView.findViewById<View>(android.R.id.content)
         initBottomBar()
+        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+            initIntookValue()
+            setValueForDrinking()
+        }
 
+    }
+
+    private fun initIntookValue() {
+        unit = AppUtils.calculateExtensions(current_unitInt)
+        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -183,7 +232,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToStatsActivity() {
         Handler(this.mainLooper).postDelayed({
-
+            var edit = sharedPref.edit()
+            edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
+            edit.putString(AppUtils.UNIT_STRING,unit)
+            edit.apply()
             startActivity(Intent(this, StatsActivity::class.java))
 
         }, TIME)
@@ -193,20 +245,25 @@ class MainActivity : AppCompatActivity() {
     private fun goToBottomInfo() {
         Handler(this.mainLooper).postDelayed({
 
-            val bottomSheetFragment = InfoBottomSheetFragment()
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+            var edit = sharedPref.edit()
+            edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
+            edit.apply()
+            startActivity(Intent(this, InfoActivity::class.java))
 
         }, TIME)
 
     }
 
+    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
     private fun addDrinkedWater() {
+
         if (selectedOption != null) {
             if ((inTook * 100 / totalIntake) <= 140) {
-                if (sqliteHelper.addIntook(dateNow, selectedOption!!) > 0) {
+                if (sqliteHelper.addIntook(dateNow, selectedOption!!,unit) > 0) {
                     inTook += selectedOption!!
                     setWaterLevel(inTook, totalIntake)
-                    showMessage(getString(R.string.your_water_intake_was_saved),view,false,1)
+                    showMessage(getString(R.string.your_water_intake_was_saved),view,false,
+                        AppUtils.Companion.TypeMessage.SAVE)
                 }
             } else {
                 showMessage(getString(R.string.you_already_achieved_the_goal), view)
@@ -230,9 +287,14 @@ class MainActivity : AppCompatActivity() {
                 .playOn(binding.cardView)
             showMessage(getString(R.string.please_select_an_option),view,true)
         }
+        binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification().clear()
+        binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification().clear()
     }
 
     private fun goToBottomEdit() {
+        var editor = sharedPref.edit()
+        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
+        editor.apply()
         Handler(this.mainLooper).postDelayed({
 
             val bottomSheetFragment = EditInfoBottomSheetFragment()
@@ -242,21 +304,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun manageNotification() {
-        notificStatus = !notificStatus
-        sharedPref.edit().putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus).apply()
-        if (notificStatus) {
-            binding.bottomBarNotNotify.visibility = GONE
-            binding.bottomBarNotify.visibility = VISIBLE
-            Snackbar.make(view, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
-            alarm.setAlarm(
-                this,
-                sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
-            )
-        } else {
-            binding.bottomBarNotNotify.visibility = VISIBLE
-            binding.bottomBarNotify.visibility = GONE
-            Snackbar.make(view, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
-            alarm.cancelAlarm(this)
+        if(enabled){
+            notificStatus = !notificStatus
+            var editor = sharedPref.edit()
+            editor.putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus)
+            editor.apply()
+            if (notificStatus) {
+                binding.bottomBarNotNotify.visibility = GONE
+                binding.bottomBarNotify.visibility = VISIBLE
+                Snackbar.make(view, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
+                alarm.setAlarm(
+                    this,
+                    sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+                )
+            } else {
+                binding.bottomBarNotNotify.visibility = VISIBLE
+                binding.bottomBarNotify.visibility = GONE
+                Snackbar.make(view, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
+                alarm.cancelAlarm(this)
+            }
         }
     }
 
@@ -274,11 +340,57 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateValues() {
-        totalIntake = sharedPref.getInt(AppUtils.TOTAL_INTAKE, 0)
+        totalIntake = try {
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }catch (ex:Exception){
+            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = sharedPref.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }
+
+        var noUpdate = sharedPref.getBoolean(NO_UPDATE_UNIT,false)
+        if(!noUpdate){
+            totalIntake = sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,calculateRealUnit(current_unitInt,new_unitInt))
+
+            unit = AppUtils.calculateExtensions(new_unitInt)
+            sqliteHelper.updateTotalIntake(
+                AppUtils.getCurrentOnlyDate()!!,
+                totalIntake, unit)
+        }
+
+        var editor = sharedPref.edit()
+        editor.putBoolean(NO_UPDATE_UNIT, false)
+        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
+        editor.apply()
+
+        sqliteHelper.addAll(dateNow, 0, totalIntake,unit)
 
         inTook = sqliteHelper.getIntook(dateNow)
 
         setWaterLevel(inTook, totalIntake)
+
+        binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification().clear()
+        binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification().clear()
+    }
+
+    private fun calculateRealUnit(currentUnitint: Int, newUnitint: Int): Int {
+        val realUnit = new_unitInt
+        if(currentUnitint==newUnitint){
+            val c = sqliteHelper.getTotalIntake(dateNow)
+            if(c.moveToFirst()){
+                val unit = extractIntConversion(c.getString(1))
+                return if(unit==new_unitInt){
+                    realUnit
+                } else{
+                    unit
+                }
+            }
+        }
+        return realUnit
     }
 
     override fun onStart() {
@@ -291,6 +403,34 @@ class MainActivity : AppCompatActivity() {
             true
         )
 
+        startSleepTime = sharedPref.getLong(AppUtils.START_TIME_KEY, 1558323000000)
+        stopSleepTime = sharedPref.getLong(AppUtils.STOP_TIME_KEY,  1558323000000)
+
+        val dataStart = Calendar.getInstance()
+        dataStart.timeInMillis = startSleepTime
+        val dataStop = Calendar.getInstance()
+        dataStop.timeInMillis = stopSleepTime
+
+        val builderFrom = StringBuilder()
+        builderFrom.append(AppUtils.getCurrentOnlyDate()!!)
+        builderFrom.append("-")
+        builderFrom.append(String.format(
+            "%02d:%02d",
+            dataStart.get(Calendar.HOUR_OF_DAY),
+            dataStart.get(Calendar.MINUTE)))
+
+        val dateFrom = builderFrom.toString()
+
+        val builderTo = StringBuilder()
+        builderTo.append(AppUtils.getCurrentDatePlusOne()!!)
+        builderTo.append("-")
+        builderTo.append(String.format(
+            "%02d:%02d",
+            dataStop.get(Calendar.HOUR_OF_DAY),
+            dataStop.get(Calendar.MINUTE)))
+
+        val dateTo = builderTo.toString()
+
         notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
         alarm = AlarmHelper()
         if (!alarm.checkAlarm(this) && notificStatus) {
@@ -302,7 +442,29 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        sqliteHelper.addAll(dateNow, 0, totalIntake)
+        if(sleepMode(dateFrom,dateTo)){
+            binding.bottomBarNotNotify.visibility = VISIBLE
+            binding.bottomBarNotify.visibility = GONE
+            showMessage(getString(R.string.notification_sleep),view,false,
+                AppUtils.Companion.TypeMessage.SLEEP)
+            alarm.cancelAlarm(this)
+            enabled = false
+        }
+        else{
+            if (!alarm.checkAlarm(this) && notificStatus) {
+                binding.bottomBarNotNotify.visibility = GONE
+                binding.bottomBarNotify.visibility = VISIBLE
+                alarm.setAlarm(
+                    this,
+                    sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+                )
+            }
+        }
+
+
+
+        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
 
         updateValues()
 
@@ -318,7 +480,7 @@ class MainActivity : AppCompatActivity() {
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            selectedOption = 50
+            selectedOption = binding.ml50!!.text.toString().toExtractFloat()
             binding.op50ml.background = getDrawable(R.drawable.option_select_bg)
             binding.op100ml.background = getDrawable(outValue.resourceId)
             binding.op150ml.background = getDrawable(outValue.resourceId)
@@ -335,7 +497,7 @@ class MainActivity : AppCompatActivity() {
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            selectedOption = 100
+            selectedOption = binding.ml100!!.text.toString().toExtractFloat()
             binding.op50ml.background = getDrawable(outValue.resourceId)
             binding.op100ml.background = getDrawable(R.drawable.option_select_bg)
             binding.op150ml.background = getDrawable(outValue.resourceId)
@@ -350,7 +512,7 @@ class MainActivity : AppCompatActivity() {
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            selectedOption = 150
+            selectedOption = binding.ml150!!.text.toString().toExtractFloat()
             binding.op50ml.background = getDrawable(outValue.resourceId)
             binding.op100ml.background = getDrawable(outValue.resourceId)
             binding.op150ml.background = getDrawable(R.drawable.option_select_bg)
@@ -365,7 +527,7 @@ class MainActivity : AppCompatActivity() {
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            selectedOption = 200
+            selectedOption = binding.ml200!!.text.toString().toExtractFloat()
             binding.op50ml.background = getDrawable(outValue.resourceId)
             binding.op100ml.background = getDrawable(outValue.resourceId)
             binding.op150ml.background = getDrawable(outValue.resourceId)
@@ -380,7 +542,7 @@ class MainActivity : AppCompatActivity() {
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            selectedOption = 250
+            selectedOption = binding.ml250!!.text.toString().toExtractFloat()
             binding.op50ml.background = getDrawable(outValue.resourceId)
             binding.op100ml.background = getDrawable(outValue.resourceId)
             binding.op150ml.background = getDrawable(outValue.resourceId)
@@ -407,8 +569,8 @@ class MainActivity : AppCompatActivity() {
             alertDialogBuilder.setPositiveButton("OK") { _, _ ->
                 val inputText = userInput.editText!!.text.toString()
                 if (!TextUtils.isEmpty(inputText)) {
-                    binding.tvCustom.text = "$inputText ml"
-                    selectedOption = inputText.toInt()
+                    binding.tvCustom.text = "$inputText $unit"
+                    selectedOption = binding.tvCustom.text.toString().toExtractFloat()
                     setNotificationBadge()
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
@@ -425,14 +587,32 @@ class MainActivity : AppCompatActivity() {
             binding.op250ml.background = getDrawable(outValue.resourceId)
             binding.opCustom.background = getDrawable(R.drawable.option_select_bg)
         }
+        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+            setValueForDrinking()
+        }
 
+
+    }
+
+    private fun sleepMode(dateFrom: String, dateTo: String): Boolean {
+        val dateCheck = AppUtils.getCurrentDate()!!
+        val d1 = dateFrom.split("-")
+        val d2 = dateTo.split("-")
+        val c = dateCheck.split("-")
+
+
+        val from = Date(d1[2].toInt(),(d1[1].toInt() - 1), d1[0].toInt(), (d1[3].split(":"))[0].toInt(), (d1[3].split(":"))[1].toInt())
+        val to = Date(d2[2].toInt(),(d2[1].toInt() - 1), d2[0].toInt(), (d2[3].split(":"))[0].toInt(), (d2[3].split(":"))[1].toInt())
+        val check = Date(c[2].toInt(),(c[1].toInt() - 1), c[0].toInt(), (c[3].split(":"))[0].toInt(), (c[3].split(":"))[1].toInt())
+
+        return check > from && check < to
     }
 
     private fun setNotificationBadge() {
         val notification = binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification()
-        notification.show(selectedOption.toString())
+        notification.show(selectedOption!!.toNumberString())
         val notificationNot = binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification()
-        notificationNot.show(selectedOption.toString())
+        notificationNot.show(selectedOption!!.toNumberString())
     }
 
     private fun whatsnew() {
@@ -487,17 +667,27 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
             }
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
+        setTheme()
+        setBackGround()
+        binding.bottomBarNotify.menu.findItemById(R.id.icon_plus).notification().clear()
+        binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification().clear()
+        val editor = sharedPref.edit()
+        editor.putInt(AppUtils.UNIT_KEY,new_unitInt)
+        editor.apply()
     }
 
 
-    private fun setWaterLevel(inTook: Int, totalIntake: Int) {
+    private fun setWaterLevel(inTook: Float, totalIntake: Float) {
 
         YoYo.with(Techniques.SlideInDown)
             .duration(500)
             .playOn(binding.tvIntook)
-        binding.tvIntook.text = "$inTook"
-        binding.tvTotalIntake.text = "/$totalIntake ml"
-        val progress = ((inTook / totalIntake.toFloat()) * 100).toInt()
+        binding.tvIntook.text = "" + inTook.toNumberString()
+        binding.tvTotalIntake.text = "/"+totalIntake.toNumberString()+ " " + "$unit"
+        val progress = ((inTook / totalIntake) * 100).toInt()
         YoYo.with(Techniques.Pulse)
             .duration(500)
             .playOn(binding.intakeProgress)
@@ -608,27 +798,20 @@ class MainActivity : AppCompatActivity() {
         pm checkRequestAndDispatch 1
     }
 
-    private fun showMessage(message: String, view: View, error:Boolean? = false, type:Int?=null) {
-        val snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
-        val customSnackView: View =
-            when(error){
-                true ->layoutInflater.inflate(R.layout.error_toast_layout, null)
-                else->layoutInflater.inflate(R.layout.info_toast_layout, null)
-            }
-        snackBar.view.setBackgroundColor(Color.TRANSPARENT)
-        val snackbarLayout = snackBar.view as Snackbar.SnackbarLayout
 
-        val text = customSnackView.findViewById<TextView>(R.id.tvMessage)
-        text.text = message
-
-        if(type!=null){
-            val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
-            anim.setAnimation(R.raw.save)
-        }
-
-        snackbarLayout.setPadding(0, 0, 0, 0)
-        snackbarLayout.addView(customSnackView, 0)
-        snackBar.show()
+    private fun setValueForDrinking() {
+        unit = AppUtils.calculateExtensions(new_unitInt)
+        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
+        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
+        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
+        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
+        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
+        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
+        binding.tvTotalIntake!!.text = "/" +totalIntake.toNumberString() + " " + "$unit"
     }
 
     companion object {

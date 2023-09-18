@@ -16,6 +16,8 @@ import rpt.tool.mementobibere.ui.libraries.chart.data.LineData
 import rpt.tool.mementobibere.ui.libraries.chart.data.LineDataSet
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.chart.ChartXValueFormatter
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValueStats
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import kotlin.math.max
@@ -29,10 +31,12 @@ class StatsActivity : AppCompatActivity() {
     private var totalGlasses: Float = 0f
     private lateinit var binding: ActivityStatsBinding
     private var themeInt : Int = 0
+    private var unit : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME,0)
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
         setTheme()
         super.onCreate(savedInstanceState)
         binding = ActivityStatsBinding.inflate(layoutInflater)
@@ -55,7 +59,10 @@ class StatsActivity : AppCompatActivity() {
 
             for (i in 0 until cursor.count) {
                 dateArray.add(cursor.getString(1))
-                val percent = cursor.getInt(2) / cursor.getInt(3).toFloat() * 100
+                val percent = cursor.getFloat(2).toCalculatedValueStats(
+                    AppUtils.extractIntConversion(cursor.getString(4)),unit) /
+                        cursor.getFloat(3).toCalculatedValueStats(
+                            AppUtils.extractIntConversion(cursor.getString(4)),unit) * 100
                 totalPercentage += percent
                 totalGlasses += cursor.getInt(2)
                 entries.add(
@@ -129,6 +136,11 @@ class StatsActivity : AppCompatActivity() {
                 binding.chart.xAxis.valueFormatter = (ChartXValueFormatter(dateArray))
                 binding.chart.data = lineData
                 binding.chart.invalidate()
+                val layoutParams: ConstraintLayout.LayoutParams = binding.textView14.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.bottomToTop = binding.chart.id
+                binding.textView14.layoutParams = layoutParams
+                binding.chart.visibility = VISIBLE
+                binding.noData.visibility = GONE
             }
             else{
                 val layoutParams: ConstraintLayout.LayoutParams = binding.textView14.layoutParams as ConstraintLayout.LayoutParams
@@ -138,29 +150,31 @@ class StatsActivity : AppCompatActivity() {
                 binding.noData.visibility = VISIBLE
             }
 
-            val remaining = sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
-            ) - sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
+            val remaining = sharedPref.getFloat(
+                AppUtils.TOTAL_INTAKE_KEY,
+                0f
+            ) - sqliteHelper.getIntook(AppUtils.getCurrentOnlyDate()!!)
 
             if (remaining > 0) {
-                binding.remainingIntake.text = "$remaining ml"
+                binding.remainingIntake.text = "$remaining " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
             } else {
-                binding.remainingIntake.text = "0 ml"
+                binding.remainingIntake.text = "0 " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
             }
 
-            binding.targetIntake.text = "${sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
+            binding.targetIntake.text = "${sharedPref.getFloat(
+                AppUtils.TOTAL_INTAKE_KEY,
+                0f
             )
-            } ml"
+            } " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
 
-            val percentage = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / sharedPref.getInt(
-                AppUtils.TOTAL_INTAKE,
-                0
+            val percentage = sqliteHelper.getIntook(
+                AppUtils.getCurrentOnlyDate()!!
+            ) * 100 / sharedPref.getFloat(
+                AppUtils.TOTAL_INTAKE_KEY,
+                0f
             )
             binding.waterLevelView.centerTitle = "$percentage%"
-            binding.waterLevelView.progressValue = percentage
+            binding.waterLevelView.progressValue = percentage.toInt()
 
         }
     }
@@ -185,3 +199,5 @@ class StatsActivity : AppCompatActivity() {
         }
     }
 }
+
+

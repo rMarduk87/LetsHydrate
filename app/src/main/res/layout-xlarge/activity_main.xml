@@ -22,21 +22,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ImageContrastCheck" />
 
+
     <ImageView
         android:id="@+id/btnMenu2"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/todo2"
         android:padding="8dp"
         android:src="@drawable/ic_news"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo2" />
-
-
-
+        tools:ignore="ImageContrastCheck" />
 
     <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
         android:id="@+id/bottom_bar_notify"
@@ -70,13 +68,13 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+        android:layout_width="438dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="155dp"
         android:layout_marginTop="16dp"
-        android:text="@string/daily_drink_target"
+        android:text="@string/daily_drink_target_large"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
@@ -93,7 +91,7 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="300dp"
+        app:layout_constraintHeight_max="400dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intakeProgress">
 
@@ -131,8 +129,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/coffee"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -143,6 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/_50_ml"
                         android:textColor="@color/colorBlack" />
                 </LinearLayout>
@@ -172,8 +171,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/juice"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -184,6 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/_100_ml"
                         android:textColor="@color/colorBlack" />
 
@@ -204,8 +204,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/tea"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -216,6 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/_150_ml"
                         android:textColor="@color/colorBlack" />
 
@@ -257,8 +258,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/glass"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -269,6 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/_200_ml"
                         android:textColor="@color/colorBlack" />
 
@@ -289,8 +291,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/wine"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -301,6 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/_250_ml"
                         android:textColor="@color/colorBlack" />
 
@@ -321,8 +324,8 @@
                     android:focusable="true">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         app:lottie_rawRes="@raw/milk"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
@@ -333,6 +336,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textSize="20sp"
                         android:text="@string/custom"
                         android:textColor="@color/colorBlack" />
 
@@ -349,7 +353,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:maxWidth="5dp"
+        android:maxWidth="15dp"
         app:currentProgress="60"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -361,7 +365,7 @@
         app:progressColor="@color/colorWhite"
         app:textColor="@color/colorWhite"
         app:textMargin="5dp"
-        app:textSize="15sp"
+        app:textSize="25sp"
         app:totalProgress="130" />
 
     <TextView
@@ -372,7 +376,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/_2000"
         android:textColor="@color/colorWhite"
-        android:textSize="35sp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -386,7 +390,7 @@
         android:layout_marginBottom="4dp"
         android:text="@string/_3500_ml"
         android:textColor="@color/colorWhite"
-        android:textSize="25sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvIntook"
         app:layout_constraintStart_toEndOf="@+id/tvIntook"
         tools:ignore="TextContrastCheck" />
