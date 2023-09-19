@@ -106,7 +106,7 @@
     <string name="LOADING">Loading...</string>
     <string name="default_progressbar">Default Progressbar:</string>
     <string name="wathsnew">Quoi de neuf</string>
-    <string name="dialog_new_message">\nMettre à jour le menu Informations et paramètres, introduction du document de confidentialité, localisation en espagnol</string>
+    <string name="dialog_new_message">\nAjout d\'une analyse des crashs et des bugs</string>
     <string name="dialog_new_version_message">Quoi de neuf pour la sortie </string>
     <string name="intake_report">Rapport d\'admission</string>
     <string name="info_settings"><![CDATA[INFOS ET PARAMÈTRES]]></string>

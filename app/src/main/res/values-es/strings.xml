@@ -106,7 +106,7 @@
     <string name="LOADING">Cargando…</string>
     <string name="default_progressbar">Barra de progreso predeterminada:</string>
     <string name="wathsnew">Novedad</string>
-    <string name="dialog_new_message">\nActualizar menú de información y configuración, documento de privacidad introducido, localización en español</string>
+    <string name="dialog_new_message">\nSe agregó análisis de fallas y errores.</string>
     <string name="dialog_new_version_message">Novedades para la versión </string>
     <string name="intake_report">Estadísticas de asunción</string>
     <string name="info_settings"><![CDATA[INFORMACIÓN Y AJUSTES]]></string>
