@@ -106,7 +106,7 @@
     <string name="LOADING">Loading...</string>
     <string name="default_progressbar">Default Progressbar:</string>
     <string name="wathsnew">What\'s new</string>
-    <string name="dialog_new_message">\nUpdate Info and Settings Menu,introduced privacy document, localization in Spanish</string>
+    <string name="dialog_new_message">\nAdded crash and bug analysis</string>
     <string name="dialog_new_version_message">What\'s new for the release </string>
     <string name="intake_report">Intake Report</string>
     <string name="info_settings"><![CDATA[INFO & SETTINGS]]></string>

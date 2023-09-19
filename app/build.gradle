@@ -4,6 +4,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -14,8 +16,8 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 24
         targetSdk 33
-        versionCode 3
-        versionName "1.0.1.1"
+        versionCode 5
+        versionName "1 alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -73,6 +75,11 @@ dependencies {
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //DotsIndicator
     implementation("com.tbuonomo:dotsindicator:5.0")
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    //CrashLytics
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
     //Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

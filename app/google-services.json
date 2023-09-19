@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "789325755217",
+    "project_id": "memento-bibere",
+    "storage_bucket": "memento-bibere.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789325755217:android:049d8c23eda9fe18379970",
+        "android_client_info": {
+          "package_name": "rpt.com.mementobibere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtzBBXffUB9rO4kmT6wN2gqkgRf2HhzAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789325755217:android:d62872fb2f19dd5f379970",
+        "android_client_info": {
+          "package_name": "rpt.tool.mementobibere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtzBBXffUB9rO4kmT6wN2gqkgRf2HhzAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

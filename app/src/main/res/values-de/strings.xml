@@ -106,7 +106,7 @@
     <string name="LOADING">Loading...</string>
     <string name="default_progressbar">Default Progressbar:</string>
     <string name="wathsnew">Was ist neu</string>
-    <string name="dialog_new_message">\nMenü Informationen und Einstellungen aktualisieren.\nDatenschutzdokument eingeführt, Lokalisierung auf Spanisch</string>
+    <string name="dialog_new_message">\nAbsturz- und Fehleranalyse hinzugefügt</string>
     <string name="dialog_new_version_message">Was ist neu in der Version </string>
     <string name="intake_report">Aufnahmebericht</string>
     <string name="info_settings"><![CDATA[INFO & EINSTELLUNGEN]]></string>

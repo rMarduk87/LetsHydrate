@@ -106,7 +106,7 @@
     <string name="LOADING">Loading...</string>
     <string name="default_progressbar">Default Progressbar:</string>
     <string name="wathsnew">Novità</string>
-    <string name="dialog_new_message">\nAggiornamento Menu Info e Impostazioni, introdotto documento sulla privacy, localizzazione in spagnolo</string>
+    <string name="dialog_new_message">\nAggiunta analisi di crash e bug</string>
     <string name="dialog_new_version_message">Novità per la versione </string>
     <string name="intake_report">Statistiche di assunzione</string>
     <string name="info_settings"><![CDATA[INFO & IMPOSTAZIONI]]></string>
