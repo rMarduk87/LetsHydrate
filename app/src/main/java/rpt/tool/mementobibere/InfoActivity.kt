@@ -13,7 +13,6 @@ import android.view.View
 import rpt.tool.mementobibere.databinding.ActivityInfoBinding
 import rpt.tool.mementobibere.databinding.PartialInfoBinding
 import rpt.tool.mementobibere.databinding.PartialPrincipalInfoBinding
-import rpt.tool.mementobibere.ui.libraries.alert.dialog.SweetAlertDialog
 import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.AppUtils.Companion.UNIT_KEY
@@ -62,25 +61,6 @@ class InfoActivity : RPTBaseAppCompatActivity() {
         initBottomBars()
 
         val is24h = android.text.format.DateFormat.is24HourFormat(this)
-
-        principal.etSendMail.editText!!.setOnClickListener {
-            var dialogMail = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-            dialogMail
-                .setTitleText(getString(R.string.send_mail))
-                .setContentText(getString(R.string.dialog_mail_message))
-                .setCancelText("No")
-                .setConfirmText("Ok")
-                .showCancelButton(true)
-                .setCancelClickListener { _ -> // reuse previous dialog instance, keep widget user state, reset them if you need
-                    dialogMail.dismiss()
-
-                }
-                .setConfirmClickListener { _ ->
-                    sendMail()
-                }
-                .show()
-        }
-
 
 
         var stringColor = when(themeInt){

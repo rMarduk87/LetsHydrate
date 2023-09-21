@@ -32,7 +32,6 @@ import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import rpt.tool.mementobibere.databinding.ActivityMainBinding
-import rpt.tool.mementobibere.ui.libraries.alert.dialog.SweetAlertDialog
 import rpt.tool.mementobibere.ui.libraries.menu.Menu
 import rpt.tool.mementobibere.ui.libraries.menu.MenuItem
 import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
@@ -468,14 +467,6 @@ class MainActivity : RPTBaseAppCompatActivity() {
 
         updateValues()
 
-        binding.btnMenu.setOnClickListener {
-            invite()
-        }
-
-        binding.btnMenu2.setOnClickListener {
-            whatsnew()
-        }
-
         binding.op50ml.setOnClickListener {
             if (snackbar != null) {
                 snackbar?.dismiss()
@@ -613,15 +604,6 @@ class MainActivity : RPTBaseAppCompatActivity() {
         notification.show(selectedOption!!.toNumberString())
         val notificationNot = binding.bottomBarNotNotify.menu.findItemById(R.id.icon_plus).notification()
         notificationNot.show(selectedOption!!.toNumberString())
-    }
-
-    private fun whatsnew() {
-        SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-            .setTitleText(getString(R.string.wathsnew))
-            .setContentText(getString(R.string.dialog_new_version_message)
-                    +" " + BuildConfig.VERSION_NAME + getString(R.string.dialog_new_message))
-            .setConfirmText("Ok")
-            .show()
     }
 
     private fun invite() {
