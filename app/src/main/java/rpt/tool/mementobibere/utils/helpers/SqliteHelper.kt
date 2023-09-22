@@ -36,7 +36,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion && newVersion == 2){
             db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_UNIT VARCHAR(250) DEFAULT \"ml\"")
-            db!!.execSQL("UPDATE TABLE $TABLE_STATS set $KEY_UNIT = \"ml\"")
+            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
         }
         else{
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_STATS")
