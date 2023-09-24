@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import java.util.*
 
 class NotificationHelper(val ctx: Context) {
@@ -101,7 +102,18 @@ class NotificationHelper(val ctx: Context) {
 
         val startTimestamp = prefs.getLong(AppUtils.START_TIME_KEY, prefs.getLong(AppUtils.WAKEUP_TIME_KEY,0))
         val stopTimestamp = prefs.getLong(AppUtils.STOP_TIME_KEY, prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0))
-        val totalIntake = prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        var totalIntake = 0f
+
+        totalIntake = try {
+            prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }catch (ex:Exception){
+            var totalIntakeOld = prefs.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = prefs.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }
 
         if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
             return false
