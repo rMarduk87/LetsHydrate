@@ -25,8 +25,8 @@ import java.util.*
 class NotificationHelper(val ctx: Context) {
     private var notificationManager: NotificationManager? = null
 
-    private val CHANNEL_ONE_ID = "rpt.tools.mementobibere.CHANNELONE"
-    private val CHANNEL_ONE_NAME = "Channel One"
+    private val CHANNEL_ONE_ID = "Default"
+    private val CHANNEL_ONE_NAME = "Default"
 
 
     private fun createChannels() {
@@ -77,7 +77,7 @@ class NotificationHelper(val ctx: Context) {
                     R.mipmap.ic_launcher
                 )
             )
-            .setSmallIcon(R.drawable.ic_small_logo)
+            .setSmallIcon(R.drawable.ic_small_icon)
 
         notification.setShowWhen(true)
 
@@ -89,7 +89,7 @@ class NotificationHelper(val ctx: Context) {
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val contentIntent =
-            PendingIntent.getActivity(ctx, 99, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(ctx, 99, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         notification.setContentIntent(contentIntent)
 
@@ -100,12 +100,13 @@ class NotificationHelper(val ctx: Context) {
         val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         val sqliteHelper = SqliteHelper(ctx)
 
-        val startTimestamp = prefs.getLong(AppUtils.START_TIME_KEY, prefs.getLong(AppUtils.WAKEUP_TIME_KEY,0))
-        val stopTimestamp = prefs.getLong(AppUtils.STOP_TIME_KEY, prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0))
+        val startTimestamp = prefs.getLong(AppUtils.WAKEUP_TIME_KEY, 0)
+        val stopTimestamp = prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0)
         var totalIntake = 0f
 
         totalIntake = try {
             prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(prefs.getInt(AppUtils.UNIT_KEY,0),prefs.getInt(AppUtils.UNIT_NEW_KEY,0))
         }catch (ex:Exception){
             var totalIntakeOld = prefs.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
             var editor = prefs.edit()
@@ -113,12 +114,13 @@ class NotificationHelper(val ctx: Context) {
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
             prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(prefs.getInt(AppUtils.UNIT_KEY,0),prefs.getInt(AppUtils.UNIT_NEW_KEY,0))
         }
 
         if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
             return false
 
-        val percent = sqliteHelper.getIntook(AppUtils.getCurrentOnlyDate()!!) * 100 / totalIntake
+        val percent = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / totalIntake
 
         val now = Calendar.getInstance().time
 
@@ -140,7 +142,6 @@ class NotificationHelper(val ctx: Context) {
         )
         return notify
     }
-
 
     private fun compareTimes(currentTime: Date, timeToRun: Date): Long {
         val currentCal = Calendar.getInstance()

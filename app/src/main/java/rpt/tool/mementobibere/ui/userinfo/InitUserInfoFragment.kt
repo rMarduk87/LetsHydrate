@@ -1,27 +1,29 @@
 package rpt.tool.mementobibere.ui.userinfo
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.InitUserInfoFragmentBinding
-import rpt.tool.mementobibere.ui.libraries.menu.MenuItemDescriptor
 import rpt.tool.mementobibere.utils.AppUtils
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.Calendar
+import java.util.Locale
 
+@Suppress("DEPRECATION")
 class InitUserInfoFragment:
     BaseFragment<InitUserInfoFragmentBinding>(InitUserInfoFragmentBinding::inflate) {
 
@@ -31,15 +33,14 @@ class InitUserInfoFragment:
     private var sleepingTime: Long = 0
     private lateinit var sharedPref: SharedPreferences
     private var unit : Int = 0
+    private var weightUnit : Int = 0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val is24h = android.text.format.DateFormat.is24HourFormat(requireContext())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
 
@@ -50,9 +51,9 @@ class InitUserInfoFragment:
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 requireContext(),
-                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -73,9 +74,9 @@ class InitUserInfoFragment:
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
-            val mTimePicker: TimePickerDialog = TimePickerDialog(
+            val mTimePicker = TimePickerDialog(
                 requireContext(),
-                TimePickerDialog.OnTimeSetListener { _, selectedHour, selectedMinute ->
+                { _, selectedHour, selectedMinute ->
 
                     val time = Calendar.getInstance()
                     time.set(Calendar.HOUR_OF_DAY, selectedHour)
@@ -103,7 +104,7 @@ class InitUserInfoFragment:
             when {
                 TextUtils.isEmpty(weight) -> showError(getString(R.string.please_input_your_weight),it)
 
-                weight.toInt() > 200 || weight.toInt() < 20 ->
+                weight.toInt() > AppUtils.getMaxWeight(weightUnit) || weight.toInt() < AppUtils.getMinWeight(weightUnit) ->
                     showError(getString(R.string.please_input_a_valid_weight), it)
 
                 TextUtils.isEmpty(workTime) -> showError(
@@ -114,6 +115,8 @@ class InitUserInfoFragment:
                 workTime.toInt() > 500 || workTime.toInt() < 0 ->
                     showError(getString(R.string.please_input_a_valid_workout_time), it)
 
+                !AppUtils.IsValidDate(binding.etSleepTime.editText!!.text.toString(),binding.etWakeUpTime.editText!!.text.toString()) -> showError(getString(R.string.please_input_a_valid_rest_time), it)
+
                 else -> {
 
                     val editor = sharedPref.edit()
@@ -122,8 +125,9 @@ class InitUserInfoFragment:
                     editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
                     editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
                     editor.putBoolean(AppUtils.FIRST_RUN_KEY, false)
+                    editor.putBoolean(AppUtils.SET_WEIGHT_UNIT,true)
 
-                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt())
+                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt(),weightUnit)
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
                     editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
@@ -140,6 +144,7 @@ class InitUserInfoFragment:
 
     private fun initBottomBars() {
         val menu = binding.unitSystemBottomBar.menu
+        val menu2 = binding.weightSystemBottomBar.menu
 
 
         for (i in AppUtils.listIdsInfoSystem.indices) {
@@ -154,6 +159,21 @@ class InitUserInfoFragment:
                     .build()
             )
         }
+
+        for (i in AppUtils.listIdsWeightSystem.indices) {
+            menu2.add(
+                MenuItemDescriptor.Builder(
+                    requireContext(),
+                    AppUtils.listIdsWeightSystem[i],
+                    AppUtils.listWeightSystem[i],
+                    AppUtils.listStringWeightSystem[i],
+                    Color.parseColor("#41B279")
+                )
+                    .build()
+            )
+        }
+
+        setWeightUnit()
 
         binding.unitSystemBottomBar.onItemSelectedListener = { _, i, _ ->
             when(i.id) {
@@ -179,6 +199,16 @@ class InitUserInfoFragment:
             }
         }
 
+        binding.weightSystemBottomBar.onItemSelectedListener = { _, i, _ ->
+            when(i.id) {
+                R.id.icon_kg -> weightUnit = 0
+                R.id.icon_lbl -> weightUnit = 1
+            }
+
+            setWeightUnit()
+
+        }
+
     }
 
     private fun setSystemUnit() {
@@ -192,6 +222,13 @@ class InitUserInfoFragment:
         editor.apply()
     }
 
+    private fun setWeightUnit() {
+        val editor = sharedPref.edit()
+        editor.putInt(AppUtils.WEIGHT_UNIT_KEY,weightUnit)
+        editor.apply()
+    }
+
+    @SuppressLint("InflateParams")
     private fun showError(error: String, view: View) {
         val snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
         val customSnackView: View =

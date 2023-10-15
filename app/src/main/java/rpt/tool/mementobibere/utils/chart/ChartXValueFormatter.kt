@@ -1,9 +1,9 @@
 package rpt.tool.mementobibere.utils.chart
 
-import rpt.tool.mementobibere.ui.libraries.chart.components.AxisBase
-import rpt.tool.mementobibere.ui.libraries.chart.formatter.IAxisValueFormatter
+import rpt.tool.mementobibere.libraries.chart.components.AxisBase
+import rpt.tool.mementobibere.libraries.chart.formatter.IAxisValueFormatter
 
-class ChartXValueFormatter(val dateArray: ArrayList<String>) :
+class ChartXValueFormatter(private val dateArray: ArrayList<String>) :
     IAxisValueFormatter {
 
 

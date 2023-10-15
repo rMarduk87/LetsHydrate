@@ -6,15 +6,17 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
-import rpt.tool.mementobibere.utils.recievers.BootReceiver
-import rpt.tool.mementobibere.utils.recievers.NotifierReceiver
+import rpt.tool.mementobibere.utils.AppUtils.Companion.notificationId
 import java.util.concurrent.TimeUnit
+import rpt.tool.mementobibere.utils.notifications.NotifierReceiver
+import rpt.tool.mementobibere.utils.notifications.BootReceiver
 
 class AlarmHelper {
     private var alarmManager: AlarmManager? = null
 
-    private val ACTION_BD_NOTIFICATION = "rpt.tools.mementobibere.NOTIFICATION"
+    private val ACTION_BD_NOTIFICATION = "rpt.tool.mementobibere.NOTIFICATION"
 
     fun setAlarm(context: Context, notificationFrequency: Long) {
         val notificationFrequencyMs = TimeUnit.MINUTES.toMillis(notificationFrequency)
@@ -24,11 +26,18 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
+        val intFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        }
+        else{
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
         val pendingAlarmIntent = PendingIntent.getBroadcast(
             context,
-            0,
+            notificationId,
             alarmIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            intFlags
         )
 
         Log.i("AlarmHelper", "Setting Alarm Interval to: $notificationFrequency minutes")
@@ -40,7 +49,7 @@ class AlarmHelper {
             pendingAlarmIntent
         )
 
-        
+        /* Restart if rebooted */
         val receiver = ComponentName(context, BootReceiver::class.java)
         context.packageManager.setComponentEnabledSetting(
             receiver,
@@ -55,15 +64,22 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
+        val intFlags = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            0 or PendingIntent.FLAG_IMMUTABLE
+        }
+        else{
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
         val pendingAlarmIntent = PendingIntent.getBroadcast(
             context,
-            0,
+            notificationId,
             alarmIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            intFlags
         )
         alarmManager!!.cancel(pendingAlarmIntent)
 
-        
+        /* Alarm won't start again if device is rebooted */
         val receiver = ComponentName(context, BootReceiver::class.java)
         val pm = context.packageManager
         pm.setComponentEnabledSetting(
@@ -79,10 +95,16 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
-        return PendingIntent.getBroadcast(
-            context, 0,
-            alarmIntent,
+        val intFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_NO_CREATE
+        }
+
+        return PendingIntent.getBroadcast(
+            context, notificationId,
+            alarmIntent,
+            intFlags
         ) != null
     }
 }

@@ -38,8 +38,8 @@ fun Float.toCalculatedValueStats(current: Int, newValue: Int): Float {
     else{
         val mlStep = this.toCalculatedValue(current,0)
         mlStep.toCalculatedValue(0,newValue)
+        return mlStep
     }
-    return this
 }
 
 fun Float.toCalculatedValue(current: Int, newValue: Int) : Float{
@@ -61,12 +61,27 @@ fun Float.toCalculatedValue(current: Int, newValue: Int) : Float{
     if(current == 2 && newValue == 0) {
         return AppUtils.ozUSToMl(this)
     }
-    return return this
+    return this
+}
+
+
+fun Int.toPrincipalUnit(weightUnit: Int): Int {
+    if(weightUnit == 1) {
+        return AppUtils.lblToKg(this)
+    }
+    return this
+}
+
+fun Int.toCalculateWeight(weightUnit: Int): Int {
+    if(weightUnit == 1) {
+        return AppUtils.kgToLbl(this)
+    }
+    return this
 }
 
 fun Float.toNumberString(): String {
     var pattern = "#.##"
-    var length = this.length()
+    val length = this.length()
     if(length == 1){
         pattern = "#"
     }

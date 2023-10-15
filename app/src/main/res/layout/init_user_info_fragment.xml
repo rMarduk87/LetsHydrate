@@ -36,6 +36,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnContinue" />
 
+    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+        android:id="@+id/weight_system_bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_margin="15dp"
+        app:exb_backgroundCornerRadius="8dp"
+        app:exb_backgroundColor="@color/white"
+        app:exb_itemInactiveColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -156,6 +169,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/unit_system_bottom_bar" />
 
+
         <TextView
             android:id="@+id/systemUnitTV"
             android:layout_width="wrap_content"
@@ -169,13 +183,12 @@
             tools:ignore="TextContrastCheck"
             android:text="@string/type_unit" />
 
-        <rpt.tool.mementobibere.ui.libraries.menu.ExpandableBottomBar
+        <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
             android:id="@+id/unit_system_bottom_bar"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_margin="15dp"
-            android:theme="@style/BottomBarInfo"
-            app:exb_backgroundCornerRadius="15dp"
+            app:exb_backgroundCornerRadius="8dp"
             app:exb_backgroundColor="@color/white"
             app:exb_itemInactiveColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"

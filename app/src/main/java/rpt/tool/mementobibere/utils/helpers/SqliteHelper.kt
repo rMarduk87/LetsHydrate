@@ -13,30 +13,30 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private val DATABASE_VERSION = 2
-        private val DATABASE_NAME = "RptBibere"
-        private val TABLE_STATS = "stats"
-        private val KEY_ID = "id"
-        private val KEY_DATE = "date"
-        private val KEY_INTOOK = "intook"
-        private val KEY_TOTAL_INTAKE = "totalintake"
-        private val KEY_UNIT = "unit"
+        private const val DATABASE_VERSION = 2
+        private const val DATABASE_NAME = "RptBibere"
+        private const val TABLE_STATS = "stats"
+        private const val KEY_ID = "id"
+        private const val KEY_DATE = "date"
+        private const val KEY_INTOOK = "intook"
+        private const val KEY_TOTAL_INTAKE = "totalintake"
+        private const val KEY_UNIT = "unit"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
 
-        val CREATE_STATS_TABLE = ("CREATE TABLE " + TABLE_STATS + "("
+        val createStatTable = ("CREATE TABLE " + TABLE_STATS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE,"
                 + KEY_INTOOK + " INT," + KEY_TOTAL_INTAKE + " INT," + KEY_UNIT +
                 " VARCHAR(200) DEFAULT \"ml\""+")")
-        db?.execSQL(CREATE_STATS_TABLE)
+        db?.execSQL(createStatTable)
 
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion && newVersion == 2){
             db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_UNIT VARCHAR(250) DEFAULT \"ml\"")
-            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
+            db.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
         }
         else{
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_STATS")
@@ -94,7 +94,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return response
     }
 
-    fun checkExistance(date: String): Int {
+    private fun checkExistance(date: String): Int {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
         db.rawQuery(selectQuery, arrayOf(date)).use {
@@ -119,7 +119,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     fun updateTotalIntake(date: String, totalintake: Float, unit: String): Int {
-        val intook = getIntook(date)
+        getIntook(date)
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(KEY_TOTAL_INTAKE, totalintake)
