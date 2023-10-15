@@ -54,8 +54,11 @@
         <item name="android:background">@drawable/textinput_bg</item>
     </style>
 
-    <style name="BottomBarInfo">
-        <item name="android:background">@drawable/textinput_bg</item>
+    <style name="TextInputLayoutAppearanceD" parent="Widget.Design.TextInputLayout">
+        <!-- reference our hint & error styles -->
+        <item name="hintTextAppearance">@style/HintText</item>
+        <item name="errorTextAppearance">@style/ErrorText</item>
+        <item name="android:background">@drawable/textinput_bg_dark</item>
     </style>
 
     <style name="DividerHorizontal">
@@ -67,6 +70,12 @@
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/dividerColor</item>
+    </style>
+
+    <style name="DividerHorizontalD">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/dividerColorDark</item>
     </style>
 
     <style name="ExpandableBottomBar">
@@ -102,4 +111,5 @@
         <item name="android:paddingRight">21dp</item>
         <item name="android:textColor">@color/button_text_color</item>
     </style>
+
 </resources>

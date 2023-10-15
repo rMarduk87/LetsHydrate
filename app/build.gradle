@@ -10,14 +10,14 @@ plugins {
 
 android {
     namespace 'rpt.tool.mementobibere'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "rpt.tool.mementobibere"
-        minSdk 24
+        minSdk 26
         targetSdk 33
-        versionCode 8
-        versionName "1 delta"
+        versionCode 9
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,7 +55,7 @@ android {
 dependencies {
 
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.preference:preference-ktx:1.2.1'
@@ -80,6 +80,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     //CrashLytics
     implementation("com.google.firebase:firebase-crashlytics-ktx")
+    //BottomBar
+    implementation 'com.github.st235:expandablebottombar:1.5.3'
+    //InApp Update
+    implementation 'com.google.android.play:app-update:2.1.0'
+    //JodaTime
+    implementation 'joda-time:joda-time:2.12.1'
     //Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

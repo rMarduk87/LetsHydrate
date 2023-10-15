@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="icon_bell" type="id" />
-    <item name="icon_plus" type="id" />
     <item name="icon_edit" type="id" />
     <item name="icon_other" type="id" />
     <item name="icon_stats" type="id" />
@@ -15,4 +14,7 @@
     <item name="icon_oz_uk" type="id"/>
     <item name="icon_oz_us" type="id"/>
     <item name="icon_ml" type="id"/>
+
+    <item name="icon_kg" type="id"/>
+    <item name="icon_lbl" type="id"/>
 </resources>

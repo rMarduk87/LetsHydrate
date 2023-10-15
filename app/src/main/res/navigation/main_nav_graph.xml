@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/DrinkFragment">
+
+    <fragment
+        android:id="@+id/DrinkFragment"
+        android:name="rpt.tool.mementobibere.ui.drink.DrinkFragment"
+        android:label="@string/drink_fragment_label"
+        tools:layout="@layout/drink_fragment">
+        <action
+            android:id="@+id/action_drinkFragment_to_editInfoBottomSheetFragment"
+            app:destination="@id/editInfoBottomSheetFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_selectWeightBottomSheetFragment"
+            app:destination="@id/selectWeightBottomSheetFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_infoFragment"
+            app:destination="@id/applicationInfoFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/editInfoBottomSheetFragment"
+        android:name="rpt.tool.mementobibere.ui.userinfo.EditInfoBottomSheetFragment"
+        android:label="EditInfoBottomSheetFragment" />
+    <dialog
+        android:id="@+id/selectWeightBottomSheetFragment"
+        android:name="rpt.tool.mementobibere.ui.weight.SelectWeightBottomSheetFragment"
+        android:label="SelectWeightBottomSheetFragment" />
+    <fragment
+        android:id="@+id/applicationInfoFragment"
+        android:name="rpt.tool.mementobibere.ui.info.ApplicationInfoFragment"
+        android:label="@string/info_fragment_label"
+        tools:layout="@layout/application_info_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.StatisticsFragment"
+        android:label="@string/stats_fragment_label"
+        tools:layout="@layout/stats_fragment">
+    </fragment>
+
+</navigation>

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package rpt.tool.mementobibere
 
 import android.content.Intent
@@ -24,9 +26,7 @@ class WalkThroughActivity : AppCompatActivity() {
         binding = ActivityWalkThroughBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         viewPagerAdapter = WalkThroughAdapter(supportFragmentManager)
         binding.walkThroughPager.adapter = viewPagerAdapter
