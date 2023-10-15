@@ -25,7 +25,7 @@
     <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
         android:id="@+id/bottom_bar_not_notify"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_margin="20dp"
         app:exb_backgroundCornerRadius="8dp"
         app:exb_backgroundColor="@color/white"
