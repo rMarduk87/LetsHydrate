@@ -11,13 +11,6 @@
 
     <include
         android:background="@color/colorSecondaryDark"
-        android:id="@+id/partial"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/partial_info" />
-
-    <include
-        android:background="@color/colorSecondaryDark"
         android:id="@+id/principal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

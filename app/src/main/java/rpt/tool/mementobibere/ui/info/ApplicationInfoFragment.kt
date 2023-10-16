@@ -7,18 +7,12 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.View
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
-import androidx.core.os.BuildCompat
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.ApplicationInfoFragmentBinding
-import rpt.tool.mementobibere.databinding.PartialInfoBinding
 import rpt.tool.mementobibere.databinding.PartialPrincipalInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
@@ -31,7 +25,6 @@ class ApplicationInfoFragment:
     private var inTook: Float = 0f
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var principal : PartialPrincipalInfoBinding
-    private lateinit var partial : PartialInfoBinding
     private lateinit var sharedPref: SharedPreferences
     private var themeInt : Int = 0
     private var unit : Int = 0
@@ -44,11 +37,8 @@ class ApplicationInfoFragment:
         themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
         super.onViewCreated(view, savedInstanceState)
         principal = PartialPrincipalInfoBinding.bind(binding.root)
-        partial = PartialInfoBinding.bind(binding.root)
-        val htmlLegacy =
-            getString(R.string.policy_val).replace("\\\'","'")
-        val mimeType = "text/html"
-        val encoding = "UTF-8"
+        val htmlLegacy = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
+
 
         stringColor = when(themeInt){
             1->"#41B279"
@@ -65,17 +55,8 @@ class ApplicationInfoFragment:
 
 
         principal.etPrivacy.editText!!.setOnClickListener {
-            binding.principal.layoutPrincipal.visibility = View.GONE
-            binding.partial.layoutPartial.visibility = View.VISIBLE
-
-
-            binding.partial.web.loadDataWithBaseURL("", htmlLegacy, mimeType, encoding, "")
-            binding.partial.web.setBackgroundColor(Color.parseColor(stringColor))
-        }
-
-        binding.partial.btnBack.setOnClickListener {
-            binding.principal.layoutPrincipal.visibility = View.VISIBLE
-            binding.partial.layoutPartial.visibility = View.GONE
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(htmlLegacy))
+            startActivity(browserIntent)
         }
 
         binding.principal.etNotificationText.editText!!.setText(
@@ -149,7 +130,6 @@ class ApplicationInfoFragment:
         binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.partial.title.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.notificationBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
         binding.principal.unitSystemBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
         binding.principal.darkThemeBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
@@ -181,7 +161,6 @@ class ApplicationInfoFragment:
         binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.partial.title.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.notificationBottomBar.setBackgroundColorRes(R.color.colorWhite)
         binding.principal.unitSystemBottomBar.setBackgroundColorRes(R.color.colorWhite)
         binding.principal.darkThemeBottomBar.setBackgroundColorRes(R.color.colorWhite)
@@ -208,7 +187,6 @@ class ApplicationInfoFragment:
 
     private fun setBackgroundColor(color: Int) {
         binding.principal.layoutPrincipal.setBackgroundColor(color)
-        binding.partial.layoutPartial.setBackgroundColor(color)
     }
 
     private fun initBottomBars() {
