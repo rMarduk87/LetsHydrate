@@ -1,4 +1,4 @@
-# MementoBibere
+# Idratiamoci!!
 
 <img width="128" height="128" alt="store" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/79fa6d8a-3913-41ed-8486-b0c3166ed6b5">
 
@@ -7,13 +7,12 @@ Memento Bibere is an android app to remind you to drink water and track your wat
 
 ## ScreenShots
 
-
-<img width="344" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/30bf694d-d83f-4271-9dff-5e5e0413c13c"> 
-<img width="355" alt="2" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/d7d0a392-b047-4e17-8295-c358e6e0bb83">
-<img width="359" alt="3" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/bb8bf2ae-ae1e-4a14-ba02-6651b029bb6e">
-<img width="344" alt="4" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/65aaa0d1-3280-43dc-883f-a97523e7af19"> 
-<img width="359" alt="5" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/116ab9a8-a380-4349-8a3a-88a65e39bac1">
-<img width="361" alt="6" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/d73d34b3-7fbc-4414-86ce-d9c8b3f80a8a">
+<img width="344" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/722596d1-f978-4684-815e-e2ac4c5bebd5">
+<img width="360" alt="2" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/b5b11df3-3939-49c4-ab85-386e31da5ca8">
+<img width="360" alt="3" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/edc2e9af-5a9d-48fa-bad9-c73593703fc5">
+<img width="360" alt="4" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/8315e6e7-4080-4530-98a4-84eefc50eec9">
+<img width="360" alt="5" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/a986f941-fd3e-450e-b53f-86fd2a7cebaa">
+<img width="359" alt="6" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/46f471f5-c5ab-4643-b619-1ee66a1f39e9">
 
 
 # Contributing
