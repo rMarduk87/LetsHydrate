@@ -112,4 +112,33 @@
         <item name="android:textColor">@color/button_text_color</item>
     </style>
 
+    <style name="TableHeader" parent="Widget.AppCompat.TextView">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ItemCardView">
+        <item name="android:layout_marginVertical">@dimen/recycler_view_margin_vertical</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:elevation">0dp</item>
+        <item name="contentPadding">@dimen/recycler_view_item_padding</item>
+    </style>
+
+    <style name="TableFieldTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="TableFieldImageView">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
 </resources>

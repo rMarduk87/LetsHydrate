@@ -17,4 +17,8 @@
 
     <item name="icon_kg" type="id"/>
     <item name="icon_lbl" type="id"/>
+
+    <item name="icon_all" type="id"/>
+    <item name="icon_intook" type="id"/>
+    <item name="icon_reach" type="id"/>
 </resources>

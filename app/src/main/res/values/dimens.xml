@@ -6,4 +6,7 @@
     <dimen name="alert_width">290dp</dimen>
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
+    <dimen name="recycler_view_item_padding">16dp</dimen>
+    <dimen name="recycler_view_margin_vertical">4dp</dimen>
+    <dimen name="recycler_view_item_icon_size">64dp</dimen>
 </resources>

@@ -69,8 +69,8 @@ class NotificationHelper(val ctx: Context) {
         view.setTextViewText(R.id.title,title)
         view.setTextViewText(R.id.text, body)
         val notification = NotificationCompat.Builder(ctx.applicationContext, CHANNEL_ONE_ID)
-            .setCustomContentView(view)
-            .setAutoCancel(true)
+            .setContentTitle(title)
+            .setContentText(body)
             .setLargeIcon(
                 BitmapFactory.decodeResource(
                     ctx.resources,
@@ -78,12 +78,11 @@ class NotificationHelper(val ctx: Context) {
                 )
             )
             .setSmallIcon(R.drawable.ic_small_icon)
+            .setAutoCancel(true)
 
         notification.setShowWhen(true)
 
         notification.setSound(Uri.parse(notificationsTone))
-
-        notification.setContent(view)
 
         val notificationIntent = Intent(ctx, MainActivity::class.java)
 

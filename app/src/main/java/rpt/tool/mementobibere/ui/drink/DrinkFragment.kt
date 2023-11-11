@@ -1,12 +1,12 @@
 package rpt.tool.mementobibere.ui.drink
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -16,7 +16,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +28,9 @@ import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
+import rpt.tool.mementobibere.StatsBaseActivity
 import rpt.tool.mementobibere.WalkThroughActivity
 import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
@@ -37,10 +38,12 @@ import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.extensions.toNumberString
+import rpt.tool.mementobibere.utils.extensions.toStringHour
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
+import java.util.Date
 
 
 class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::inflate) {
@@ -67,6 +70,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private var value_150: Float = 150f
     private var value_200: Float = 200f
     private var value_250: Float = 250f
+    private var btnSelected: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
@@ -96,8 +100,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
                 .toCalculatedValue(current_unitInt,new_unitInt)
         }
-
-
         if (sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true)) {
             startActivity(Intent(requireContext(), WalkThroughActivity::class.java))
         } else if (totalIntake <= 0) {
@@ -202,8 +204,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
             edit.putString(AppUtils.UNIT_STRING,unit)
             edit.apply()
-            safeNavController?.safeNavigate(
-                DrinkFragmentDirections.actionDrinkFragmentToStatsFragment())
+            startActivity(Intent(requireActivity(), StatsBaseActivity::class.java))
 
         }, TIME)
 
@@ -232,11 +233,12 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     setWaterLevel(inTook, totalIntake)
                     showMessage(getString(R.string.your_water_intake_was_saved),viewWindow,false,
                         AppUtils.Companion.TypeMessage.SAVE)
+                    sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
+                    addLastIntook(btnSelected!!.toFloat())
                 }
             } else {
                 showMessage(getString(R.string.you_already_achieved_the_goal), viewWindow)
             }
-            selectedOption = null
             binding.tvCustom.text = "Custom"
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -249,12 +251,13 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val mNotificationManager : NotificationManager = requireActivity()
                 .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
             mNotificationManager.cancelAll()
-        } else {
-            YoYo.with(Techniques.Shake)
-                .duration(700)
-                .playOn(binding.cardView)
-            showMessage(getString(R.string.please_select_an_option),viewWindow,true)
         }
+    }
+
+    private fun addLastIntook(toFloat: Float) {
+        var edit = sharedPref.edit()
+        edit.putFloat(AppUtils.LAST_INTOOK_KEY,toFloat)
+        edit.apply()
     }
 
     private fun goToBottomEdit() {
@@ -390,6 +393,21 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             edit.apply()
         }
 
+        totalIntake = try {
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
+        }catch (ex:Exception){
+            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = sharedPref.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
+        }
+
+        setValueForDrinking()
+
         outValue = TypedValue()
         requireContext().applicationContext.theme.resolveAttribute(
             android.R.attr.selectableItemBackground,
@@ -399,6 +417,12 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         if(!sharedPref.getBoolean(AppUtils.SET_WEIGHT_UNIT, false)){
             safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
+        }
+
+        if(!AppUtils.isValidDate(
+                Date(sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY,0L)).toStringHour(),
+                Date(sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY,0L)).toStringHour())){
+            safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToAdjustHourBottomSheetFragment())
         }
 
         notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
@@ -431,6 +455,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
+            btnSelected = 0
             selectedOption = binding.ml50!!.text.toString().toExtractFloat()
             binding.op50ml.background = requireContext().getDrawable(R.drawable.option_select_bg)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -445,6 +470,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
+            btnSelected = 1
             selectedOption = binding.ml100!!.text.toString().toExtractFloat()
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(R.drawable.option_select_bg)
@@ -459,6 +485,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
+            btnSelected = 2
             selectedOption = binding.ml150!!.text.toString().toExtractFloat()
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -473,6 +500,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
+            btnSelected = 3
             selectedOption = binding.ml200!!.text.toString().toExtractFloat()
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -487,6 +515,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
+            btnSelected = 4
             selectedOption = binding.ml250!!.text.toString().toExtractFloat()
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -516,6 +545,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 if (!TextUtils.isEmpty(inputText)) {
                     binding.tvCustom.text = "$inputText $unit"
                     selectedOption = binding.tvCustom.text.toString().toExtractFloat()
+                    btnSelected = 5
                     addDrinkedWater()
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
@@ -537,6 +567,59 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
 
 
+        binding.btnUndo.setOnClickListener {
+            if (snackbar != null) {
+                snackbar?.dismiss()
+            }
+            undoLastDailyIntook()
+        }
+
+        binding.btnRedo.setOnClickListener {
+            restoreLastDailyIntook()
+        }
+
+        binding.btnRefresh.setOnClickListener {
+            resetDailyIntook()
+        }
+    }
+
+    private fun restoreLastDailyIntook() {
+        var totalIntook = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
+        if(selectedOption != null){
+            sqliteHelper.resetIntook(AppUtils.getCurrentDate()!!)
+            sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit)
+            sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
+            updateValues()
+            addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
+        }
+    }
+
+    private fun undoLastDailyIntook() {
+        var totalIntook = sqliteHelper.getIntook(dateNow)
+        if(selectedOption != null) {
+            sqliteHelper.resetIntook(dateNow)
+            sqliteHelper.addIntook(
+                AppUtils.getCurrentDate()!!,
+                (totalIntook - selectedOption!!),
+                unit
+            )
+            addLastIntook(-1f)
+            sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), -1)
+            updateValues()
+            sqliteHelper.removeReachedGoal(dateNow)
+        }
+    }
+
+    private fun resetDailyIntook() {
+        var totalIntook = sqliteHelper.getIntook(dateNow)
+        if(totalIntook > 0){
+            sqliteHelper.resetIntook(dateNow)
+            updateValues()
+            selectedOption = null
+            sqliteHelper.resetIntookCounter(dateNow)
+            sqliteHelper.removeReachedGoal(dateNow)
+            addLastIntook(-1f)
+        }
     }
 
     override fun onResume() {
@@ -568,6 +651,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         binding.intakeProgress.currentProgress = progress
         if ((inTook * 100 / totalIntake) > 140) {
             showMessage(getString(R.string.you_achieved_the_goal),binding.mainActivityParent)
+            sqliteHelper.addReachedGoal(dateNow,inTook,unit)
         }
     }
 
@@ -587,7 +671,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     companion object {
-
         const val TIME: Long = 650
     }
 
@@ -620,12 +703,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
     }
 
-    fun refreshAlarm(notify: Boolean){
+    private fun refreshAlarm(notify: Boolean){
         var alarm = AlarmHelper()
         if(notify){
             binding.bottomBarNotNotify.visibility = View.GONE
             binding.bottomBarNotify.visibility = View.VISIBLE
-            Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
             alarm.setAlarm(
                 requireContext(),
                 sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
@@ -633,9 +715,29 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         else{
             binding.bottomBarNotNotify.visibility = View.VISIBLE
             binding.bottomBarNotify.visibility = View.GONE
-            Snackbar.make(viewWindow, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
             alarm.cancelAlarm(requireContext())
+            val activity: Activity? = activity
+            if (activity != null && activity is MainActivity) {
+                activity.initPermissions()
+            }
+        }
+    }
+
+
+    fun updateIntake() {
+        totalIntake = try {
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
+        }catch (ex:Exception){
+            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = sharedPref.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+                .toCalculatedValue(current_unitInt,new_unitInt)
         }
 
+        setValueForDrinking()
     }
 }
