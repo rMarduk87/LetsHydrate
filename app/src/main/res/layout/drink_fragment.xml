@@ -12,7 +12,7 @@
         android:id="@+id/bottom_bar_notify"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         app:exb_backgroundCornerRadius="8dp"
         app:exb_backgroundColor="@color/colorWhite"
         app:exb_itemInactiveColor="@color/black"
@@ -40,15 +40,104 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/daily_drink_target"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/intakeProgress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnUndo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_undo"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toStartOf="@+id/btnRefresh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intakeProgress" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnRedo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_redo"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnRefresh"
+        app:layout_constraintTop_toBottomOf="@+id/intakeProgress" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intakeProgress"
+        app:srcCompat="@drawable/ic_refresh" />
+
+    <rpt.tool.mementobibere.libraries.progressview.RptProgressView
+        android:id="@+id/intakeProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:maxWidth="5dp"
+        app:currentProgress="60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvIntook"
+        app:markerColor="@color/colorWhite"
+        app:markers="100"
+        app:progressBackgroundColor="#43F69F"
+        app:progressBarHeight="10dp"
+        app:progressColor="@color/colorSkyBlue"
+        android:textColor="@color/colorSkyBlue"
+        app:textMargin="5dp"
+        app:textSize="15sp"
+        app:totalProgress="130" />
+
+    <TextView
+        android:id="@+id/tvIntook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/_2000"
+        android:textColor="@color/colorWhite"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/tvTotalIntake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/_3500_ml"
+        android:textColor="@color/colorWhite"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvIntook"
+        app:layout_constraintStart_toEndOf="@+id/tvIntook"
         tools:ignore="TextContrastCheck" />
 
     <androidx.cardview.widget.CardView
@@ -310,55 +399,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-    <rpt.tool.mementobibere.libraries.progressview.RptProgressView
-        android:id="@+id/intakeProgress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:maxWidth="5dp"
-        app:currentProgress="60"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIntook"
-        app:markerColor="@color/colorWhite"
-        app:markers="100"
-        app:progressBackgroundColor="#43F69F"
-        app:progressBarHeight="10dp"
-        app:progressColor="@color/colorSkyBlue"
-        android:textColor="@color/colorSkyBlue"
-        app:textMargin="5dp"
-        app:textSize="15sp"
-        app:totalProgress="130" />
-
-    <TextView
-        android:id="@+id/tvIntook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/_2000"
-        android:textColor="@color/colorWhite"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        tools:ignore="TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/tvTotalIntake"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="4dp"
-        android:text="@string/_3500_ml"
-        android:textColor="@color/colorWhite"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvIntook"
-        app:layout_constraintStart_toEndOf="@+id/tvIntook"
-        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

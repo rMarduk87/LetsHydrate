@@ -15,7 +15,6 @@ import rpt.tool.mementobibere.databinding.EditInfoBottomSheetFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.AppUtils.Companion.NO_UPDATE_UNIT
 import rpt.tool.mementobibere.utils.AppUtils.Companion.calculateExtensions
-import rpt.tool.mementobibere.utils.AppUtils.Companion.notificationId
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
@@ -38,6 +37,8 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
     private var newUnitint: Int = 0
     private var weightUnit: Int = 0
     private var themeInt : Int = 0
+    private var oldWeight: Int = 0
+    private var oldWorkTime: Int = 0
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,6 +51,9 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
         binding.etWeight.editText!!.setText("" + sharedPref.getInt(AppUtils.WEIGHT_KEY, 0))
         binding.etWorkTime.editText!!.setText("" + sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0))
         binding.etTarget.editText!!.setText("" + sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toNumberString())
+
+        oldWeight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0)
+        oldWorkTime = sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0)
 
         currentUnitint = sharedPref.getInt(AppUtils.UNIT_KEY,0)
         newUnitint = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
@@ -141,8 +145,8 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
             val editor = sharedPref.edit()
             val sqliteHelper = SqliteHelper(requireContext())
 
-            if(weight != binding.etWeight.editText!!.text.toString() ||
-                workTime != binding.etWorkTime.editText!!.text.toString()){
+            if(weight != oldWeight.toString() ||
+                workTime != oldWorkTime.toString()){
                 val totalIntake = AppUtils.calculateIntake(
                     weight.toInt(),
                     workTime.toInt(),
@@ -173,6 +177,9 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
                     showError(getString(R.string.please_input_a_valid_workout_time))
 
                 TextUtils.isEmpty(customTarget) -> showError(getString(R.string.please_input_your_custom_target))
+                !AppUtils.isValidDate(binding.etSleepTime.editText!!.text.toString(),
+                    binding.etWakeUpTime.editText!!.text.toString()) ->
+                    showError(getString(R.string.please_input_a_valid_rest_time))
                 else -> {
 
                     editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
@@ -207,10 +214,14 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
 
                     editor.apply()
 
-                    Toast.makeText(requireContext(), getString(R.string.values_updated_successfully), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(rpt.tool.mementobibere.R.string.values_updated_successfully), Toast.LENGTH_SHORT).show()
                     var alarm = AlarmHelper()
                     alarm.cancelAlarm(requireContext())
                     dismiss()
+                    requireActivity().finish()
+                    requireActivity().overridePendingTransition(0, 0);
+                    startActivity(requireActivity().intent);
+                    requireActivity().overridePendingTransition(0, 0);
                 }
             }
         }
@@ -300,6 +311,4 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
     private fun setBackgroundColor(color: Int) {
         binding.bottomSheetParent.setBackgroundColor(color)
     }
-
-
 }

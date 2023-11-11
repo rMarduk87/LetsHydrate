@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initPermissions() {
+    fun initPermissions() {
         pm.buildRequestResultsDispatcher {
             withRequestCode(1) {
                 checkPermissions(android.Manifest.permission.POST_NOTIFICATIONS)

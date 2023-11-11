@@ -21,7 +21,6 @@ import rpt.tool.mementobibere.utils.AppUtils
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.Calendar
-import java.util.Locale
 
 @Suppress("DEPRECATION")
 class InitUserInfoFragment:
@@ -115,7 +114,7 @@ class InitUserInfoFragment:
                 workTime.toInt() > 500 || workTime.toInt() < 0 ->
                     showError(getString(R.string.please_input_a_valid_workout_time), it)
 
-                !AppUtils.IsValidDate(binding.etSleepTime.editText!!.text.toString(),binding.etWakeUpTime.editText!!.text.toString()) -> showError(getString(R.string.please_input_a_valid_rest_time), it)
+                !AppUtils.isValidDate(binding.etSleepTime.editText!!.text.toString(),binding.etWakeUpTime.editText!!.text.toString()) -> showError(getString(R.string.please_input_a_valid_rest_time), it)
 
                 else -> {
 

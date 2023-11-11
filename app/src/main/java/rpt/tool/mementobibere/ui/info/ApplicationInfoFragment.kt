@@ -10,13 +10,15 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
+import rpt.tool.mementobibere.databinding.ApplicationInfoFragmentBinding
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.ApplicationInfoFragmentBinding
 import rpt.tool.mementobibere.databinding.PartialPrincipalInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.navigation.safeNavController
+import rpt.tool.mementobibere.utils.navigation.safeNavigate
 
 class ApplicationInfoFragment:
     BaseFragment<ApplicationInfoFragmentBinding>(ApplicationInfoFragmentBinding::inflate) {
@@ -50,9 +52,6 @@ class ApplicationInfoFragment:
         initBottomBars()
 
         android.text.format.DateFormat.is24HourFormat(requireContext())
-
-
-
 
         principal.etPrivacy.editText!!.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(htmlLegacy))
@@ -112,6 +111,8 @@ class ApplicationInfoFragment:
                 editor.putString(AppUtils.NOTIFICATION_MSG_KEY, notificMsg)
                 editor.putString(AppUtils.NOTIFICATION_TONE_URI_KEY,currentToneUri.toString())
                 editor.apply()
+                safeNavController?.safeNavigate(
+                    ApplicationInfoFragmentDirections.actionInfoFragmentToDrinkFragment())
             }
         }
     }

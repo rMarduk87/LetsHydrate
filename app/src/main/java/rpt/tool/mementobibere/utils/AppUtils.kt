@@ -95,7 +95,7 @@ class AppUtils {
             return 0
         }
 
-        fun IsValidDate(wakeupTime: String, sleepingTime: String): Boolean {
+        fun isValidDate(wakeupTime: String, sleepingTime: String): Boolean {
 
             var calendarStringW = wakeupTime.split(":")
             var calendarStringS = sleepingTime.split(":")
@@ -107,19 +107,19 @@ class AppUtils {
             calendarSleep.set(2023,9,27,calendarStringS[0].toInt(),calendarStringS[1].toInt())
 
             return !isSameDateTime(calendarWake,calendarSleep) &&
-                    !isCalendar2MajorOfCalendar2(calendarWake,calendarSleep)
+                    !isCalendar2MajorOfCalendar(calendarWake,calendarSleep)
         }
 
-        fun isSameDateTime(cal1: Calendar, cal2: Calendar): Boolean {
+        private fun isSameDateTime(cal1: Calendar, cal2: Calendar): Boolean {
             // compare if is the same ERA, YEAR, DAY, HOUR, MINUTE and SECOND
             return cal1[Calendar.HOUR_OF_DAY] == cal2[Calendar.HOUR_OF_DAY] &&
                     cal1[Calendar.MINUTE] == cal2[Calendar.MINUTE]
         }
 
-        fun isCalendar2MajorOfCalendar2(cal1: Calendar, cal2: Calendar): Boolean {
+        private fun isCalendar2MajorOfCalendar(cal1: Calendar, cal2: Calendar): Boolean {
             // compare if is the same ERA, YEAR, DAY, HOUR, MINUTE and SECOND
             return cal2[Calendar.HOUR_OF_DAY] > cal1[Calendar.HOUR_OF_DAY] &&
-                    cal2[Calendar.MINUTE] > cal2[Calendar.MINUTE]
+                            cal2[Calendar.MINUTE] > cal1[Calendar.MINUTE]
         }
 
         fun getMaxWeight(weightUnit: Int): Int {
@@ -142,6 +142,32 @@ class AppUtils {
             val c = Calendar.getInstance().time
             val df = SimpleDateFormat("dd-MM-yyyy")
             return df.format(c)
+        }
+
+        fun getMaxDate(): Long {
+            var calendarTodayMinOne = Calendar.getInstance()
+            calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, -1)
+            return calendarTodayMinOne.timeInMillis
+        }
+
+        fun convertToSelected(selectedOption: Float, unit: String): Float {
+            when(extractIntConversion(unit)){
+                0-> return extractSelection(selectedOption)
+                1-> return extractSelection(ozUKToMl(selectedOption))
+                2-> return extractSelection(ozUSToMl(selectedOption))
+            }
+            return selectedOption
+        }
+
+        private fun extractSelection(selectedOption: Float): Float {
+            return when(selectedOption){
+                50f->0f
+                100f->1f
+                150f->2f
+                200f->3f
+                250f->4f
+                else->5f
+            }
         }
 
 
@@ -173,6 +199,7 @@ class AppUtils {
         const val SET_WEIGHT_UNIT = "set_weight_unit"
         const val RESET_NOTIFICATION_KEY: String = "reset_notification"
         const val notificationId = 32194567
+        const val LAST_INTOOK_KEY: String = "last_intook"
 
         enum class TypeMessage {
             NOTHING, SAVE
@@ -284,6 +311,24 @@ class AppUtils {
         val listStringWeightSystem= arrayOf(
             R.string.kg,
             R.string.lbl
+        )
+
+        val listIdsStats = arrayOf(
+            R.id.icon_all,
+            R.id.icon_intook,
+            R.id.icon_reach
+        )
+
+        val listIconStats = arrayOf(
+            R.drawable.ic_stats,
+            R.drawable.ic_intook,
+            R.drawable.ic_reached
+        )
+
+        val listStringStats = arrayOf(
+            R.string.all,
+            R.string.intook,
+            R.string.reached
         )
     }
 }
