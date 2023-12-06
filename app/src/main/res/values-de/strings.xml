@@ -168,12 +168,12 @@
     <string name="all">All Stats</string>
     <string name="intook">Intook Count</string>
     <string name="reached">Reached Obj</string>
-    <string name="undo">Rückgängig machen</string>
+    <string name="undo">Rückgängig\nmachen</string>
     <string name="redo">Wiederholen</string>
     <string name="reset">Zurücksetzen</string>
     <string name="intook_report">Täglicher Bericht</string>
-    <string name="opt_max">Am häufigsten ausgewählte Option.</string>
-    <string name="opt_min">Am wenigsten ausgewählte Option.</string>
+    <string name="opt_max">Am häufigsten\nausgewählte Option.</string>
+    <string name="opt_min">Am wenigsten\nausgewählte Option.</string>
     <string name="enter_hour_input_title">Ihre Aufstehzeit sollte kürzer sein als Ihre Schlafenszeit</string>
     <string name="summary2">Bis heute</string>
     <string name="none">Nichts</string>
@@ -184,10 +184,11 @@
     <string name="reached_goal">Ziel erreicht</string>
     <string name="reached_goal_part2">(Klicken Sie auf den Kalender, um frühere Termine hinzuzufügen)</string>
     <string name="code">Code</string>
-    <string name="last_opt">Letzte Option ausgewählt.</string>
+    <string name="last_opt">Letzte Option\nausgewählt.</string>
     <string name="new_data_hint">Fügen Sie ein Datum hinzu, an dem Sie das Ziel erreicht haben</string>
     <string name="enter_data_input_title">Haben Sie Ihr Trinkziel schon heute erreicht? Geben Sie es hier ein</string>
     <string name="please_input_a_valid_date">Bitte geben Sie ein Gültigkeitsdatum ein</string>
     <string name="please_input_a_valid_date_range">Das Datum darf nicht größer als\n heute oder vor dem 31.08.2023 sein</string>
     <string name="intook_report_title">Aufnahmebericht</string>
+    <string name="splash_screen">Splashscreen</string>
 </resources>

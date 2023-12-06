@@ -41,6 +41,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etPrivacy" />
 
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view5"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/splash_screen_bottom_bar" />
+
             <TextView
                 android:id="@+id/darkTV"
                 android:layout_width="wrap_content"
@@ -80,17 +87,42 @@
                 tools:ignore="TextContrastCheck"
                 android:text="@string/notif_setting_header" />
 
+            <TextView
+                android:id="@+id/splashScreen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/splash_screen" />
+
+            <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+                android:id="@+id/splash_screen_bottom_bar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                app:exb_backgroundCornerRadius="8dp"
+                app:exb_backgroundColor="@color/white"
+                app:exb_itemInactiveColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/splashScreen"/>
 
             <TextView
                 android:id="@+id/legal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
+                app:layout_constraintTop_toBottomOf="@+id/splash_screen_bottom_bar"
                 tools:ignore="TextContrastCheck"
                 android:text="@string/legal" />
 
@@ -226,7 +258,7 @@
     <Button
         android:id="@+id/btnUpdate"
         style="@android:style/Widget.Material.Button.Borderless"
-        android:layout_width="140dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
@@ -244,5 +276,6 @@
         android:layout_marginTop="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/infoTopTitle" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

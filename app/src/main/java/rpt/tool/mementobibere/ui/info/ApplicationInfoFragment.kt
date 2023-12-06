@@ -33,6 +33,7 @@ class ApplicationInfoFragment:
     private var currentToneUri: String? = ""
     private var notificMsg: String = ""
     private var notificFrequency: Int = 45
+    private var splash : Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
@@ -194,6 +195,7 @@ class ApplicationInfoFragment:
         val menu = principal.darkThemeBottomBar.menu
         val menu2 = principal.unitSystemBottomBar.menu
         val menu3 = principal.notificationBottomBar.menu
+        val menu4 = principal.splashScreenBottomBar.menu
 
         for (i in AppUtils.listIdsInfoTheme.indices) {
             menu.add(
@@ -228,6 +230,19 @@ class ApplicationInfoFragment:
                     AppUtils.listIdsFreq[i],
                     AppUtils.listFreq[i],
                     AppUtils.listStringFreq[i],
+                    Color.parseColor(stringColor)
+                )
+                    .build()
+            )
+        }
+
+        for (i in AppUtils.listIdsSplash.indices) {
+            menu4.add(
+                MenuItemDescriptor.Builder(
+                    requireContext(),
+                    AppUtils.listIdsSplash[i],
+                    AppUtils.listIconSplash[i],
+                    AppUtils.listStringSplash[i],
                     Color.parseColor(stringColor)
                 )
                     .build()
@@ -297,6 +312,33 @@ class ApplicationInfoFragment:
             sharedPref.edit().putInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, notificFrequency).apply()
         }
 
+        splash = sharedPref.getBoolean(AppUtils.SEE_SPLASH_KEY,true)
+
+        when (splash) {
+            true -> menu4.select(R.id.icon_on)
+            false -> menu4.select(R.id.icon_off)
+            else -> {
+                menu4.select(R.id.on)
+                splash = true
+            }
+        }
+
+        principal.splashScreenBottomBar.onItemSelectedListener = { _, i, _ ->
+            when(i.id) {
+                R.id.icon_on -> splash = true
+                R.id.icon_off -> splash = false
+            }
+
+            setSplash()
+
+        }
+
+    }
+
+    private fun setSplash() {
+        val editor = sharedPref.edit()
+        editor.putBoolean(AppUtils.SEE_SPLASH_KEY, splash)
+        editor.apply()
     }
 
     private fun setSystemUnit() {

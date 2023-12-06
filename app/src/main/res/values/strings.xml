@@ -165,4 +165,5 @@
     <string name="please_input_a_valid_date">Please input a valida date</string>
     <string name="please_input_a_valid_date_range">The date cannot be greater\nthan today or before 08-31-2023</string>
     <string name="intook_report_title">Intake Report</string>
+    <string name="splash_screen">Splashscreen</string>
 </resources>

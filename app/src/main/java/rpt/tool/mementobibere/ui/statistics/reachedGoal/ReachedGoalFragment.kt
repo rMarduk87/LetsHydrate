@@ -3,7 +3,6 @@ package rpt.tool.mementobibere.ui.statistics.reachedGoal
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
@@ -17,40 +16,38 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputLayout
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import github.com.st235.lib_expandablebottombar.Menu
-import github.com.st235.lib_expandablebottombar.MenuItem
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.extensions.defaultSetUp
+import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.recyclerview.items.reachedGoal.ReachedGoalItem
-import rpt.tool.mementobibere.utils.extensions.defaultSetUp
-import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-class ReachedGoalFragment:
-    BaseFragment<ReachedGoalStatsFragmentBinding>(ReachedGoalStatsFragmentBinding::inflate) {
+class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
+    ReachedGoalStatsFragmentBinding::inflate) {
 
-    private lateinit var bottomMenu: Menu
     private lateinit var sharedPref: SharedPreferences
-    private var themeInt : Int = 0
-    private var unit : Int = 0
+    private var themeInt: Int = 0
+    private var unit: Int = 0
     private val itemAdapter = ItemAdapter<ReachedGoalItem>()
     private val fastAdapter = FastAdapter.with(itemAdapter)
 
     private val viewModel: ReachedGoalViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        sharedPref = requireActivity().getSharedPreferences(
+            AppUtils.USERS_SHARED_PREF,
+            AppUtils.PRIVATE_MODE
+        )
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY, 0)
+        unit = sharedPref.getInt(AppUtils.UNIT_KEY, 0)
         super.onViewCreated(view, savedInstanceState)
         setBackGround()
-        initBottomBar()
 
         binding.recyclerView.defaultSetUp(
             fastAdapter
@@ -71,7 +68,8 @@ class ReachedGoalFragment:
             userInput.editText!!.setOnClickListener {
                 val calendar = Calendar.getInstance()
 
-                val mDatePicker = DatePickerDialog(requireContext(),
+                val mDatePicker = DatePickerDialog(
+                    requireContext(),
                     { _, year, monthOfYear, dayOfMonth ->
                         calendar.set(Calendar.YEAR, year)
                         calendar.set(Calendar.MONTH, monthOfYear)
@@ -80,8 +78,11 @@ class ReachedGoalFragment:
                         val myFormat = "dd-MM-yyyy" // mention the format you need
                         val sdf = SimpleDateFormat(myFormat)
                         userInput.editText!!.setText(sdf.format(calendar.time))
-                    },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)
-                    )
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
                 mDatePicker.datePicker.maxDate = AppUtils.getMaxDate()
                 mDatePicker.setTitle("")
                 mDatePicker.show()
@@ -91,7 +92,7 @@ class ReachedGoalFragment:
 
             val sqliteHelper = SqliteHelper(requireContext())
 
-            val unit = AppUtils.calculateExtensions(sharedPref.getInt(AppUtils.UNIT_KEY,0))
+            val unit = AppUtils.calculateExtensions(sharedPref.getInt(AppUtils.UNIT_KEY, 0))
 
             userBtnAdd.setOnClickListener {
                 when {
@@ -101,10 +102,16 @@ class ReachedGoalFragment:
 
                     else -> {
 
-                        sqliteHelper.addReachedGoal(userInput.editText!!.text.toString(),sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY,0f),unit)
-                        sqliteHelper.addAll(userInput.editText!!.text.toString(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY,0f).toInt(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY,0f),unit)
+                        sqliteHelper.addReachedGoal(
+                            userInput.editText!!.text.toString(), sharedPref.getFloat(
+                                AppUtils.TOTAL_INTAKE_KEY, 0f
+                            ), unit
+                        )
+                        sqliteHelper.addAll(
+                            userInput.editText!!.text.toString(),
+                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toInt(),
+                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f), unit
+                        )
                         userInput.editText!!.setText("")
                     }
                 }
@@ -113,16 +120,11 @@ class ReachedGoalFragment:
             alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
                 safeNavController?.safeNavigate(
-                    ReachedGoalFragmentDirections.actionGoalFragmentToItself())
+                    ReachedGoalFragmentDirections.actionReachedGoalFragmentToItself())
             }
 
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
-        }
-
-        binding.btnBack.setOnClickListener {
-            safeNavController?.safeNavigate(
-                ReachedGoalFragmentDirections.actionGoalFragmentToDrinkFragment())
         }
     }
 
@@ -139,82 +141,20 @@ class ReachedGoalFragment:
         }
     }
 
-    private fun initBottomBar() {
-
-        bottomMenu = binding.bottomBarStats.menu
-
-        createMenu()
-    }
-
-    private fun createMenu() {
-
-        var colorString = if(themeInt==0){
-            "#41B279"
-        }
-        else{
-            "#29704D"
-        }
-
-        for (i in AppUtils.listIdsStats.indices) {
-            bottomMenu.add(
-                MenuItemDescriptor.Builder(
-                    requireContext(),
-                    AppUtils.listIdsStats[i],
-                    AppUtils.listIconStats[i],
-                    AppUtils.listStringStats[i],
-                    Color.parseColor(colorString)
-                )
-                    .build()
-            )
-        }
-
-
-
-        binding.bottomBarStats.onItemSelectedListener = { _, i, _ ->
-            manageListeners(i)
-        }
-
-        binding.bottomBarStats.onItemReselectedListener = { _, i, _ ->
-            manageListeners(i)
-        }
-
-        bottomMenu.select(R.id.icon_reach)
-    }
-
-    private fun manageListeners(i: MenuItem) {
-        when(i.id) {
-            R.id.icon_all -> goToAllStats()
-            R.id.icon_intook -> goToIntookStats()
-            R.id.icon_reach -> return
-        }
-    }
-
-    private fun goToAllStats() {
-        safeNavController?.safeNavigate(ReachedGoalFragmentDirections
-            .actionGoalFragmentToAllstatsFragment())
-    }
-
-    private fun goToIntookStats() {
-        safeNavController?.safeNavigate(ReachedGoalFragmentDirections
-            .actionGoalFragmentToToIntookFragment())
-    }
-
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setBackGround() {
-        when(themeInt){
-            0->toLightTheme()
-            1->toDarkTheme()
+        when (themeInt) {
+            0 -> toLightTheme()
+            1 -> toDarkTheme()
         }
     }
 
     private fun toDarkTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
-        binding.bottomBarStats.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
     }
 
     private fun toLightTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
-        binding.bottomBarStats.setBackgroundColorRes(R.color.colorWhite)
     }
 
     @SuppressLint("InflateParams")

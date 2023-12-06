@@ -182,7 +182,7 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="intake_report_percent">% dell\' obiettivo</string>
     <string name="str_back">INDIETRO</string>
     <string name="reached_goal">Obiettivo raggiunto</string>
-    <string name="reached_goal_part2">(Fare clic sul calendario per aggiungere le date precedenti)</string>
+    <string name="reached_goal_part2">(Cliccare sul calendario per aggiungere date precedenti)</string>
     <string name="code">Code</string>
     <string name="last_opt">Ultima opzione selezionata.</string>
     <string name="new_data_hint">Aggiungi una data in cui hai raggiunto l\'obiettivo</string>
@@ -190,4 +190,5 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="please_input_a_valid_date">Per favore inserisci una data valida</string>
     <string name="please_input_a_valid_date_range">La data non può essere successiva a\noggi o precedente al 31-08-2023</string>
     <string name="intook_report_title">Rapporto sull\'assunzione</string>
+    <string name="splash_screen">Splashscreen</string>
 </resources>
