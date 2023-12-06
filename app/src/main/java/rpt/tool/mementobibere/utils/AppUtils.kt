@@ -200,9 +200,14 @@ class AppUtils {
         const val RESET_NOTIFICATION_KEY: String = "reset_notification"
         const val notificationId = 32194567
         const val LAST_INTOOK_KEY: String = "last_intook"
+        const val SEE_SPLASH_KEY : String = "see_splash"
 
         enum class TypeMessage {
             NOTHING, SAVE
+        }
+
+        enum class TypeLayout{
+            Es,Fr,It
         }
 
 
@@ -329,6 +334,21 @@ class AppUtils {
             R.string.all,
             R.string.intook,
             R.string.reached
+        )
+
+        val listIdsSplash = arrayOf(
+            R.id.icon_on,
+            R.id.icon_off
+        )
+
+        val listIconSplash = arrayOf(
+            R.drawable.ic_on,
+            R.drawable.ic_off
+        )
+
+        val listStringSplash = arrayOf(
+            R.string.on,
+            R.string.off
         )
     }
 }

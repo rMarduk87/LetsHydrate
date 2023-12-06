@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/reached_goal_fragment_nav_graph"
+app:startDestination="@id/ReachedGoalFragment">
+
+<fragment
+    android:id="@+id/ReachedGoalFragment"
+    android:name="rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragment"
+    android:label="ReachedGoalFragment"
+    tools:layout="@layout/reached_goal_stats_fragment">
+    <action
+        android:id="@+id/action_reachedGoalFragment_to_itself"
+        app:destination="@id/ReachedGoalFragment" />
+</fragment>
+
+</navigation>

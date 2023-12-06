@@ -19,6 +19,7 @@ import android.view.View.VISIBLE
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
@@ -44,10 +45,12 @@ import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import java.util.Date
+import java.util.Locale
 
 
 class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::inflate) {
 
+    private var counter: Int = 0
     private var enabled: Boolean = true
     private lateinit var unit: String
     private lateinit var menuNotify: Menu
@@ -114,6 +117,78 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             initIntookValue()
             setValueForDrinking()
         }
+        setMarginByLocate()
+    }
+
+    private fun setMarginByLocate() {
+        var lang = Locale.getDefault().displayLanguage
+        when(lang){
+            "English"-> setMarginEn()
+            "Deutsch"-> setMarginDe()
+            "español"-> setMargin(AppUtils.Companion.TypeLayout.Es)
+            "français"-> setMargin(AppUtils.Companion.TypeLayout.Fr)
+            "italiano"-> setMargin(AppUtils.Companion.TypeLayout.It)
+            else-> setMarginEn()
+        }
+    }
+
+    private fun setMarginDe() {
+        val layoutParamsUndo: ConstraintLayout.LayoutParams = binding.undoTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsUndo.verticalBias = 0.6f
+        layoutParamsUndo.setMargins(0,50,0,0)
+        val layoutParamsRefresh: ConstraintLayout.LayoutParams = binding.refreshTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRefresh.marginStart = -8
+        layoutParamsRefresh.setMargins(0,50,0,0)
+        val layoutParamsRedo: ConstraintLayout.LayoutParams = binding.redoTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRedo.marginStart = -8
+        layoutParamsRedo.setMargins(0,50,0,0)
+
+        binding.undoTV.layoutParams = layoutParamsUndo
+        binding.refreshTV.layoutParams = layoutParamsRefresh
+        binding.redoTV.layoutParams = layoutParamsRedo
+    }
+
+    private fun setMargin(b: AppUtils.Companion.TypeLayout) {
+        val layoutParamsUndo: ConstraintLayout.LayoutParams = binding.undoTV.layoutParams as ConstraintLayout.LayoutParams
+        if(b==AppUtils.Companion.TypeLayout.Es){
+            layoutParamsUndo.marginStart = 4
+        }
+        layoutParamsUndo.setMargins(0,50,0,0)
+        val layoutParamsRedo: ConstraintLayout.LayoutParams = binding.redoTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRedo.marginStart = 6
+        if(b==AppUtils.Companion.TypeLayout.It){
+            layoutParamsRedo.setMargins(45,50,0,0)
+        }
+        else{
+            layoutParamsRedo.setMargins(0,50,0,0)
+        }
+        val layoutParamsRefresh: ConstraintLayout.LayoutParams = binding.refreshTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRefresh.marginStart = -4
+        if(b==AppUtils.Companion.TypeLayout.It){
+            layoutParamsRefresh.setMargins(1000,50,0,0)
+        }
+        else{
+            layoutParamsRefresh.setMargins(20,50,0,0)
+        }
+
+        binding.undoTV.layoutParams = layoutParamsUndo
+        binding.refreshTV.layoutParams = layoutParamsRefresh
+        binding.redoTV.layoutParams = layoutParamsRedo
+    }
+
+    private fun setMarginEn() {
+        val layoutParamsUndo: ConstraintLayout.LayoutParams = binding.undoTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsUndo.marginStart = 22
+        layoutParamsUndo.setMargins(0,20,0,0)
+        val layoutParamsRefresh: ConstraintLayout.LayoutParams = binding.refreshTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRefresh.marginStart = 20
+        layoutParamsRefresh.setMargins(0,20,0,0)
+        val layoutParamsRedo: ConstraintLayout.LayoutParams = binding.redoTV.layoutParams as ConstraintLayout.LayoutParams
+        layoutParamsRedo.marginStart = 26
+        layoutParamsRedo.setMargins(0,20,0,0)
+        binding.undoTV.layoutParams = layoutParamsUndo
+        binding.refreshTV.layoutParams = layoutParamsRefresh
+        binding.redoTV.layoutParams = layoutParamsRedo
     }
 
     private fun initIntookValue() {
@@ -591,12 +666,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
             updateValues()
             addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
+            selectedOption = null
+            counter = 0
         }
     }
 
     private fun undoLastDailyIntook() {
         var totalIntook = sqliteHelper.getIntook(dateNow)
-        if(selectedOption != null) {
+        if(selectedOption != null && counter == 0) {
             sqliteHelper.resetIntook(dateNow)
             sqliteHelper.addIntook(
                 AppUtils.getCurrentDate()!!,
@@ -607,6 +684,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), -1)
             updateValues()
             sqliteHelper.removeReachedGoal(dateNow)
+            counter = 1
         }
     }
 
@@ -619,6 +697,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sqliteHelper.resetIntookCounter(dateNow)
             sqliteHelper.removeReachedGoal(dateNow)
             addLastIntook(-1f)
+            counter = 0
         }
     }
 
@@ -671,7 +750,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     companion object {
-        const val TIME: Long = 650
+        const val TIME: Long = 150
     }
 
     override fun onRequestPermissionsResult(

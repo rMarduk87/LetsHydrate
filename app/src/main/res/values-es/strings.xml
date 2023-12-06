@@ -194,4 +194,5 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="please_input_a_valid_date">Ingrese una fecha de validación</string>
     <string name="please_input_a_valid_date_range">La fecha no puede ser mayor que\n hoy ni antes del 31-08-2023.</string>
     <string name="intook_report_title">Informe de admisión</string>
+    <string name="splash_screen">Splashscreen</string>
 </resources>

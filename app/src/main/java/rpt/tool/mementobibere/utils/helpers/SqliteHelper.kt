@@ -215,9 +215,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     fun getAllIntookStats(): Cursor {
-        val selectQuery = "SELECT t1.$KEY_INTOOK, t1.$KEY_DATE, t2.total FROM $TABLE_INTOOK_COUNTER t1 " +
+        val selectQuery = "SELECT t1.$KEY_INTOOK, t2.total FROM $TABLE_INTOOK_COUNTER t1 " +
                 "INNER JOIN (SELECT $KEY_INTOOK,SUM($KEY_INTOOK_COUNT) AS total FROM " +
-                "$TABLE_INTOOK_COUNTER GROUP BY $KEY_INTOOK) t2 ON t1.$KEY_INTOOK = t2.$KEY_INTOOK"
+                "$TABLE_INTOOK_COUNTER GROUP BY $KEY_INTOOK) t2 ON t1.$KEY_INTOOK = t2.$KEY_INTOOK" +
+                " GROUP BY t1.$KEY_INTOOK"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, null)
     }

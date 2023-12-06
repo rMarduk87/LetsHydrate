@@ -12,24 +12,15 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="175dp"
-        android:text="@string/stats"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="155dp"
+        android:text="@string/btn_stats"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:text="@string/str_back"
-        style="@android:style/Widget.Material.Button.Borderless"
-        android:drawableEnd="@drawable/ic_arrow_circle_left_solid"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBack"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/noData"
@@ -53,7 +44,7 @@
         android:layout_height="308dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -179,19 +170,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-        android:id="@+id/bottom_bar_stats"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_margin="20dp"
-        app:exb_backgroundCornerRadius="8dp"
-        app:exb_backgroundColor="@color/colorWhite"
-        app:exb_itemInactiveColor="@color/black"
-        app:exb_notificationBadgeBackgroundColor="@color/red"
-        app:exb_notificationBadgeTextColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView8"

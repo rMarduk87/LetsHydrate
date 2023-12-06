@@ -190,4 +190,5 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="please_input_a_valid_date">Veuillez saisir une date de validation</string>
     <string name="please_input_a_valid_date_range">La date ne peut pas être postérieure à\n aujourd\'hui ou avant le 31/08/2023</string>
     <string name="intook_report_title">Rapport d\'admission</string>
+    <string name="splash_screen">Splashscreen</string>
 </resources>

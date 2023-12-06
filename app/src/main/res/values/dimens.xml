@@ -9,4 +9,5 @@
     <dimen name="recycler_view_item_padding">16dp</dimen>
     <dimen name="recycler_view_margin_vertical">4dp</dimen>
     <dimen name="recycler_view_item_icon_size">64dp</dimen>
+    <dimen name="recycler_view_item_icon_sizexxl">128dp</dimen>
 </resources>

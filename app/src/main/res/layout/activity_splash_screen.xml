@@ -7,7 +7,18 @@
     android:id="@+id/splash"
     tools:context=".SplashScreenActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="414dp"
+        android:layout_height="525dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
+
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/rpt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:lottie_rawRes="@raw/rpt"
