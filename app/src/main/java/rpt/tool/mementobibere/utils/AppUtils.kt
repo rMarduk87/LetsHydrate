@@ -3,6 +3,8 @@ package rpt.tool.mementobibere.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import rpt.tool.mementobibere.R
+import rpt.tool.mementobibere.utils.extensions.toExtractFloat
+import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -11,11 +13,17 @@ import kotlin.math.ceil
 
 class AppUtils {
     companion object {
-        fun calculateIntake(weight: Int, workTime: Int, weightUnit: Int): Double {
+        fun calculateIntake(weight: Int, workTime: Int, weightUnit: Int,gender: Int): Double {
 
             var convertedWeight = weight.toPrincipalUnit(weightUnit)
-            return ((convertedWeight * 100 / 3.0) + (workTime / 6 * 7))
-
+            var intake = ((convertedWeight * 100 / 3.0) + (workTime / 6 * 7))
+            return if(gender == 0){
+                intake
+            } else{
+                intake -= 450
+                intake
+            }
+            return intake
         }
 
         @SuppressLint("SimpleDateFormat")
@@ -150,6 +158,12 @@ class AppUtils {
             return calendarTodayMinOne.timeInMillis
         }
 
+        fun getMinDate(): Long {
+            var calendarTodayMinOne = Calendar.getInstance()
+            calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, 1)
+            return calendarTodayMinOne.timeInMillis
+        }
+
         fun convertToSelected(selectedOption: Float, unit: String): Float {
             when(extractIntConversion(unit)){
                 0-> return extractSelection(selectedOption)
@@ -168,6 +182,10 @@ class AppUtils {
                 250f->4f
                 else->5f
             }
+        }
+
+        fun calculatePercentual(intook: Float, intake: Float): Float {
+            return (intook * 100 / intake).toNumberString().toExtractFloat()
         }
 
 
@@ -201,9 +219,13 @@ class AppUtils {
         const val notificationId = 32194567
         const val LAST_INTOOK_KEY: String = "last_intook"
         const val SEE_SPLASH_KEY : String = "see_splash"
+        const val GENDER_KEY : String = "gender"
+        const val SET_GENDER_KEY : String = "set_gender"
+        const val BLOOD_DONOR_KEY : String = "blood_donor"
+        const val SET_BLOOD_KEY : String = "set_blood_donor"
 
         enum class TypeMessage {
-            NOTHING, SAVE
+            NOTHING, SAVE, MAN,WOMAN
         }
 
         enum class TypeLayout{
@@ -320,18 +342,21 @@ class AppUtils {
 
         val listIdsStats = arrayOf(
             R.id.icon_all,
+            R.id.icon_daily,
             R.id.icon_intook,
             R.id.icon_reach
         )
 
         val listIconStats = arrayOf(
             R.drawable.ic_stats,
+            R.drawable.ic_daily,
             R.drawable.ic_intook,
             R.drawable.ic_reached
         )
 
         val listStringStats = arrayOf(
             R.string.all,
+            R.string.reached_daily,
             R.string.intook,
             R.string.reached
         )

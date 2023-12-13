@@ -166,4 +166,24 @@
     <string name="please_input_a_valid_date_range">The date cannot be greater\nthan today or before 08-31-2023</string>
     <string name="intook_report_title">Intake Report</string>
     <string name="splash_screen">Splashscreen</string>
+    <string name="init_user_info_gender">Water is the main constituent of the human body and represents approximately 60% of body weight in adult males, 50 to 55% in females.\nTherefore, a different requirement will be calculated based on sex.</string>
+    <string name="gender_hint">Please choice your gender</string>
+    <string name="init_user_info_gender_min">The water requirement between men and women is different, choose your gender to calculate it.</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="gender">Choose your gender</string>
+    <string name="info_label">INFORMATION</string>
+    <string name="curiosity">Curiosity</string>
+    <string name="reached_daily">Reached Daily</string>
+    <string name="d_stats">Bevute Quotidiane</string>
+    <string name="goal">Goal</string>
+    <string name="other_info">Other Info</string>
+    <string name="avis">Blood donor? Click below</string>
+    <string name="walkthough_text_five">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\nTo confirm click on the button below.\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="walkthough_text_five_2">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="tomorrow_you_will_donate">Tomorrow you will donate blood or today you have already donated, drinking is essential!!</string>
+    <string name="you_selected_man">You selected Man</string>
+    <string name="you_selected_woman">You selected Woman</string>
+    <string name="you_selected_avis">You ara a blood donor</string>
+    <string name="you_selected_no_avis">You are not a blood donor</string>
 </resources>

@@ -120,11 +120,35 @@
         app:textSize="15sp"
         app:totalProgress="130" />
 
+    <ImageView
+        android:id="@+id/calendarAvis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar_mini"
+        android:layout_marginLeft="16dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalIntake">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/infoAvis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:src="@drawable/ic_avis_day"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalIntake">
+
+    </ImageView>
+
     <TextView
         android:id="@+id/tvIntook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="44dp"
         android:text="@string/_2000"
         android:textColor="@color/colorWhite"

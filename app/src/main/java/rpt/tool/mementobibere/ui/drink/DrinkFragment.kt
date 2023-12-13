@@ -2,6 +2,7 @@ package rpt.tool.mementobibere.ui.drink
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
@@ -20,6 +21,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.airbnb.lottie.LottieAnimationView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
@@ -44,6 +46,8 @@ import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -85,11 +89,24 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
         value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
         value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
+        sqliteHelper = SqliteHelper(requireContext())
+        dateNow = AppUtils.getCurrentOnlyDate()!!
         setTheme()
         super.onViewCreated(view, savedInstanceState)
         setBackGround()
 
-        sqliteHelper = SqliteHelper(requireContext())
+        if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1){
+            binding.calendarAvis.visibility = VISIBLE
+        }
+        else if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
+            sqliteHelper.getAvisDay(dateNow)){
+            binding.calendarAvis.visibility = VISIBLE
+            binding.infoAvis!!.visibility = VISIBLE
+        }
+        else{
+            binding.calendarAvis.visibility = GONE
+            binding.infoAvis!!.visibility = GONE
+        }
 
         totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
@@ -108,8 +125,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         } else if (totalIntake <= 0) {
             startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
         }
-
-        dateNow = AppUtils.getCurrentOnlyDate()!!
 
         viewWindow = requireActivity().window.decorView.findViewById<View>(android.R.id.content)
         initBottomBar()
@@ -380,8 +395,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun toDarkTheme() {
         binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
         binding.textView5.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
         binding.bottomBarNotify.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
         binding.bottomBarNotNotify.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
     }
@@ -389,8 +410,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun toLightTheme() {
         binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg)
         binding.textView5.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorWhite))
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorWhite))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorWhite))
+        }
         binding.bottomBarNotify.setBackgroundColorRes(R.color.colorWhite)
         binding.bottomBarNotNotify.setBackgroundColorRes(R.color.colorWhite)
     }
@@ -456,6 +483,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     override fun onStart() {
         super.onStart()
 
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+
         val new = sharedPref.getBoolean(AppUtils.RESET_NOTIFICATION_KEY,true)
         if(new){
             val mNotificationManager : NotificationManager = requireActivity()
@@ -466,6 +498,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             var edit = sharedPref.edit()
             edit.putBoolean(AppUtils.RESET_NOTIFICATION_KEY,false)
             edit.apply()
+        }
+
+        if(!sharedPref.getBoolean(AppUtils.SET_GENDER_KEY, false)){
+            setGender()
+        }
+
+        if(!sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false)){
+            setBloodDonor()
         }
 
         totalIntake = try {
@@ -505,9 +545,13 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         if (!alarm.checkAlarm(requireContext()) && notificStatus) {
             binding.bottomBarNotNotify.visibility = View.GONE
             binding.bottomBarNotify.visibility = View.VISIBLE
+            var isAvisDay = sqliteHelper.getAvisDay(dateNow)
+            var freq = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+            if(isAvisDay){
+                freq /= 2
+            }
             alarm.setAlarm(
-                requireContext(),
-                sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+                requireContext(),freq
             )
         }
 
@@ -656,6 +700,96 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         binding.btnRefresh.setOnClickListener {
             resetDailyIntook()
         }
+
+        binding.calendarAvis.setOnClickListener{
+            val calendar = Calendar.getInstance()
+
+            val mDatePicker = DatePickerDialog(
+                requireContext(),
+                { _, year, monthOfYear, dayOfMonth ->
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, monthOfYear)
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                    var calendarPre = calendar
+                    calendarPre.add(Calendar.DAY_OF_MONTH, -1)
+
+                    val myFormat = "dd-MM-yyyy" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat)
+                    sqliteHelper.addAvis(sdf.format(calendarPre.time))
+                    sqliteHelper.addAvis(sdf.format(calendar.time))
+                    if(sdf.format(calendar.time) == dateNow){
+                        if(totalIntake < 2000){
+                            val editor = sharedPref.edit()
+                            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,2000f)
+                            editor.apply()
+                        }
+                    }
+                    safeNavController?.safeNavigate(DrinkFragmentDirections
+                        .actionDrinkFragmentToSelfFragment())
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+            mDatePicker.datePicker.minDate = AppUtils.getMinDate()
+            mDatePicker.setTitle("")
+            mDatePicker.show()
+        }
+
+        binding.infoAvis!!.setOnClickListener {
+            showMessage(
+                getString(R.string.tomorrow_you_will_donate),it, duration = 3500)
+        }
+    }
+
+    private fun setBloodDonor() {
+        startActivity(Intent(requireContext(), WalkThroughActivity::class.java))
+    }
+
+    private fun setGender() {
+        var genderChoice = -1
+        val li = LayoutInflater.from(requireContext())
+        val promptsView = li.inflate(R.layout.custom_input_dialog2, null)
+
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setView(promptsView)
+
+        val userMaleBtn = promptsView
+            .findViewById(R.id.btnMan) as LottieAnimationView
+
+        val userWomanBtn = promptsView
+            .findViewById(R.id.btnWoman) as LottieAnimationView
+
+        userMaleBtn.setOnClickListener {
+            genderChoice = 0
+            showMessage(getString(R.string.you_selected_man),it,
+                type=AppUtils.Companion.TypeMessage.MAN)
+        }
+
+        userWomanBtn.setOnClickListener {
+            genderChoice = 1
+            showMessage(getString(R.string.you_selected_woman),it,
+                type=AppUtils.Companion.TypeMessage.WOMAN)
+        }
+
+        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
+            when (genderChoice) {
+                -1 -> showMessage(getString(R.string.gender_hint),promptsView,true)
+                else -> {
+
+                    val editor = sharedPref.edit()
+                    editor.putInt(AppUtils.GENDER_KEY, genderChoice)
+                    editor.putBoolean(AppUtils.SET_GENDER_KEY,true)
+                    editor.apply()
+                }
+            }
+        }.setNegativeButton("Cancel") { _, _ ->
+            showMessage(getString(R.string.gender_hint),promptsView,true)
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     private fun restoreLastDailyIntook() {
@@ -800,23 +934,5 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 activity.initPermissions()
             }
         }
-    }
-
-
-    fun updateIntake() {
-        totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }
-
-        setValueForDrinking()
     }
 }

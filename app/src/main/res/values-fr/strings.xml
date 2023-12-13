@@ -191,4 +191,24 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="please_input_a_valid_date_range">La date ne peut pas être postérieure à\n aujourd\'hui ou avant le 31/08/2023</string>
     <string name="intook_report_title">Rapport d\'admission</string>
     <string name="splash_screen">Splashscreen</string>
+    <string name="init_user_info_gender">L\'eau est le principal constituant du corps humain et représente environ 60% du poids corporel chez l\'homme adulte, 50 à 55% chez la femme.\nUn besoin différent sera donc calculé en fonction du sexe.</string>
+    <string name="gender_hint">Veuillez choisir votre sexe</string>
+    <string name="init_user_info_gender_min">Le besoin en eau entre les hommes et les femmes est différent, choisissez votre sexe pour le calculer.</string>
+    <string name="man">Homme</string>
+    <string name="woman">Femme</string>
+    <string name="gender">Choisissez votre sexe</string>
+    <string name="info_label">INFORMATIONS</string>
+    <string name="curiosity">Curiosité</string>
+    <string name="reached_daily">Atteint quotidiennement</string>
+    <string name="d_stats">Bevute Quotidiane</string>
+    <string name="goal">Objectif</string>
+    <string name="other_info">Autres informations</string>
+    <string name="avis">Donneur de sang? Cliquez ci-dessous</string>
+    <string name="walkthough_text_five">Si vous êtes donneur de sang total il est important de bien vous hydrater (au moins 2 litres) la veille du don et le jour même après le don\nPour confirmer cliquez sur le bouton ci-dessous.\n\nSur l\'écran où vous indiquez la quantité bu, vous pouvez cliquer sur l\'icône du calendrier pour indiquer quand vous ferez un don, activant la modification de la quantité recommandée et l\'augmentation de la fréquence des notifications.</string>
+    <string name="walkthough_text_five_2">Si vous êtes donneur de sang total il est important de bien vous hydrater (au moins 2 litres) la veille du don et le jour même après le don\n\nSur l\'écran où vous indiquez la quantité bu , vous pouvez cliquer sur l\'icône du calendrier pour indiquer quand vous ferez un don, activant la modification de la quantité recommandée et une plus grande fréquence de notifications.</string>
+    <string name="tomorrow_you_will_donate">Demain vous donnerez du sang ou aujourd\'hui vous avez déjà donné, boire est essentiel !!</string>
+    <string name="you_selected_man">Vous avez sélectionné Homme</string>
+    <string name="you_selected_woman">Vous avez sélectionné Femme</string>
+    <string name="you_selected_avis">Vous êtes un donneur de sang</string>
+    <string name="you_selected_no_avis">Vous n\'êtes pas un donneur de sang</string>
 </resources>

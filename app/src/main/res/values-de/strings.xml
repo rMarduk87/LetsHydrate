@@ -191,4 +191,24 @@
     <string name="please_input_a_valid_date_range">Das Datum darf nicht größer als\n heute oder vor dem 31.08.2023 sein</string>
     <string name="intook_report_title">Aufnahmebericht</string>
     <string name="splash_screen">Splashscreen</string>
+    <string name="init_user_info_gender">Wasser ist der Hauptbestandteil des menschlichen Körpers und macht bei erwachsenen Männern etwa 60 % des Körpergewichts aus, bei Frauen 50 bis 55 %.\nDaher wird je nach Geschlecht ein unterschiedlicher Bedarf berechnet.</string>
+    <string name="gender_hint">Bitte wählen Sie Ihr Geschlecht</string>
+    <string name="init_user_info_gender_min">Der Wasserbedarf von Männern und Frauen ist unterschiedlich. Wählen Sie Ihr Geschlecht, um ihn zu berechnen.</string>
+    <string name="man">Mann</string>
+    <string name="woman">Frau</string>
+    <string name="gender">Wählen Sie Ihr Geschlecht</string>
+    <string name="info_label">INFORMATIONEN</string>
+    <string name="curiosity">Neugier</string>
+    <string name="reached_daily">Täglich erreicht</string>
+    <string name="d_stats">Tägliches Trinken</string>
+    <string name="goal">Ziel</string>
+    <string name="other_info">Andere Informationen</string>
+    <string name="avis">Blutspender? Klicken Sie unten</string>
+    <string name="walkthough_text_five">Wenn Sie Vollblutspender sind, ist es wichtig, dass Sie am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich nehmen (mindestens 2 Liter).\nZur Bestätigung klicken Sie auf die Schaltfläche unten.\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben, können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
+    <string name="walkthough_text_five_2">Wenn Sie Vollblutspender sind, ist es wichtig, am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich zu nehmen (mindestens 2 Liter).\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben , können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
+    <string name="tomorrow_you_will_donate">Morgen wirst du Blut spenden oder heute hast du bereits gespendet, Trinken ist unerlässlich!!</string>
+    <string name="you_selected_man">Sie haben „Mann“ ausgewählt</string>
+    <string name="you_selected_woman">Sie haben Frau ausgewählt</string>
+    <string name="you_selected_avis">Sie sind ein Blutspender</string>
+    <string name="you_selected_no_avis">Sie sind kein Blutspender</string>
 </resources>
