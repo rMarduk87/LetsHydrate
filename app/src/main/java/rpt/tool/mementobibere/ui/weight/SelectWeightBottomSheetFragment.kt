@@ -32,8 +32,10 @@ class SelectWeightBottomSheetFragment:
             editor.putInt(AppUtils.WEIGHT_UNIT_KEY,weightUnit)
             val weight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0).toCalculateWeight(weightUnit)
             editor.putInt(AppUtils.WEIGHT_KEY,weight)
-            val totalIntake = AppUtils.calculateIntake(weight,
-                sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),weightUnit)
+            val totalIntake = AppUtils.calculateIntake(
+                weight,
+                sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0), weightUnit, sharedPref.getInt(AppUtils.GENDER_KEY, 0)
+            )
             val df = DecimalFormat("#")
             df.roundingMode = RoundingMode.CEILING
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())

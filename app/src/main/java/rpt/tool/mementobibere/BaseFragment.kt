@@ -46,9 +46,11 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         _binding = null
     }
 
-    @SuppressLint("InflateParams")
-    fun showMessage(message: String, view: View, error:Boolean? = false, type: AppUtils.Companion.TypeMessage = AppUtils.Companion.TypeMessage.NOTHING) {
-        val snackBar = Snackbar.make(view, "", 1500)
+    @SuppressLint("InflateParams", "RestrictedApi")
+    fun showMessage(message: String, view: View, error:Boolean? = false,
+                    type: AppUtils.Companion.TypeMessage = AppUtils.Companion.TypeMessage.NOTHING,
+                    duration: Int = 1500) {
+        val snackBar = Snackbar.make(view, "", duration)
         val customSnackView: View =
             when(error){
                 true ->layoutInflater.inflate(R.layout.error_toast_layout, null)
@@ -63,6 +65,14 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         if(type== AppUtils.Companion.TypeMessage.SAVE){
             val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
             anim.setAnimation(R.raw.save)
+        }
+        if(type== AppUtils.Companion.TypeMessage.MAN){
+            val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
+            anim.setAnimation(R.raw.man)
+        }
+        if(type== AppUtils.Companion.TypeMessage.WOMAN){
+            val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
+            anim.setAnimation(R.raw.woman)
         }
 
         snackbarLayout.setPadding(0, 0, 0, 0)

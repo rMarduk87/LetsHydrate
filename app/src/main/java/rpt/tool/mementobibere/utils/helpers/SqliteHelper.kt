@@ -6,6 +6,8 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.lifecycle.MutableLiveData
+import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.data.appmodel.Daily
 import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
 import rpt.tool.mementobibere.utils.extensions.toCalendar
 import rpt.tool.mementobibere.utils.extensions.toReachedStatsString
@@ -18,11 +20,12 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private const val DATABASE_VERSION = 3
+        private const val DATABASE_VERSION = 4
         private const val DATABASE_NAME = "RptBibere"
         private const val TABLE_STATS = "stats"
         private const val TABLE_INTOOK_COUNTER = "intook_count"
         private const val TABLE_REACHED = "intake_reached"
+        private const val TABLE_AVIS = "avis_day"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
         private const val KEY_INTOOK = "intook"
@@ -35,14 +38,26 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
     override fun onCreate(db: SQLiteDatabase?) {
 
+        addFirstTable(db)
+
+        addNewTables(db)
+
+        addAvisTable(db)
+
+    }
+
+    private fun addFirstTable(db: SQLiteDatabase?) {
         val createStatTable = ("CREATE TABLE " + TABLE_STATS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE,"
                 + KEY_INTOOK + " INT," + KEY_TOTAL_INTAKE + " INT," + KEY_UNIT +
                 " VARCHAR(200) DEFAULT \"ml\""+")")
         db?.execSQL(createStatTable)
+    }
 
-        addNewTables(db)
-
+    private fun addAvisTable(db: SQLiteDatabase?) {
+        val createAvisTable = ("CREATE TABLE " + TABLE_AVIS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT)")
+        db?.execSQL(createAvisTable)
     }
 
     private fun addNewTables(db: SQLiteDatabase?) {
@@ -67,10 +82,14 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         else if(newVersion > oldVersion && newVersion == 3){
             addNewTables(db!!)
         }
+        else if(newVersion > oldVersion && newVersion == 4){
+            addAvisTable(db!!)
+        }
         else{
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_STATS")
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_INTOOK_COUNTER")
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_REACHED")
+            db!!.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             onCreate(db)
         }
 
@@ -146,6 +165,23 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, null)
+
+    }
+
+    fun getAllStatsDaily(): MutableLiveData<List<Daily>> {
+        val list : ArrayList<Daily> = arrayListOf<Daily>()
+        val entry = MutableLiveData<List<Daily>>()
+        getAllStats().use{ it ->
+            if (it.moveToFirst()) {
+                for (i in 0 until it.count) {
+                    list.add(Daily(it.getString(1).toCalendar(),AppUtils.calculatePercentual(it.getFloat(2), it.getFloat(3))))
+                    it.moveToNext()
+                }
+                entry.postValue(list.sortedBy { it.day })
+            }
+        }
+
+        return entry
 
     }
 
@@ -313,5 +349,30 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return entry
+    }
+
+    fun addAvis(date: String) : Long {
+        val selectQuery = "SELECT * FROM $TABLE_AVIS WHERE $KEY_DATE = ?"
+        if (checkExistance(date,selectQuery) == 0) {
+            val values = ContentValues()
+            values.put(KEY_DATE, date)
+            val db = this.writableDatabase
+            val response = db.insert(TABLE_AVIS, null, values)
+            db.close()
+            return response
+        }
+        return -1
+    }
+
+    fun getAvisDay(date: String): Boolean {
+        val selectQuery = "SELECT * FROM $TABLE_AVIS WHERE $KEY_DATE = ?"
+        val db = this.readableDatabase
+        var day = false
+        db.rawQuery(selectQuery, arrayOf(date)).use {
+            if (it.moveToFirst()) {
+                day = true
+            }
+        }
+        return day
     }
 }

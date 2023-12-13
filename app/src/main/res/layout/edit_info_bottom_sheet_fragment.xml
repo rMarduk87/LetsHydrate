@@ -22,12 +22,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck"
-        tools:text="@string/edit_info_text" />
+        android:text="@string/edit_info_text" />
 
     <Button
         android:id="@+id/btnUpdate"
         style="@android:style/Widget.Material.Button.Borderless"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
@@ -162,12 +162,53 @@
             tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTarget"
+        tools:ignore="TextContrastCheck"
+        android:text="@string/gender" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/btnMan"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etTarget"
+        app:layout_constraintTop_toBottomOf="@+id/etTarget"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/man" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/btnWoman"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="@+id/etTarget"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTarget"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/woman" />
+
     <View
         style="@style/DividerHorizontal"
         android:id="@+id/view2"
         android:layout_marginTop="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etTarget" />
+        app:layout_constraintTop_toBottomOf="@id/btnWoman" />
 
 
 

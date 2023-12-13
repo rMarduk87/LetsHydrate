@@ -34,6 +34,7 @@ import github.com.st235.lib_expandablebottombar.Menu
 import rpt.tool.mementobibere.data.models.BarChartModel
 import rpt.tool.mementobibere.databinding.ActivityStatsBaseBinding
 import rpt.tool.mementobibere.databinding.AllStatsFragmentBinding
+import rpt.tool.mementobibere.databinding.DailyStatsFragmentBinding
 import rpt.tool.mementobibere.databinding.IntookCounterStatsFragmentBinding
 import rpt.tool.mementobibere.databinding.ReachedGoalStatsBaseFragmentBinding
 import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
@@ -45,6 +46,8 @@ import rpt.tool.mementobibere.libraries.chart.data.LineData
 import rpt.tool.mementobibere.libraries.chart.data.LineDataSet
 import rpt.tool.mementobibere.libraries.chart.highlight.Highlight
 import rpt.tool.mementobibere.libraries.chart.listener.OnChartValueSelectedListener
+import rpt.tool.mementobibere.ui.statistics.daily.DailyViewModel
+import rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragmentDirections
 import rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalViewModel
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.chart.ChartXValueFormatter
@@ -54,6 +57,8 @@ import rpt.tool.mementobibere.utils.extensions.toDefaultFloatIfNull
 import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
+import rpt.tool.mementobibere.utils.navigation.safeNavigate
+import rpt.tool.mementobibere.utils.view.recyclerview.items.daily.DailyItem
 import rpt.tool.mementobibere.utils.view.recyclerview.items.reachedGoal.ReachedGoalItem
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -119,7 +124,7 @@ class StatsBaseActivity : AppCompatActivity() {
 
     private inner class StatsAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         override fun getCount(): Int {
-            return 3
+            return 4
         }
 
         override fun getItem(i: Int): Fragment {
@@ -128,12 +133,15 @@ class StatsBaseActivity : AppCompatActivity() {
                 0 -> {
                     return AllStatsView()
                 }
-
-                1 -> {
-                    return IntookCounterView()
+                1->{
+                    return DailyStatsView()
                 }
 
                 2 -> {
+                    return IntookCounterView()
+                }
+
+                3 -> {
                     return ReachedGoalView()
                 }
 
@@ -320,6 +328,63 @@ class StatsBaseActivity : AppCompatActivity() {
         private fun toLightTheme() {
             binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
             binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        }
+    }
+
+    class DailyStatsView : BaseFragment<DailyStatsFragmentBinding>(DailyStatsFragmentBinding::inflate) {
+
+        private lateinit var sharedPref: SharedPreferences
+        private var themeInt: Int = 0
+        private var unit: Int = 0
+        private val itemAdapter = ItemAdapter<DailyItem>()
+        private val fastAdapter = FastAdapter.with(itemAdapter)
+
+        private val viewModel: DailyViewModel by viewModels()
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            sharedPref = requireActivity().getSharedPreferences(
+                AppUtils.USERS_SHARED_PREF,
+                AppUtils.PRIVATE_MODE
+            )
+            themeInt = sharedPref.getInt(AppUtils.THEME_KEY, 0)
+            unit = sharedPref.getInt(AppUtils.UNIT_KEY, 0)
+            super.onViewCreated(view, savedInstanceState)
+            setBackGround()
+
+            binding.recyclerView.defaultSetUp(
+                fastAdapter
+            )
+
+            addDataToListView()
+        }
+
+        private fun addDataToListView() {
+            viewModel.reachedtItems.observe(viewLifecycleOwner) {
+                if (it.isEmpty()) {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.noData.visibility = View.VISIBLE
+                } else {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.noData.visibility = View.GONE
+                    itemAdapter.set(it)
+                }
+            }
+        }
+
+        @SuppressLint("UseCompatLoadingForDrawables")
+        private fun setBackGround() {
+            when (themeInt) {
+                0 -> toLightTheme()
+                1 -> toDarkTheme()
+            }
+        }
+
+        private fun toDarkTheme() {
+            binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
+        }
+
+        private fun toLightTheme() {
+            binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
         }
     }
 
@@ -510,9 +575,5 @@ class StatsBaseActivity : AppCompatActivity() {
 
     class ReachedGoalView : BaseFragment<ReachedGoalStatsBaseFragmentBinding>(
         ReachedGoalStatsBaseFragmentBinding::inflate) {
-
-
-
-
     }
 }

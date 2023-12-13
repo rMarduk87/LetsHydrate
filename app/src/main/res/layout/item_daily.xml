@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    style="@style/ItemCardView"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    android:background="@color/gray"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/codeArea"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/dayArea"
+            app:layout_constraintHorizontal_weight=".005"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/code"
+                style="@style/TableFieldTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorBlack" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/dayArea"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:paddingRight="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/qtaArea"
+            app:layout_constraintHorizontal_weight="1.1"
+            app:layout_constraintStart_toEndOf="@id/codeArea"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/day"
+                style="@style/TableFieldTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/qtaArea"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/reached"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/dayArea"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <rpt.tool.mementobibere.libraries.wave.RptWaveLoadingView
+                android:id="@+id/waterLevelView"
+                android:layout_width="250dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:wlv_borderColor="@color/colorSecondaryLighter"
+                app:wlv_borderWidth="8dp"
+                app:wlv_progressValue="70"
+                app:wlv_round_rectangle="true"
+                app:wlv_shapeType="rectangle"
+                app:wlv_titleCenter="40%"
+                app:wlv_titleCenterColor="@color/colorWhite"
+                app:wlv_titleCenterSize="18sp"
+                app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+                app:wlv_titleCenterStrokeWidth="3dp"
+                app:wlv_triangle_direction="north"
+                app:wlv_waveAmplitude="60"
+                app:wlv_waveColor="@color/colorSecondaryDark" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/city"
+                style="@style/TableFieldTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/reached"
+            style="@style/TableFieldImageView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/recycler_view_item_icon_size"
+            android:layout_marginEnd="6dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/note"
+            app:layout_constraintHorizontal_weight=".5"
+            app:layout_constraintStart_toEndOf="@id/qtaArea"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/note"
+            style="@style/TableFieldImageView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/recycler_view_item_icon_size"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/orderHistory"
+            app:layout_constraintHorizontal_weight=".05"
+            app:layout_constraintStart_toEndOf="@id/reached"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/orderHistory"
+            style="@style/TableFieldImageView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/recycler_view_item_icon_size"
+            android:layout_marginEnd="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/addPreviousReached"
+            app:layout_constraintHorizontal_weight=".05"
+            app:layout_constraintStart_toEndOf="@id/note"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/addPreviousReached"
+            style="@style/TableFieldImageView"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/recycler_view_item_icon_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight=".05"
+            app:layout_constraintStart_toEndOf="@id/orderHistory"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

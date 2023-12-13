@@ -3,12 +3,15 @@ package rpt.tool.mementobibere.ui.userinfo
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.snackbar.Snackbar
 import rpt.tool.mementobibere.BaseBottomSheetDialog
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.EditInfoBottomSheetFragmentBinding
@@ -39,6 +42,8 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
     private var themeInt : Int = 0
     private var oldWeight: Int = 0
     private var oldWorkTime: Int = 0
+    private var genderChoice : Int = -1
+    private var genderChoiceOld : Int = -1
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +64,7 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
         newUnitint = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
         weightUnit = sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0)
         themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        genderChoiceOld = sharedPref.getInt(AppUtils.GENDER_KEY, -1)
         setBackground()
 
         val unit = calculateExtensions(newUnitint)
@@ -135,6 +141,18 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
             mTimePicker.show()
         }
 
+        genderChoice = sharedPref.getInt(AppUtils.GENDER_KEY,-1)
+
+        binding.btnMan.setOnClickListener {
+            genderChoice = 0
+            showMessage(getString(R.string.you_selected_man),false)
+        }
+
+        binding.btnWoman.setOnClickListener {
+            genderChoice = 1
+            showMessage(getString(R.string.you_selected_woman),false)
+        }
+
         binding.btnUpdate.setOnClickListener {
 
             val currentTarget = sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
@@ -145,12 +163,16 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
             val editor = sharedPref.edit()
             val sqliteHelper = SqliteHelper(requireContext())
 
+            if(genderChoice==-1){
+                showMessage(getString(R.string.gender_hint))
+            }
+
             if(weight != oldWeight.toString() ||
-                workTime != oldWorkTime.toString()){
+                workTime != oldWorkTime.toString() || genderChoice != genderChoiceOld) {
                 val totalIntake = AppUtils.calculateIntake(
                     weight.toInt(),
                     workTime.toInt(),
-                    weightUnit
+                    weightUnit,genderChoice
                 )
                 val df = DecimalFormat("#")
                 df.roundingMode = RoundingMode.CEILING
@@ -164,22 +186,22 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
                 )
             }
             when {
-                TextUtils.isEmpty(weight) -> showError(getString(R.string.please_input_your_weight))
+                TextUtils.isEmpty(weight) -> showMessage(getString(R.string.please_input_your_weight))
 
                 weight.toInt() > AppUtils.getMaxWeight(weightUnit) || weight.toInt() < AppUtils.getMinWeight(weightUnit) ->
-                    showError(getString(R.string.please_input_a_valid_weight))
+                    showMessage(getString(R.string.please_input_a_valid_weight))
 
-                TextUtils.isEmpty(workTime) -> showError(
+                TextUtils.isEmpty(workTime) -> showMessage(
                     getString(R.string.please_input_your_workout_time)
                 )
 
                 workTime.toInt() > 500 || workTime.toInt() < 0 ->
-                    showError(getString(R.string.please_input_a_valid_workout_time))
+                    showMessage(getString(R.string.please_input_a_valid_workout_time))
 
-                TextUtils.isEmpty(customTarget) -> showError(getString(R.string.please_input_your_custom_target))
+                TextUtils.isEmpty(customTarget) -> showMessage(getString(R.string.please_input_your_custom_target))
                 !AppUtils.isValidDate(binding.etSleepTime.editText!!.text.toString(),
                     binding.etWakeUpTime.editText!!.text.toString()) ->
-                    showError(getString(R.string.please_input_a_valid_rest_time))
+                    showMessage(getString(R.string.please_input_a_valid_rest_time))
                 else -> {
 
                     editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
@@ -198,7 +220,7 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
                         val totalIntake = AppUtils.calculateIntake(
                             weight.toInt(),
                             workTime.toInt(),
-                            weightUnit
+                            weightUnit,sharedPref.getInt(AppUtils.GENDER_KEY,0)
                         )
                         val df = DecimalFormat("#")
                         df.roundingMode = RoundingMode.CEILING
@@ -219,9 +241,9 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
                     alarm.cancelAlarm(requireContext())
                     dismiss()
                     requireActivity().finish()
-                    requireActivity().overridePendingTransition(0, 0);
-                    startActivity(requireActivity().intent);
-                    requireActivity().overridePendingTransition(0, 0);
+                    requireActivity().overridePendingTransition(0, 0)
+                    startActivity(requireActivity().intent)
+                    requireActivity().overridePendingTransition(0, 0)
                 }
             }
         }
@@ -235,12 +257,15 @@ class EditInfoBottomSheetFragment : BaseBottomSheetDialog<EditInfoBottomSheetFra
     }
 
     @SuppressLint("InflateParams")
-    private fun showError(error: String) {
+    private fun showMessage(error: String, isError:Boolean = true) {
         val toast = Toast(requireContext())
         toast.duration = Toast.LENGTH_SHORT
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        val customView: View =
-            layoutInflater.inflate(R.layout.error_toast_layout, null)
+        val customView: View = if(isError){
+            layoutInflater.inflate(R.layout.error_toast_layout, null)}
+        else{
+            layoutInflater.inflate(R.layout.info_toast_layout, null)
+        }
 
         val text = customView.findViewById<TextView>(R.id.tvMessage)
         text.text = error

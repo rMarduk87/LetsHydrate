@@ -120,6 +120,17 @@
         app:textSize="25sp"
         app:totalProgress="130" />
 
+    <ImageView
+        android:id="@+id/calendarAvis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar_mini"
+        android:layout_marginLeft="32dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalIntake">
+    </ImageView>
+
     <TextView
         android:id="@+id/tvIntook"
         android:layout_width="wrap_content"

@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_drinkFragment_to_infoFragment"
             app:destination="@id/applicationInfoFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_selfFragment"
+            app:destination="@id/DrinkFragment" />
     </fragment>
     <dialog
         android:id="@+id/editInfoBottomSheetFragment"
@@ -44,6 +47,9 @@
         <action
             android:id="@+id/action_infoFragment_to_DrinkFragment"
             app:destination="@id/DrinkFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_settingFragment"
+            app:destination="@id/applicationInfoFragment" />
     </fragment>
 
 </navigation>

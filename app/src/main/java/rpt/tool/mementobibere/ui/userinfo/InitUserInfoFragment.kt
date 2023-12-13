@@ -8,9 +8,12 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.snackbar.Snackbar
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
@@ -33,6 +36,8 @@ class InitUserInfoFragment:
     private lateinit var sharedPref: SharedPreferences
     private var unit : Int = 0
     private var weightUnit : Int = 0
+    private var gender : Int = 0
+    private var bloodDonor : Int = 0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -91,6 +96,73 @@ class InitUserInfoFragment:
             mTimePicker.show()
         }
 
+        binding.etGender.editText!!.setOnClickListener {
+
+            val li = LayoutInflater.from(requireContext())
+            val promptsView = li.inflate(R.layout.custom_input_dialog2, null)
+
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setView(promptsView)
+
+
+            val btnMan = promptsView
+                .findViewById(R.id.btnMan) as LottieAnimationView
+            val btnWoman = promptsView
+                .findViewById(R.id.btnWoman) as LottieAnimationView
+
+
+            btnMan.setOnClickListener{
+                gender = 0
+                val editor = sharedPref.edit()
+                editor.putInt(AppUtils.GENDER_KEY, gender)
+                editor.apply()
+                showMessage(getString(R.string.you_selected_man),it,
+                    type=AppUtils.Companion.TypeMessage.MAN)
+            }
+
+            btnWoman.setOnClickListener{
+                gender = 1
+                val editor = sharedPref.edit()
+                editor.putInt(AppUtils.GENDER_KEY, gender)
+                editor.apply()
+                showMessage(getString(R.string.you_selected_woman),it,
+                    type=AppUtils.Companion.TypeMessage.WOMAN)
+            }
+
+            alertDialogBuilder.setPositiveButton("OK") { _, _ ->
+
+            }.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+            }
+
+            var text = if(gender==0){
+                getString(R.string.man)
+            }
+            else{
+                getString(R.string.woman)
+            }
+
+            binding.etGender.editText!!.setText(text)
+
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+
+        binding.btnAvis.setOnClickListener{
+            if(bloodDonor==0){
+                bloodDonor = 1
+                showMessage(getString(R.string.you_selected_avis),it)
+            }
+            else{
+                bloodDonor = 0
+                showMessage(getString(R.string.you_selected_no_avis),it)
+            }
+            val editor = sharedPref.edit()
+            editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
+            editor.apply()
+        }
+
         binding.btnContinue.setOnClickListener {
 
             val imm: InputMethodManager =
@@ -116,6 +188,8 @@ class InitUserInfoFragment:
 
                 !AppUtils.isValidDate(binding.etSleepTime.editText!!.text.toString(),binding.etWakeUpTime.editText!!.text.toString()) -> showError(getString(R.string.please_input_a_valid_rest_time), it)
 
+                TextUtils.isEmpty(binding.etGender.editText!!.text.toString()) -> showError(getString(R.string.gender_hint),it)
+
                 else -> {
 
                     val editor = sharedPref.edit()
@@ -125,8 +199,11 @@ class InitUserInfoFragment:
                     editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
                     editor.putBoolean(AppUtils.FIRST_RUN_KEY, false)
                     editor.putBoolean(AppUtils.SET_WEIGHT_UNIT,true)
+                    editor.putBoolean(AppUtils.SET_GENDER_KEY, true)
+                    editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonor)
+                    editor.apply()
 
-                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt(),weightUnit)
+                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt(),weightUnit, gender)
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
                     editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
@@ -227,7 +304,7 @@ class InitUserInfoFragment:
         editor.apply()
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint("InflateParams", "RestrictedApi")
     private fun showError(error: String, view: View) {
         val snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
         val customSnackView: View =

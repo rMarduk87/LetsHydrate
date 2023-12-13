@@ -195,4 +195,24 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="please_input_a_valid_date_range">La fecha no puede ser mayor que\n hoy ni antes del 31-08-2023.</string>
     <string name="intook_report_title">Informe de admisión</string>
     <string name="splash_screen">Splashscreen</string>
+    <string name="init_user_info_gender">El agua es el componente principal del cuerpo humano y representa aproximadamente el 60% del peso corporal en los hombres adultos, del 50 al 55% en las mujeres.\nPor lo tanto, se calculará un requerimiento diferente según el sexo.</string>
+    <string name="gender_hint">Por favor, elige tu género</string>
+    <string name="init_user_info_gender_min">El requerimiento de agua entre hombres y mujeres es diferente, elige tu género para calcularlo.</string>
+    <string name="man">Hombre</string>
+    <string name="woman">Mujer</string>
+    <string name="gender">Elige tu género</string>
+    <string name="info_label">INFORMACIÓN</string>
+    <string name="curiosity">Curiosidad</string>
+    <string name="reached_daily">Alcanzado diariamente</string>
+    <string name="d_stats">Bevute Quotidiane</string>
+    <string name="goal">Objetivo</string>
+    <string name="other_info">Otra información</string>
+    <string name="avis">¿Donante de sangre? Haga clic a continuación</string>
+    <string name="walkthough_text_five">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de la donación\nPara confirmar haz clic en el botón de abajo.\n\nEn la pantalla donde indicas la cantidad consumida, puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
+    <string name="walkthough_text_five_2">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de donar\n\nEn la pantalla donde indicas la cantidad consumida , puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
+    <string name="tomorrow_you_will_donate">Mañana donarás sangre o hoy ya la has donado, beber es fundamental!!</string>
+    <string name="you_selected_man">Seleccionaste Hombre</string>
+    <string name="you_selected_woman">Seleccionaste Mujer</string>
+    <string name="you_selected_avis">Eres donante de sangre</string>
+    <string name="you_selected_no_avis">No eres donante de sangre</string>
 </resources>
