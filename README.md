@@ -7,14 +7,17 @@ Let's Hydrate is an android app to remind you to drink water and track your wate
 
 ## ScreenShots
 
-<img width="360" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/556cd725-f373-4930-8b0c-56926ea1859e">
-<img width="360" alt="2" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/0565e9d7-1797-40b9-a803-3c94a8b1fc17">
-<img width="356" alt="3" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/f66bb00c-a634-4772-8db9-dcf340fc84db">
-<img width="360" alt="4" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/46c61a15-4baf-49f8-b44b-6d95ee5e095b">
-<img width="360" alt="5" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/10c7bb2d-f943-4bda-ab6c-3faf0604289c">
-<img width="362" alt="6" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/c7548534-39d0-4096-af00-aa61f9eabf26">
-<img width="361" alt="7" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/d41ea252-c7d8-4c0f-b37f-a643b1dcc317">
-<img width="361" alt="8" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/98faba8f-d29f-4522-b39b-3849d2bc3143">
+<img width="382" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/479fc2ca-8704-4c87-8ff6-2941088d5dd5">
+<img width="384" alt="2" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/b10592a4-7d50-4690-928f-cc736160c1af">
+<img width="386" alt="3" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/d312319c-7b1c-4a6a-86c8-9a32ded7d9ba">
+<img width="385" alt="3a" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/c051daf7-8634-42d4-b601-921b2ec082ee">
+<img width="383" alt="4" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/9fcd1417-d9c5-44b6-952a-fc2c90010312">
+<img width="385" alt="5" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/43b85034-1221-442b-8313-e7d51d7fb9bb">
+<img width="362" alt="6" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/ca0da23a-9e4f-467e-9c76-69cd4a42b422">
+<img width="361" alt="7" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/0cf142db-7e91-4f20-8805-8fa14499bf6a">
+<img width="382" alt="7a" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/c972f66b-4610-4b1f-b36b-53e77894827f">
+<img width="361" alt="8" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/c727b8af-63a2-4fd5-9217-2c9f9db4372e">
+
 
 
 # Contributing
