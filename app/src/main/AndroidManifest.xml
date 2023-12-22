@@ -8,7 +8,7 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
-        android:name="rpt.tool.mementobibere.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".IntookCalculationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_intook_calculation"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".StatsBaseActivity"
             android:exported="false"

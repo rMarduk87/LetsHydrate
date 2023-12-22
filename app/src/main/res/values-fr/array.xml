@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="water">
+        <item>Gardez l\'eau dans votre bouche pendant un moment avant de l\'avaler</item>
+        <item>Ne buvez pas d\'eau immédiatement après avoir mangé</item>
+        <item>Ne buvez pas d\'eau froide ou glacée</item>
+        <item>Il est préférable de boire de l\'eau en position assise plutôt qu\'en position debout ou en mouvement</item>
+        <item>Si vous le pouvez, buvez de l\'eau dès votre réveil</item>
+        <item>Boire au moins huit verres par jour</item>
+        <item>Si vous n\'avez pas envie de boire de l\'eau, trouvez des alternatives (mais soyez prudent avec les sucres)</item>
+        <item>Si vous faites du sport, essayez de boire beaucoup d\'eau</item>
+        <item>Les fruits et légumes sont importants, Hydratons-nous ne les prend pas en compte dans le calcul</item>
+    </string-array>
+</resources>

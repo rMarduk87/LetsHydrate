@@ -1,13 +1,10 @@
 package rpt.tool.mementobibere.utils.chart
 
-import rpt.tool.mementobibere.libraries.chart.components.AxisBase
-import rpt.tool.mementobibere.libraries.chart.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.formatter.ValueFormatter
 
-class ChartXValueFormatter(private val dateArray: ArrayList<String>) :
-    IAxisValueFormatter {
-
-
-    override fun getFormattedValue(value: Float, axis: AxisBase?): String {
+class ChartXValueFormatter(val dateArray: ArrayList<String>) : ValueFormatter() {
+    override fun getAxisLabel(value: Float, axis: AxisBase?): String {
         return dateArray.getOrNull(value.toInt()) ?: ""
     }
 }

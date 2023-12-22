@@ -13,15 +13,22 @@ import kotlin.math.ceil
 
 class AppUtils {
     companion object {
-        fun calculateIntake(weight: Int, workTime: Int, weightUnit: Int,gender: Int): Double {
+        fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int): Double {
 
             var convertedWeight = weight.toPrincipalUnit(weightUnit)
-            var intake = ((convertedWeight * 100 / 3.0) + (workTime / 6 * 7))
-            return if(gender == 0){
-                intake
-            } else{
+            var intake = (convertedWeight * 100 / 3.0)
+            if(gender == 1){
                 intake -= 450
-                intake
+            }
+            when(workType){
+                1-> intake += 257
+                2-> intake += 515
+                3-> intake += 1030
+            }
+            when(climate){
+                0-> intake += 129
+                2-> intake += 257
+                3-> intake += 515
             }
             return intake
         }
@@ -180,12 +187,17 @@ class AppUtils {
                 150f->2f
                 200f->3f
                 250f->4f
-                else->5f
+                300f->5f
+                else->6f
             }
         }
 
         fun calculatePercentual(intook: Float, intake: Float): Float {
             return (intook * 100 / intake).toNumberString().toExtractFloat()
+        }
+
+        fun CalculateOption(inTook: Float, totalIntake: Float): Float? {
+            return totalIntake - inTook
         }
 
 
@@ -211,6 +223,7 @@ class AppUtils {
         const val VALUE_150_KEY = "150"
         const val VALUE_200_KEY = "200"
         const val VALUE_250_KEY = "250"
+        const val VALUE_300_KEY = "300"
         const val NO_UPDATE_UNIT = "no_update_unit"
         const val UNIT_STRING = "unit_string"
         const val WEIGHT_UNIT_KEY = "weight_unit"
@@ -223,9 +236,13 @@ class AppUtils {
         const val SET_GENDER_KEY : String = "set_gender"
         const val BLOOD_DONOR_KEY : String = "blood_donor"
         const val SET_BLOOD_KEY : String = "set_blood_donor"
+        const val SET_NEW_WORK_TYPE_KEY : String = "set_new_work_type"
+        const val CLIMATE_KEY : String = "climate"
+        const val SET_CLIMATE_KEY : String = "set_climate"
+        const val SEE_TIPS_KEY : String = "see_tips"
 
         enum class TypeMessage {
-            NOTHING, SAVE, MAN,WOMAN
+            NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
         }
 
         enum class TypeLayout{
@@ -270,18 +287,21 @@ class AppUtils {
 
         val listIdsInfoTheme = arrayOf(
             R.id.icon_light,
-            R.id.icon_dark
+            R.id.icon_dark,
+            R.id.icon_water
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
-            R.drawable.ic_dark
+            R.drawable.ic_dark,
+            R.drawable.ic_water
 
         )
 
         val listStringInfoTheme= arrayOf(
             R.string.light,
-            R.string.dark
+            R.string.dark,
+            R.string.water
 
         )
 
@@ -372,6 +392,21 @@ class AppUtils {
         )
 
         val listStringSplash = arrayOf(
+            R.string.on,
+            R.string.off
+        )
+
+        val listIdsTips = arrayOf(
+            R.id.tips_on,
+            R.id.tips_off
+        )
+
+        val listIconTips = arrayOf(
+            R.drawable.ic_on,
+            R.drawable.ic_off
+        )
+
+        val listStringTips = arrayOf(
             R.string.on,
             R.string.off
         )

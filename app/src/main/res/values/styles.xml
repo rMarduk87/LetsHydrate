@@ -46,6 +46,27 @@
         <item name="android:fontFamily">@font/kanit</item>
     </style>
 
+    <style name="AppThemeW" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowDisablePreview">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondaryDarkW</item>
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
+    <style name="MainThemeW" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@color/colorSecondaryW</item>
+        <item name="colorPrimaryDark">@color/colorSecondaryW</item>
+        <item name="colorAccent">@color/colorSecondaryDarkW</item>
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
     <style name="ErrorText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/red</item>
         <item name="android:textSize">16sp</item>

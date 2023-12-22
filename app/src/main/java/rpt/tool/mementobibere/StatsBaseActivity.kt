@@ -1,7 +1,6 @@
 package rpt.tool.mementobibere
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
@@ -10,16 +9,9 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,41 +19,32 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.material.textfield.TextInputLayout
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import github.com.st235.lib_expandablebottombar.Menu
 import rpt.tool.mementobibere.data.models.BarChartModel
 import rpt.tool.mementobibere.databinding.ActivityStatsBaseBinding
 import rpt.tool.mementobibere.databinding.AllStatsFragmentBinding
 import rpt.tool.mementobibere.databinding.DailyStatsFragmentBinding
 import rpt.tool.mementobibere.databinding.IntookCounterStatsFragmentBinding
 import rpt.tool.mementobibere.databinding.ReachedGoalStatsBaseFragmentBinding
-import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
-import rpt.tool.mementobibere.libraries.chart.animation.Easing
-import rpt.tool.mementobibere.libraries.chart.components.LimitLine
-import rpt.tool.mementobibere.libraries.chart.components.XAxis
-import rpt.tool.mementobibere.libraries.chart.data.Entry
-import rpt.tool.mementobibere.libraries.chart.data.LineData
-import rpt.tool.mementobibere.libraries.chart.data.LineDataSet
-import rpt.tool.mementobibere.libraries.chart.highlight.Highlight
-import rpt.tool.mementobibere.libraries.chart.listener.OnChartValueSelectedListener
 import rpt.tool.mementobibere.ui.statistics.daily.DailyViewModel
-import rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragmentDirections
-import rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalViewModel
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.chart.ChartXValueFormatter
 import rpt.tool.mementobibere.utils.extensions.defaultSetUp
+import rpt.tool.mementobibere.utils.extensions.ifSame
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValueStats
 import rpt.tool.mementobibere.utils.extensions.toDefaultFloatIfNull
 import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.navigation.safeNavController
-import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.recyclerview.items.daily.DailyItem
-import rpt.tool.mementobibere.utils.view.recyclerview.items.reachedGoal.ReachedGoalItem
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import kotlin.math.max
 
 class StatsBaseActivity : AppCompatActivity() {
@@ -94,15 +77,23 @@ class StatsBaseActivity : AppCompatActivity() {
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
+            2->toWaterTheme()
         }
+    }
+
+    private fun toWaterTheme() {
+        binding.background.setBackgroundColor(getColor(R.color.colorSecondaryDarkW))
+        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_w)
     }
 
     private fun toDarkTheme() {
         binding.background.setBackgroundColor(getColor(R.color.colorSecondaryDark))
+        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_dark)
     }
 
     private fun toLightTheme() {
         binding.background.setBackgroundColor(getColor(R.color.colorSecondary))
+        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg)
     }
 
     override fun onStart() {
@@ -246,7 +237,7 @@ class StatsBaseActivity : AppCompatActivity() {
                         )
                     dataSet.setDrawCircles(false)
                     dataSet.lineWidth = 2.5f
-                    dataSet.color = ContextCompat.getColor(requireContext(), R.color.colorSecondaryDark)
+                    dataSet.color = ContextCompat.getColor(requireContext(), setColor(themeInt))
                     dataSet.setDrawFilled(true)
                     dataSet.fillDrawable = setDrawable()
                     dataSet.setDrawValues(false)
@@ -295,11 +286,24 @@ class StatsBaseActivity : AppCompatActivity() {
                     0f
                 )
                 val intPercentage = percentage.toInt()
-                binding.waterLevelView.centerTitle = "$intPercentage%"
-                binding.waterLevelView.progressValue = intPercentage
-
+                binding.waterLevelViewL.centerTitle = "$intPercentage%"
+                binding.waterLevelViewL.progressValue = intPercentage
+                binding.waterLevelViewD!!.centerTitle = "$intPercentage%"
+                binding.waterLevelViewD!!.progressValue = intPercentage
+                binding.waterLevelViewW!!.centerTitle = "$intPercentage%"
+                binding.waterLevelViewW!!.progressValue = intPercentage
+                setBackGround()
             }
 
+        }
+
+        private fun setColor(themeInt: Int): Int {
+            when(themeInt){
+                0-> return R.color.colorSecondaryDark
+                1-> return R.color.darkGreen
+                2-> return R.color.colorSecondaryDarkW
+            }
+            return R.color.colorSecondaryDark
         }
 
 
@@ -307,7 +311,8 @@ class StatsBaseActivity : AppCompatActivity() {
         private fun setDrawable(): Drawable? {
             when(themeInt){
                 0-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant)
-                1-> requireContext().getDrawable(R.drawable.graph_fill_gradiant_dark)
+                1-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_dark)
+                2-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_water)
             }
             return requireContext().getDrawable(R.drawable.graph_fill_gradiant)
         }
@@ -317,17 +322,47 @@ class StatsBaseActivity : AppCompatActivity() {
             when(themeInt){
                 0->toLightTheme()
                 1->toDarkTheme()
+                2->toWaterTheme()
             }
+        }
+
+        private fun toWaterTheme() {
+            binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
+            binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+            binding.waterLevelViewL.visibility = View.GONE
+            binding.waterLevelViewD!!.visibility = View.GONE
+            binding.waterLevelViewW!!.visibility = View.VISIBLE
+            val layoutParams: ConstraintLayout.LayoutParams = binding.textView6.layoutParams
+                    as ConstraintLayout.LayoutParams
+            layoutParams.startToStart = binding.waterLevelViewW!!.id
+            layoutParams.topToTop = binding.waterLevelViewW!!.id
+            binding.textView6.layoutParams = layoutParams
         }
 
         private fun toDarkTheme() {
             binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
             binding.textView8.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.waterLevelViewL.visibility = View.GONE
+            binding.waterLevelViewD!!.visibility = View.VISIBLE
+            binding.waterLevelViewW!!.visibility = View.GONE
+            val layoutParams: ConstraintLayout.LayoutParams = binding.textView6.layoutParams
+                    as ConstraintLayout.LayoutParams
+            layoutParams.startToStart = binding.waterLevelViewD!!.id
+            layoutParams.topToTop = binding.waterLevelViewD!!.id
+            binding.textView6.layoutParams = layoutParams
         }
 
         private fun toLightTheme() {
             binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
             binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+            binding.waterLevelViewL.visibility = View.VISIBLE
+            binding.waterLevelViewD!!.visibility = View.GONE
+            binding.waterLevelViewW!!.visibility = View.GONE
+            val layoutParams: ConstraintLayout.LayoutParams = binding.textView6.layoutParams
+                    as ConstraintLayout.LayoutParams
+            layoutParams.startToStart = binding.waterLevelViewL!!.id
+            layoutParams.topToTop = binding.waterLevelViewL!!.id
+            binding.textView6.layoutParams = layoutParams
         }
     }
 
@@ -376,7 +411,12 @@ class StatsBaseActivity : AppCompatActivity() {
             when (themeInt) {
                 0 -> toLightTheme()
                 1 -> toDarkTheme()
+                2 -> toWaterTheme()
             }
+        }
+
+        private fun toWaterTheme() {
+            binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
         }
 
         private fun toDarkTheme() {
@@ -456,6 +496,12 @@ class StatsBaseActivity : AppCompatActivity() {
             else{
                 requireContext().getString(R.string.none)
             }
+
+            when(themeInt){
+                0->binding.chartDaily.barsColor = resources.getColor(R.color.colorSecondary)
+                1->binding.chartDaily.barsColor = resources.getColor(R.color.darkGreen)
+                2->binding.chartDaily.barsColor = resources.getColor(R.color.colorSecondaryW)
+            }
         }
 
         private fun setBottomChart() {
@@ -491,15 +537,27 @@ class StatsBaseActivity : AppCompatActivity() {
                 binding.textView60.text = requireContext().getString(R.string.summary2)
             }
 
-            binding.most2.text = sqliteHelper.getMaxIntookStats()
+            val min = sqliteHelper.getMinIntookStats()
+            val max = sqliteHelper.getMaxIntookStats()
+
+            binding.most2.text = max
                 .toExtractIntookOption(unit).ifEmpty {
                     requireContext().getString(R.string.none)
                 }
 
-            binding.least.text = sqliteHelper.getMinIntookStats()
+            binding.least.text = min
                 .toExtractIntookOption(unit).ifEmpty {
                     requireContext().getString(R.string.none)
                 }
+                .ifSame(max.toExtractIntookOption(unit),requireContext().getString(R.string.none)){
+                    requireContext().getString(R.string.none)
+                }.toString()
+
+            when(themeInt){
+                0->binding.chartVarious.barsColor = resources.getColor(R.color.colorSecondary)
+                1->binding.chartVarious.barsColor = resources.getColor(R.color.darkGreen)
+                2->binding.chartVarious.barsColor = resources.getColor(R.color.colorSecondaryW)
+            }
         }
 
         private fun fromModelToListOf(model: ArrayList<BarChartModel>, unit: Int): List<Pair<String, Float>> {
@@ -534,6 +592,11 @@ class StatsBaseActivity : AppCompatActivity() {
                         unit
                     )
                 }?.counter.toDefaultFloatIfNull() ),
+                6.toExtractIntookOption(unit) to (model.singleOrNull { s ->
+                    s.type == 6.toExtractIntookOption(
+                        unit
+                    )
+                }?.counter.toDefaultFloatIfNull() ),
             )
         }
 
@@ -551,7 +614,13 @@ class StatsBaseActivity : AppCompatActivity() {
             when(themeInt){
                 0->toLightTheme()
                 1->toDarkTheme()
+                2->toWaterTheme()
             }
+        }
+
+        private fun toWaterTheme() {
+            binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
+            binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
         }
 
         private fun toDarkTheme() {
@@ -577,3 +646,5 @@ class StatsBaseActivity : AppCompatActivity() {
         ReachedGoalStatsBaseFragmentBinding::inflate) {
     }
 }
+
+

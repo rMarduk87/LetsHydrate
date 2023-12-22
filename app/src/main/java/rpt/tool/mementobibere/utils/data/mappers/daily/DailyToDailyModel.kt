@@ -10,7 +10,8 @@ class DailyToDailyModel : ModelMapper<Daily, DailyModel> {
     override fun map(source: Daily): DailyModel {
         return DailyModel(
             day = source.day,
-            quantity = source.quantity
+            quantity = source.quantity,
+            theme = source.theme
         )
     }
 }

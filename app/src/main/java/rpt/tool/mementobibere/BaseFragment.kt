@@ -49,12 +49,18 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     @SuppressLint("InflateParams", "RestrictedApi")
     fun showMessage(message: String, view: View, error:Boolean? = false,
                     type: AppUtils.Companion.TypeMessage = AppUtils.Companion.TypeMessage.NOTHING,
-                    duration: Int = 1500) {
+                    duration: Int = 1500,workType: Int = -1,climate: Int = -1) {
         val snackBar = Snackbar.make(view, "", duration)
         val customSnackView: View =
             when(error){
                 true ->layoutInflater.inflate(R.layout.error_toast_layout, null)
-                else->layoutInflater.inflate(R.layout.info_toast_layout, null)
+                else->
+                    if(type == AppUtils.Companion.TypeMessage.WORKTYPE){
+                        layoutInflater.inflate(R.layout.workout_toast_layout, null)
+                    }
+                    else{
+                        layoutInflater.inflate(R.layout.info_toast_layout, null)
+                    }
             }
         snackBar.view.setBackgroundColor(Color.TRANSPARENT)
         val snackbarLayout = snackBar.view as Snackbar.SnackbarLayout
@@ -73,6 +79,24 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         if(type== AppUtils.Companion.TypeMessage.WOMAN){
             val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
             anim.setAnimation(R.raw.woman)
+        }
+        if(type== AppUtils.Companion.TypeMessage.WORKTYPE){
+            val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
+            when(workType){
+                0->anim.setAnimation(R.raw.calm)
+                1->anim.setAnimation(R.raw.normal)
+                2->anim.setAnimation(R.raw.lively)
+                3->anim.setAnimation(R.raw.intense)
+            }
+        }
+        if(type== AppUtils.Companion.TypeMessage.CLIMATE){
+            val anim = customSnackView.findViewById<LottieAnimationView>(R.id.anim)
+            when(workType){
+                0->anim.setAnimation(R.raw.cold)
+                1->anim.setAnimation(R.raw.fresh)
+                2->anim.setAnimation(R.raw.mild)
+                3->anim.setAnimation(R.raw.torrid)
+            }
         }
 
         snackbarLayout.setPadding(0, 0, 0, 0)

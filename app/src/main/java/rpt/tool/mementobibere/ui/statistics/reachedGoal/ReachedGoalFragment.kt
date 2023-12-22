@@ -110,7 +110,8 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
                         sqliteHelper.addAll(
                             userInput.editText!!.text.toString(),
                             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toInt(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f), unit
+                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f),unit,
+                            sharedPref.getInt(AppUtils.THEME_KEY, 0)
                         )
                         userInput.editText!!.setText("")
                     }
@@ -146,7 +147,12 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
         when (themeInt) {
             0 -> toLightTheme()
             1 -> toDarkTheme()
+            2 -> toWaterTheme()
         }
+    }
+
+    private fun toWaterTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
     }
 
     private fun toDarkTheme() {

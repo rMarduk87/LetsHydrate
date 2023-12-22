@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="water">
+        <item>Keep the water in your mouth for a while before swallowing</item>
+        <item>Do not drink water immediately after eating</item>
+        <item>Do not drink cold or iced water</item>
+        <item>Drinking water while sitting is better than while standing or moving</item>
+        <item>If you can, drink water as soon as you wake up</item>
+        <item>Drink at least eight glasses a day</item>
+        <item>If you don\'t feel like drinking water, find alternatives (but be careful with sugars)</item>
+        <item>If you do sports, try to drink lots of water</item>
+        <item>Fruits and vegetables are important, Let\'s Hydrate does not take them into account in the calculation</item>
+    </string-array>
+</resources>

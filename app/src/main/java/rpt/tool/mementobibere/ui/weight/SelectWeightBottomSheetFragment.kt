@@ -34,7 +34,10 @@ class SelectWeightBottomSheetFragment:
             editor.putInt(AppUtils.WEIGHT_KEY,weight)
             val totalIntake = AppUtils.calculateIntake(
                 weight,
-                sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0), weightUnit, sharedPref.getInt(AppUtils.GENDER_KEY, 0)
+                sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
+                weightUnit,
+                sharedPref.getInt(AppUtils.GENDER_KEY, 0),
+                sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),
             )
             val df = DecimalFormat("#")
             df.roundingMode = RoundingMode.CEILING
@@ -50,8 +53,11 @@ class SelectWeightBottomSheetFragment:
         var colorString = if(themeInt==0){
             "#41B279"
         }
-        else{
+        else if(themeInt==1){
             "#29704D"
+        }
+        else{
+            "#4167B2"
         }
         val menu = binding.weightSystemBottomBar.menu
 
@@ -93,7 +99,17 @@ class SelectWeightBottomSheetFragment:
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
+            2->toWaterTheme()
         }
+    }
+
+    private fun toWaterTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.view2.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.colorWhite)
     }
 
     private fun toDarkTheme() {

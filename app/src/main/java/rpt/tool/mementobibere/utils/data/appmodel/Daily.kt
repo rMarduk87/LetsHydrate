@@ -11,6 +11,7 @@ import java.util.Calendar
 class Daily(
     var day: Calendar,
     val quantity: Float,
+    val theme: Int
 ) : AppModel(), Serializable {
 
     init {

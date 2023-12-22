@@ -20,7 +20,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private const val DATABASE_VERSION = 4
+        private const val DATABASE_VERSION = 5
         private const val DATABASE_NAME = "RptBibere"
         private const val TABLE_STATS = "stats"
         private const val TABLE_INTOOK_COUNTER = "intook_count"
@@ -33,6 +33,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val KEY_UNIT = "unit"
         private const val KEY_INTOOK_COUNT = "intook_count"
         private const val KEY_QTA = "qta"
+        private const val KEY_THEME = "theme"
 
     }
 
@@ -50,14 +51,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val createStatTable = ("CREATE TABLE " + TABLE_STATS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE,"
                 + KEY_INTOOK + " INT," + KEY_TOTAL_INTAKE + " INT," + KEY_UNIT +
-                " VARCHAR(200) DEFAULT \"ml\""+")")
+                " VARCHAR(200) DEFAULT \"ml\","+ KEY_THEME + " INT" +")")
         db?.execSQL(createStatTable)
-    }
-
-    private fun addAvisTable(db: SQLiteDatabase?) {
-        val createAvisTable = ("CREATE TABLE " + TABLE_AVIS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT)")
-        db?.execSQL(createAvisTable)
     }
 
     private fun addNewTables(db: SQLiteDatabase?) {
@@ -74,16 +69,27 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db?.execSQL(createReachedTable)
     }
 
+    private fun addAvisTable(db: SQLiteDatabase?) {
+        val createAvisTable = ("CREATE TABLE " + TABLE_AVIS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT)")
+        db?.execSQL(createAvisTable)
+    }
+
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion && newVersion == 2){
             db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_UNIT VARCHAR(250) DEFAULT \"ml\"")
-            db.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
+            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
         }
         else if(newVersion > oldVersion && newVersion == 3){
             addNewTables(db!!)
         }
         else if(newVersion > oldVersion && newVersion == 4){
             addAvisTable(db!!)
+        }
+        else if(newVersion > oldVersion && newVersion == 5){
+            db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_THEME INT DEFAULT 0")
+            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_THEME = 0")
+            db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 6 WHERE $KEY_INTOOK_COUNT = 5")
         }
         else{
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_STATS")
@@ -95,7 +101,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
 
 
-    fun addAll(date: String, intook: Int, totalintake: Float, unit: String): Long {
+    fun addAll(date: String, intook: Int, totalintake: Float, unit: String, theme: Int): Long {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         if (checkExistance(date,selectQuery) == 0) {
             val values = ContentValues()
@@ -103,12 +109,24 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             values.put(KEY_INTOOK, intook)
             values.put(KEY_TOTAL_INTAKE, totalintake)
             values.put(KEY_UNIT, unit)
+            values.put(KEY_THEME, theme)
             val db = this.writableDatabase
             val response = db.insert(TABLE_STATS, null, values)
             db.close()
             return response
         }
         return -1
+    }
+
+    fun updateAll(theme: Int) : Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_THEME,  theme)
+
+        val response = db.update(
+            TABLE_STATS, contentValues, null,null)
+        db.close()
+        return response
     }
 
     fun getIntook(date: String): Float {
@@ -174,7 +192,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         getAllStats().use{ it ->
             if (it.moveToFirst()) {
                 for (i in 0 until it.count) {
-                    list.add(Daily(it.getString(1).toCalendar(),AppUtils.calculatePercentual(it.getFloat(2), it.getFloat(3))))
+                    list.add(Daily(it.getString(1).toCalendar(),AppUtils.calculatePercentual(it.getFloat(2), it.getFloat(3)),it.getInt(4)))
                     it.moveToNext()
                 }
                 entry.postValue(list.sortedBy { it.day })
@@ -227,7 +245,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.close()
             return response
         }
-
         return -1
     }
 

@@ -17,6 +17,7 @@ fun Int.toMainTheme(): Int {
     when(this){
         0->return R.style.MainTheme
         1->return R.style.MainThemeD
+        2->return R.style.MainThemeW
     }
     return R.style.MainTheme
 }
@@ -25,13 +26,18 @@ fun Int.toAppTheme(): Int {
     when(this){
         0->return R.style.AppTheme
         1->return R.style.AppThemeD
+        2->return R.style.AppThemeW
     }
     return R.style.AppTheme
 }
 
-fun String.toExtractFloat(): Float{
+fun String.toExtractFloat(isAll : Boolean = false): Float{
     val k = this.split(" ")
-    val step = k[0].toFloat()
+    var j = k[0]
+    if(isAll){
+        j = k[0].split("/")[1]
+    }
+    val step = j.toFloat()
     if(step.length()==1){
         return parseFloat(String.format("%.0f",step))
     }
@@ -47,6 +53,13 @@ fun Float.toCalculatedValueStats(current: Int, newValue: Int): Float {
         mlStep.toCalculatedValue(0,newValue)
         return mlStep
     }
+}
+
+fun String.ifSame(max: String, text: String, function: () -> String): String? {
+    if(this == max){
+         return text
+    }
+    return this
 }
 
 fun Float.toCalculatedValue(current: Int, newValue: Int) : Float{
@@ -118,7 +131,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             2-> "150 ml"
             3-> "200 ml"
             4-> "250 ml"
-            5-> "custom"
+            5-> "300 ml"
+            6-> "custom"
             else->""
         }
         1-> result = when(this){
@@ -127,7 +141,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             2-> "5.27 oz(uk)"
             3-> "7.03 oz(uk)"
             4-> "8.79 oz(uk)"
-            5-> "custom"
+            5-> "10.56 oz(uk)"
+            6-> "custom"
             else->""
         }
         2-> result = when(this){
@@ -136,7 +151,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             2-> "5.07 oz(us)"
             3-> "6.76 oz(us)"
             4-> "8.45 oz(us)"
-            5-> "custom"
+            5-> "10.14 oz(us)"
+            6-> "custom"
             else->""
         }
     }

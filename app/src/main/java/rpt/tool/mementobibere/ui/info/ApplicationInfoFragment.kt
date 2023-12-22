@@ -34,6 +34,7 @@ class ApplicationInfoFragment:
     private var notificMsg: String = ""
     private var notificFrequency: Int = 45
     private var splash : Boolean = true
+    private var tips : Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
@@ -42,14 +43,14 @@ class ApplicationInfoFragment:
         principal = PartialPrincipalInfoBinding.bind(binding.root)
         val htmlLegacy = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
 
-
         stringColor = when(themeInt){
-            1->"#41B279"
-            2->"#29704D"
+            0->"#41B279"
+            1->"#29704D"
+            2->"#6A91DE"
             else -> {"#41B279"}
         }
 
-        setBackground()
+        setLayout()
         initBottomBars()
 
         android.text.format.DateFormat.is24HourFormat(requireContext())
@@ -118,11 +119,41 @@ class ApplicationInfoFragment:
         }
     }
 
-    private fun setBackground() {
+    private fun setLayout() {
+
         when(themeInt){
             0-> toLightTheme()
             1-> toDarkTheme()
+            2-> toWaterTheme()
         }
+    }
+
+    private fun toWaterTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
+        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etNotificationText.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etNotificationText.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.view.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.view3.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.view4.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
     }
 
     private fun toDarkTheme() {
@@ -132,9 +163,6 @@ class ApplicationInfoFragment:
         binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.notificationBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
-        binding.principal.unitSystemBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
-        binding.principal.darkThemeBottomBar.setBackgroundColorRes(R.color.gray_btn_bg_pressed_color)
         binding.principal.etNotificationText.
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
         binding.principal.etRingtone.
@@ -163,9 +191,6 @@ class ApplicationInfoFragment:
         binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.notificationBottomBar.setBackgroundColorRes(R.color.colorWhite)
-        binding.principal.unitSystemBottomBar.setBackgroundColorRes(R.color.colorWhite)
-        binding.principal.darkThemeBottomBar.setBackgroundColorRes(R.color.colorWhite)
         binding.principal.etNotificationText.
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.etRingtone.
@@ -187,15 +212,18 @@ class ApplicationInfoFragment:
         binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
     }
 
+
     private fun setBackgroundColor(color: Int) {
         binding.principal.layoutPrincipal.setBackgroundColor(color)
     }
 
     private fun initBottomBars() {
+
         val menu = principal.darkThemeBottomBar.menu
         val menu2 = principal.unitSystemBottomBar.menu
         val menu3 = principal.notificationBottomBar.menu
         val menu4 = principal.splashScreenBottomBar.menu
+        val menu5 = principal.tipsBottomBar.menu
 
         for (i in AppUtils.listIdsInfoTheme.indices) {
             menu.add(
@@ -249,10 +277,24 @@ class ApplicationInfoFragment:
             )
         }
 
+        for (i in AppUtils.listIdsTips.indices) {
+            menu5.add(
+                MenuItemDescriptor.Builder(
+                    requireContext(),
+                    AppUtils.listIdsTips[i],
+                    AppUtils.listIconTips[i],
+                    AppUtils.listStringTips[i],
+                    Color.parseColor(stringColor)
+                )
+                    .build()
+            )
+        }
+
         principal.darkThemeBottomBar.onItemSelectedListener = { _, i, _ ->
             when(i.id) {
                 R.id.icon_light -> themeInt = 0
                 R.id.icon_dark -> themeInt = 1
+                R.id.icon_water -> themeInt = 2
             }
 
             setThemeToShared()
@@ -274,6 +316,7 @@ class ApplicationInfoFragment:
         when (themeInt) {
             0 -> menu.select(R.id.icon_light)
             1 -> menu.select(R.id.icon_dark)
+            2 -> menu.select(R.id.icon_water)
             else -> {
                 menu.select(R.id.icon_light)
                 themeInt = 0
@@ -317,10 +360,6 @@ class ApplicationInfoFragment:
         when (splash) {
             true -> menu4.select(R.id.icon_on)
             false -> menu4.select(R.id.icon_off)
-            else -> {
-                menu4.select(R.id.on)
-                splash = true
-            }
         }
 
         principal.splashScreenBottomBar.onItemSelectedListener = { _, i, _ ->
@@ -333,6 +372,28 @@ class ApplicationInfoFragment:
 
         }
 
+        tips = sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)
+
+        when (tips) {
+            true -> menu5.select(R.id.tips_on)
+            false -> menu5.select(R.id.tips_off)
+        }
+
+        principal.tipsBottomBar.onItemSelectedListener = { _, i, _ ->
+            when(i.id) {
+                R.id.tips_on -> tips = true
+                R.id.tips_off -> tips = false
+            }
+
+            setTips()
+
+        }
+    }
+
+    private fun setTips() {
+        val editor = sharedPref.edit()
+        editor.putBoolean(AppUtils.SEE_TIPS_KEY, splash)
+        editor.apply()
     }
 
     private fun setSplash() {
@@ -359,14 +420,27 @@ class ApplicationInfoFragment:
         editor.putFloat(AppUtils.VALUE_150_KEY,AppUtils.firstConversion(150f,unit))
         editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unit))
         editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unit))
+        editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unit))
         editor.apply()
     }
 
     private fun setThemeToShared() {
+        sqliteHelper = SqliteHelper(requireContext())
+        sqliteHelper.updateAll(themeInt)
+        var old = sharedPref.getInt(AppUtils.THEME_KEY, 0)
         val editor = sharedPref.edit()
         editor.putInt(AppUtils.THEME_KEY, themeInt)
         editor.apply()
-        setBackground()
+        if(old != themeInt){
+            stringColor = when(themeInt){
+                0->"#41B279"
+                1->"#29704D"
+                2->"#6A91DE"
+                else -> {"#41B279"}
+            }
+            setLayout()
+        }
+
     }
 
     @Deprecated("Deprecated in Java")

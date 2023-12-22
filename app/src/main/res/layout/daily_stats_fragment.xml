@@ -101,7 +101,7 @@
                 android:text="@string/goal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/fake3"
-                app:layout_constraintHorizontal_weight=".15"
+                app:layout_constraintHorizontal_weight=".25"
                 app:layout_constraintStart_toEndOf="@id/qtaHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 

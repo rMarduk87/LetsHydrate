@@ -10,4 +10,7 @@
     <dimen name="recycler_view_margin_vertical">4dp</dimen>
     <dimen name="recycler_view_item_icon_size">64dp</dimen>
     <dimen name="recycler_view_item_icon_sizexxl">128dp</dimen>
+    <dimen name="textSize">15sp</dimen>
+    <dimen name="editBalloonOverlayPadding">6dp</dimen>
+    <dimen name="editBalloonOverlayRadius">11dp</dimen>
 </resources>
