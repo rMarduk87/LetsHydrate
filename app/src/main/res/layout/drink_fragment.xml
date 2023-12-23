@@ -175,7 +175,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="96dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="140dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -435,27 +435,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/undo"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/btnUndo"
-        app:layout_constraintTop_toTopOf="@+id/btnUndo" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnUndo"
+        app:layout_constraintRight_toRightOf="@+id/btnUndo"
+        app:layout_constraintTop_toBottomOf="@+id/btnUndo" />
 
     <TextView
         android:id="@+id/refreshTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:text="@string/reset"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/btnRefresh"
-        app:layout_constraintTop_toTopOf="@+id/btnRefresh" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnRefresh"
+        app:layout_constraintRight_toRightOf="@+id/btnRefresh"
+        app:layout_constraintTop_toBottomOf="@+id/btnRefresh" />
 
     <TextView
         android:id="@+id/redoTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/redo"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintStart_toStartOf="@+id/btnRedo"
-        app:layout_constraintTop_toTopOf="@+id/btnRedo" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnRedo"
+        app:layout_constraintRight_toRightOf="@+id/btnRedo"
+        app:layout_constraintTop_toBottomOf="@+id/btnRedo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
