@@ -63,7 +63,7 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/sd"
             app:layout_constraintRight_toLeftOf="@+id/btn_gift"
-            app:layout_constraintTop_toTopOf="0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_gift"
@@ -86,8 +86,8 @@
             android:text="March 2018"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintLeft_toLeftOf="0"
-            app:layout_constraintRight_toRightOf="0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sh" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -120,8 +120,8 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginLeft="6dp"
-            app:layout_constraintLeft_toLeftOf="0"
-            app:layout_constraintRight_toRightOf="0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/jz" />
 
         <LinearLayout
@@ -178,15 +178,15 @@
             android:textSize="12sp"
             android:tint="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/c3"
-            app:layout_constraintRight_toRightOf="0" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <View
             android:id="@+id/c3"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_marginTop="23dp"
-            app:layout_constraintLeft_toLeftOf="0"
-            app:layout_constraintRight_toRightOf="0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/df" />
 
         <TextView
@@ -587,7 +587,7 @@
             android:textColor="@color/darkGreen"
             android:textSize="14sp"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="0"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/cn"
             app:layout_constraintRight_toRightOf="@+id/ca"

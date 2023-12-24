@@ -244,4 +244,12 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="work_type_hint">Elige el tipo de entrenamiento diario</string>
     <string name="climate_set_hint">Por favor elige el tipo de clima</string>
     <string name="tips">Ver consejos para beber</string>
+    <string name="avis_info">Haz clic en el calendario para indicar cuándo donarás sangre</string>
+    <string name="welcome">Bienvenidos a Hidrátenos</string>
+    <string name="click_opt">Haga clic en una de las opciones para indicar la cantidad consumida</string>
+    <string name="click_opt_custom">Con esta opción puedes elegir la cantidad que quieras</string>
+    <string name="click_opt_all">¿Has bebido la cantidad diaria?Haz clic aquí</string>
+    <string name="click_opt_undo">Haga clic aquí para cancelar la última opción seleccionada</string>
+    <string name="click_opt_redo">Haga clic aquí para restaurar la última opción seleccionada</string>
+    <string name="click_opt_refresh">Haga clic aquí para restablecer la cantidad consumida hasta el momento</string>
 </resources>

@@ -240,4 +240,12 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="work_type_hint">Veuillez choisir le type d\'entraînement quotidien</string>
     <string name="climate_set_hint">Veuillez choisir le type de climat</string>
     <string name="tips">Voir les conseils de consommation</string>
+    <string name="avis_info">Cliquez sur le calendrier pour indiquer quand vous donnerez votre sang</string>
+    <string name="welcome">Bienvenue sur Hydratons-nous</string>
+    <string name="click_opt">Cliquez sur une des options pour indiquer la quantité bu</string>
+    <string name="click_opt_custom">Avec cette option, vous pouvez choisir la quantité que vous souhaitez</string>
+    <string name="click_opt_all">Avez-vous bu la quantité quotidienne? Cliquez ici</string>
+    <string name="click_opt_undo">Cliquez ici pour annuler la dernière option sélectionnée</string>
+    <string name="click_opt_redo">Cliquez ici pour restaurer la dernière option sélectionnée</string>
+    <string name="click_opt_refresh">Cliquez ici pour réinitialiser la quantité bu jusqu\'à présent</string>
 </resources>

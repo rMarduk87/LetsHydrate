@@ -240,6 +240,7 @@ class AppUtils {
         const val CLIMATE_KEY : String = "climate"
         const val SET_CLIMATE_KEY : String = "set_climate"
         const val SEE_TIPS_KEY : String = "see_tips"
+        const val START_TUTORIAL_KEY : String = "start_tutorial"
 
         enum class TypeMessage {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE

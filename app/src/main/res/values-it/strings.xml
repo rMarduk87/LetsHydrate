@@ -240,4 +240,12 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="work_type_hint">Scegli il tipo di allenamento quotidiano</string>
     <string name="climate_set_hint">Scegli il tipo di clima</string>
     <string name="tips">Visualizzare suggerimenti bevuta</string>
+    <string name="avis_info">Clicca sul calendario per indicare quando farai la donazione sangue</string>
+    <string name="welcome">Benvenuto su Idratiamoci</string>
+    <string name="click_opt">Clicca su una delle opzioni per indicare la quantità bevuta</string>
+    <string name="click_opt_custom">Con questa opzione puoi scegliere la quantità che preferisci</string>
+    <string name="click_opt_all">Hai bevuto la quantità giornaliera?Clicca qui</string>
+    <string name="click_opt_undo">Fai clic qui per annullare l\'ultima opzione selezionata</string>
+    <string name="click_opt_redo">Fai clic qui per ripristinare l\'ultima opzione selezionata</string>
+    <string name="click_opt_refresh">Clicca qui per azzerare la quantità bevuta finora</string>
 </resources>

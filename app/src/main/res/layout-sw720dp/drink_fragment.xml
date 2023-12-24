@@ -154,10 +154,21 @@
         app:progressView_radius="12dp" />
 
     <ImageView
+        android:id="@+id/tutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_tutorial"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvIntook">
+
+    </ImageView>
+
+    <ImageView
         android:id="@+id/calendarAvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="32dp"
         android:src="@drawable/ic_calendar_mini"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
@@ -166,10 +177,23 @@
     </ImageView>
 
     <ImageView
+        android:id="@+id/calendarAvisHelp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="-8dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/calendarAvis"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalIntake"
+        app:srcCompat="@android:drawable/ic_menu_info_details"
+        app:tint="@color/red">
+
+    </ImageView>
+
+    <ImageView
         android:id="@+id/infoAvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="64dp"
+        android:layout_marginLeft="96dp"
         android:src="@drawable/ic_avis_day"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
@@ -181,7 +205,7 @@
         android:id="@+id/tvIntook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="44dp"
         android:text="@string/_2000"
         android:textColor="@color/colorWhite"

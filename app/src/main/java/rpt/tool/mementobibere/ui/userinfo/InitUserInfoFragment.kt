@@ -347,6 +347,7 @@ class InitUserInfoFragment:
                     editor.putBoolean(AppUtils.SET_GENDER_KEY, true)
                     editor.putBoolean(AppUtils.SET_NEW_WORK_TYPE_KEY, true)
                     editor.putBoolean(AppUtils.SET_CLIMATE_KEY, true)
+                    editor.putBoolean(AppUtils.START_TUTORIAL_KEY, true)
                     editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonor)
                     editor.apply()
 

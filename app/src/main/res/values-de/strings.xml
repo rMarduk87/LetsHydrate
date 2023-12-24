@@ -240,4 +240,12 @@
     <string name="work_type_hint">Bitte wählen Sie die Art des täglichen Trainings aus</string>
     <string name="climate_set_hint">Bitte wählen Sie die Art des Klimas</string>
     <string name="tips">Trinktipps ansehen</string>
+    <string name="avis_info">Klicken Sie auf den Kalender, um anzugeben, wann Sie Blut spenden möchten</string>
+    <string name="welcome">Willkommen bei Lass uns hydrieren</string>
+    <string name="click_opt">Klicken Sie auf eine der Optionen, um die getrunkene Menge anzugeben</string>
+    <string name="click_opt_custom">Mit dieser Option können Sie jede gewünschte Menge auswählen</string>
+    <string name="click_opt_all">Haben Sie die tägliche Menge getrunken? Klicken Sie hier</string>
+    <string name="click_opt_undo">Klicken Sie hier, um die zuletzt ausgewählte Option abzubrechen</string>
+    <string name="click_opt_redo">Klicken Sie hier, um die zuletzt ausgewählte Option wiederherzustellen</string>
+    <string name="click_opt_refresh">Klicken Sie hier, um die bisher getrunkene Menge zurückzusetzen</string>
 </resources>
