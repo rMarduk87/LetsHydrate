@@ -158,9 +158,6 @@ class InitUserInfoFragment:
                 bloodDonor = 0
                 showMessage(getString(R.string.you_selected_no_avis),it)
             }
-            val editor = sharedPref.edit()
-            editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
-            editor.apply()
         }
 
         binding.btnContinue.setOnClickListener {
@@ -201,6 +198,7 @@ class InitUserInfoFragment:
                     editor.putBoolean(AppUtils.SET_WEIGHT_UNIT,true)
                     editor.putBoolean(AppUtils.SET_GENDER_KEY, true)
                     editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonor)
+                    editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
                     editor.apply()
 
                     val totalIntake = AppUtils.calculateIntake(weight.toInt(), workTime.toInt(),weightUnit, gender)
