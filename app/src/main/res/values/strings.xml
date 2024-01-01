@@ -24,7 +24,7 @@
     <string name="notif_freq_hint">Notification Frequency</string>
     <string name="walkthrough_text_one">Clear, pure, essential for life and health. Water is the main component of the human body, just think that it represents about 60 percent of the weight in adult males, while from 50 to 55 percent in women and up to 75 percent in a newborn
     </string>
-    <string name="walkthough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
+    <string name="walkthrough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
         make you tired.
     </string>
     <string name="walkthrough_text_three">Every cell, tissue and organ in your body needs water to work properly, an element at the base of the main physical and cognitive functions
@@ -60,7 +60,7 @@
     <string name="notification_enabled">Notification Enabled..</string>
     <string name="notification_disabled">Notification Disabled..</string>
     <string name="empty">Empty</string>
-    <string name="walkthough_text_four">How much to drink?\nAdolescents, adults and the elderly: males 2.5 liters a day, females 2 liters a day</string>
+    <string name="walkthrough_text_four">How much to drink?\nAdolescents, adults and the elderly: males 2.5 liters a day, females 2 liters a day</string>
     <string name="back">Back</string>
     <string name="_30_mins">30 Mins</string>
     <string name="_45_mins">45 Mins</string>
@@ -175,12 +175,12 @@
     <string name="info_label">INFORMATION</string>
     <string name="curiosity">Curiosity</string>
     <string name="reached_daily">Reached Daily</string>
-    <string name="d_stats">Bevute Quotidiane</string>
+    <string name="d_stats">Daily Drink</string>
     <string name="goal">Goal</string>
     <string name="other_info">Other Info</string>
     <string name="avis">Blood donor? Click below</string>
-    <string name="walkthough_text_five">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\nTo confirm click on the button below.\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
-    <string name="walkthough_text_five_2">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="walkthrough_text_five">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\nTo confirm click on the button below.\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="walkthrough_text_five_2">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
     <string name="tomorrow_you_will_donate">Tomorrow you will donate blood or today you have already donated, drinking is essential!!</string>
     <string name="you_selected_man">You selected Man</string>
     <string name="you_selected_woman">You selected Woman</string>
@@ -223,5 +223,8 @@
     <string name="click_opt_undo">Click here to cancel the last selected option</string>
     <string name="click_opt_redo">Click here to restore the last selected option</string>
     <string name="click_opt_refresh">Click here to reset the amount drunk so far</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="get_reload">Reload</string>
 
 </resources>

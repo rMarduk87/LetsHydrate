@@ -69,8 +69,8 @@ class StatsBaseActivity : AppCompatActivity() {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
         viewPagerAdapter = StatsAdapter(supportFragmentManager)
-        binding.statsPager.adapter = viewPagerAdapter
-        binding.indicator.setViewPager(binding.statsPager)
+        //binding.statsPager.adapter = viewPagerAdapter
+        //binding.indicator.setViewPager(binding.statsPager)
     }
 
     private fun setBackGround() {
@@ -83,26 +83,26 @@ class StatsBaseActivity : AppCompatActivity() {
 
     private fun toWaterTheme() {
         binding.background.setBackgroundColor(getColor(R.color.colorSecondaryDarkW))
-        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_w)
+        //binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_w)
     }
 
     private fun toDarkTheme() {
         binding.background.setBackgroundColor(getColor(R.color.colorSecondaryDark))
-        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_dark)
+        //binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg_dark)
     }
 
     private fun toLightTheme() {
         binding.background.setBackgroundColor(getColor(R.color.colorSecondary))
-        binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg)
+        //binding.getStarted.background = getDrawable(R.drawable.walk_through_button_bg)
     }
 
     override fun onStart() {
         super.onStart()
-        binding.getStarted.setOnClickListener {
+        /*binding.getStarted.setOnClickListener {
 
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        }
+        }*/
     }
 
     override fun onNavigateUp(): Boolean {

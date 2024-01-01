@@ -24,7 +24,7 @@
     <string name="notif_freq_hint">Frecuencia de notificación</string>
     <string name="walkthrough_text_one">Claro, puro, esencial para la vida y la salud. El agua es el componente principal del cuerpo humano, basta pensar que representa alrededor del 60 por ciento del peso en los varones adultos, mientras que del 50 al 55 por ciento en las mujeres y hasta el 75 por ciento en un recién nacido.
       </string>
-    <string name="walkthough_text_two">La falta de agua puede provocar deshidratación. Incluso una deshidratación leve puede agotarle y
+    <string name="walkthrough_text_two">La falta de agua puede provocar deshidratación. Incluso una deshidratación leve puede agotarle y
           cansarte.
       </string>
     <string name="walkthrough_text_three">Cada célula, tejido y órgano de tu cuerpo necesita agua para funcionar correctamente, que es la base de las principales funciones físicas y cognitivas.
@@ -60,7 +60,7 @@
     <string name="notification_enabled">Notificación habilitada..</string>
     <string name="notification_disabled">Notificación deshabilitada..</string>
     <string name="empty">Vacío</string>
-    <string name="walkthough_text_four">¿Cuánto beber?\nAdolescentes, adultos y ancianos: hombres 2,5 litros por día, mujeres 2 litros por día</string>
+    <string name="walkthrough_text_four">¿Cuánto beber?\nAdolescentes, adultos y ancianos: hombres 2,5 litros por día, mujeres 2 litros por día</string>
     <string name="back">Atrás</string>
     <string name="_30_mins">30 minutos</string>
     <string name="_45_mins">45 minutos</string>
@@ -208,8 +208,8 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="goal">Objetivo</string>
     <string name="other_info">Otra información</string>
     <string name="avis">¿Donante de sangre? Haga clic a continuación</string>
-    <string name="walkthough_text_five">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de la donación\nPara confirmar haz clic en el botón de abajo.\n\nEn la pantalla donde indicas la cantidad consumida, puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
-    <string name="walkthough_text_five_2">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de donar\n\nEn la pantalla donde indicas la cantidad consumida , puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
+    <string name="walkthrough_text_five">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de la donación\nPara confirmar haz clic en el botón de abajo.\n\nEn la pantalla donde indicas la cantidad consumida, puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
+    <string name="walkthrough_text_five_2">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de donar\n\nEn la pantalla donde indicas la cantidad consumida , puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
     <string name="tomorrow_you_will_donate">Mañana donarás sangre o hoy ya la has donado, beber es fundamental!!</string>
     <string name="you_selected_man">Seleccionaste Hombre</string>
     <string name="you_selected_woman">Seleccionaste Mujer</string>
@@ -252,4 +252,7 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="click_opt_undo">Haga clic aquí para cancelar la última opción seleccionada</string>
     <string name="click_opt_redo">Haga clic aquí para restaurar la última opción seleccionada</string>
     <string name="click_opt_refresh">Haga clic aquí para restablecer la cantidad consumida hasta el momento</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="get_reload">Reload</string>
 </resources>

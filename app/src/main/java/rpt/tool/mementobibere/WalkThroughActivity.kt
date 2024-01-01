@@ -6,24 +6,30 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.os.Handler
+import android.os.Looper
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ScrollView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import com.airbnb.lottie.LottieAnimationView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.skydoves.balloon.BalloonAlign
+import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.databinding.ActivityWalkThroughBinding
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.balloon.walktrought.FifthWalkthroughBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.FirstWalkthroughBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.FourthWalkthroughBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.SecondWalkthroughBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.ThirdWalkthroughBalloonFactory
 
 class WalkThroughActivity : AppCompatActivity() {
 
 
-    private var viewPagerAdapter: WalkThroughAdapter? = null
     private lateinit var binding: ActivityWalkThroughBinding
     private lateinit var sharedPref: SharedPreferences
+    private val firstWalkthroughBalloon by balloon<FirstWalkthroughBalloonFactory>()
+    private val secondWalkthroughBalloon by balloon<SecondWalkthroughBalloonFactory>()
+    private val thirdWalkthroughBalloon by balloon<ThirdWalkthroughBalloonFactory>()
+    private val fourthWalkthroughBalloon by balloon<FourthWalkthroughBalloonFactory>()
+    private val fifthWalkthroughBalloon by balloon<FifthWalkthroughBalloonFactory>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,188 +39,125 @@ class WalkThroughActivity : AppCompatActivity() {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
-        val setBlood = sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false)
-        val walkthrough = sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, false)
+        startWalkThrough(binding.root)
+    }
 
-        if(!setBlood && walkthrough){
-            binding.getStarted.setText(R.string.str_continue)
-        }
-        else if(!setBlood && !walkthrough){
-            binding.getStarted.setText(R.string.get_started)
-        }
+    private fun startWalkThrough(root: ConstraintLayout) {
+        fifthWalkthroughBalloon.dismiss()
+        binding.getReload.isEnabled = false
+        binding.imageView2.visibility = View.VISIBLE
+        binding.imageView3.visibility = View.GONE
+        binding.imageView4.visibility = View.GONE
+        binding.imageView5.visibility = View.GONE
+        binding.imageView6.visibility = View.GONE
 
-        viewPagerAdapter = WalkThroughAdapter(supportFragmentManager)
-        binding.walkThroughPager.adapter = viewPagerAdapter
-        binding.indicator.setViewPager(binding.walkThroughPager)
+        Handler(Looper.getMainLooper()).postDelayed({
+            firstWalkthroughBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.imageView2 as View,
+                subAnchorList = listOf(root),
+            )
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            firstWalkthroughBalloon.dismiss()
+            goToSecond(root)
+        }, 6500)
+    }
+
+    private fun goToSecond(root: ConstraintLayout) {
+        binding.imageView2.visibility = View.GONE
+        binding.imageView3.visibility = View.VISIBLE
+        binding.imageView4.visibility = View.GONE
+        binding.imageView5.visibility = View.GONE
+        binding.imageView6.visibility = View.GONE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            secondWalkthroughBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.imageView3 as View,
+                subAnchorList = listOf(root),
+            )
+        }, 2000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            secondWalkthroughBalloon.dismiss()
+            goToThird(root)
+        }, 5000)
+    }
+
+    private fun goToThird(root: ConstraintLayout) {
+        binding.imageView2.visibility = View.GONE
+        binding.imageView3.visibility = View.GONE
+        binding.imageView4.visibility = View.VISIBLE
+        binding.imageView5.visibility = View.GONE
+        binding.imageView6.visibility = View.GONE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            thirdWalkthroughBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.imageView4 as View,
+                subAnchorList = listOf(root),
+            )
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            thirdWalkthroughBalloon.dismiss()
+            goToFourth(root)
+        }, 6500)
+    }
+
+    private fun goToFourth(root: ConstraintLayout) {
+        binding.imageView2.visibility = View.GONE
+        binding.imageView3.visibility = View.GONE
+        binding.imageView4.visibility = View.GONE
+        binding.imageView5.visibility = View.VISIBLE
+        binding.imageView6.visibility = View.GONE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            fourthWalkthroughBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.imageView5 as View,
+                subAnchorList = listOf(root),
+            )
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            fourthWalkthroughBalloon.dismiss()
+            goToFifth(root)
+        }, 6500)
+    }
+
+    private fun goToFifth(root: ConstraintLayout) {
+        binding.imageView2.visibility = View.GONE
+        binding.imageView3.visibility = View.GONE
+        binding.imageView4.visibility = View.GONE
+        binding.imageView5.visibility = View.GONE
+        binding.imageView6.visibility = View.VISIBLE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            fifthWalkthroughBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.imageView6 as View,
+                subAnchorList = listOf(root),
+            )
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.getReload.isEnabled = true
+        }, 6500)
     }
 
     override fun onStart() {
         super.onStart()
         binding.getStarted.setOnClickListener {
 
-            val setBlood = sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false)
-
-            if(setBlood){
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-            else{
-                startActivity(Intent(this, InitUserInfoActivity::class.java))
-                finish()
-            }
-
-
-        }
-    }
-
-    private inner class WalkThroughAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-        override fun getCount(): Int {
-            val setBlood = sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false)
-            val walkthrough = sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, false)
-            return if(!setBlood && !walkthrough){
-                5
-            }
-            else if(!setBlood && walkthrough){
-                1
-            }
-            else{
-                5
-            }
+            startActivity(Intent(this, InitUserInfoActivity::class.java))
+            finish()
         }
 
-        override fun getItem(i: Int): Fragment {
-            if(!sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false) &&
-                !sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, false)){
-                when (i) {
-                    0 -> {
-                        return WalkThroughOne()
-                    }
-
-                    1 -> {
-                        return WalkThroughTwo()
-                    }
-
-                    2 -> {
-                        return WalkThroughThree()
-                    }
-                    3 -> {
-                        return WalkThroughFour()
-                    }
-
-                    4 -> {
-                        return WalkThroughFive(true)
-                    }
-                    else -> {
-                        return WalkThroughOne()
-                    }
-                }
-            }
-            else if(!sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false) &&
-                sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, false)){
-                return WalkThroughFive(false)
-            }
-            return WalkThroughOne()
-        }
-    }
-
-
-    class WalkThroughOne : Fragment() {
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-
-            return inflater.inflate(R.layout.walk_through_one, container, false)
-
-        }
-    }
-
-    class WalkThroughTwo : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-
-            return inflater.inflate(R.layout.walk_through_two, container, false)
-
-        }
-    }
-
-    class WalkThroughThree : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-
-            return inflater.inflate(R.layout.walk_through_three, container, false)
-
-        }
-
-    }
-
-    class WalkThroughFour : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-
-            return inflater.inflate(R.layout.walk_through_four, container, false)
-
-        }
-
-    }
-
-    class WalkThroughFive(isFirst: Boolean) : Fragment() {
-        private lateinit var sharedPref: SharedPreferences
-        private lateinit var btnAvis: LottieAnimationView
-        private lateinit var textView4 : TextView
-        private lateinit var textView40 : TextView
-        private lateinit var scrollView: ScrollView
-        private var bloodDonor : Int = 0
-        private var _isFirst :Boolean = isFirst
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-
-            var view =  inflater.inflate(R.layout.walk_through_five, container, false)
-
-            btnAvis = view.findViewById(R.id.btnAvis) as LottieAnimationView
-            textView4 = view.findViewById(R.id.textView4) as TextView
-            textView40 = view.findViewById(R.id.textView40) as TextView
-            scrollView = view.findViewById(R.id.scrollView2) as ScrollView
-
-            btnAvis.visibility = if(_isFirst){View.GONE}else{View.VISIBLE}
-
-            textView4.visibility = if(_isFirst){View.GONE}else{View.VISIBLE}
-
-            textView40.visibility = if(!_isFirst){View.GONE}else{View.VISIBLE}
-
-            scrollView.visibility = if(_isFirst){View.GONE}else{View.VISIBLE}
-
-            btnAvis.setOnClickListener{
-                if(bloodDonor == 0){
-                    bloodDonor = 1
-                }
-                else{
-                    bloodDonor = 0
-                }
-
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.BLOOD_DONOR_KEY,bloodDonor)
-                editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
-                editor.apply()
-            }
-            return view;
+        binding.getReload.setOnClickListener {
+            startWalkThrough(binding.root)
         }
     }
 }

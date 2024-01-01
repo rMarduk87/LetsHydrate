@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_drinkFragment_to_selfFragment"
             app:destination="@id/DrinkFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_tutorialFragment"
+            app:destination="@id/TutorialFragment" />
     </fragment>
     <dialog
         android:id="@+id/editInfoBottomSheetFragment"
@@ -50,6 +53,15 @@
         <action
             android:id="@+id/action_infoFragment_to_settingFragment"
             app:destination="@id/applicationInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TutorialFragment"
+        android:name="rpt.tool.mementobibere.ui.tutorial.TutorialFragment"
+        android:label="TutorialFragment"
+        tools:layout="@layout/tutorial_fragment">
+        <action
+            android:id="@+id/action_tutorialFragment_to_drinkFragment"
+            app:destination="@id/DrinkFragment" />
     </fragment>
 
 </navigation>

@@ -24,7 +24,7 @@
     <string name="notif_freq_hint">Benachrichtigungshäufigkeit</string>
     <string name="walkthrough_text_one">Klar, rein, essentiell für Leben und Gesundheit. Wasser ist der Hauptbestandteil des menschlichen Körpers. Denken Sie nur daran, dass es bei erwachsenen Männern etwa 60 Prozent des Gewichts ausmacht, bei Frauen 50 bis 55 Prozent und bei Neugeborenen bis zu 75 Prozent
      </string>
-    <string name="walkthough_text_two">Wassermangel kann zu Dehydrierung führen. Selbst eine leichte Dehydrierung kann Sie erschöpfen
+    <string name="walkthrough_text_two">Wassermangel kann zu Dehydrierung führen. Selbst eine leichte Dehydrierung kann Sie erschöpfen
          mach dich müde.
      </string>
     <string name="walkthrough_text_three">Jede Zelle, jedes Gewebe und jedes Organ in Ihrem Körper benötigt Wasser, um richtig zu funktionieren, ein Element, das den wichtigsten körperlichen und kognitiven Funktionen zugrunde liegt
@@ -60,7 +60,7 @@
     <string name="notification_enabled">Benachrichtigung aktiviert..</string>
     <string name="notification_disabled">Benachrichtigung deaktiviert..</string>
     <string name="empty">Leer</string>
-    <string name="walkthough_text_four">Wie viel trinken?\nJugendliche, Erwachsene und ältere Menschen: Männer 2,5 Liter pro Tag, Frauen 2 Liter pro Tag</string>
+    <string name="walkthrough_text_four">Wie viel trinken?\nJugendliche, Erwachsene und ältere Menschen: Männer 2,5 Liter pro Tag, Frauen 2 Liter pro Tag</string>
     <string name="back">Zurück</string>
     <string name="_30_mins">30 Minuten</string>
     <string name="_45_mins">45 Minuten</string>
@@ -204,8 +204,8 @@
     <string name="goal">Ziel</string>
     <string name="other_info">Andere Informationen</string>
     <string name="avis">Blutspender? Klicken Sie unten</string>
-    <string name="walkthough_text_five">Wenn Sie Vollblutspender sind, ist es wichtig, dass Sie am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich nehmen (mindestens 2 Liter).\nZur Bestätigung klicken Sie auf die Schaltfläche unten.\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben, können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
-    <string name="walkthough_text_five_2">Wenn Sie Vollblutspender sind, ist es wichtig, am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich zu nehmen (mindestens 2 Liter).\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben , können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
+    <string name="walkthrough_text_five">Wenn Sie Vollblutspender sind, ist es wichtig, dass Sie am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich nehmen (mindestens 2 Liter).\nZur Bestätigung klicken Sie auf die Schaltfläche unten.\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben, können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
+    <string name="walkthrough_text_five_2">Wenn Sie Vollblutspender sind, ist es wichtig, am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich zu nehmen (mindestens 2 Liter).\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben , können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
     <string name="tomorrow_you_will_donate">Morgen wirst du Blut spenden oder heute hast du bereits gespendet, Trinken ist unerlässlich!!</string>
     <string name="you_selected_man">Sie haben „Mann“ ausgewählt</string>
     <string name="you_selected_woman">Sie haben Frau ausgewählt</string>
@@ -248,4 +248,7 @@
     <string name="click_opt_undo">Klicken Sie hier, um die zuletzt ausgewählte Option abzubrechen</string>
     <string name="click_opt_redo">Klicken Sie hier, um die zuletzt ausgewählte Option wiederherzustellen</string>
     <string name="click_opt_refresh">Klicken Sie hier, um die bisher getrunkene Menge zurückzusetzen</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="get_reload">Reload</string>
 </resources>

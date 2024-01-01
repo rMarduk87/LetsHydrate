@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.utils.balloon
+package rpt.tool.mementobibere.utils.balloon.tutorial
 
 import android.content.Context
 import android.widget.Toast
@@ -11,11 +11,11 @@ import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.overlay.BalloonOverlayRoundRect
 import rpt.tool.mementobibere.R
 
-class FourthHelpBalloonFactory : Balloon.Factory() {
+class SixthHelpBalloonFactory : Balloon.Factory() {
 
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
         return Balloon.Builder(context)
-            .setText(context.getText(R.string.click_opt_all))
+            .setText(context.getText(R.string.click_opt_redo))
             .setArrowSize(10)
             .setWidthRatio(1.0f)
             .setHeight(BalloonSizeSpec.WRAP)

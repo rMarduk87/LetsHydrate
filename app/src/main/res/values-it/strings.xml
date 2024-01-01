@@ -24,7 +24,7 @@
     <string name="notif_freq_hint">Frequenza di notifica</string>
     <string name="walkthrough_text_one">Chiara, pura, essenziale per la vita e la salute. L\'acqua è il componente principale del corpo umano, basti pensare che rappresenta circa il 60 per cento del peso nei maschi adulti, mentre dal 50 al 55 per cento nelle donne e fino al 75 per cento in un neonato
      </string>
-    <string name="walkthough_text_two">La mancanza di acqua può portare alla disidratazione. Anche una lieve disidratazione può prosciugarti e
+    <string name="walkthrough_text_two">La mancanza di acqua può portare alla disidratazione. Anche una lieve disidratazione può prosciugarti e
          renderti stanco.
      </string>
     <string name="walkthrough_text_three">Ogni cellula, tessuto e organo del tuo corpo ha bisogno di acqua per funzionare correttamente, elemento alla base delle principali funzioni fisiche e cognitive
@@ -60,7 +60,7 @@
     <string name="notification_enabled">Notifica abilitata..</string>
     <string name="notification_disabled">Notifica disabilitata..</string>
     <string name="empty">Vuoto</string>
-    <string name="walkthough_text_four">Quanto bere?\nAdolescenti, adulti e anziani: maschi 2,5 litri al giorno, femmine 2 litri al giorno</string>
+    <string name="walkthrough_text_four">Quanto bere?\nAdolescenti, adulti e anziani: maschi 2,5 litri al giorno, femmine 2 litri al giorno</string>
     <string name="back">Indietro</string>
     <string name="_30_mins">30 minuti</string>
     <string name="_45_mins">45 minuti</string>
@@ -204,8 +204,8 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="goal">Obiettivo</string>
     <string name="other_info">Altre informazioni</string>
     <string name="avis">Doni sangue? Fai clic qui sotto</string>
-    <string name="walkthough_text_five">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\nPer confermare clicca sul pulsante qui sotto.\n\nNella schermata in cui indichi la quantità bevuta, potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
-    <string name="walkthough_text_five_2">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\n\nNella schermata dove indichi la quantità bevuta , potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
+    <string name="walkthrough_text_five">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\nPer confermare clicca sul pulsante qui sotto.\n\nNella schermata in cui indichi la quantità bevuta, potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
+    <string name="walkthrough_text_five_2">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\n\nNella schermata dove indichi la quantità bevuta , potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
     <string name="tomorrow_you_will_donate">Domani donerai il sangue o oggi hai già donato, bere è fondamentale!!</string>
     <string name="you_selected_man">Hai selezionato Uomo</string>
     <string name="you_selected_woman">Hai selezionato Donna</string>
@@ -248,4 +248,7 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="click_opt_undo">Fai clic qui per annullare l\'ultima opzione selezionata</string>
     <string name="click_opt_redo">Fai clic qui per ripristinare l\'ultima opzione selezionata</string>
     <string name="click_opt_refresh">Clicca qui per azzerare la quantità bevuta finora</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="get_reload">Reload</string>
 </resources>
