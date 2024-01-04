@@ -37,17 +37,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/top"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/bubble"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/ic_bubbles"
             android:layout_marginStart="32dp"
             android:layout_marginTop="48dp"
@@ -57,8 +59,8 @@
 
         <TextView
             android:id="@+id/se"
-            android:layout_width="285dp"
-            android:layout_height="80dp"
+            android:layout_width="630dp"
+            android:layout_height="120dp"
             android:background="@drawable/bg_notification"
             android:ellipsize="end"
             android:gravity="center"
@@ -127,7 +129,7 @@
     <com.skydoves.progressview.ProgressView
         android:id="@+id/intakeProgress"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -146,9 +148,9 @@
         app:progressView_labelText="0%"
         app:progressView_labelTypeface="bold"
         app:progressView_max="130"
-        app:progressView_min="15"
+        app:progressView_min="0"
         app:progressView_padding="1dp"
-        app:progressView_progress="40"
+        app:progressView_progress="0"
         app:progressView_progressFromPrevious="true"
         app:progressView_radius="12dp" />
 
@@ -157,7 +159,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_tutorial"
-        app:layout_constraintStart_toStartOf="@+id/btnUndo"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvIntook">
 
     </ImageView>
@@ -166,7 +169,7 @@
         android:id="@+id/calendarAvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="32dp"
         android:src="@drawable/ic_calendar_mini"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
@@ -191,7 +194,7 @@
         android:id="@+id/infoAvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="64dp"
+        android:layout_marginLeft="96dp"
         android:src="@drawable/ic_avis_day"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/tvTotalIntake"
@@ -203,11 +206,11 @@
         android:id="@+id/tvIntook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="44dp"
-        android:text="0"
+        android:text="@string/_2000"
         android:textColor="@color/colorWhite"
-        android:textSize="25sp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top"
@@ -220,7 +223,7 @@
         android:layout_marginStart="4dp"
         android:text="@string/_3500_ml"
         android:textColor="@color/colorWhite"
-        android:textSize="25sp"
+        android:textSize="45sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvIntook"
         app:layout_constraintStart_toEndOf="@+id/tvIntook"
         tools:ignore="TextContrastCheck" />
@@ -237,7 +240,7 @@
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="300dp"
+        app:layout_constraintHeight_max="400dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intakeProgress">
 
@@ -249,6 +252,7 @@
                 style="@style/DividerHorizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/constraintLayout2" />
+
             <View
                 style="@style/DividerHorizontal"
                 app:layout_constraintStart_toStartOf="parent"
@@ -279,8 +283,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/coffee" />
@@ -291,7 +295,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_50_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
                 </LinearLayout>
 
                 <View
@@ -319,8 +324,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/mini_cocktail" />
@@ -331,7 +336,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_100_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -350,8 +356,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/cocktail" />
@@ -362,7 +368,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_150_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -402,8 +409,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/tea" />
@@ -414,7 +421,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_200_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -433,8 +441,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/wine" />
@@ -445,7 +453,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_250_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -464,8 +473,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/glass" />
@@ -476,10 +485,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/_300_ml"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout4"
                 android:layout_width="0dp"
@@ -515,8 +526,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/milk" />
@@ -527,7 +538,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/custom"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -546,8 +558,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/drink_all" />
@@ -558,7 +570,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/drink_all"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -577,8 +590,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/barcode" />
@@ -589,7 +602,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/barcode"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textSize="30sp" />
 
                 </LinearLayout>
 
@@ -602,6 +616,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/undo"
+        android:textSize="24sp"
         android:layout_marginTop="4dp"
         app:layout_constraintLeft_toLeftOf="@+id/btnUndo"
         app:layout_constraintRight_toRightOf="@+id/btnUndo"
@@ -611,7 +626,9 @@
         android:id="@+id/refreshTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:text="@string/reset"
+        android:textSize="24sp"
         android:layout_marginTop="4dp"
         app:layout_constraintLeft_toLeftOf="@+id/btnRefresh"
         app:layout_constraintRight_toRightOf="@+id/btnRefresh"
@@ -622,6 +639,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/redo"
+        android:textSize="24sp"
         android:layout_marginTop="4dp"
         app:layout_constraintLeft_toLeftOf="@+id/btnRedo"
         app:layout_constraintRight_toRightOf="@+id/btnRedo"

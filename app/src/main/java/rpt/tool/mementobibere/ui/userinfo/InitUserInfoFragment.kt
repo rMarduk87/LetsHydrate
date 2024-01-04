@@ -117,8 +117,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.GENDER_KEY, gender)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_man),it,
-                    type=AppUtils.Companion.TypeMessage.MAN)
+                showMessage(
+                    getString(R.string.you_selected_man), it,
+                    type=AppUtils.Companion.TypeMessage.MAN
+                )
             }
 
             btnWoman.setOnClickListener{
@@ -126,8 +128,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.GENDER_KEY, gender)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_woman),it,
-                    type=AppUtils.Companion.TypeMessage.WOMAN)
+                showMessage(
+                    getString(R.string.you_selected_woman), it,
+                    type=AppUtils.Companion.TypeMessage.WOMAN
+                )
             }
 
             alertDialogBuilder.setPositiveButton("OK") { _, _ ->
@@ -151,15 +155,12 @@ class InitUserInfoFragment:
         binding.btnAvis.setOnClickListener{
             if(bloodDonor==0){
                 bloodDonor = 1
-                showMessage(getString(R.string.you_selected_avis),it)
+                showMessage(getString(R.string.you_selected_avis), it)
             }
             else{
                 bloodDonor = 0
-                showMessage(getString(R.string.you_selected_no_avis),it)
+                showMessage(getString(R.string.you_selected_no_avis), it)
             }
-            val editor = sharedPref.edit()
-            editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
-            editor.apply()
         }
 
 
@@ -187,8 +188,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.WORK_TIME_KEY, workType)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_calm),it,
-                    type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+                showMessage(
+                    getString(R.string.you_selected_calm), it,
+                    type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+                )
             }
 
             btnNormal.setOnClickListener{
@@ -196,8 +199,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.WORK_TIME_KEY, workType)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_normal),it,
-                    type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+                showMessage(
+                    getString(R.string.you_selected_normal), it,
+                    type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+                )
             }
 
             btnLively.setOnClickListener{
@@ -205,8 +210,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.WORK_TIME_KEY, workType)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_lively),it,
-                    type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+                showMessage(
+                    getString(R.string.you_selected_lively), it,
+                    type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+                )
             }
 
             btnIntense.setOnClickListener{
@@ -214,8 +221,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.WORK_TIME_KEY, workType)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_intense),it,
-                    type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+                showMessage(
+                    getString(R.string.you_selected_intense), it,
+                    type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+                )
             }
 
             alertDialogBuilder.setPositiveButton("OK") { _, _ ->
@@ -264,8 +273,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.CLIMATE_KEY, climate)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_cold),it,
-                    type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+                showMessage(
+                    getString(R.string.you_selected_cold), it,
+                    type=AppUtils.Companion.TypeMessage.CLIMATE
+                )
             }
 
             btnFresh.setOnClickListener{
@@ -273,8 +284,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.CLIMATE_KEY, climate)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_fresh),it,
-                    type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+                showMessage(
+                    getString(R.string.you_selected_fresh), it,
+                    type=AppUtils.Companion.TypeMessage.CLIMATE
+                )
             }
 
             btnMild.setOnClickListener{
@@ -282,8 +295,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.CLIMATE_KEY, climate)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_mild),it,
-                    type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+                showMessage(
+                    getString(R.string.you_selected_mild), it,
+                    type=AppUtils.Companion.TypeMessage.CLIMATE
+                )
             }
 
             btnTorrid.setOnClickListener{
@@ -291,8 +306,10 @@ class InitUserInfoFragment:
                 val editor = sharedPref.edit()
                 editor.putInt(AppUtils.CLIMATE_KEY, climate)
                 editor.apply()
-                showMessage(getString(R.string.you_selected_torrid),it,
-                    type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+                showMessage(
+                    getString(R.string.you_selected_torrid), it,
+                    type=AppUtils.Companion.TypeMessage.CLIMATE
+                )
             }
 
             alertDialogBuilder.setPositiveButton("OK") { _, _ ->
@@ -349,6 +366,7 @@ class InitUserInfoFragment:
                     editor.putBoolean(AppUtils.SET_CLIMATE_KEY, true)
                     editor.putBoolean(AppUtils.START_TUTORIAL_KEY, true)
                     editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonor)
+                    editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
                     editor.apply()
 
                     val totalIntake = AppUtils.calculateIntake(weight.toInt(), workType,weightUnit, gender, climate)

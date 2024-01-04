@@ -13,7 +13,7 @@ class ReachedGoalViewModel : ViewModel() {
 
     val reachedtItems = liveData {
         withContext(Dispatchers.Default) {
-            emitSource(SqliteHelper(Application.instance).getAllReached().map
+            emitSource(SqliteHelper(Application.instance).getAllReachedForStats().map
             {
                 it.map { ReachedGoalItem(it) }
             })

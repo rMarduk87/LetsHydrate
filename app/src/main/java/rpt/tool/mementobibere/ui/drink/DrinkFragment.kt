@@ -11,7 +11,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -20,10 +19,10 @@ import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.WindowManager
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -38,23 +37,17 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.StatsBaseActivity
 import rpt.tool.mementobibere.WalkThroughActivity
 import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.FirstHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.FourthHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.SecondHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.ThirdHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.FifthHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.SixthHelpBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.tutorial.SeventhHelpBalloonFactory
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
+import rpt.tool.mementobibere.utils.extensions.toMonth
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toStringHour
+import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
@@ -192,8 +185,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         else if(themeInt==1){
             "#29704D"
         }
-        else{
+        else if(themeInt ==2){
             "#4167B2"
+        }
+        else{
+            "#FF6200EE"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -257,8 +253,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
             edit.putString(AppUtils.UNIT_STRING,unit)
             edit.apply()
-            startActivity(Intent(requireActivity(), StatsBaseActivity::class.java))
-
+            safeNavController?.safeNavigate(DrinkFragmentDirections
+                .actionDrinkFragmentToStatsFragment())
         }, TIME)
 
     }
@@ -281,11 +277,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         if (selectedOption != null) {
             if ((inTook * 100 / totalIntake) <= 140 && clicked <= 1) {
-                if (sqliteHelper.addIntook(dateNow, selectedOption!!,unit) > 0) {
+                if (sqliteHelper.addIntook(dateNow, selectedOption!!,unit, dateNow.toMonth(),
+                    dateNow.toYear()) > 0) {
                     inTook += selectedOption!!
                     setWaterLevel(inTook, totalIntake)
-                    showMessage(getString(R.string.your_water_intake_was_saved),viewWindow,false,
-                        AppUtils.Companion.TypeMessage.SAVE)
+                    showMessage(
+                        getString(R.string.your_water_intake_was_saved), viewWindow, false,
+                        AppUtils.Companion.TypeMessage.SAVE
+                    )
                     sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
                     addLastIntook(btnSelected!!.toFloat())
                 }
@@ -297,15 +296,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 showMessage(getString(R.string.you_already_achieved_the_goal), viewWindow)
             }
             binding.tvCustom.text = requireContext().getText(R.string.custom)
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,binding.opScan,outValue.resourceId,-1)
 
             // remove pending notifications
             val mNotificationManager : NotificationManager = requireActivity()
@@ -313,6 +304,32 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             mNotificationManager.cancelAll()
         }
     }
+
+    private fun addBackground(
+        op50ml: LinearLayout,
+        op100ml: LinearLayout,
+        op150ml: LinearLayout,
+        op200ml: LinearLayout,
+        op250ml: LinearLayout,
+        op300ml: LinearLayout,
+        opCustom: LinearLayout,
+        opDrinkAll: LinearLayout,
+        opScan: LinearLayout,
+        resourceId: Int,
+        oneHighLight: Int,
+        highlight: Int? = null
+    ) {
+        op50ml.background = requireContext().getDrawable((if(oneHighLight==1){highlight}else{resourceId})!!)
+        op100ml.background = requireContext().getDrawable((if(oneHighLight==2){highlight}else{resourceId})!!)
+        op150ml.background = requireContext().getDrawable((if(oneHighLight==3){highlight}else{resourceId})!!)
+        op200ml.background = requireContext().getDrawable((if(oneHighLight==4){highlight}else{resourceId})!!)
+        op250ml.background = requireContext().getDrawable((if(oneHighLight==5){highlight}else{resourceId})!!)
+        op300ml.background = requireContext().getDrawable((if(oneHighLight==6){highlight}else{resourceId})!!)
+        opCustom.background = requireContext().getDrawable((if(oneHighLight==7){highlight}else{resourceId})!!)
+        opDrinkAll.background = requireContext().getDrawable((if(oneHighLight==8){highlight}else{resourceId})!!)
+        opScan.background = requireContext().getDrawable((if(oneHighLight==9){highlight}else{resourceId})!!)
+    }
+
 
     private fun addLastIntook(toFloat: Float) {
         var edit = sharedPref.edit()
@@ -360,7 +377,21 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             0->toLightTheme()
             1->toDarkTheme()
             2->toWaterTheme()
+            3->toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toWaterTheme() {
@@ -375,7 +406,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
         binding.bottomBarNotify.setBackgroundColorRes(R.color.colorWhite)
         binding.bottomBarNotNotify.setBackgroundColorRes(R.color.colorWhite)
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.colorSecondaryLightW)
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toDarkTheme() {
@@ -388,7 +419,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
             binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
         }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.darkGreen)
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toLightTheme() {
@@ -438,7 +469,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
         editor.apply()
 
-        sqliteHelper.addAll(dateNow, 0, totalIntake,unit, themeInt)
+        sqliteHelper.addAll(dateNow, 0, totalIntake,unit,
+            themeInt, dateNow.toMonth(), dateNow.toYear())
 
         inTook = sqliteHelper.getIntook(dateNow)
 
@@ -535,8 +567,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
         val alarm = AlarmHelper()
         if (!alarm.checkAlarm(requireContext()) && notificStatus) {
-            binding.bottomBarNotNotify.visibility = View.GONE
-            binding.bottomBarNotify.visibility = View.VISIBLE
+            binding.bottomBarNotNotify.visibility = GONE
+            binding.bottomBarNotify.visibility = VISIBLE
             var isAvisDay = sqliteHelper.getAvisDay(dateNow)
             var freq = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
             if(isAvisDay){
@@ -562,22 +594,24 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         updateValues()
 
-        var background = if(themeInt!=2){
-            R.drawable.option_select_bg
-        }
-        else{
-            R.drawable.option_select_bg_w
-        }
+        var background =
+            when(themeInt){
+                2->R.drawable.option_select_bg_w
+                3->R.drawable.option_select_bg_g
+                else -> R.drawable.option_select_bg
+            }
 
         if(sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)){
             if(inTook > 0){
                 binding.bubble.visibility = VISIBLE
                 binding.se.visibility = VISIBLE
+                binding.top.visibility = VISIBLE
                 val randomIndex: Int = java.util.Random().nextInt(waters.size)
                 val randomWaters: String = waters[randomIndex]
                 binding.se.text = randomWaters
             }
             else{
+                binding.top.visibility = GONE
                 binding.bubble.visibility = INVISIBLE
                 binding.se.visibility = INVISIBLE
             }
@@ -589,15 +623,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 0
             selectedOption = binding.ml50!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(background)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,1,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -608,15 +636,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 1
             selectedOption = binding.ml100!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(background)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,2,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -627,15 +649,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 2
             selectedOption = binding.ml150!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(background)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,3,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -646,15 +662,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 3
             selectedOption = binding.ml200!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(background)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,4,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -665,15 +675,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 4
             selectedOption = binding.ml250!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(background)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,5,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -684,15 +688,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
             btnSelected = 5
             selectedOption = binding.ml300!!.text.toString().toExtractFloat()
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(background)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,6,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -726,15 +724,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
 
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(background)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,7,background)
         }
 
         binding.opDrinkAll.setOnClickListener {
@@ -744,20 +736,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 }
                 clicked += 1
                 btnSelected = 6
-                selectedOption = AppUtils.CalculateOption(inTook,totalIntake)!!
-                binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-                binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-                binding.opDrinkAll.background = requireContext().getDrawable(background)
-                binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+                selectedOption = AppUtils.calculateOption(inTook,totalIntake)!!
+                addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                    binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                    binding.opScan,outValue.resourceId,8,background)
                 addDrinkedWater()
             }
             else{
-                showMessage(getString(R.string.option_selectable_once_a_day),it)
+                showMessage(getString(R.string.option_selectable_once_a_day), it)
             }
         }
 
@@ -780,15 +766,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
 
-            binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op200ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op250ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(background)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.opScan,outValue.resourceId,9,background)
 
         }
 
@@ -862,7 +842,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         binding.infoAvis!!.setOnClickListener {
             showMessage(
-                getString(R.string.tomorrow_you_will_donate),it, duration = 3500)
+                getString(R.string.tomorrow_you_will_donate), it, duration = 3500
+            )
         }
 
         binding.tutorial!!.setOnClickListener {
@@ -910,11 +891,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         userBlood.setOnClickListener {
             if(bloodDonorChoice==0){
                 bloodDonorChoice = 1
-                showMessage(getString(R.string.you_selected_avis),it)
+                showMessage(getString(R.string.you_selected_avis), it)
             }
             else{
                 bloodDonorChoice = 0
-                showMessage(getString(R.string.you_selected_no_avis),it)
+                showMessage(getString(R.string.you_selected_no_avis), it)
             }
         }
 
@@ -950,19 +931,23 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         userMaleBtn.setOnClickListener {
             genderChoice = 0
-            showMessage(getString(R.string.you_selected_man),it,
-                type=AppUtils.Companion.TypeMessage.MAN)
+            showMessage(
+                getString(R.string.you_selected_man), it,
+                type=AppUtils.Companion.TypeMessage.MAN
+            )
         }
 
         userWomanBtn.setOnClickListener {
             genderChoice = 1
-            showMessage(getString(R.string.you_selected_woman),it,
-                type=AppUtils.Companion.TypeMessage.WOMAN)
+            showMessage(
+                getString(R.string.you_selected_woman), it,
+                type=AppUtils.Companion.TypeMessage.WOMAN
+            )
         }
 
         alertDialogBuilder.setPositiveButton("OK") { _, _ ->
             when (genderChoice) {
-                -1 -> showMessage(getString(R.string.gender_hint),promptsView,true)
+                -1 -> showMessage(getString(R.string.gender_hint), promptsView, true)
                 else -> {
 
                     val editor = sharedPref.edit()
@@ -972,7 +957,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.gender_hint),promptsView,true)
+            showMessage(getString(R.string.gender_hint), promptsView, true)
         }
 
         val alertDialog = alertDialogBuilder.create()
@@ -1003,8 +988,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.WORK_TIME_KEY, workType)
             editor.apply()
-            showMessage(getString(R.string.you_selected_calm),it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+            showMessage(
+                getString(R.string.you_selected_calm), it,
+                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+            )
         }
 
         btnNormal.setOnClickListener{
@@ -1012,8 +999,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.WORK_TIME_KEY, workType)
             editor.apply()
-            showMessage(getString(R.string.you_selected_normal),it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+            showMessage(
+                getString(R.string.you_selected_normal), it,
+                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+            )
         }
 
         btnLively.setOnClickListener{
@@ -1021,8 +1010,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.WORK_TIME_KEY, workType)
             editor.apply()
-            showMessage(getString(R.string.you_selected_lively),it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+            showMessage(
+                getString(R.string.you_selected_lively), it,
+                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+            )
         }
 
         btnIntense.setOnClickListener{
@@ -1030,13 +1021,15 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.WORK_TIME_KEY, workType)
             editor.apply()
-            showMessage(getString(R.string.you_selected_intense),it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE,workType = workType)
+            showMessage(
+                getString(R.string.you_selected_intense), it,
+                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
+            )
         }
 
         alertDialogBuilder.setPositiveButton("OK") { _, _ ->
             when (workType) {
-                -1 -> showMessage(getString(R.string.work_type_hint),promptsView,true)
+                -1 -> showMessage(getString(R.string.work_type_hint), promptsView, true)
                 else -> {
 
                     val editor = sharedPref.edit()
@@ -1046,7 +1039,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.work_type_hint),promptsView,true)
+            showMessage(getString(R.string.work_type_hint), promptsView, true)
         }
 
         val alertDialog = alertDialogBuilder.create()
@@ -1077,8 +1070,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.CLIMATE_KEY, climate)
             editor.apply()
-            showMessage(getString(R.string.you_selected_cold),it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+            showMessage(
+                getString(R.string.you_selected_cold), it,
+                type=AppUtils.Companion.TypeMessage.CLIMATE
+            )
         }
 
         btnFresh.setOnClickListener{
@@ -1086,8 +1081,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.CLIMATE_KEY, climate)
             editor.apply()
-            showMessage(getString(R.string.you_selected_fresh),it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+            showMessage(
+                getString(R.string.you_selected_fresh), it,
+                type=AppUtils.Companion.TypeMessage.CLIMATE
+            )
         }
 
         btnMild.setOnClickListener{
@@ -1095,8 +1092,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.CLIMATE_KEY, climate)
             editor.apply()
-            showMessage(getString(R.string.you_selected_mild),it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+            showMessage(
+                getString(R.string.you_selected_mild), it,
+                type=AppUtils.Companion.TypeMessage.CLIMATE
+            )
         }
 
         btnTorrid.setOnClickListener{
@@ -1104,13 +1103,15 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.CLIMATE_KEY, climate)
             editor.apply()
-            showMessage(getString(R.string.you_selected_torrid),it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE,climate = climate)
+            showMessage(
+                getString(R.string.you_selected_torrid), it,
+                type=AppUtils.Companion.TypeMessage.CLIMATE
+            )
         }
 
         alertDialogBuilder.setPositiveButton("OK") { _, _ ->
             when (climate) {
-                -1 -> showMessage(getString(R.string.climate_set_hint),promptsView,true)
+                -1 -> showMessage(getString(R.string.climate_set_hint), promptsView, true)
                 else -> {
 
                     val editor = sharedPref.edit()
@@ -1120,7 +1121,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.climate_set_hint),promptsView,true)
+            showMessage(getString(R.string.climate_set_hint), promptsView, true)
         }
 
         val alertDialog = alertDialogBuilder.create()
@@ -1137,7 +1138,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         var totalIntook = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
         if(selectedOption != null){
             sqliteHelper.resetIntook(AppUtils.getCurrentDate()!!)
-            sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit)
+            sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit,
+                AppUtils.getCurrentDate()!!.toMonth(), AppUtils.getCurrentDate()!!.toYear())
             sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
             updateValues()
             addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
@@ -1155,7 +1157,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sqliteHelper.addIntook(
                 AppUtils.getCurrentDate()!!,
                 (totalIntook - selectedOption!!),
-                unit
+                unit,dateNow.toMonth(),dateNow.toYear()
             )
             addLastIntook(-1f)
             sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), -1)
@@ -1223,7 +1225,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
 
         if ((inTook * 100 / totalIntake) > 140) {
-            showMessage(getString(R.string.you_achieved_the_goal),binding.mainActivityParent)
+            showMessage(getString(R.string.you_achieved_the_goal), binding.mainActivityParent)
             sqliteHelper.addReachedGoal(dateNow,inTook,unit)
         }
     }
@@ -1261,16 +1263,16 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    binding.bottomBarNotNotify.visibility = View.GONE
-                    binding.bottomBarNotify.visibility = View.VISIBLE
+                    binding.bottomBarNotNotify.visibility = GONE
+                    binding.bottomBarNotify.visibility = VISIBLE
                     Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
                     alarm.setAlarm(
                         requireContext(),
                         sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
 
                 } else {
-                    binding.bottomBarNotNotify.visibility = View.VISIBLE
-                    binding.bottomBarNotify.visibility = View.GONE
+                    binding.bottomBarNotNotify.visibility = VISIBLE
+                    binding.bottomBarNotify.visibility = GONE
                     Snackbar.make(viewWindow, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
                     alarm.cancelAlarm(requireContext())
                 }
@@ -1281,15 +1283,15 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun refreshAlarm(notify: Boolean){
         var alarm = AlarmHelper()
         if(notify){
-            binding.bottomBarNotNotify.visibility = View.GONE
-            binding.bottomBarNotify.visibility = View.VISIBLE
+            binding.bottomBarNotNotify.visibility = GONE
+            binding.bottomBarNotify.visibility = VISIBLE
             alarm.setAlarm(
                 requireContext(),
                 sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
         }
         else{
-            binding.bottomBarNotNotify.visibility = View.VISIBLE
-            binding.bottomBarNotify.visibility = View.GONE
+            binding.bottomBarNotNotify.visibility = VISIBLE
+            binding.bottomBarNotify.visibility = GONE
             alarm.cancelAlarm(requireContext())
             val activity: Activity? = activity
             if (activity != null && activity is MainActivity) {

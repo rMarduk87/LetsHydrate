@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_drinkFragment_to_tutorialFragment"
             app:destination="@id/TutorialFragment" />
+        <action
+            android:id="@+id/action_drinkFragment_to_statsFragment"
+            app:destination="@id/StatsFragment" />
     </fragment>
     <dialog
         android:id="@+id/editInfoBottomSheetFragment"
@@ -63,5 +66,31 @@
             android:id="@+id/action_tutorialFragment_to_drinkFragment"
             app:destination="@id/DrinkFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/StatsFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.stats.StatsFragment"
+        android:label="StatFragment"
+        tools:layout="@layout/stats_fragment">
+        <action
+            android:id="@+id/action_statsFragment_to_intookCounterBottomSheetDialog"
+            app:destination="@id/intookCounterFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_drinkFragment"
+            app:destination="@id/DrinkFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_reacheGoalFragment"
+            app:destination="@id/ReachedGoalFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/intookCounterFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.details.IntookCounterFragment"
+        android:label="intookCounterFragment"
+        tools:layout="@layout/intook_counter_stats_bottom_sheet_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/ReachedGoalFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragment"
+        android:label="ReachedGoalFragment"
+        tools:layout="@layout/reached_goal_stats_fragment">
+    </fragment>
 </navigation>

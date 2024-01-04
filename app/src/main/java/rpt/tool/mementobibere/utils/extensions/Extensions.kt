@@ -10,14 +10,18 @@ import java.lang.Float.parseFloat
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.util.Calendar
 import java.util.Date
-
+import java.util.Locale
 fun Int.toMainTheme(): Int {
     when(this){
         0->return R.style.MainTheme
         1->return R.style.MainThemeD
         2->return R.style.MainThemeW
+        3->return R.style.MainThemeG
     }
     return R.style.MainTheme
 }
@@ -27,6 +31,7 @@ fun Int.toAppTheme(): Int {
         0->return R.style.AppTheme
         1->return R.style.AppThemeD
         2->return R.style.AppThemeW
+        3->return R.style.AppThemeG
     }
     return R.style.AppTheme
 }
@@ -53,13 +58,6 @@ fun Float.toCalculatedValueStats(current: Int, newValue: Int): Float {
         mlStep.toCalculatedValue(0,newValue)
         return mlStep
     }
-}
-
-fun String.ifSame(max: String, text: String, function: () -> String): String? {
-    if(this == max){
-         return text
-    }
-    return this
 }
 
 fun Float.toCalculatedValue(current: Int, newValue: Int) : Float{
@@ -190,3 +188,15 @@ fun Calendar.toStringDate(): String? {
     return df.format(c)
 }
 
+fun String.toYear(): String {
+    var split = this.split("-")
+    return split[2]
+}
+
+fun String.toMonth(): String {
+    var split = this.split("-")
+    if(split[1].startsWith("0")){
+        return split[1].removePrefix("0")
+    }
+    return split[1]
+}

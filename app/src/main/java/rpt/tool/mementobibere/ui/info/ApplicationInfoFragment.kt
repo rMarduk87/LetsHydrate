@@ -16,6 +16,8 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.PartialPrincipalInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
+import rpt.tool.mementobibere.utils.extensions.toMonth
+import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
@@ -47,6 +49,7 @@ class ApplicationInfoFragment:
             0->"#41B279"
             1->"#29704D"
             2->"#6A91DE"
+            3->"#FF6200EE"
             else -> {"#41B279"}
         }
 
@@ -106,7 +109,7 @@ class ApplicationInfoFragment:
             notificMsg = binding.principal.etNotificationText.editText!!.text.toString()
             if(TextUtils.isEmpty(notificMsg))
             {
-                showMessage(getString(R.string.please_a_notification_message),it, true)
+                showMessage(getString(R.string.please_a_notification_message), it, true)
             }
             else{
                 var editor = sharedPref.edit()
@@ -125,7 +128,36 @@ class ApplicationInfoFragment:
             0-> toLightTheme()
             1-> toDarkTheme()
             2-> toWaterTheme()
+            3-> toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.purple_500))
+        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.etNotificationText.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.etRingtone.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.etPrivacy.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.etNotificationText.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.etRingtone.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.etPrivacy.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view3.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view4.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
     }
 
     private fun toWaterTheme() {
@@ -295,6 +327,7 @@ class ApplicationInfoFragment:
                 R.id.icon_light -> themeInt = 0
                 R.id.icon_dark -> themeInt = 1
                 R.id.icon_water -> themeInt = 2
+                R.id.icon_grape -> themeInt = 3
             }
 
             setThemeToShared()
@@ -317,6 +350,7 @@ class ApplicationInfoFragment:
             0 -> menu.select(R.id.icon_light)
             1 -> menu.select(R.id.icon_dark)
             2 -> menu.select(R.id.icon_water)
+            3 -> menu.select(R.id.icon_grape)
             else -> {
                 menu.select(R.id.icon_light)
                 themeInt = 0
@@ -409,7 +443,8 @@ class ApplicationInfoFragment:
             if(sqliteHelper.resetIntook(AppUtils.getCurrentOnlyDate()!!) == 1){
                 sqliteHelper.addIntook(AppUtils.getCurrentOnlyDate()!!,
                     inTook.toCalculatedValue(sharedPref.getInt(AppUtils.UNIT_KEY,0),unit),
-                    AppUtils.calculateExtensions(unit)
+                    AppUtils.calculateExtensions(unit),AppUtils.getCurrentOnlyDate()!!.toMonth(),
+                    AppUtils.getCurrentOnlyDate()!!.toYear()
                 )
             }
         }
@@ -436,6 +471,7 @@ class ApplicationInfoFragment:
                 0->"#41B279"
                 1->"#29704D"
                 2->"#6A91DE"
+                3->"#FF6200EE"
                 else -> {"#41B279"}
             }
             setLayout()

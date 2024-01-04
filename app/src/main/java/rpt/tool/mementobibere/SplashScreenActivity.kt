@@ -3,9 +3,11 @@ package rpt.tool.mementobibere
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import rpt.tool.mementobibere.databinding.ActivitySplashScreenBinding
 import rpt.tool.mementobibere.utils.AppUtils
@@ -30,6 +32,12 @@ class SplashScreenActivity : AppCompatActivity() {
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
         if(!sharedPref.getBoolean(AppUtils.SEE_SPLASH_KEY,true)){
             binding.splash.background = resources.getDrawable(R.mipmap.ic_launcher_background)

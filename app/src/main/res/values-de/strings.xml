@@ -250,5 +250,24 @@
     <string name="click_opt_refresh">Klicken Sie hier, um die bisher getrunkene Menge zurückzusetzen</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="get_reload">Reload</string>
+    <string name="get_reload">Neu laden</string>
+    <string name="weekly_average">Wochendurchschnitt</string>
+    <string name="monthly_average">Monatlicher Durchschnitt</string>
+    <string name="average_completion">Durchschnittlicher Abschluss</string>
+    <string name="drink_frequency">Trinkhäufigkeit</string>
+    <string name="weekly_completion">Wöchentlicher Abschluss</string>
+    <string name="sun">Son</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Die</string>
+    <string name="wed">Mit</string>
+    <string name="thu">Don</string>
+    <string name="fri">Fre</string>
+    <string name="sat">Sam</string>
+    <string name="add_reached_day">Erreichten Tag hinzufügen</string>
+    <string name="month">Monat</string>
+    <string name="year">Jahr</string>
+    <string name="show_reached_day">Ziel erreicht anzeigen</string>
+    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Ein gesunder Geist und Körper sind hydriert. Kommen Sie und probieren Sie es aus!</string>
+    <string name="intake_report_month">Aktueller Monatsbericht</string>
+    <string name="grape">Grape</string>
 </resources>

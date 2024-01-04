@@ -140,7 +140,22 @@ class AdjustHourBottomSheetFragment:
             0-> toLightTheme()
             1-> toDarkTheme()
             2-> toWaterTheme()
+            3-> toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.purple_500))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
     }
 
     private fun toWaterTheme() {

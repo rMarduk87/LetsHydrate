@@ -146,9 +146,9 @@
         app:progressView_labelText="0%"
         app:progressView_labelTypeface="bold"
         app:progressView_max="130"
-        app:progressView_min="15"
+        app:progressView_min="0"
         app:progressView_padding="1dp"
-        app:progressView_progress="40"
+        app:progressView_progress="0"
         app:progressView_progressFromPrevious="true"
         app:progressView_radius="12dp" />
 

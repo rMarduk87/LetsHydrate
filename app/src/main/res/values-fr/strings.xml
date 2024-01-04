@@ -250,5 +250,24 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="click_opt_refresh">Cliquez ici pour réinitialiser la quantité bu jusqu\'à présent</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="get_reload">Reload</string>
+    <string name="get_reload">Recharger</string>
+    <string name="weekly_average">Moyenne hebdomadaire</string>
+    <string name="monthly_average">Moyenne mensuelle</string>
+    <string name="average_completion">Achèvement moyen</string>
+    <string name="drink_frequency">Fréquence des boissons</string>
+    <string name="weekly_completion">Achèvement hebdomadaire</string>
+    <string name="sun">Dim</string>
+    <string name="mon">Lun</string>
+    <string name="tue">Mar</string>
+    <string name="wed">Mer</string>
+    <string name="thu">Jeu</string>
+    <string name="fri">Ven</string>
+    <string name="sat">Sam</string>
+    <string name="add_reached_day">Ajouter le jour atteint</string>
+    <string name="month">Mois</string>
+    <string name="year">Année</string>
+    <string name="show_reached_day">Afficher l\'objectif atteint</string>
+    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Un esprit et un corps sains sont hydratés. Venez essayer!</string>
+    <string name="intake_report_month">Rapport du mois en cours</string>
+    <string name="grape">Grape</string>
 </resources>

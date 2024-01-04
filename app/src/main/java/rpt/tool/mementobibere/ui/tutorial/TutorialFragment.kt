@@ -1,43 +1,26 @@
 package rpt.tool.mementobibere.ui.tutorial
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.DatePickerDialog
-import android.app.NotificationManager
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.TextUtils
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.skydoves.balloon.BalloonAlign
 import com.skydoves.balloon.balloon
 import github.com.st235.lib_expandablebottombar.Menu
-import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
-import rpt.tool.mementobibere.InitUserInfoActivity
-import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.StatsBaseActivity
-import rpt.tool.mementobibere.WalkThroughActivity
 import rpt.tool.mementobibere.databinding.TutorialFragmentBinding
-import rpt.tool.mementobibere.ui.drink.DrinkFragmentDirections
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
 import rpt.tool.mementobibere.utils.balloon.tutorial.FifthHelpBalloonFactory
@@ -51,14 +34,9 @@ import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.extensions.toNumberString
-import rpt.tool.mementobibere.utils.extensions.toStringHour
-import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
 
 class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentBinding::inflate) {
     private var start: Boolean = false
@@ -190,8 +168,11 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         else if(themeInt==1){
             "#29704D"
         }
-        else{
+        else if(themeInt ==2){
             "#4167B2"
+        }
+        else{
+            "#FF6200EE"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -231,8 +212,10 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             inTook = 0f
         }
         setWaterLevel(inTook, totalIntake)
-        showMessage(getString(R.string.your_water_intake_was_saved),viewWindow,false,
-            AppUtils.Companion.TypeMessage.SAVE)
+        showMessage(
+            getString(R.string.your_water_intake_was_saved), viewWindow, false,
+            AppUtils.Companion.TypeMessage.SAVE
+        )
     }
 
     private fun setBackGround() {
@@ -240,7 +223,21 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             0->toLightTheme()
             1->toDarkTheme()
             2->toWaterTheme()
+            3->toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toWaterTheme() {
@@ -255,7 +252,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         }
         binding.bottomBarNotify.setBackgroundColorRes(R.color.colorWhite)
         binding.bottomBarNotNotify.setBackgroundColorRes(R.color.colorWhite)
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.colorSecondaryLightW)
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toDarkTheme() {
@@ -268,7 +265,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
             binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
         }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.darkGreen)
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toLightTheme() {
@@ -342,11 +339,14 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         start = true
         saveIntook = inTook
 
-        firstHelpBalloon.showAlign(
-            align = BalloonAlign.BOTTOM,
-            mainAnchor = binding.tutorial as View,
-            subAnchorList = listOf(view),
-        )
+        Handler(Looper.getMainLooper()).postDelayed({
+            firstHelpBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.tutorial as View,
+                subAnchorList = listOf(view),
+            )
+        },3000)
+
 
         Handler(Looper.getMainLooper()).postDelayed({
             firstHelpBalloon.dismiss()
@@ -412,7 +412,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
                 snackbar?.dismiss()
             }
             btnSelected = 6
-            selectedOption = AppUtils.CalculateOption(inTook,totalIntake)!!
+            selectedOption = AppUtils.calculateOption(inTook,totalIntake)!!
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op150ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -517,7 +517,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         }
 
         if ((inTook * 100 / totalIntake) > 140) {
-            showMessage(getString(R.string.you_achieved_the_goal),binding.mainActivityParent)
+            showMessage(getString(R.string.you_achieved_the_goal), binding.mainActivityParent)
             sqliteHelper.addReachedGoal(dateNow,inTook,unit)
         }
     }

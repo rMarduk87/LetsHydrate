@@ -11,6 +11,7 @@
     <item name="icon_dark" type="id"/>
     <item name="icon_light" type="id"/>
     <item name="icon_water" type="id"/>
+    <item name="icon_grape" type="id"/>
 
     <item name="icon_oz_uk" type="id"/>
     <item name="icon_oz_us" type="id"/>

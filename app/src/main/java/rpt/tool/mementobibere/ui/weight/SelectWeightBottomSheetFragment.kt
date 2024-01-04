@@ -56,8 +56,11 @@ class SelectWeightBottomSheetFragment:
         else if(themeInt==1){
             "#29704D"
         }
-        else{
+        else if(themeInt ==2){
             "#4167B2"
+        }
+        else{
+            "#FF6200EE"
         }
         val menu = binding.weightSystemBottomBar.menu
 
@@ -100,7 +103,17 @@ class SelectWeightBottomSheetFragment:
             0->toLightTheme()
             1->toDarkTheme()
             2->toWaterTheme()
+            3->toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.purple_500))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.view2.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.gray)
     }
 
     private fun toWaterTheme() {

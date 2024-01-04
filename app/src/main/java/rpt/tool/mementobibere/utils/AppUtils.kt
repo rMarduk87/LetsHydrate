@@ -2,12 +2,17 @@ package rpt.tool.mementobibere.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ParseException
 import rpt.tool.mementobibere.R
+import rpt.tool.mementobibere.data.models.MonthChartModel
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 import kotlin.math.ceil
 
 
@@ -196,8 +201,103 @@ class AppUtils {
             return (intook * 100 / intake).toNumberString().toExtractFloat()
         }
 
-        fun CalculateOption(inTook: Float, totalIntake: Float): Float? {
+        fun calculateOption(inTook: Float, totalIntake: Float): Float? {
             return totalIntake - inTook
+        }
+
+        @Throws(ParseException::class)
+        fun getDateList(strStartDate: String?, strEndDate: String?, formatOutput: String):
+                List<MonthChartModel>? {
+
+            val dateList: MutableList<MonthChartModel> = ArrayList()
+            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatterIndex = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
+
+            val startDate: Date = inputFormatter.parse(strStartDate)
+            val endDate: Date = inputFormatter.parse(strEndDate)
+
+            val startWith = Calendar.getInstance()
+            startWith.time = startDate
+            startWith[Calendar.DAY_OF_MONTH] = 1
+            while (startWith.time.time <= endDate.time) {
+                var dataForOutputIndex = outputFormatterIndex.format(startWith.time)
+                var dataForOutputText = outputFormatter.format(startWith.time)
+                dateList.add(MonthChartModel(dataForOutputIndex,dataForOutputText))
+                startWith
+                    .add(Calendar.MONTH, 1)
+            }
+            return dateList
+        }
+
+        fun getDateListForYear(strStartDate: String?, strEndDate: String?, formatOutput: String):
+                List<String>? {
+
+            val dateList: MutableList<String> = ArrayList()
+            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
+
+            val startDate: Date = inputFormatter.parse(strStartDate)
+            val endDate: Date = inputFormatter.parse(strEndDate)
+
+            val startWith = Calendar.getInstance()
+            startWith.time = startDate
+            startWith[Calendar.DAY_OF_MONTH] = 1
+            while (startWith.time.time <= endDate.time) {
+                var dataForOutput = outputFormatter.format(startWith.time)
+                if(!dateList.contains(dataForOutput)){
+                    dateList.add(dataForOutput)
+                }
+                startWith
+                    .add(Calendar.MONTH, 1)
+            }
+            return dateList
+        }
+
+        fun getWeekList(strStartDate: String): List<String> {
+
+            val now = Calendar.getInstance()
+
+            val format = SimpleDateFormat("dd-MM-yyyy")
+            val startDate: Date = format.parse(strStartDate)
+
+            now.time = startDate
+
+            val dateList: MutableList<String> = ArrayList()
+            val delta = -now[Calendar.DAY_OF_WEEK] + 1 //add 2 if your week start on monday
+
+            now.add(Calendar.DAY_OF_MONTH, delta)
+            for (i in 0..6) {
+                dateList.add( format.format(now.time))
+                now.add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            return dateList
+        }
+
+        fun getTotalDays(currentDate: String, year: String): Int {
+            val cal = GregorianCalendar()
+            var feb = if(cal.isLeapYear(year.toInt())){
+                29
+            }
+            else{
+                28
+            }
+            when(currentDate.toInt()){
+                1-> return 31
+                2-> return feb
+                3-> return 31
+                4-> return 30
+                5-> return 31
+                6-> return 30
+                7-> return 31
+                8-> return 31
+                9-> return 30
+                10-> return 31
+                11-> return 30
+                12-> return 31
+            }
+            return 0
         }
 
 
@@ -241,6 +341,12 @@ class AppUtils {
         const val SET_CLIMATE_KEY : String = "set_climate"
         const val SEE_TIPS_KEY : String = "see_tips"
         const val START_TUTORIAL_KEY : String = "start_tutorial"
+        const val START_DATE = "31-08-2023"
+        const val STAT_IS_MONTH_KEY : String = "isMonth"
+        const val INDEX_MONTH_KEY : String = "month"
+        const val INDEX_YEAR_KEY : String = "year"
+        const val DATE : String = "date"
+        const val FIRST_STATS_KEY : String = "stats"
 
         enum class TypeMessage {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
@@ -289,20 +395,23 @@ class AppUtils {
         val listIdsInfoTheme = arrayOf(
             R.id.icon_light,
             R.id.icon_dark,
-            R.id.icon_water
+            R.id.icon_water,
+            R.id.icon_grape
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
             R.drawable.ic_dark,
-            R.drawable.ic_water
+            R.drawable.ic_water,
+            R.drawable.ic_grape
 
         )
 
         val listStringInfoTheme= arrayOf(
             R.string.light,
             R.string.dark,
-            R.string.water
+            R.string.water,
+            R.string.grape
 
         )
 

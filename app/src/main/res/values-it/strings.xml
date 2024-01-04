@@ -250,5 +250,24 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="click_opt_refresh">Clicca qui per azzerare la quantità bevuta finora</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="get_reload">Reload</string>
+    <string name="get_reload">Ricarica</string>
+    <string name="weekly_average">Media settimanale</string>
+    <string name="monthly_average">Media mensile</string>
+    <string name="average_completion">Completamento medio</string>
+    <string name="drink_frequency">Frequenza di bevuta</string>
+    <string name="weekly_completion">Completamento settimanale</string>
+    <string name="sun">Dom</string>
+    <string name="mon">Lun</string>
+    <string name="tue">Mar</string>
+    <string name="wed">Mer</string>
+    <string name="thu">Gio</string>
+    <string name="fri">Ven</string>
+    <string name="sat">Sab</string>
+    <string name="add_reached_day">Aggiungi record</string>
+    <string name="month">Mese</string>
+    <string name="year">Anno</string>
+    <string name="show_reached_day">Mostra l\'obiettivo raggiunto</string>
+    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Una mente e un corpo sani sono idratati. Provalo!</string>
+    <string name="intake_report_month">Report mese corrente</string>
+    <string name="grape">Grape</string>
 </resources>

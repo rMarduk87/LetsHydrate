@@ -254,5 +254,24 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="click_opt_refresh">Haga clic aquí para restablecer la cantidad consumida hasta el momento</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="get_reload">Reload</string>
+    <string name="get_reload">Recargar</string>
+    <string name="weekly_average">Promedio semanal</string>
+    <string name="monthly_average">Promedio mensual</string>
+    <string name="average_completion">Promedio de finalización</string>
+    <string name="drink_frequency">Frecuencia de bebida</string>
+    <string name="weekly_completion">Finalización semanal</string>
+    <string name="sun">Dom</string>
+    <string name="mon">Lun</string>
+    <string name="tue">Mar</string>
+    <string name="wed">Mié</string>
+    <string name="thu">Jue</string>
+    <string name="fri">Vie</string>
+    <string name="sat">Sàb</string>
+    <string name="add_reached_day">Agregar día alcanzado</string>
+    <string name="month">Mes</string>
+    <string name="year">Año</string>
+    <string name="show_reached_day">Mostrar objetivo alcanzado</string>
+    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Una mente y un cuerpo sanos son hidratados. ¡Ven y pruébalo!</string>
+    <string name="intake_report_month">Informe del mes actual</string>
+    <string name="grape">Grape</string>
 </resources>
