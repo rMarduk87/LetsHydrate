@@ -52,6 +52,8 @@ import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -241,8 +243,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun manageListeners(i: MenuItem) {
         when(i.id) {
             R.id.icon_bell -> manageNotification()
-            R.id.icon_edit -> goToBottomEdit()
-            R.id.icon_other -> goToBottomInfo()
+            R.id.icon_info -> goToBottomInfo()
+            R.id.icon_curiosity -> goToBottomCuriosity()
             R.id.icon_stats -> goToStatsActivity()
         }
     }
@@ -337,16 +339,20 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         edit.apply()
     }
 
-    private fun goToBottomEdit() {
-        var editor = sharedPref.edit()
-        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
-        editor.apply()
-        Handler(requireContext().mainLooper).postDelayed({
+    private fun goToBottomCuriosity() {
+        val li = LayoutInflater.from(requireContext())
+        val promptsView = li.inflate(R.layout.custom_input_dialog3, null)
 
-            safeNavController?.safeNavigate(DrinkFragmentDirections
-                .actionDrinkFragmentToEditInfoBottomSheetFragment())
+        val alertDialogBuilder = AlertDialog.Builder(requireContext())
+        alertDialogBuilder.setView(promptsView)
 
-        }, TIME)
+        alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
+            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            dialog.cancel()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     private fun manageNotification() {
@@ -392,6 +398,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
         }
         binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
+        binding.undoTV.setTextColor(resources.getColor(R.color.colorWhite))
+        binding.redoTV.setTextColor(resources.getColor(R.color.colorWhite))
+        binding.refreshTV.setTextColor(resources.getColor(R.color.colorWhite))
     }
 
     private fun toWaterTheme() {
@@ -407,6 +416,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         binding.bottomBarNotify.setBackgroundColorRes(R.color.colorWhite)
         binding.bottomBarNotNotify.setBackgroundColorRes(R.color.colorWhite)
         binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
+        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
     }
 
     private fun toDarkTheme() {
@@ -420,6 +432,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
         }
         binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
+        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
     }
 
     private fun toLightTheme() {
@@ -433,6 +448,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorWhite))
         }
         binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
+        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
+        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
     }
 
     private fun setTheme() {
@@ -1033,9 +1051,27 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 else -> {
 
                     val editor = sharedPref.edit()
+                    val totalIntake = AppUtils.calculateIntake(
+                        sharedPref.getInt(AppUtils.WEIGHT_KEY, 0),
+                        workType,
+                        sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
+                        sharedPref.getInt(AppUtils.GENDER_KEY,0),
+                        sharedPref.getInt(AppUtils.CLIMATE_KEY, 0)
+                    )
+                    val df = DecimalFormat("#")
+                    df.roundingMode = RoundingMode.CEILING
+                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
+
+                    sqliteHelper.updateTotalIntake(
+                        AppUtils.getCurrentOnlyDate()!!,
+                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
+                            sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0))
+                    )
                     editor.putInt(AppUtils.WORK_TIME_KEY, workType)
                     editor.putBoolean(AppUtils.SET_NEW_WORK_TYPE_KEY,true)
                     editor.apply()
+                    safeNavController?.safeNavigate(DrinkFragmentDirections
+                        .actionDrinkFragmentToSelfFragment())
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->
@@ -1113,11 +1149,27 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             when (climate) {
                 -1 -> showMessage(getString(R.string.climate_set_hint), promptsView, true)
                 else -> {
-
                     val editor = sharedPref.edit()
+                    val totalIntake = AppUtils.calculateIntake(
+                        sharedPref.getInt(AppUtils.WEIGHT_KEY, 0),
+                        sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
+                        sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
+                        sharedPref.getInt(AppUtils.GENDER_KEY,0), climate
+                    )
+                    val df = DecimalFormat("#")
+                    df.roundingMode = RoundingMode.CEILING
+                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
+
+                    sqliteHelper.updateTotalIntake(
+                        AppUtils.getCurrentOnlyDate()!!,
+                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
+                            sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0))
+                    )
                     editor.putInt(AppUtils.CLIMATE_KEY, climate)
                     editor.putBoolean(AppUtils.SET_CLIMATE_KEY,true)
                     editor.apply()
+                    safeNavController?.safeNavigate(DrinkFragmentDirections
+                        .actionDrinkFragmentToSelfFragment())
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->

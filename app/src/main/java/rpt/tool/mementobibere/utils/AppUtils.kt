@@ -359,29 +359,29 @@ class AppUtils {
 
         val listIds = arrayOf(
             R.id.icon_bell,
-            R.id.icon_edit,
-            R.id.icon_other,
+            R.id.icon_info,
+            R.id.icon_curiosity,
             R.id.icon_stats
         )
 
         val listIconNotify = arrayOf(
             R.drawable.ic_bell,
-            R.drawable.ic_edit,
             R.drawable.ic_info,
+            R.drawable.ic_curiosity,
             R.drawable.ic_stats
         )
 
         val listStringNotify = arrayOf(
             R.string.notific,
-            R.string.edit,
             R.string.info,
+            R.string.curiosity,
             R.string.stats
         )
 
         val listIconNotNotify = arrayOf(
             R.drawable.ic_bell_disabled,
-            R.drawable.ic_edit,
             R.drawable.ic_info,
+            R.drawable.ic_curiosity,
             R.drawable.ic_stats
         )
 

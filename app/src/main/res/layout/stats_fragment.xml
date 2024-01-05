@@ -157,9 +157,9 @@
                 android:text="@string/month" />
 
             <ToggleButton
-                android:textOn="@string/month"
-                android:textOff="@string/year"
-                android:id="@+id/month_year_switch"
+                android:textOn="@string/change_view"
+                android:textOff="@string/change_view"
+                android:id="@+id/month_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/month_label"
@@ -395,7 +395,7 @@
             app:layout_constraintTop_toBottomOf="@+id/sat" />
 
         <TextView
-            android:id="@+id/gz"
+            android:id="@+id/reports"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
@@ -411,13 +411,13 @@
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_marginLeft="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ts"
+            app:layout_constraintBottom_toBottomOf="@+id/repWeekTV"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
-            app:layout_constraintTop_toTopOf="@+id/ts"
+            app:layout_constraintTop_toTopOf="@+id/repWeekTV"
             app:srcCompat="@drawable/bq" />
 
         <TextView
-            android:id="@+id/ts"
+            android:id="@+id/repWeekTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -428,7 +428,7 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintLeft_toRightOf="@+id/ob"
-            app:layout_constraintTop_toBottomOf="@+id/gz" />
+            app:layout_constraintTop_toBottomOf="@+id/reports" />
 
         <TextView
             android:id="@+id/weekAverageTV"
@@ -437,9 +437,9 @@
             android:text="%s / day"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ts"
+            app:layout_constraintBottom_toBottomOf="@+id/repWeekTV"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toTopOf="@+id/ts" />
+            app:layout_constraintTop_toTopOf="@+id/repWeekTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/tq"
@@ -450,20 +450,20 @@
             android:background="@color/colorSkyBlue"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toBottomOf="@+id/ts" />
+            app:layout_constraintTop_toBottomOf="@+id/repWeekTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/nt"
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_marginLeft="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/m0"
+            app:layout_constraintBottom_toBottomOf="@+id/repMonthTV"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
-            app:layout_constraintTop_toTopOf="@+id/m0"
+            app:layout_constraintTop_toTopOf="@+id/repMonthTV"
             app:srcCompat="@drawable/az" />
 
         <TextView
-            android:id="@+id/m0"
+            android:id="@+id/repMonthTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -483,9 +483,9 @@
             android:text="%s / day"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/m0"
+            app:layout_constraintBottom_toBottomOf="@+id/repMonthTV"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toTopOf="@+id/m0" />
+            app:layout_constraintTop_toTopOf="@+id/repMonthTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ly"
@@ -496,20 +496,20 @@
             android:background="@color/colorSkyBlue"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toBottomOf="@+id/m0" />
+            app:layout_constraintTop_toBottomOf="@+id/repMonthTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ug"
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_marginLeft="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/bc"
+            app:layout_constraintBottom_toBottomOf="@+id/repReachedTV"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
-            app:layout_constraintTop_toTopOf="@+id/bc"
+            app:layout_constraintTop_toTopOf="@+id/repReachedTV"
             app:srcCompat="@drawable/ce" />
 
         <TextView
-            android:id="@+id/bc"
+            android:id="@+id/repReachedTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -529,9 +529,9 @@
             android:text="%d%%"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/bc"
+            app:layout_constraintBottom_toBottomOf="@+id/repReachedTV"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toTopOf="@+id/bc" />
+            app:layout_constraintTop_toTopOf="@+id/repReachedTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ba"
@@ -542,19 +542,19 @@
             android:background="@color/colorSkyBlue"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toBottomOf="@+id/bc" />
+            app:layout_constraintTop_toBottomOf="@+id/repReachedTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="8dp"
             android:layout_height="8dp"
             android:layout_marginLeft="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/gh"
+            app:layout_constraintBottom_toBottomOf="@+id/repDrinkFreqTV"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
-            app:layout_constraintTop_toTopOf="@+id/gh"
+            app:layout_constraintTop_toTopOf="@+id/repDrinkFreqTV"
             app:srcCompat="@drawable/at" />
 
         <TextView
-            android:id="@+id/gh"
+            android:id="@+id/repDrinkFreqTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -574,9 +574,9 @@
             android:text="%s times / day"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="@+id/gh"
+            app:layout_constraintBottom_toBottomOf="@+id/repDrinkFreqTV"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toTopOf="@+id/gh" />
+            app:layout_constraintTop_toTopOf="@+id/repDrinkFreqTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/gf"
@@ -587,7 +587,7 @@
             android:background="@color/colorSkyBlue"
             app:layout_constraintLeft_toLeftOf="@+id/c9"
             app:layout_constraintRight_toRightOf="@+id/ca"
-            app:layout_constraintTop_toBottomOf="@+id/gh" />
+            app:layout_constraintTop_toBottomOf="@+id/repDrinkFreqTV" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/bubble"

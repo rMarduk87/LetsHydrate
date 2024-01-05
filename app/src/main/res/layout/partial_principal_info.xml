@@ -36,17 +36,26 @@
 
             <View
                 style="@style/DividerHorizontal"
+                android:id="@+id/view5"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/splash_screen_bottom_bar" />
+
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view6"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tips_bottom_bar" />
+
+            <View
+                style="@style/DividerHorizontal"
                 android:id="@+id/view4"
                 android:layout_marginTop="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etPrivacy" />
 
-            <View
-                style="@style/DividerHorizontal"
-                android:id="@+id/view5"
-                android:layout_marginTop="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/splash_screen_bottom_bar" />
+
 
             <TextView
                 android:id="@+id/darkTV"
@@ -148,9 +157,233 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tips_bottom_bar"
+                app:layout_constraintTop_toBottomOf="@+id/view7"
                 tools:ignore="TextContrastCheck"
                 android:text="@string/legal" />
+
+            <TextView
+                android:id="@+id/userInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tips_bottom_bar"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/edit_info_text" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etWeight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userInfo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:hint="@string/weight_hint"
+                    android:inputType="numberSigned"
+                    android:maxLength="3"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etWorkType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etWeight">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:hint="@string/workout_hint"
+                    android:inputType="text"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etWakeUpTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toStartOf="@+id/etSleepTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etWorkType">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/wakeup_hint"
+                    android:inputType="numberSigned"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etSleepTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/etWakeUpTime"
+                app:layout_constraintTop_toBottomOf="@+id/etWorkType">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/sleeping_hint"
+                    android:inputType="numberSigned"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etTarget"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etWakeUpTime">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:hint="@string/custom_intake_hint"
+                    android:inputType="numberSigned|numberDecimal"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etClimate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:theme="@style/TextInputLayoutAppearance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etTarget">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="@string/climate_hint"
+                    android:inputType="text"
+                    android:paddingStart="10dp"
+                    android:paddingBottom="10dp"
+                    tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etClimate"
+                tools:ignore="TextContrastCheck"
+                android:text="@string/gender" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="240dp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etClimate"
+                tools:ignore="TextContrastCheck" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/btnMan"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/etClimate"
+                app:layout_constraintTop_toBottomOf="@+id/etClimate"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/man" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/btnWoman"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="60dp"
+                app:layout_constraintEnd_toEndOf="@+id/etClimate"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etClimate"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/woman" />
+
+            <View
+                style="@style/DividerHorizontal"
+                android:id="@+id/view7"
+                android:layout_marginTop="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnWoman" />
 
             <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
                 android:id="@+id/dark_theme_bottom_bar"

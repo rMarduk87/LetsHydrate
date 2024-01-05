@@ -41,10 +41,7 @@ class IntookCounterFragment :
         sqliteHelper = SqliteHelper(requireContext())
         binding.chartDaily.animate(listOf())
 
-        val remaining = sharedPref.getFloat(
-            AppUtils.TOTAL_INTAKE_KEY,
-            0f
-        ) - sqliteHelper.getIntook(date)
+        val remaining = sqliteHelper.getTotalIntakeValue(date) - sqliteHelper.getIntook(date)
 
         if (remaining > 0) {
             binding.remainingIntake!!.text = "$remaining " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
@@ -52,16 +49,10 @@ class IntookCounterFragment :
             binding.remainingIntake!!.text = "0 " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
         }
 
-        binding.targetIntake!!.text = "${sharedPref.getFloat(
-            AppUtils.TOTAL_INTAKE_KEY,
-            0f
-        )
+        binding.targetIntake!!.text = "${sqliteHelper.getTotalIntakeValue(date)
         } " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
 
-        val percentage = sqliteHelper.getIntook(date) * 100 / sharedPref.getFloat(
-            AppUtils.TOTAL_INTAKE_KEY,
-            0f
-        )
+        val percentage = sqliteHelper.getIntook(date) * 100 / sqliteHelper.getTotalIntakeValue(date)
         val intPercentage = percentage.toInt()
         binding.waterLevelViewL!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewL!!.progressValue = intPercentage
@@ -69,6 +60,8 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.progressValue = intPercentage
         binding.waterLevelViewW!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewW!!.progressValue = intPercentage
+        binding.waterLevelViewG!!.centerTitle = "$intPercentage%"
+        binding.waterLevelViewG!!.progressValue = intPercentage
         setBackGround()
 
         setTopChart()
@@ -76,7 +69,7 @@ class IntookCounterFragment :
 
     private fun setTopChart() {
         val model = ArrayList<BarChartModel>()
-        val cursor: Cursor = sqliteHelper.getDailyIntookStats(AppUtils.getCurrentDate()!!)
+        val cursor: Cursor = sqliteHelper.getDailyIntookStats(date)
 
         if (cursor.moveToFirst()) {
 
@@ -113,6 +106,14 @@ class IntookCounterFragment :
         binding.least!!.text = sqliteHelper.getMinTodayIntookStats(date)
             .toExtractIntookOption(unit).ifEmpty {
             requireContext().getString(R.string.none)
+        }
+
+        if(binding.most!!.text != requireContext().getString(R.string.none)){
+            if(binding.least!!.text != requireContext().getString(R.string.none)){
+                if(binding.most!!.text == binding.least!!.text){
+                    binding.least!!.text = requireContext().getString(R.string.none)
+                }
+            }
         }
 
         when(themeInt){
@@ -180,20 +181,49 @@ class IntookCounterFragment :
     private fun toGrapeTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
         binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.waterLevelViewL!!.visibility = View.GONE
+        binding.waterLevelViewD!!.visibility = View.GONE
+        binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewG!!.visibility = View.VISIBLE
+        setLayout(binding.waterLevelViewG.id)
     }
 
     private fun toWaterTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
         binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.waterLevelViewL!!.visibility = View.GONE
+        binding.waterLevelViewD!!.visibility = View.GONE
+        binding.waterLevelViewW!!.visibility = View.VISIBLE
+        binding.waterLevelViewG!!.visibility = View.GONE
+        setLayout(binding.waterLevelViewW.id)
     }
     private fun toDarkTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
         binding.textView8.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.waterLevelViewL!!.visibility = View.GONE
+        binding.waterLevelViewD!!.visibility = View.VISIBLE
+        binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewG!!.visibility = View.GONE
+        setLayout(binding.waterLevelViewD.id)
     }
     private fun toLightTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
         binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.waterLevelViewL!!.visibility = View.VISIBLE
+        binding.waterLevelViewD!!.visibility = View.GONE
+        binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewG!!.visibility = View.GONE
+        setLayout(binding.waterLevelViewL.id)
     }
+
+    private fun setLayout(id: Int) {
+        val layoutParams: ConstraintLayout.LayoutParams = binding.textView6.layoutParams as
+                ConstraintLayout.LayoutParams
+        layoutParams.startToStart = id
+        layoutParams.topToTop = id
+        binding.textView6.layoutParams = layoutParams
+    }
+
     override fun onValueSelected(e: Entry?, h: Highlight?) {}
     override fun onNothingSelected() {}
     companion object {

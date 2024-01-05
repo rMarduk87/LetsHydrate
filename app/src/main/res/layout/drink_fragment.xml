@@ -283,7 +283,7 @@
                         android:layout_height="60dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/coffee" />
+                        app:lottie_rawRes="@raw/mini_cocktail" />
 
                     <TextView
                         android:id="@+id/ml50"
@@ -323,7 +323,7 @@
                         android:layout_height="60dp"
                         app:lottie_autoPlay="true"
                         app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/mini_cocktail" />
+                        app:lottie_rawRes="@raw/coffee" />
 
                     <TextView
                         android:id="@+id/ml100"

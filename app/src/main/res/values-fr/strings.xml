@@ -270,4 +270,5 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Un esprit et un corps sains sont hydratés. Venez essayer!</string>
     <string name="intake_report_month">Rapport du mois en cours</string>
     <string name="grape">Grape</string>
+    <string name="change_view">Change de vue</string>
 </resources>

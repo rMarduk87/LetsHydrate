@@ -79,26 +79,35 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
-        if(newVersion > oldVersion && newVersion == 2){
-            db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_UNIT VARCHAR(250) DEFAULT \"ml\"")
-            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
-        }
-        else if(newVersion > oldVersion && newVersion == 3){
-            addNewTables(db!!)
-        }
-        else if(newVersion > oldVersion && newVersion == 4){
-            addAvisTable(db!!)
-        }
-        else if(newVersion > oldVersion && newVersion == 5){
-            db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_THEME INT DEFAULT 0")
-            db!!.execSQL("UPDATE $TABLE_STATS set $KEY_THEME = 0")
-            db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 6 WHERE $KEY_INTOOK_COUNT = 5")
-        }
-        else if(newVersion > oldVersion && newVersion == 6){
-            db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_MONTH VARCHAR(200)")
-            db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_YEAR VARCHAR(200)")
-            updateValuesOfStats(db!!)
-            updateValuesOfCounter(db!!)
+        if(newVersion > oldVersion){
+            var counter = oldVersion
+            if(counter==1){
+                counter += 1
+                db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_UNIT VARCHAR(250) DEFAULT \"ml\"")
+                db!!.execSQL("UPDATE $TABLE_STATS set $KEY_UNIT = \"ml\"")
+            }
+            if(oldVersion<3){
+                counter += 1
+                addNewTables(db!!)
+            }
+            if(counter<4){
+                counter += 1
+                addAvisTable(db!!)
+            }
+            if(counter<5){
+                counter += 1
+                db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_THEME INT DEFAULT 0")
+                db!!.execSQL("UPDATE $TABLE_STATS set $KEY_THEME = 0")
+                db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 6 WHERE $KEY_INTOOK_COUNT = 5")
+            }
+            if (counter<6){
+                counter += 1
+                db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_MONTH VARCHAR(200)")
+                db!!.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_YEAR VARCHAR(200)")
+                updateValuesOfStats(db!!)
+                updateValuesOfCounter(db!!)
+            } else {
+            }
         }
         else{
             db!!.execSQL("DROP TABLE IF EXISTS $TABLE_STATS")
@@ -131,12 +140,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                     val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ?"
                     db.rawQuery(selectQuery, arrayOf(reached.getString(2))).use {
                         if (!it.moveToFirst()) {
-                            val values = ContentValues()
-                            values.put(KEY_DATE, reached.getString(2))
-                            values.put(KEY_INTOOK, 6)
-                            values.put(KEY_INTOOK_COUNT, 1)
-                            val db = this.writableDatabase
-                            db.insert(TABLE_INTOOK_COUNTER, null, values)
+                            var data = reached.getString(2)
+                            db!!.execSQL("INSERT INTO $TABLE_INTOOK_COUNTER ($KEY_DATE, $KEY_INTOOK, $KEY_INTOOK_COUNT) VALUES ($data, 6,1)")
                         }
                     }
                     reached.moveToNext()
@@ -226,6 +231,16 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val selectQuery = "SELECT $KEY_UNIT, $KEY_TOTAL_INTAKE FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
+    }
+
+    fun getTotalIntakeValue(date: String) : Float{
+        var total = 0f
+        getTotalIntake(date).use{
+            if (it.moveToFirst()) {
+                return it.getFloat(1)
+            }
+        }
+        return total
     }
 
     private fun getAllStats(): Cursor {

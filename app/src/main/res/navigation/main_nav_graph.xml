@@ -11,9 +11,6 @@
         android:label="@string/drink_fragment_label"
         tools:layout="@layout/drink_fragment">
         <action
-            android:id="@+id/action_drinkFragment_to_editInfoBottomSheetFragment"
-            app:destination="@id/editInfoBottomSheetFragment" />
-        <action
             android:id="@+id/action_drinkFragment_to_selectWeightBottomSheetFragment"
             app:destination="@id/selectWeightBottomSheetFragment" />
         <action
@@ -32,10 +29,6 @@
             android:id="@+id/action_drinkFragment_to_statsFragment"
             app:destination="@id/StatsFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/editInfoBottomSheetFragment"
-        android:name="rpt.tool.mementobibere.ui.userinfo.EditInfoBottomSheetFragment"
-        android:label="EditInfoBottomSheetFragment" />
     <dialog
         android:id="@+id/selectWeightBottomSheetFragment"
         android:name="rpt.tool.mementobibere.ui.weight.SelectWeightBottomSheetFragment"

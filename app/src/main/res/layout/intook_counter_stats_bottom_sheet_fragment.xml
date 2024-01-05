@@ -123,6 +123,34 @@
                 android:visibility="gone"
                 app:wlv_waveColor="@color/colorSecondaryW" />
 
+            <me.itangqi.waveloadingview.WaveLoadingView
+                android:id="@+id/waterLevelViewG"
+                android:layout_width="250dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout70"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:wlv_borderColor="@color/colorSecondaryLighterW"
+                app:wlv_borderWidth="8dp"
+                app:wlv_progressValue="70"
+                app:wlv_round_rectangle="true"
+                app:wlv_shapeType="circle"
+                app:wlv_titleCenter="40%"
+                app:wlv_titleCenterColor="@color/colorWhite"
+                app:wlv_titleCenterSize="45sp"
+                app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+                app:wlv_titleCenterStrokeWidth="3dp"
+                app:wlv_triangle_direction="north"
+                app:wlv_waveAmplitude="60"
+                android:visibility="gone"
+                app:wlv_waveColor="@color/purple_500" />
+
             <LinearLayout
                 android:id="@+id/linearLayout70"
                 android:layout_width="wrap_content"

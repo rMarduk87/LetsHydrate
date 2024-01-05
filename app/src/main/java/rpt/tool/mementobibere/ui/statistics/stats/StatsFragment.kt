@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.CompoundButton
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.LimitLine
@@ -75,7 +76,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             binding.se.visibility = View.VISIBLE
         }
 
-        binding.monthYearSwitch.setOnCheckedChangeListener(this)
+        binding.monthSwitch.setOnCheckedChangeListener(this)
+
 
         listOfWeeks = AppUtils.getWeekList(AppUtils.getCurrentDate()!!)
 
@@ -89,11 +91,11 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
         if(isMonth){
             binding.monthOrYearTV.text = listOfMonths[indexMonth].text
-            binding.monthYearSwitch.isChecked = true
+            binding.monthSwitch.isChecked = true
         }
         else{
             binding.monthOrYearTV.text = listOfYears[indexYear]
-            binding.monthYearSwitch.isChecked = false
+            binding.monthSwitch.isChecked = false
         }
         if(indexMonth == listOfMonths.size - 1 && isMonth){
             binding.forward.isEnabled = false
@@ -411,7 +413,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             }
 
         } else {
-            val layoutParams: ConstraintLayout.LayoutParams = binding.df.layoutParams as ConstraintLayout.LayoutParams
+            val layoutParams: LayoutParams = binding.df.layoutParams as LayoutParams
             layoutParams.topToBottom = binding.noData.id
             binding.df.layoutParams = layoutParams
             binding.chart.visibility = View.GONE
@@ -433,8 +435,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                 binding.chart.setPinchZoom(true)
                 binding.chart.isScaleXEnabled = true
                 binding.chart.isScaleYEnabled = false
-                binding.chart.axisLeft.textColor = Color.BLACK
-                binding.chart.xAxis.textColor = Color.BLACK
+                binding.chart.axisLeft.textColor = setThemeColor()
+                binding.chart.xAxis.textColor = setThemeColor()
                 binding.chart.axisLeft.setDrawAxisLine(false)
                 binding.chart.xAxis.setDrawAxisLine(false)
                 binding.chart.setDrawMarkers(false)
@@ -476,14 +478,14 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                 binding.chart.xAxis.valueFormatter = (ChartXValueFormatter(dateArray))
                 binding.chart.data = lineData
                 binding.chart.invalidate()
-                val layoutParams: ConstraintLayout.LayoutParams = binding.df.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParams: LayoutParams = binding.df.layoutParams as LayoutParams
                 layoutParams.topToBottom = binding.chart.id
                 binding.df.layoutParams = layoutParams
                 binding.chart.visibility = View.VISIBLE
                 binding.noData.visibility = View.GONE
             }
             else{
-                val layoutParams: ConstraintLayout.LayoutParams = binding.df.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParams: LayoutParams = binding.df.layoutParams as LayoutParams
                 layoutParams.topToBottom = binding.noData.id
                 binding.df.layoutParams = layoutParams
                 binding.chart.visibility = View.GONE
@@ -491,6 +493,13 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             }
             setBackGround()
         }
+    }
+
+    private fun setThemeColor(): Int {
+        when(themeInt){
+            3-> return Color.parseColor("#FF6200EE")
+        }
+        return Color.BLACK
     }
 
     private fun setColor(themeInt: Int): Int {
@@ -525,38 +534,64 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
     private fun toGrapeTheme() {
         binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.purple_500))
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorBlack))
         binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.purple_500))
         binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.purple_500))
         binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.purple_500))
         binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.purple_500))
+        binding.reports.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repWeekTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repMonthTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repReachedTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repDrinkFreqTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnShowRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnAddRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.monthOrYearTV.setTextColor(requireContext().getColor(R.color.purple_500))
+        binding.monthLabel.setTextColor(requireContext().getColor(R.color.purple_500))
+        binding.bubble.setImageDrawable(requireContext().getDrawable(R.drawable.ic_bubbles_g))
     }
 
     private fun toWaterTheme() {
         binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDarkW))
         binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDarkW))
         binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDarkW))
         binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDarkW))
+        setOtherLayout()
     }
 
     private fun toDarkTheme() {
         binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.darkGreen30))
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
         binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
         binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
         binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
+        setOtherLayout()
     }
 
     private fun toLightTheme() {
         binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDark))
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
         binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
         binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
         binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
+        setOtherLayout()
+    }
+
+    private fun setOtherLayout() {
+        binding.reports.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.repWeekTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.repMonthTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.repReachedTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.repDrinkFreqTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnShowRecord.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnAddRecord.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.monthOrYearTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.monthLabel.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.bubble.setImageDrawable(requireContext().getDrawable(R.drawable.ic_bubbles))
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, checked: Boolean) {
@@ -565,6 +600,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         }else{
             requireContext().getString(R.string.year)
         }
+
         isMonth = checked
 
         val editor = sharedPref.edit()
@@ -577,10 +613,12 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         if(isMonth){
             indexMonth = sharedPref.getInt(AppUtils.INDEX_MONTH_KEY,listOfMonths.size -1)
             binding.monthOrYearTV.text = listOfMonths[indexMonth].text
+            //binding.monthSwitch.isChecked = !checked
         }
         else{
             indexYear = sharedPref.getInt(AppUtils.INDEX_YEAR_KEY,listOfYears.size -1)
             binding.monthOrYearTV.text = listOfYears[indexYear]
+            //binding.monthSwitch.isChecked = checked
         }
         createChart()
     }
