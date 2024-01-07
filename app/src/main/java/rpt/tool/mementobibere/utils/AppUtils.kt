@@ -352,11 +352,6 @@ class AppUtils {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
         }
 
-        enum class TypeLayout{
-            Es,Fr,It
-        }
-
-
         val listIds = arrayOf(
             R.id.icon_bell,
             R.id.icon_info,

@@ -65,12 +65,57 @@
             tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/enter_intake_input_title"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        tools:ignore="TextContrastCheck" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etReachedQta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:theme="@style/TextInputLayoutAppearance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:hint="@string/new_qta_hint"
+            android:inputType="numberSigned"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <View
         style="@style/DividerHorizontal"
         android:id="@+id/view2"
         android:layout_marginTop="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etReachedDay" />
+
+    <View
+        style="@style/DividerHorizontal"
+        android:id="@+id/view3"
+        android:layout_marginTop="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etReachedQta" />
 
 
 

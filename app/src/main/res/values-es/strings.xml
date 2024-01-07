@@ -186,10 +186,10 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="intake_report_percent">% del objetivo</string>
     <string name="str_back">ATRÁS</string>
     <string name="reached_goal">Meta alcanzada</string>
-    <string name="reached_goal_part2">(Haga clic en el calendario para agregar fechas anteriores)</string>
+    <string name="reached_goal_part2">(Las cantidades siguientes se indican en la unidad de medida vigente cuando\nse ingresaron)</string>
     <string name="code">Code</string>
     <string name="last_opt">Última opción seleccionada.</string>
-    <string name="new_data_hint">Agrega una fecha en la que lograste el objetivo</string>
+    <string name="new_data_hint">Añadir una fecha</string>
     <string name="enter_data_input_title">¿Has alcanzado tu objetivo de consumo de alcohol antes de hoy? Introdúcelo aquí</string>
     <string name="please_input_a_valid_date">Ingrese una fecha de validación</string>
     <string name="please_input_a_valid_date_range">La fecha no puede ser mayor que\n hoy ni antes del 31-08-2023.</string>
@@ -257,8 +257,8 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="get_reload">Recargar</string>
     <string name="weekly_average">Promedio semanal</string>
     <string name="monthly_average">Promedio mensual</string>
-    <string name="average_completion">Promedio de finalización</string>
-    <string name="drink_frequency">Frecuencia de bebida</string>
+    <string name="average_completion">Promedio de finalización(semanal)</string>
+    <string name="drink_frequency">Frecuencia de bebida(semanal)</string>
     <string name="weekly_completion">Finalización semanal</string>
     <string name="sun">Dom</string>
     <string name="mon">Lun</string>
@@ -272,7 +272,11 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="year">Año</string>
     <string name="show_reached_day">Mostrar objetivo alcanzado</string>
     <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Una mente y un cuerpo sanos son hidratados. ¡Ven y pruébalo!</string>
-    <string name="intake_report_month">Informe del mes actual</string>
+    <string name="intake_report_month">Informe actual</string>
     <string name="grape">Grape</string>
     <string name="change_view">Cambio Vista</string>
+    <string name="enter_intake_input_title">Ingrese aquí la cantidad consumida en la fecha elegida(si no selecciona nada, se utilizará la cantidad máxima calculada hoy)</string>
+    <string name="new_qta_hint">Agregar cantidad en unidad de medida</string>
+    <string name="please_enter_a_quantity_at_least_equal_to">Por favor introduzca una cantidad al menos igual a</string>
+    <string name="times">veces</string>
 </resources>

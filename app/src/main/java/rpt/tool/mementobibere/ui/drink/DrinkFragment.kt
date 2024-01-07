@@ -61,7 +61,6 @@ import java.util.Date
 
 class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::inflate) {
 
-    private var start: Boolean = false
     private var refreshed: Boolean = false
     private var clicked: Int = 0
     private var counter: Int = 0
@@ -161,7 +160,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun initIntookValue() {
-        unit = AppUtils.calculateExtensions(current_unitInt)
+        unit = AppUtils.calculateExtensions(new_unitInt)
         binding.ml50!!.text = "${value_50.toNumberString()} $unit"
         binding.ml100!!.text = "${value_100.toNumberString()} $unit"
         binding.ml150!!.text = "${value_150.toNumberString()} $unit"
@@ -460,7 +459,20 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun updateValues() {
-        totalIntake = try {
+        /*totalIntake = try {
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }catch (ex:Exception){
+            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            var editor = sharedPref.edit()
+            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
+            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
+            editor.apply()
+            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+        }*/
+
+        //var noUpdate = sharedPref.getBoolean(AppUtils.NO_UPDATE_UNIT,false)
+        /*if(!noUpdate){
+            totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
@@ -470,17 +482,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             editor.apply()
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }
-
-        var noUpdate = sharedPref.getBoolean(AppUtils.NO_UPDATE_UNIT,false)
-        if(!noUpdate){
-            totalIntake = sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
+            totalIntake = totalIntake
                 .toCalculatedValue(current_unitInt,calculateRealUnit(current_unitInt,new_unitInt))
 
             unit = AppUtils.calculateExtensions(new_unitInt)
             sqliteHelper.updateTotalIntake(
                 AppUtils.getCurrentOnlyDate()!!,
                 totalIntake, unit)
-        }
+        }*/
 
         var editor = sharedPref.edit()
         editor.putBoolean(AppUtils.NO_UPDATE_UNIT, false)
@@ -550,7 +559,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             setClimate()
         }
 
-        totalIntake = try {
+        /*totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
                 .toCalculatedValue(current_unitInt,new_unitInt)
         }catch (ex:Exception){
@@ -561,7 +570,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             editor.apply()
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
                 .toCalculatedValue(current_unitInt,new_unitInt)
-        }
+        }*/
 
         setValueForDrinking()
 
@@ -734,6 +743,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     selectedOption = binding.tvCustom.text.toString().toExtractFloat()
                     btnSelected = 6
                     addDrinkedWater()
+                    randomizeBalloon()
                 }
             }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
@@ -759,6 +769,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
                     binding.opScan,outValue.resourceId,8,background)
                 addDrinkedWater()
+                randomizeBalloon()
             }
             else{
                 showMessage(getString(R.string.option_selectable_once_a_day), it)
@@ -884,7 +895,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
     private fun randomizeBalloon() {
         if(sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)){
-            if(binding.bubble.visibility == INVISIBLE){
+            if(binding.bubble.visibility == INVISIBLE || binding.bubble.visibility == GONE){
+                binding.top.visibility = VISIBLE
                 binding.bubble.visibility = VISIBLE
                 binding.se.visibility = VISIBLE
             }
@@ -1187,18 +1199,21 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         else{
             selectedOption
         }
-        var totalIntook = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
-        if(selectedOption != null){
-            sqliteHelper.resetIntook(AppUtils.getCurrentDate()!!)
-            sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit,
-                AppUtils.getCurrentDate()!!.toMonth(), AppUtils.getCurrentDate()!!.toYear())
-            sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
-            updateValues()
-            addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
-            selectedOption = null
-            counter = 0
-            refreshed = false
-            intookToRefresh = 0f
+        if(btnSelected != null) {
+            var totalIntook = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
+            if(selectedOption != null){
+                sqliteHelper.resetIntook(AppUtils.getCurrentDate()!!)
+                sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit,
+                    AppUtils.getCurrentDate()!!.toMonth(), AppUtils.getCurrentDate()!!.toYear())
+                sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
+                updateValues()
+                addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
+                selectedOption = null
+                counter = 0
+                refreshed = false
+                intookToRefresh = 0f
+                randomizeBalloon()
+            }
         }
     }
 
@@ -1234,6 +1249,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.intakeProgress.labelText = "0%"
             clicked = 0
             refreshed = true
+            binding.top.visibility = GONE
+            binding.bubble.visibility = GONE
+            binding.se.visibility = GONE
         }
     }
 

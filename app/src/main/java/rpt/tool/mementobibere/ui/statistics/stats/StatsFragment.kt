@@ -32,9 +32,11 @@ import rpt.tool.mementobibere.databinding.StatsFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.chart.ChartXValueFormatter
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValueStats
+import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.extensions.toMonth
 import rpt.tool.mementobibere.utils.extensions.toNumberString
+import rpt.tool.mementobibere.utils.extensions.toStats
 import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.navigation.safeNavController
@@ -180,6 +182,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             val userInput = promptsView
                 .findViewById(R.id.etReachedDay) as TextInputLayout
 
+            val userIputQta = promptsView.findViewById(R.id.etReachedQta) as TextInputLayout
+
             userInput.editText!!.setOnClickListener {
                 val calendar = Calendar.getInstance()
 
@@ -209,18 +213,38 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
             val unit = AppUtils.calculateExtensions(sharedPref.getInt(AppUtils.UNIT_KEY, 0))
 
+            var value = 0f
+            if(!TextUtils.isEmpty(userIputQta.editText!!.text.toString())){
+                value = userIputQta.editText!!.text.toString().toFloat()
+            }
+
             userBtnAdd.setOnClickListener {
                 when {
 
                     TextUtils.isEmpty(userInput.editText!!.text.toString()) ->
                         showError(getString(R.string.please_input_a_valid_date))
 
+                    value != 0f && value < sharedPref.getFloat(
+                        AppUtils.TOTAL_INTAKE_KEY, 0f
+                    ) -> showError(
+                        "${getString(R.string.please_enter_a_quantity_at_least_equal_to)} "
+                                + sharedPref.getFloat(
+                        AppUtils.TOTAL_INTAKE_KEY, 0f
+                    ) + " " + AppUtils.calculateExtensions(
+                            sharedPref.getInt(AppUtils.UNIT_KEY,0)))
+
                     else -> {
 
-                        sqliteHelper.addReachedGoal(
-                            userInput.editText!!.text.toString(), sharedPref.getFloat(
+                        var qta =  if(value != 0f){
+                            value
+                        }else{
+                            sharedPref.getFloat(
                                 AppUtils.TOTAL_INTAKE_KEY, 0f
-                            ), unit
+                            )
+                        }
+
+                        sqliteHelper.addReachedGoal(
+                            userInput.editText!!.text.toString(), qta, unit
                         )
                         sqliteHelper.addAll(
                             userInput.editText!!.text.toString(),
@@ -233,6 +257,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                         sqliteHelper.addOrUpdateIntookCounter(
                             userInput.editText!!.text.toString(),6f,1)
                         userInput.editText!!.setText("")
+                        userIputQta.editText!!.setText("")
                     }
                 }
             }
@@ -299,6 +324,37 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             )
         } / ${requireContext().getString(R.string.day)}"
 
+        var drinkedD = 0f
+        var toCompleteD = 0f
+        var percentage = 0f
+        var completion = 0f
+
+        for (i in listOfWeeks.indices) {
+            drinkedD = sqliteHelper.getIntook(listOfWeeks[i])
+            toCompleteD = sqliteHelper.getTotalIntakeValue(listOfWeeks[i])
+            if(toCompleteD != 0f){
+                percentage +=  drinkedD * 100/toCompleteD
+            }
+
+        }
+
+        completion = percentage /7
+        binding.reachedAverageTV.text = "${completion.toNumberString()} %"
+
+        var sumCount = 0f
+        for (i in listOfWeeks.indices) {
+            var c = sqliteHelper.getSumOfDailyIntookCounter(listOfWeeks[i])
+            c.use {
+                if (it.moveToFirst()) {
+                    sumCount += it.getInt(1)
+                }
+            }
+        }
+
+        drinkFrequency = (sumCount/7).toString().toExtractFloat().toStats()
+        binding.drinkFrequencyTV.text = "${drinkFrequency.toNumberString()} ${
+            requireContext().getString(R.string.times)
+        } / ${requireContext().getString(R.string.day)}"
     }
 
     private fun assignIconByIntook(date: String): Int {

@@ -49,6 +49,10 @@ fun String.toExtractFloat(isAll : Boolean = false): Float{
     return step
 }
 
+fun Float.toStats(): Float{
+    return String.format("%.0f",this).toFloat()
+}
+
 fun Float.toCalculatedValueStats(current: Int, newValue: Int): Float {
     return if(current == 0){
         this.toCalculatedValue(0,newValue)
@@ -124,32 +128,32 @@ fun Int.toExtractIntookOption(unit: Int): String {
     var result = ""
     when(unit){
         0-> result = when(this){
-            0-> "50 ml"
-            1-> "100 ml"
-            2-> "150 ml"
-            3-> "200 ml"
-            4-> "250 ml"
-            5-> "300 ml"
+            0-> "50"
+            1-> "100"
+            2-> "150"
+            3-> "200"
+            4-> "250"
+            5-> "300"
             6-> "custom"
             else->""
         }
         1-> result = when(this){
-            0-> "1.75 oz(uk)"
-            1-> "3.51 oz(uk)"
-            2-> "5.27 oz(uk)"
-            3-> "7.03 oz(uk)"
-            4-> "8.79 oz(uk)"
-            5-> "10.56 oz(uk)"
+            0-> "1.75"
+            1-> "3.51"
+            2-> "5.27"
+            3-> "7.03"
+            4-> "8.79"
+            5-> "10.56"
             6-> "custom"
             else->""
         }
         2-> result = when(this){
-            0-> "1.69 oz(us)"
-            1-> "3.38 oz(us)"
-            2-> "5.07 oz(us)"
-            3-> "6.76 oz(us)"
-            4-> "8.45 oz(us)"
-            5-> "10.14 oz(us)"
+            0-> "1.69"
+            1-> "3.38"
+            2-> "5.07"
+            3-> "6.76"
+            4-> "8.45"
+            5-> "10.14"
             6-> "custom"
             else->""
         }

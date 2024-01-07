@@ -182,10 +182,10 @@
     <string name="intake_report_percent">% des Ziels</string>
     <string name="str_back">BACK</string>
     <string name="reached_goal">Ziel erreicht</string>
-    <string name="reached_goal_part2">(Klicken Sie auf den Kalender, um frühere Termine hinzuzufügen)</string>
+    <string name="reached_goal_part2">(Die nachstehenden Mengen werden in der zum Zeitpunkt der Eingabe gültigen Maßeinheit angegeben)</string>
     <string name="code">Code</string>
     <string name="last_opt">Letzte Option\nausgewählt.</string>
-    <string name="new_data_hint">Fügen Sie ein Datum hinzu, an dem Sie das Ziel erreicht haben</string>
+    <string name="new_data_hint">Fügen Sie ein Datum hinzu</string>
     <string name="enter_data_input_title">Haben Sie Ihr Trinkziel schon heute erreicht? Geben Sie es hier ein</string>
     <string name="please_input_a_valid_date">Bitte geben Sie ein Gültigkeitsdatum ein</string>
     <string name="please_input_a_valid_date_range">Das Datum darf nicht größer als\n heute oder vor dem 31.08.2023 sein</string>
@@ -253,8 +253,8 @@
     <string name="get_reload">Neu laden</string>
     <string name="weekly_average">Wochendurchschnitt</string>
     <string name="monthly_average">Monatlicher Durchschnitt</string>
-    <string name="average_completion">Durchschnittlicher Abschluss</string>
-    <string name="drink_frequency">Trinkhäufigkeit</string>
+    <string name="average_completion">Durchschnittlicher Abschluss(Wöchentlich)</string>
+    <string name="drink_frequency">Trinkhäufigkeit(Wöchentlich)</string>
     <string name="weekly_completion">Wöchentlicher Abschluss</string>
     <string name="sun">Son</string>
     <string name="mon">Mon</string>
@@ -268,7 +268,11 @@
     <string name="year">Jahr</string>
     <string name="show_reached_day">Ziel erreicht anzeigen</string>
     <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Ein gesunder Geist und Körper sind hydriert. Kommen Sie und probieren Sie es aus!</string>
-    <string name="intake_report_month">Aktueller Monatsbericht</string>
+    <string name="intake_report_month">Aktueller bericht</string>
     <string name="grape">Grape</string>
     <string name="change_view">Ansicht ändern</string>
+    <string name="enter_intake_input_title">Geben Sie hier die am gewählten Datum getrunkene Menge ein(Wenn Sie nichts auswählen, wird die heute berechnete Höchstmenge verwendet)</string>
+    <string name="new_qta_hint">Menge in Maßeinheit hinzufügen</string>
+    <string name="please_enter_a_quantity_at_least_equal_to">Bitte geben Sie eine Menge ein, die mindestens gleich ist</string>
+    <string name="times">mal</string>
 </resources>

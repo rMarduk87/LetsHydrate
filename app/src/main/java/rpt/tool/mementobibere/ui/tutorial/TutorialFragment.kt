@@ -351,7 +351,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         Handler(Looper.getMainLooper()).postDelayed({
             firstHelpBalloon.dismiss()
             goToSecond(view,background)
-        }, 2000)
+        }, 5000)
     }
 
     private fun goToSecond(view: View, background: Int) {
@@ -395,7 +395,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         Handler(Looper.getMainLooper()).postDelayed({
             thirdHelpBalloon.dismiss()
             goToFourth(view,background)
-        }, 2500)
+        }, 2800)
 
 
     }
@@ -423,7 +423,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.opDrinkAll.background = requireContext().getDrawable(background)
             binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
             addDrinkedWater()
-        }, 3000)
+        }, 3400)
 
         Handler(Looper.getMainLooper()).postDelayed({
             binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
@@ -433,7 +433,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             addDrinkedWater()
             isTutorial = false
             goToFifth(view)
-        }, 4000)
+        }, 4400)
     }
 
     private fun goToFifth(view: View) {
@@ -446,7 +446,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         Handler(Looper.getMainLooper()).postDelayed({
             fifthHelpBalloon.dismiss()
             goToSixth(view)
-        }, 2500)
+        }, 2650)
     }
 
     private fun goToSixth(view: View) {
@@ -459,7 +459,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         Handler(Looper.getMainLooper()).postDelayed({
             sixthHelpBalloon.dismiss()
             goToSeventh(view)
-        }, 2500)
+        }, 2650)
     }
 
     private fun goToSeventh(view: View) {
@@ -476,7 +476,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             editor.apply()
             safeNavController?.safeNavigate(TutorialFragmentDirections
                 .actionTutorialFragmentToDrinkFragment())
-        }, 2500)
+        }, 2650)
     }
 
     override fun onResume() {

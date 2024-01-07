@@ -138,9 +138,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             if (reached.moveToFirst()) {
                 for (i in 0 until reached.count) {
                     val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ?"
-                    db.rawQuery(selectQuery, arrayOf(reached.getString(2))).use {
+                    db.rawQuery(selectQuery, arrayOf(reached.getString(1))).use {
                         if (!it.moveToFirst()) {
-                            var data = reached.getString(2)
+                            var data = reached.getString(1)
                             db!!.execSQL("INSERT INTO $TABLE_INTOOK_COUNTER ($KEY_DATE, $KEY_INTOOK, $KEY_INTOOK_COUNT) VALUES ($data, 6,1)")
                         }
                     }
@@ -149,8 +149,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
     }
-
-
     fun addAll(date: String, intook: Int, totalintake: Float, unit: String, theme: Int, month: String, year: String): Long {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         if (checkExistance(date,selectQuery) == 0) {
@@ -169,7 +167,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return -1
     }
-
     fun updateAll(theme: Int) : Int{
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -180,7 +177,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db.close()
         return response
     }
-
     fun getIntook(date: String): Float {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
@@ -192,7 +188,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return intook
     }
-
     fun resetIntook(date: String): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -202,7 +197,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db.close()
         return response
     }
-
     fun addIntook(date: String, selectedOption: Float, unit: String, month: String, year: String): Int {
         val intook = getIntook(date)
         val db = this.writableDatabase
@@ -216,7 +210,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db.close()
         return response
     }
-
     private fun checkExistance(date: String, query: String): Int {
         val db = this.readableDatabase
         db.rawQuery(query, arrayOf(date)).use {
@@ -226,13 +219,11 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return 0
     }
-
     fun getTotalIntake(date: String): Cursor{
         val selectQuery = "SELECT $KEY_UNIT, $KEY_TOTAL_INTAKE FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
     }
-
     fun getTotalIntakeValue(date: String) : Float{
         var total = 0f
         getTotalIntake(date).use{
@@ -242,27 +233,21 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return total
     }
-
     private fun getAllStats(): Cursor {
         val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, null)
-
     }
     fun getAllStatsYear(year : String): Cursor {
         val selectQuery = "SELECT * FROM $TABLE_STATS WHERE $KEY_YEAR = ? ORDER BY $KEY_DATE DESC"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(year))
-
     }
-
     fun getAllStatsMonthly(month : String, year : String): Cursor {
         val selectQuery = "SELECT * FROM $TABLE_STATS WHERE $KEY_YEAR = ? AND $KEY_MONTH = ? ORDER BY $KEY_DATE DESC"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(year,month))
-
     }
-
     fun updateTotalIntake(date: String, totalintake: Float, unit: String): Int {
         getIntook(date)
         val db = this.writableDatabase
@@ -274,7 +259,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db.close()
         return response
     }
-
     fun addOrUpdateIntookCounter(date: String, selectedOption: Float, value: Int): Int {
         val intook = getIntookCounter(date,selectedOption)
         if(intook==-1){
@@ -307,14 +291,12 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return -1
     }
-
     fun resetIntookCounter(date: String): Int{
         val db = this.writableDatabase
         val response = db.delete(TABLE_INTOOK_COUNTER, "$KEY_DATE = ?", arrayOf(date))
         db.close()
         return response
     }
-
     private fun getIntookCounter(date: String, selectedOption: Float): Int {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ? AND $KEY_INTOOK = ?"
         val db = this.readableDatabase
@@ -325,6 +307,14 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return intook
+    }
+
+    fun getSumOfDailyIntookCounter(date: String): Cursor {
+        val selectQuery = "SELECT $KEY_DATE, SUM($KEY_INTOOK_COUNT) as count " +
+                "FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ? " +
+                "GROUP BY $KEY_DATE HAVING SUM($KEY_INTOOK_COUNT) > 0"
+        val db = this.readableDatabase
+        return db.rawQuery(selectQuery, arrayOf(date))
     }
 
     fun getAllIntookStats(): Cursor {
@@ -340,9 +330,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val selectQuery = "SELECT * FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
-
     }
-
     fun getMaxIntookStats(): Int {
         val selectQuery = "SELECT t1.$KEY_INTOOK, t2.total FROM $TABLE_INTOOK_COUNTER t1 " +
                 "INNER JOIN (SELECT $KEY_INTOOK,SUM($KEY_INTOOK_COUNT) AS total FROM " +
@@ -356,7 +344,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return intook
     }
-
     fun getMinIntookStats(): Int {
         val selectQuery = "SELECT t1.$KEY_INTOOK, t2.total FROM $TABLE_INTOOK_COUNTER t1 " +
                 "INNER JOIN (SELECT $KEY_INTOOK,SUM($KEY_INTOOK_COUNT) AS total FROM " +
@@ -370,7 +357,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return intook
     }
-
     fun getMaxTodayIntookStats(date: String): Int {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC LIMIT 1"
         val db = this.readableDatabase
@@ -382,7 +368,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return intook
     }
-
     fun getMinTodayIntookStats(date: String): Int {
         val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT ASC LIMIT 1"
         val db = this.readableDatabase
@@ -443,7 +428,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return entry
     }
-
     fun addAvis(date: String) : Long {
         val selectQuery = "SELECT * FROM $TABLE_AVIS WHERE $KEY_DATE = ?"
         if (checkExistance(date,selectQuery) == 0) {
@@ -456,7 +440,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
         return -1
     }
-
     fun getAvisDay(date: String): Boolean {
         val selectQuery = "SELECT * FROM $TABLE_AVIS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase

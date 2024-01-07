@@ -182,10 +182,10 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="intake_report_percent">% de l\'objet</string>
     <string name="str_back">RETOUR</string>
     <string name="reached_goal">Objectif atteint</string>
-    <string name="reached_goal_part2">(Cliquez sur le calendrier pour ajouter les dates précédentes)</string>
+    <string name="reached_goal_part2">(Les quantités ci-dessous sont indiquées dans l\'unité de mesure en vigueur au moment\nde leur saisie)</string>
     <string name="code">Code</string>
     <string name="last_opt">Dernière option sélectionnée..</string>
-    <string name="new_data_hint">Ajoutez une date à laquelle vous avez atteint l\'objectif</string>
+    <string name="new_data_hint">Ajouter une date</string>
     <string name="enter_data_input_title">Avez-vous atteint votre objectif de consommation avant aujourd\'hui? Saisissez-le ici</string>
     <string name="please_input_a_valid_date">Veuillez saisir une date de validation</string>
     <string name="please_input_a_valid_date_range">La date ne peut pas être postérieure à\n aujourd\'hui ou avant le 31/08/2023</string>
@@ -253,8 +253,8 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="get_reload">Recharger</string>
     <string name="weekly_average">Moyenne hebdomadaire</string>
     <string name="monthly_average">Moyenne mensuelle</string>
-    <string name="average_completion">Achèvement moyen</string>
-    <string name="drink_frequency">Fréquence des boissons</string>
+    <string name="average_completion">Achèvement moyen(hebdomadaire)</string>
+    <string name="drink_frequency">Fréquence des boissons(hebdomadaire)</string>
     <string name="weekly_completion">Achèvement hebdomadaire</string>
     <string name="sun">Dim</string>
     <string name="mon">Lun</string>
@@ -268,7 +268,11 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="year">Année</string>
     <string name="show_reached_day">Afficher l\'objectif atteint</string>
     <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Un esprit et un corps sains sont hydratés. Venez essayer!</string>
-    <string name="intake_report_month">Rapport du mois en cours</string>
+    <string name="intake_report_month">Rapport en cours</string>
     <string name="grape">Grape</string>
     <string name="change_view">Change de vue</string>
+    <string name="enter_intake_input_title">Entrez ici la quantité bu à la date choisie(si vous ne sélectionnez rien, la quantité maximale calculée aujourd\'hui sera utilisée)</string>
+    <string name="new_qta_hint">Ajouter une quantité dans l\'unité de mesure</string>
+    <string name="please_enter_a_quantity_at_least_equal_to">Veuillez saisir une quantité au moins égale à</string>
+    <string name="times">fois</string>
 </resources>

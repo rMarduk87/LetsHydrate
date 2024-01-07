@@ -65,6 +65,8 @@ class IntookCounterFragment :
         setBackGround()
 
         setTopChart()
+        binding.textView60.text = requireContext().getString(R.string.intook_report) + " ("+
+                sharedPref.getString(AppUtils.UNIT_STRING,"ml") + ")"
     }
 
     private fun setTopChart() {

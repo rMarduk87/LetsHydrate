@@ -157,10 +157,10 @@
     <string name="intake_report_percent">% of Target</string>
     <string name="str_back">BACK</string>
     <string name="reached_goal">Reached Goal</string>
-    <string name="reached_goal_part2">(Click on the calendar to add previous dates)</string>
+    <string name="reached_goal_part2">(The quantities below are indicated\nin the unit of measurement in effect when\nthey were entered)</string>
     <string name="code">Code</string>
     <string name="last_opt">Last opt selected.</string>
-    <string name="new_data_hint">Add a date where you achieved the goal</string>
+    <string name="new_data_hint">Add a date</string>
     <string name="enter_data_input_title">Have you reached your drinking goal before today? Enter it here</string>
     <string name="please_input_a_valid_date">Please input a valida date</string>
     <string name="please_input_a_valid_date_range">The date cannot be greater\nthan today or before 08-31-2023</string>
@@ -228,8 +228,8 @@
     <string name="get_reload">Reload</string>
     <string name="weekly_average">Weekly average</string>
     <string name="monthly_average">Monthly average</string>
-    <string name="average_completion">Average completion</string>
-    <string name="drink_frequency">Drink frequency</string>
+    <string name="average_completion">Average completion(Weekly)</string>
+    <string name="drink_frequency">Drink frequency(Weekly)</string>
     <string name="weekly_completion">Weekly completion</string>
     <string name="sun">Sun</string>
     <string name="mon">Mon</string>
@@ -243,8 +243,12 @@
     <string name="year">Year</string>
     <string name="show_reached_day">Show reached goal</string>
     <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">A healthy mind and body is a hydrated one. Come and have a try!</string>
-    <string name="intake_report_month">Current month report</string>
+    <string name="intake_report_month">Current report</string>
     <string name="grape">Grape</string>
     <string name="change_view">Change View</string>
+    <string name="enter_intake_input_title">Enter here the quantity drunk on the chosen date(if you do not select anything, the maximum quantity calculated today will be used)</string>
+    <string name="new_qta_hint">Add quantity in measurement unit</string>
+    <string name="please_enter_a_quantity_at_least_equal_to">Please enter a quantity at least equal to</string>
+    <string name="times">times</string>
 
 </resources>
