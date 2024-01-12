@@ -37,7 +37,8 @@ class SelectWeightBottomSheetFragment:
                 sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
                 weightUnit,
                 sharedPref.getInt(AppUtils.GENDER_KEY, 0),
-                sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),
+                sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),0,
+                sharedPref.getInt(AppUtils.UNIT_KEY,0)
             )
             val df = DecimalFormat("#")
             df.roundingMode = RoundingMode.CEILING

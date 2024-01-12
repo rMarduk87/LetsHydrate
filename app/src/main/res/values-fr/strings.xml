@@ -204,7 +204,7 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="goal">Objectif</string>
     <string name="other_info">Autres informations</string>
     <string name="avis">Donneur de sang? Cliquez ci-dessous</string>
-    <string name="walkthrough_text_five">Si vous êtes donneur de sang total il est important de bien vous hydrater (au moins 2 litres) la veille du don et le jour même après le don\nPour confirmer cliquez sur le bouton ci-dessous.\n\nSur l\'écran où vous indiquez la quantité bu, vous pouvez cliquer sur l\'icône du calendrier pour indiquer quand vous ferez un don, activant la modification de la quantité recommandée et l\'augmentation de la fréquence des notifications.</string>
+    <string name="walkthrough_text_five">Si vous êtes donneur de sang total il est important de bien vous hydrater (au moins 2 litres) la veille du don et le jour même après le don\n\nSur l\'écran où vous indiquez la quantité bu , vous pouvez cliquer sur l\'icône du calendrier pour indiquer quand vous ferez un don, activant la modification de la quantité recommandée et une plus grande fréquence de notifications.</string>
     <string name="walkthrough_text_five_2">Si vous êtes donneur de sang total il est important de bien vous hydrater (au moins 2 litres) la veille du don et le jour même après le don\n\nSur l\'écran où vous indiquez la quantité bu , vous pouvez cliquer sur l\'icône du calendrier pour indiquer quand vous ferez un don, activant la modification de la quantité recommandée et une plus grande fréquence de notifications.</string>
     <string name="tomorrow_you_will_donate">Demain vous donnerez du sang ou aujourd\'hui vous avez déjà donné, boire est essentiel !!</string>
     <string name="you_selected_man">Vous avez sélectionné Homme</string>
@@ -253,8 +253,8 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="get_reload">Recharger</string>
     <string name="weekly_average">Moyenne hebdomadaire</string>
     <string name="monthly_average">Moyenne mensuelle</string>
-    <string name="average_completion">Achèvement moyen(hebdomadaire)</string>
-    <string name="drink_frequency">Fréquence des boissons(hebdomadaire)</string>
+    <string name="average_completion">Achèvement moyen (hebdomadaire)</string>
+    <string name="drink_frequency">Fréquence des boissons (hebdomadaire)</string>
     <string name="weekly_completion">Achèvement hebdomadaire</string>
     <string name="sun">Dim</string>
     <string name="mon">Lun</string>

@@ -248,9 +248,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                         )
                         sqliteHelper.addAll(
                             userInput.editText!!.text.toString(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toInt(),
+                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f),
                             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f),unit,
-                            sharedPref.getInt(AppUtils.THEME_KEY, 0),
                             userInput.editText!!.text.toString().toMonth(),
                             userInput.editText!!.text.toString().toYear()
                         )
@@ -286,6 +285,14 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         binding.thu.setAnimation(assignIconByIntook(listOfWeeks[4]))
         binding.fri.setAnimation(assignIconByIntook(listOfWeeks[5]))
         binding.sat.setAnimation(assignIconByIntook(listOfWeeks[6]))
+
+        binding.sun.playAnimation()
+        binding.mon.playAnimation()
+        binding.tue.playAnimation()
+        binding.wed.playAnimation()
+        binding.thu.playAnimation()
+        binding.fri.playAnimation()
+        binding.sat.playAnimation()
 
         var sumWeek = 0f
         for (i in listOfWeeks.indices) {

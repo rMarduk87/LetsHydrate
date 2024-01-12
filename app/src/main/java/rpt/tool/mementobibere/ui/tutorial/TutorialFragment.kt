@@ -122,7 +122,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
 
         totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
             var editor = sharedPref.edit()
@@ -139,6 +138,23 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             initIntookValue()
             setValueForDrinking()
         }
+
+        binding.mainActivityParent.setOnTouchListener { _, _ ->  false }
+        binding.bottomBarNotify.setOnTouchListener { _, _ ->  false }
+        binding.bottomBarNotNotify.setOnTouchListener { _, _ ->  false }
+        binding.cardView.setOnTouchListener { _, _ ->  false }
+        binding.calendarAvis.setOnTouchListener { _, _ ->  false }
+        binding.calendarAvisHelp.setOnTouchListener { _, _ ->  false }
+        binding.infoAvis!!.setOnTouchListener { _, _ ->  false }
+        binding.op50ml!!.setOnTouchListener { _, _ ->  false }
+        binding.op100ml!!.setOnTouchListener { _, _ ->  false }
+        binding.op150ml!!.setOnTouchListener { _, _ ->  false }
+        binding.op200ml!!.setOnTouchListener { _, _ ->  false }
+        binding.op250ml!!.setOnTouchListener { _, _ ->  false }
+        binding.op300ml!!.setOnTouchListener { _, _ ->  false }
+        binding.opCustom.setOnTouchListener { _, _ ->  false }
+        binding.opDrinkAll.setOnTouchListener { _, _ ->  false }
+        binding.opScan.setOnTouchListener { _, _ ->  false }
     }
 
     private fun initIntookValue() {
@@ -300,7 +316,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
 
         totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
             var editor = sharedPref.edit()
@@ -433,7 +448,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             addDrinkedWater()
             isTutorial = false
             goToFifth(view)
-        }, 4400)
+        }, 5500)
     }
 
     private fun goToFifth(view: View) {

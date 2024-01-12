@@ -39,12 +39,17 @@ class WalkThroughActivity : AppCompatActivity() {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
+        binding.mainLayout.setOnTouchListener { _, _ ->  false }
+        binding.imageView2.setOnTouchListener { _, _ ->  false }
+        binding.imageView3.setOnTouchListener { _, _ ->  false }
+        binding.imageView4.setOnTouchListener { _, _ ->  false }
+        binding.imageView5.setOnTouchListener { _, _ ->  false }
+        binding.imageView6.setOnTouchListener { _, _ ->  false }
         startWalkThrough(binding.root)
     }
 
     private fun startWalkThrough(root: ConstraintLayout) {
         fifthWalkthroughBalloon.dismiss()
-        binding.getReload.isEnabled = false
         binding.imageView2.visibility = View.VISIBLE
         binding.imageView3.visibility = View.GONE
         binding.imageView4.visibility = View.GONE
@@ -125,7 +130,7 @@ class WalkThroughActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             fourthWalkthroughBalloon.dismiss()
             goToFifth(root)
-        }, 6500)
+        }, 5000)
     }
 
     private fun goToFifth(root: ConstraintLayout) {
@@ -141,23 +146,12 @@ class WalkThroughActivity : AppCompatActivity() {
                 mainAnchor = binding.imageView6 as View,
                 subAnchorList = listOf(root),
             )
-        }, 3000)
+        }, 2500)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            binding.getReload.isEnabled = true
-        }, 6500)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.getStarted.setOnClickListener {
-
+            fifthWalkthroughBalloon.dismiss()
             startActivity(Intent(this, InitUserInfoActivity::class.java))
             finish()
-        }
-
-        binding.getReload.setOnClickListener {
-            startWalkThrough(binding.root)
-        }
+        }, 6500)
     }
 }

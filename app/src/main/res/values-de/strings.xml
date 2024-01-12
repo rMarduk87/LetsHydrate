@@ -204,7 +204,7 @@
     <string name="goal">Ziel</string>
     <string name="other_info">Andere Informationen</string>
     <string name="avis">Blutspender? Klicken Sie unten</string>
-    <string name="walkthrough_text_five">Wenn Sie Vollblutspender sind, ist es wichtig, dass Sie am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich nehmen (mindestens 2 Liter).\nZur Bestätigung klicken Sie auf die Schaltfläche unten.\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben, können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
+    <string name="walkthrough_text_five">Wenn Sie Vollblutspender sind, ist es wichtig, am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich zu nehmen (mindestens 2 Liter).\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben , können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
     <string name="walkthrough_text_five_2">Wenn Sie Vollblutspender sind, ist es wichtig, am Tag vor der Spende und am selben Tag nach der Spende ausreichend Flüssigkeit zu sich zu nehmen (mindestens 2 Liter).\n\nAuf dem Bildschirm, auf dem Sie die getrunkene Menge angeben , können Sie auf das Kalendersymbol klicken, um anzugeben, wann Sie spenden möchten, und so die Änderung der empfohlenen Menge und die häufigere Benachrichtigung aktivieren.</string>
     <string name="tomorrow_you_will_donate">Morgen wirst du Blut spenden oder heute hast du bereits gespendet, Trinken ist unerlässlich!!</string>
     <string name="you_selected_man">Sie haben „Mann“ ausgewählt</string>
@@ -253,8 +253,8 @@
     <string name="get_reload">Neu laden</string>
     <string name="weekly_average">Wochendurchschnitt</string>
     <string name="monthly_average">Monatlicher Durchschnitt</string>
-    <string name="average_completion">Durchschnittlicher Abschluss(Wöchentlich)</string>
-    <string name="drink_frequency">Trinkhäufigkeit(Wöchentlich)</string>
+    <string name="average_completion">Durchschnittlicher Abschluss (Wöchentlich)</string>
+    <string name="drink_frequency">Trinkhäufigkeit (Wöchentlich)</string>
     <string name="weekly_completion">Wöchentlicher Abschluss</string>
     <string name="sun">Son</string>
     <string name="mon">Mon</string>

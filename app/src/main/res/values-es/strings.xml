@@ -208,7 +208,7 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="goal">Objetivo</string>
     <string name="other_info">Otra información</string>
     <string name="avis">¿Donante de sangre? Haga clic a continuación</string>
-    <string name="walkthrough_text_five">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de la donación\nPara confirmar haz clic en el botón de abajo.\n\nEn la pantalla donde indicas la cantidad consumida, puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
+    <string name="walkthrough_text_five">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de donar\n\nEn la pantalla donde indicas la cantidad consumida , puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
     <string name="walkthrough_text_five_2">Si eres donante de sangre total es importante hidratarte bien (al menos 2 litros) el día antes de la donación y el mismo día después de donar\n\nEn la pantalla donde indicas la cantidad consumida , puedes pulsar en el icono del calendario para indicar cuándo donarás, activando la modificación de la cantidad recomendada y la mayor frecuencia de notificaciones.</string>
     <string name="tomorrow_you_will_donate">Mañana donarás sangre o hoy ya la has donado, beber es fundamental!!</string>
     <string name="you_selected_man">Seleccionaste Hombre</string>
@@ -257,8 +257,8 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="get_reload">Recargar</string>
     <string name="weekly_average">Promedio semanal</string>
     <string name="monthly_average">Promedio mensual</string>
-    <string name="average_completion">Promedio de finalización(semanal)</string>
-    <string name="drink_frequency">Frecuencia de bebida(semanal)</string>
+    <string name="average_completion">Promedio de finalización (semanal)</string>
+    <string name="drink_frequency">Frecuencia de bebida (semanal)</string>
     <string name="weekly_completion">Finalización semanal</string>
     <string name="sun">Dom</string>
     <string name="mon">Lun</string>

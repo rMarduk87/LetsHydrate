@@ -135,7 +135,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
             var editor = sharedPref.edit()
@@ -147,13 +146,16 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
         if (sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true)) {
             startActivity(Intent(requireContext(), WalkThroughActivity::class.java))
+            requireActivity().finish()
         } else if (totalIntake <= 0) {
             startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
+            requireActivity().finish()
         }
 
         viewWindow = requireActivity().window.decorView.findViewById<View>(android.R.id.content)
         initBottomBar()
         if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+            value_300 = AppUtils.firstConversion(300f,new_unitInt)
             initIntookValue()
             setValueForDrinking()
         }
@@ -277,9 +279,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun addDrinkedWater() {
 
         if (selectedOption != null) {
-            if ((inTook * 100 / totalIntake) <= 140 && clicked <= 1) {
+            if ((inTook * 100 / totalIntake) <= 130 && clicked <= 1) {
                 if (sqliteHelper.addIntook(dateNow, selectedOption!!,unit, dateNow.toMonth(),
                     dateNow.toYear()) > 0) {
+                    sqliteHelper.updateTotalIntake(dateNow,totalIntake,unit)
                     inTook += selectedOption!!
                     setWaterLevel(inTook, totalIntake)
                     showMessage(
@@ -496,28 +499,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
         editor.apply()
 
-        sqliteHelper.addAll(dateNow, 0, totalIntake,unit,
-            themeInt, dateNow.toMonth(), dateNow.toYear())
-
         inTook = sqliteHelper.getIntook(dateNow)
 
-        setWaterLevel(inTook, totalIntake)
-    }
-
-    private fun calculateRealUnit(currentUnitint: Int, newUnitint: Int): Int {
-        val realUnit = new_unitInt
-        if(currentUnitint==newUnitint){
-            val c = sqliteHelper.getTotalIntake(dateNow)
-            if(c.moveToFirst()){
-                val unit = AppUtils.extractIntConversion(c.getString(1))
-                return if(unit==new_unitInt){
-                    realUnit
-                } else{
-                    unit
-                }
-            }
+        if(totalIntake!=0f){
+            sqliteHelper.addAll(dateNow, inTook, totalIntake,unit,
+                dateNow.toMonth(), dateNow.toYear())
         }
-        return realUnit
+
+        setWaterLevel(inTook, totalIntake)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -880,7 +869,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 actionDrinkFragmentToTutorialFragment())
         }
 
-        if ((inTook * 100 / totalIntake) > 140) {
+        if ((inTook * 100 / totalIntake) >= 130) {
             binding.intakeProgress.labelText = "${
                 getString(
                     R.string.you_achieved_the_goal
@@ -1068,7 +1057,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                         workType,
                         sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
                         sharedPref.getInt(AppUtils.GENDER_KEY,0),
-                        sharedPref.getInt(AppUtils.CLIMATE_KEY, 0)
+                        sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),0,current_unitInt
                     )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
@@ -1166,7 +1155,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                         sharedPref.getInt(AppUtils.WEIGHT_KEY, 0),
                         sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
                         sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
-                        sharedPref.getInt(AppUtils.GENDER_KEY,0), climate
+                        sharedPref.getInt(AppUtils.GENDER_KEY,0), climate,0, current_unitInt
                     )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING

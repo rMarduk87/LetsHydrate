@@ -39,7 +39,7 @@ class FourthWalkthroughBalloonFactory : Balloon.Factory() {
                 ),
             )
             .setLifecycleOwner(lifecycle)
-            .setDismissWhenClicked(true)
+            .setDismissWhenClicked(false)
             .build()
     }
 }

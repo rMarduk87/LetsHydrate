@@ -369,7 +369,8 @@ class InitUserInfoFragment:
                     editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
                     editor.apply()
 
-                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workType,weightUnit, gender, climate)
+                    val totalIntake = AppUtils.calculateIntake(weight.toInt(), workType,weightUnit,
+                        gender, climate, 0,unit )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
                     editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
@@ -460,6 +461,7 @@ class InitUserInfoFragment:
         editor.putFloat(AppUtils.VALUE_150_KEY,AppUtils.firstConversion(150f,unit))
         editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unit))
         editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unit))
+        editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unit))
         editor.putInt(AppUtils.UNIT_NEW_KEY, unit)
         editor.apply()
     }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.ParseException
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.data.models.MonthChartModel
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
@@ -18,7 +19,8 @@ import kotlin.math.ceil
 
 class AppUtils {
     companion object {
-        fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int): Double {
+        fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int,
+                            oldUnit: Int, unit: Int): Float {
 
             var convertedWeight = weight.toPrincipalUnit(weightUnit)
             var intake = (convertedWeight * 100 / 3.0)
@@ -35,7 +37,7 @@ class AppUtils {
                 2-> intake += 257
                 3-> intake += 515
             }
-            return intake
+            return intake.toFloat().toCalculatedValue(oldUnit,unit)
         }
 
         @SuppressLint("SimpleDateFormat")
