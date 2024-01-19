@@ -315,8 +315,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         if (cursor.moveToFirst()) {
 
             for (i in 0 until cursor.count) {
-                sumMonth += cursor.getFloat(2).toCalculatedValueStats(
-                    AppUtils.extractIntConversion(cursor.getString(4)),unit)
+                sumMonth += cursor.getFloat(7)
                 cursor.moveToNext()
             }
         }
@@ -331,18 +330,14 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             )
         } / ${requireContext().getString(R.string.day)}"
 
-        var drinkedD = 0f
-        var toCompleteD = 0f
         var percentage = 0f
-        var completion = 0f
 
         for (i in listOfWeeks.indices) {
-            drinkedD = sqliteHelper.getIntook(listOfWeeks[i])
-            toCompleteD = sqliteHelper.getTotalIntakeValue(listOfWeeks[i])
+            var drinkedD = sqliteHelper.getIntook(listOfWeeks[i])
+            var toCompleteD = sqliteHelper.getTotalIntakeValue(listOfWeeks[i])
             if(toCompleteD != 0f){
                 percentage +=  drinkedD * 100/toCompleteD
             }
-
         }
 
         completion = percentage /7
@@ -462,10 +457,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
             for (i in 0 until cursor.count) {
                 dateArray.add(cursor.getString(1))
-                val percent = cursor.getFloat(2).toCalculatedValueStats(
-                    AppUtils.extractIntConversion(cursor.getString(4)),unit) /
-                        cursor.getFloat(3).toCalculatedValueStats(
-                            AppUtils.extractIntConversion(cursor.getString(4)),unit) * 100
+                val percent = cursor.getFloat(7) /
+                        cursor.getFloat(8) * 100
                 entries.add(
                     Entry(
                         i.toFloat(),

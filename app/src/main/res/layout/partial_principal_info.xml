@@ -354,7 +354,7 @@
                 android:id="@+id/btnMan"
                 android:layout_width="150dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -369,7 +369,7 @@
                 android:layout_width="150dp"
                 android:layout_height="200dp"
                 android:layout_marginStart="80dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/etClimate"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -381,7 +381,7 @@
             <View
                 style="@style/DividerHorizontal"
                 android:id="@+id/view7"
-                android:layout_marginTop="16sp"
+                android:layout_marginTop="-32sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnWoman" />
 

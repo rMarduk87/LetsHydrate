@@ -174,8 +174,8 @@ fun <T : IItem<*>> RecyclerView.defaultSetUp(
     setHasFixedSize(true)
 }
 
-fun Float.toReachedStatsString(string: String?): String {
-    return "$this $string"
+fun Float.toReachedStatsString(): String {
+    return "${this.toNumberString()}"
 }
 
 fun String.toCalendar(): Calendar {

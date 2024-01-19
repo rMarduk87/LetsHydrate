@@ -22,8 +22,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
     companion object {
 
-        const val ANIMATION_TIME: Long = 3300
-        const val SHOW: Long = 30
+        const val ANIMATION_TIME: Long = 3000
+        const val SHOW: Long = 25
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

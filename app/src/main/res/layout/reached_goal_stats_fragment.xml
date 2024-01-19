@@ -98,13 +98,13 @@
                 android:layout_marginEnd="6dp"
                 android:text="@string/quantity"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/fake2"
+                app:layout_constraintEnd_toStartOf="@id/unitHeader"
                 app:layout_constraintHorizontal_weight=".3"
                 app:layout_constraintStart_toEndOf="@id/dayHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/fake2"
+                android:id="@+id/unitHeader"
                 style="@style/TableHeader"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/fake3"
-                app:layout_constraintHorizontal_weight=".05"
+                app:layout_constraintHorizontal_weight=".5"
                 app:layout_constraintStart_toEndOf="@id/qtaHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,7 +126,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/fake4"
                 app:layout_constraintHorizontal_weight=".05"
-                app:layout_constraintStart_toEndOf="@id/fake2"
+                app:layout_constraintStart_toEndOf="@id/unitHeader"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -151,7 +151,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight=".05"
                 app:layout_constraintStart_toEndOf="@id/fake4"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout

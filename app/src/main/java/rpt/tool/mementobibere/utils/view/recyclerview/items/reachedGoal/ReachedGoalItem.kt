@@ -13,6 +13,7 @@ class ReachedGoalItem(val reached: ReachedGoal) :
 
         binding.day.text = reached.day.toStringDate()
         binding.qta.text = reached.quantity
+        binding.unit.text = reached.unit
     }
 
     override fun unbindView(binding: ItemReachedGoalBinding) {

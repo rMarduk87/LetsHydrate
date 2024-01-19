@@ -221,12 +221,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val contentValues = ContentValues()
         contentValues.put(KEY_N_INTOOK, intook + selectedOption)
         contentValues.put(KEY_UNIT,unit)
-
-        val response = db.update(TABLE_STATS, contentValues,
+        return db.update(TABLE_STATS, contentValues,
             "$KEY_DATE = ? AND $KEY_MONTH = ? AND $KEY_YEAR = ?",
             arrayOf(date,month,year))
-        db.close()
-        return response
     }
     private fun checkExistance(date: String, query: String): Int {
         val db = this.readableDatabase
@@ -238,7 +235,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return 0
     }
     fun getTotalIntake(date: String): Cursor{
-        val selectQuery = "SELECT $KEY_UNIT, $KEY_TOTAL_INTAKE FROM $TABLE_STATS WHERE $KEY_DATE = ?"
+        val selectQuery = "SELECT $KEY_UNIT, $KEY_N_TOTAL_INTAKE FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
     }
@@ -271,7 +268,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
     fun updateTotalIntake(date: String, totalintake: Float, unit: String): Int {
         val db = this.writableDatabase
-        val update = "UPDATE $TABLE_STATS SET $KEY_TOTAL_INTAKE = $totalintake, $KEY_UNIT = \"$unit\" WHERE $KEY_DATE = \"$date\""
+        val update = "UPDATE $TABLE_STATS SET $KEY_N_TOTAL_INTAKE = $totalintake, $KEY_UNIT = \"$unit\" WHERE $KEY_DATE = \"$date\""
         db.execSQL(update)
         db.close()
         return 1
@@ -281,11 +278,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         if(intook==-1){
             val values = ContentValues()
             values.put(KEY_DATE, date)
-            values.put(KEY_N_INTOOK, selectedOption)
+            values.put(KEY_INTOOK, selectedOption)
             values.put(KEY_INTOOK_COUNT, 1)
             val db = this.writableDatabase
             val response = db.insert(TABLE_INTOOK_COUNTER, null, values)
-            db.close()
             return response.toInt()
         }
         else{
@@ -300,11 +296,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             val contentValues = ContentValues()
             contentValues.put(KEY_INTOOK_COUNT,  counter + value)
 
-            val response = db.update(TABLE_INTOOK_COUNTER, contentValues,
+            return db.update(TABLE_INTOOK_COUNTER, contentValues,
                 "$KEY_DATE = ? AND $KEY_INTOOK = ?",
                 arrayOf(date,selectedOption.toString()))
-            db.close()
-            return response
         }
         return -1
     }
@@ -402,7 +396,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             if (it.moveToFirst()) {
                 for (i in 0 until it.count) {
                     list.add(ReachedGoal(it.getString(1).toCalendar(), it.getFloat(2)
-                        .toReachedStatsString(it.getString(3))))
+                        .toReachedStatsString(),it.getString(3)))
                     it.moveToNext()
                 }
                 entry.postValue(list.sortedBy { it.day })

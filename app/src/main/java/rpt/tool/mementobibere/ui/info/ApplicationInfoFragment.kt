@@ -40,6 +40,7 @@ import java.util.Locale
 class ApplicationInfoFragment:
     BaseFragment<ApplicationInfoFragmentBinding>(ApplicationInfoFragmentBinding::inflate) {
 
+    private var recalculated: Boolean = false
     private var stringColor: String = ""
     private var inTook: Float = 0f
     private lateinit var sqliteHelper: SqliteHelper
@@ -69,6 +70,13 @@ class ApplicationInfoFragment:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        oldWeight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0)
+        oldWorkTime = sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0)
+        unitIntUsed = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        weightUnit = sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0)
+        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        genderChoiceOld = sharedPref.getInt(AppUtils.GENDER_KEY, -1)
+        climateOld = sharedPref.getInt(AppUtils.CLIMATE_KEY, -1)
         super.onViewCreated(view, savedInstanceState)
         principal = PartialPrincipalInfoBinding.bind(binding.root)
         val htmlLegacy = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
@@ -168,6 +176,7 @@ class ApplicationInfoFragment:
 
         if(weight != oldWeight.toString() ||
             workType != oldWorkTime || genderChoice != genderChoiceOld || climate != climateOld) {
+            recalculated = true
             val totalIntake = AppUtils.calculateIntake(
                 weight.toInt(),
                 workType,
@@ -203,7 +212,8 @@ class ApplicationInfoFragment:
                 editor.putInt(AppUtils.GENDER_KEY,genderChoice)
                 editor.putInt(AppUtils.CLIMATE_KEY,climate)
 
-                if (currentTarget != customTarget.toFloat()) {
+                if (currentTarget != customTarget.toFloat()
+                    .toCalculatedValue(unitIntUsed,unitBottomBar) && !recalculated) {
                     editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, customTarget.toFloat())
 
                     sqliteHelper.updateTotalIntake(
@@ -213,11 +223,9 @@ class ApplicationInfoFragment:
                 }
 
                 editor.putBoolean(AppUtils.NO_UPDATE_UNIT,true)
-                editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, currentTarget)
-
                 editor.apply()
 
-                Toast.makeText(requireContext(), getString(rpt.tool.mementobibere.R.string.values_updated_successfully), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.values_updated_successfully), Toast.LENGTH_SHORT).show()
                 var alarm = AlarmHelper()
                 alarm.cancelAlarm(requireContext())
             }
@@ -254,16 +262,6 @@ class ApplicationInfoFragment:
         }
 
         binding.principal.etClimate.editText!!.setText(textC)
-
-        oldWeight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0)
-        oldWorkTime = sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0)
-
-        unitIntUsed = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        weightUnit = sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        genderChoiceOld = sharedPref.getInt(AppUtils.GENDER_KEY, -1)
-        climateOld = sharedPref.getInt(AppUtils.CLIMATE_KEY, -1)
-
         val unit = AppUtils.calculateExtensions(unitBottomBar)
         if(Locale.getDefault().language == "de"){
             binding.principal.etTarget.hint = getString(R.string.custom_intake_hint) + " " + unit + " ein"
@@ -972,9 +970,7 @@ class ApplicationInfoFragment:
     private fun setSystemUnit() {
         if(unitBottomBar!=unitIntUsed){
 
-            if(sqliteHelper.resetIntook(AppUtils.getCurrentOnlyDate()!!) == 1){
-                getAllAndUpdate(unitBottomBar)
-            }
+            getAllAndUpdate(unitBottomBar)
             val editor = sharedPref.edit()
             editor.putInt(AppUtils.UNIT_NEW_KEY, unitBottomBar)
             editor.putFloat(AppUtils.VALUE_50_KEY,AppUtils.firstConversion(50f,unitBottomBar))
@@ -984,6 +980,9 @@ class ApplicationInfoFragment:
             editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unitBottomBar))
             editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unitBottomBar))
             editor.apply()
+            unitIntUsed = unitBottomBar
+            binding.principal.etTarget.editText!!.setText(
+                sqliteHelper.getTotalIntakeValue(AppUtils.getCurrentDate()!!).toNumberString())
         }
 
     }
@@ -996,17 +995,17 @@ class ApplicationInfoFragment:
                 for (i in 0 until it.count) {
 
                     var intake = it.getFloat(7).toCalculatedValue(
-                        AppUtils.extractIntConversion(it.getString(5)),unitBottomBar)
+                        AppUtils.extractIntConversion(it.getString(4)),unitBottomBar)
                     var totalintook = it.getFloat(8).toCalculatedValue(
-                        AppUtils.extractIntConversion(it.getString(5)),unitBottomBar)
+                        AppUtils.extractIntConversion(it.getString(4)),unitBottomBar)
                     var date = it.getString(1)
                     listEntity.add(ConversionIntookModel(intake,totalintook,date))
                     it.moveToNext()
                 }
                 sqliteHelper.delete()
                 for(c in 0 until listEntity.size){
-                    sqliteHelper.addAll(listEntity[c].data,listEntity[c].totalIntake,
-                        listEntity[c].intook,
+                    sqliteHelper.addAll(listEntity[c].data,listEntity[c].intook,
+                        listEntity[c].totalIntake,
                         AppUtils.calculateExtensions(unitBottomBar),
                         listEntity[c].data.toMonth(), listEntity[c].data.toYear())
                 }

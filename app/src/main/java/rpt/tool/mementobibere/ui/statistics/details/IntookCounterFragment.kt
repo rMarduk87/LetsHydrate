@@ -76,7 +76,8 @@ class IntookCounterFragment :
         if (cursor.moveToFirst()) {
 
             for (i in 0 until cursor.count) {
-                model.add(BarChartModel(cursor.getInt(2).toExtractIntookOption(unit),cursor.getFloat(3)))
+                model.add(BarChartModel(cursor.getInt(2).toExtractIntookOption(unit),
+                    cursor.getFloat(3)))
                 cursor.moveToNext()
             }
 
