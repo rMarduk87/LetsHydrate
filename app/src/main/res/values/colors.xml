@@ -42,4 +42,11 @@
     <color name="material_blue_grey_95">#ff21272b</color>
     <color name="material_deep_teal_20">#ff80cbc4</color>
     <color name="material_deep_teal_50">#ff009688</color>
+    <color name="colorSecondaryW">#1845E6</color>
+    <color name="colorSecondaryDarkW">#4167B2</color>
+    <color name="colorSecondaryLightW">#6A91DE</color>
+    <color name="colorSecondaryLighterW">#ABBDEC</color>
+    <color name="pink">#ffc0cb</color>
+    <color name="white_87">#ddffffff</color>
+    <color name="overlay">#BF000000</color>
 </resources>

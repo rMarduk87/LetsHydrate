@@ -11,6 +11,7 @@ import java.util.Calendar
 class ReachedGoal(
     var day: Calendar,
     val quantity: String,
+    val unit: String
 ) : AppModel(), Serializable {
 
     init {

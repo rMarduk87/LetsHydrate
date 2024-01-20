@@ -105,7 +105,6 @@ class NotificationHelper(val ctx: Context) {
 
         totalIntake = try {
             prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(prefs.getInt(AppUtils.UNIT_KEY,0),prefs.getInt(AppUtils.UNIT_NEW_KEY,0))
         }catch (ex:Exception){
             var totalIntakeOld = prefs.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
             var editor = prefs.edit()

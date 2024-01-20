@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="water">
+        <item>Behalten Sie das Wasser eine Weile im Mund, bevor Sie es schlucken</item>
+        <item>Trinken Sie kein Wasser unmittelbar nach dem Essen</item>
+        <item>Trinken Sie kein kaltes oder eiskaltes Wasser</item>
+        <item>Wasser im Sitzen zu trinken ist besser als im Stehen oder in Bewegung</item>
+        <item>Wenn Sie können, trinken Sie Wasser, sobald Sie aufwachen</item>
+        <item>Trinken Sie mindestens acht Gläser pro Tag</item>
+        <item>Wenn Sie keine Lust auf Wasser haben, suchen Sie nach Alternativen (aber seien Sie vorsichtig mit Zucker)</item>
+        <item>Wenn Sie Sport treiben, versuchen Sie, viel Wasser zu trinken</item>
+        <item>Obst und Gemüse sind wichtig, Lass uns hydrieren berücksichtigt sie bei der Berechnung nicht</item>
+    </string-array>
+</resources>

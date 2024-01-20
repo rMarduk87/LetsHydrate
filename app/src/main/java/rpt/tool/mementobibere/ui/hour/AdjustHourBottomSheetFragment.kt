@@ -139,7 +139,37 @@ class AdjustHourBottomSheetFragment:
         when(themeInt){
             0-> toLightTheme()
             1-> toDarkTheme()
+            2-> toWaterTheme()
+            3-> toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.purple_500))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+    }
+
+    private fun toWaterTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
     }
 
     private fun toDarkTheme() {
