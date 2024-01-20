@@ -10,7 +10,8 @@ class ReachedGoalToReachedGoalModel : ModelMapper<ReachedGoal, ReachedGoalModel>
     override fun map(source: ReachedGoal): ReachedGoalModel {
         return ReachedGoalModel(
             day = source.day,
-            quantity = source.quantity
+            quantity = source.quantity,
+            unit = source.unit
         )
     }
 }

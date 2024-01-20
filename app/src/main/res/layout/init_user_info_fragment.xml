@@ -50,18 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
-                android:id="@+id/weight_system_bottom_bar"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_margin="15dp"
-                app:exb_backgroundColor="@color/white"
-                app:exb_backgroundCornerRadius="8dp"
-                app:exb_itemInactiveColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -77,13 +66,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="96dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
                     android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/weight_system_bottom_bar">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -98,11 +87,11 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etWorkTime"
+                    android:id="@+id/etWorkType"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -113,9 +102,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:background="@null"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:hint="@string/workout_hint"
-                        android:inputType="numberSigned"
-                        android:maxLength="3"
+                        android:inputType="text"
                         android:paddingStart="10dp"
                         android:paddingBottom="10dp"
                         tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
@@ -126,12 +116,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintEnd_toStartOf="@+id/etSleepTime"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etWorkTime">
+                    app:layout_constraintTop_toBottomOf="@+id/etWorkType">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -150,12 +140,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/etWakeUpTime"
-                    app:layout_constraintTop_toBottomOf="@+id/etWorkTime">
+                    app:layout_constraintTop_toBottomOf="@+id/etWorkType">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -175,21 +165,21 @@
                     style="@style/DividerHorizontal"
                     android:layout_marginTop="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnAvis" />
+                    app:layout_constraintTop_toBottomOf="@id/weight_system_bottom_bar" />
 
                 <View
                     android:id="@+id/view2"
                     style="@style/DividerHorizontal"
                     android:layout_marginTop="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etGender" />
+                    app:layout_constraintTop_toBottomOf="@id/etClimate" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/etGender"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:theme="@style/TextInputLayoutAppearance"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -203,6 +193,31 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:hint="@string/gender_hint"
+                        android:inputType="text"
+                        android:paddingStart="10dp"
+                        android:paddingBottom="10dp"
+                        tools:ignore="RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etClimate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:theme="@style/TextInputLayoutAppearance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etGender">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/climate_hint"
                         android:inputType="text"
                         android:paddingStart="10dp"
                         android:paddingBottom="10dp"
@@ -259,13 +274,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
                     android:text="@string/type_unit"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="TextContrastCheck" />
+
+                <TextView
+                    android:id="@+id/weightTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/weight_unit"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/unit_system_bottom_bar"
+                    tools:ignore="TextContrastCheck" />
+
+                <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+                    android:id="@+id/weight_system_bottom_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="15dp"
+                    app:exb_backgroundColor="@color/white"
+                    app:exb_backgroundCornerRadius="8dp"
+                    app:exb_itemInactiveColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weightTV" />
 
                 <github.com.st235.lib_expandablebottombar.ExpandableBottomBar
                     android:id="@+id/unit_system_bottom_bar"

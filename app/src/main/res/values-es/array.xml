@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="water">
+        <item>Mantén el agua en la boca durante un rato antes de tragarla</item>
+        <item>No beba agua inmediatamente después de comer</item>
+        <item>No beba agua fría o helada</item>
+        <item>Beber agua sentado es mejor que estando de pie o en movimiento</item>
+        <item>Si puedes, bebe agua nada más despertar</item>
+        <item>Beba al menos ocho vasos al día</item>
+        <item>Si no te apetece beber agua, busca alternativas (pero cuidado con los azúcares)</item>
+        <item>Si haces deporte, intenta beber mucha agua</item>
+        <item>Las frutas y verduras son importantes, Hidratarnos no las tiene en cuenta en el cálculo</item>
+    </string-array>
+</resources>

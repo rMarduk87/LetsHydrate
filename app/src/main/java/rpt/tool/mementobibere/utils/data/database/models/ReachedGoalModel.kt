@@ -6,6 +6,7 @@ import java.util.Calendar
 class ReachedGoalModel(
     val day: Calendar,
     val quantity: String,
+    val unit: String
 ) : DbModel() {
 
     init {

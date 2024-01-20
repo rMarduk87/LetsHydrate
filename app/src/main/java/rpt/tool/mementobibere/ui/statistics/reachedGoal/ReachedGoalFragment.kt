@@ -55,77 +55,6 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
 
         addDataToListView()
 
-        binding.addPreviousReached.setOnClickListener {
-            val li = LayoutInflater.from(requireContext())
-            val promptsView = li.inflate(R.layout.add_reached_custom_input_dialog, null)
-
-            val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setView(promptsView)
-
-            val userInput = promptsView
-                .findViewById(R.id.etReachedDay) as TextInputLayout
-
-            userInput.editText!!.setOnClickListener {
-                val calendar = Calendar.getInstance()
-
-                val mDatePicker = DatePickerDialog(
-                    requireContext(),
-                    { _, year, monthOfYear, dayOfMonth ->
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.MONTH, monthOfYear)
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                        val myFormat = "dd-MM-yyyy" // mention the format you need
-                        val sdf = SimpleDateFormat(myFormat)
-                        userInput.editText!!.setText(sdf.format(calendar.time))
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-                )
-                mDatePicker.datePicker.maxDate = AppUtils.getMaxDate()
-                mDatePicker.setTitle("")
-                mDatePicker.show()
-            }
-
-            val userBtnAdd = promptsView.findViewById(R.id.btnAdd) as Button
-
-            val sqliteHelper = SqliteHelper(requireContext())
-
-            val unit = AppUtils.calculateExtensions(sharedPref.getInt(AppUtils.UNIT_KEY, 0))
-
-            userBtnAdd.setOnClickListener {
-                when {
-
-                    TextUtils.isEmpty(userInput.editText!!.text.toString()) ->
-                        showError(getString(R.string.please_input_a_valid_date))
-
-                    else -> {
-
-                        sqliteHelper.addReachedGoal(
-                            userInput.editText!!.text.toString(), sharedPref.getFloat(
-                                AppUtils.TOTAL_INTAKE_KEY, 0f
-                            ), unit
-                        )
-                        sqliteHelper.addAll(
-                            userInput.editText!!.text.toString(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toInt(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f), unit
-                        )
-                        userInput.editText!!.setText("")
-                    }
-                }
-            }
-
-            alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-                safeNavController?.safeNavigate(
-                    ReachedGoalFragmentDirections.actionReachedGoalFragmentToItself())
-            }
-
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
-        }
     }
 
     private fun addDataToListView() {
@@ -146,7 +75,17 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
         when (themeInt) {
             0 -> toLightTheme()
             1 -> toDarkTheme()
+            2 -> toWaterTheme()
+            3 -> toGrapeTheme()
         }
+    }
+
+    private fun toGrapeTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
+    }
+
+    private fun toWaterTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
     }
 
     private fun toDarkTheme() {
@@ -157,17 +96,4 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
     }
 
-    @SuppressLint("InflateParams")
-    private fun showError(error: String) {
-        val toast = Toast(requireContext())
-        toast.duration = Toast.LENGTH_SHORT
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        val customView: View =
-            layoutInflater.inflate(R.layout.error_toast_layout, null)
-
-        val text = customView.findViewById<TextView>(R.id.tvMessage)
-        text.text = error
-        toast.view = customView
-        toast.show()
-    }
 }

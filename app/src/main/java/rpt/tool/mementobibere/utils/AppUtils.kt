@@ -2,28 +2,42 @@ package rpt.tool.mementobibere.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ParseException
 import rpt.tool.mementobibere.R
+import rpt.tool.mementobibere.data.models.MonthChartModel
+import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 import kotlin.math.ceil
 
 
 class AppUtils {
     companion object {
-        fun calculateIntake(weight: Int, workTime: Int, weightUnit: Int,gender: Int): Double {
+        fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int,
+                            oldUnit: Int, unit: Int): Float {
 
             var convertedWeight = weight.toPrincipalUnit(weightUnit)
-            var intake = ((convertedWeight * 100 / 3.0) + (workTime / 6 * 7))
-            return if(gender == 0){
-                intake
-            } else{
+            var intake = (convertedWeight * 100 / 3.0)
+            if(gender == 1){
                 intake -= 450
-                intake
             }
-            return intake
+            when(workType){
+                1-> intake += 257
+                2-> intake += 515
+                3-> intake += 1030
+            }
+            when(climate){
+                0-> intake += 129
+                2-> intake += 257
+                3-> intake += 515
+            }
+            return intake.toFloat().toCalculatedValue(oldUnit,unit)
         }
 
         @SuppressLint("SimpleDateFormat")
@@ -180,12 +194,112 @@ class AppUtils {
                 150f->2f
                 200f->3f
                 250f->4f
-                else->5f
+                300f->5f
+                else->6f
             }
         }
 
         fun calculatePercentual(intook: Float, intake: Float): Float {
             return (intook * 100 / intake).toNumberString().toExtractFloat()
+        }
+
+        fun calculateOption(inTook: Float, totalIntake: Float): Float? {
+            return totalIntake - inTook
+        }
+
+        @Throws(ParseException::class)
+        fun getDateList(strStartDate: String?, strEndDate: String?, formatOutput: String):
+                List<MonthChartModel>? {
+
+            val dateList: MutableList<MonthChartModel> = ArrayList()
+            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatterIndex = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
+
+            val startDate: Date = inputFormatter.parse(strStartDate)
+            val endDate: Date = inputFormatter.parse(strEndDate)
+
+            val startWith = Calendar.getInstance()
+            startWith.time = startDate
+            startWith[Calendar.DAY_OF_MONTH] = 1
+            while (startWith.time.time <= endDate.time) {
+                var dataForOutputIndex = outputFormatterIndex.format(startWith.time)
+                var dataForOutputText = outputFormatter.format(startWith.time)
+                dateList.add(MonthChartModel(dataForOutputIndex,dataForOutputText))
+                startWith
+                    .add(Calendar.MONTH, 1)
+            }
+            return dateList
+        }
+
+        fun getDateListForYear(strStartDate: String?, strEndDate: String?, formatOutput: String):
+                List<String>? {
+
+            val dateList: MutableList<String> = ArrayList()
+            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
+
+            val startDate: Date = inputFormatter.parse(strStartDate)
+            val endDate: Date = inputFormatter.parse(strEndDate)
+
+            val startWith = Calendar.getInstance()
+            startWith.time = startDate
+            startWith[Calendar.DAY_OF_MONTH] = 1
+            while (startWith.time.time <= endDate.time) {
+                var dataForOutput = outputFormatter.format(startWith.time)
+                if(!dateList.contains(dataForOutput)){
+                    dateList.add(dataForOutput)
+                }
+                startWith
+                    .add(Calendar.MONTH, 1)
+            }
+            return dateList
+        }
+
+        fun getWeekList(strStartDate: String): List<String> {
+
+            val now = Calendar.getInstance()
+
+            val format = SimpleDateFormat("dd-MM-yyyy")
+            val startDate: Date = format.parse(strStartDate)
+
+            now.time = startDate
+
+            val dateList: MutableList<String> = ArrayList()
+            val delta = -now[Calendar.DAY_OF_WEEK] + 1 //add 2 if your week start on monday
+
+            now.add(Calendar.DAY_OF_MONTH, delta)
+            for (i in 0..6) {
+                dateList.add( format.format(now.time))
+                now.add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            return dateList
+        }
+
+        fun getTotalDays(currentDate: String, year: String): Int {
+            val cal = GregorianCalendar()
+            var feb = if(cal.isLeapYear(year.toInt())){
+                29
+            }
+            else{
+                28
+            }
+            when(currentDate.toInt()){
+                1-> return 31
+                2-> return feb
+                3-> return 31
+                4-> return 30
+                5-> return 31
+                6-> return 30
+                7-> return 31
+                8-> return 31
+                9-> return 30
+                10-> return 31
+                11-> return 30
+                12-> return 31
+            }
+            return 0
         }
 
 
@@ -211,6 +325,7 @@ class AppUtils {
         const val VALUE_150_KEY = "150"
         const val VALUE_200_KEY = "200"
         const val VALUE_250_KEY = "250"
+        const val VALUE_300_KEY = "300"
         const val NO_UPDATE_UNIT = "no_update_unit"
         const val UNIT_STRING = "unit_string"
         const val WEIGHT_UNIT_KEY = "weight_unit"
@@ -223,41 +338,47 @@ class AppUtils {
         const val SET_GENDER_KEY : String = "set_gender"
         const val BLOOD_DONOR_KEY : String = "blood_donor"
         const val SET_BLOOD_KEY : String = "set_blood_donor"
+        const val SET_NEW_WORK_TYPE_KEY : String = "set_new_work_type"
+        const val CLIMATE_KEY : String = "climate"
+        const val SET_CLIMATE_KEY : String = "set_climate"
+        const val SEE_TIPS_KEY : String = "see_tips"
+        const val START_TUTORIAL_KEY : String = "start_tutorial"
+        const val START_DATE = "31-08-2023"
+        const val STAT_IS_MONTH_KEY : String = "isMonth"
+        const val INDEX_MONTH_KEY : String = "month"
+        const val INDEX_YEAR_KEY : String = "year"
+        const val DATE : String = "date"
+        const val FIRST_STATS_KEY : String = "stats"
 
         enum class TypeMessage {
-            NOTHING, SAVE, MAN,WOMAN
+            NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
         }
-
-        enum class TypeLayout{
-            Es,Fr,It
-        }
-
 
         val listIds = arrayOf(
             R.id.icon_bell,
-            R.id.icon_edit,
-            R.id.icon_other,
+            R.id.icon_info,
+            R.id.icon_curiosity,
             R.id.icon_stats
         )
 
         val listIconNotify = arrayOf(
             R.drawable.ic_bell,
-            R.drawable.ic_edit,
             R.drawable.ic_info,
+            R.drawable.ic_curiosity,
             R.drawable.ic_stats
         )
 
         val listStringNotify = arrayOf(
             R.string.notific,
-            R.string.edit,
             R.string.info,
+            R.string.curiosity,
             R.string.stats
         )
 
         val listIconNotNotify = arrayOf(
             R.drawable.ic_bell_disabled,
-            R.drawable.ic_edit,
             R.drawable.ic_info,
+            R.drawable.ic_curiosity,
             R.drawable.ic_stats
         )
 
@@ -270,18 +391,24 @@ class AppUtils {
 
         val listIdsInfoTheme = arrayOf(
             R.id.icon_light,
-            R.id.icon_dark
+            R.id.icon_dark,
+            R.id.icon_water,
+            R.id.icon_grape
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
-            R.drawable.ic_dark
+            R.drawable.ic_dark,
+            R.drawable.ic_water,
+            R.drawable.ic_grape
 
         )
 
         val listStringInfoTheme= arrayOf(
             R.string.light,
-            R.string.dark
+            R.string.dark,
+            R.string.water,
+            R.string.grape
 
         )
 
@@ -372,6 +499,21 @@ class AppUtils {
         )
 
         val listStringSplash = arrayOf(
+            R.string.on,
+            R.string.off
+        )
+
+        val listIdsTips = arrayOf(
+            R.id.tips_on,
+            R.id.tips_off
+        )
+
+        val listIconTips = arrayOf(
+            R.drawable.ic_on,
+            R.drawable.ic_off
+        )
+
+        val listStringTips = arrayOf(
             R.string.on,
             R.string.off
         )

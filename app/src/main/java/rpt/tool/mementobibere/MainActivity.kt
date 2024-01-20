@@ -14,15 +14,16 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.lorenzofelletti.permissions.PermissionManager
+import com.lorenzofelletti.permissions.dispatcher.dsl.checkPermissions
+import com.lorenzofelletti.permissions.dispatcher.dsl.doOnDenied
+import com.lorenzofelletti.permissions.dispatcher.dsl.doOnGranted
+import com.lorenzofelletti.permissions.dispatcher.dsl.withRequestCode
 import rpt.tool.mementobibere.databinding.ActivityMainBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.w
-import rpt.tool.mementobibere.utils.permissions.PermissionManager
-import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.checkPermissions
-import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.doOnDenied
-import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.doOnGranted
-import rpt.tool.mementobibere.utils.permissions.dispatcher.dsl.withRequestCode
+
 
 
 class MainActivity : AppCompatActivity() {

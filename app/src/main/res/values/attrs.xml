@@ -394,4 +394,7 @@
         <attr name="wheel_barWidth" format="dimension" />
         <attr name="wheel_linearProgress" format="boolean" />
     </declare-styleable>
+
+    <attr name="btn_date_sel" format="reference">
+    </attr>
 </resources>

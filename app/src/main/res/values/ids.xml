@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="icon_bell" type="id" />
-    <item name="icon_edit" type="id" />
-    <item name="icon_other" type="id" />
+    <item name="icon_curiosity" type="id" />
+    <item name="icon_info" type="id" />
     <item name="icon_stats" type="id" />
+
     <item name="icon_30" type="id" />
     <item name="icon_45" type="id" />
     <item name="icon_60" type="id" />
 
     <item name="icon_dark" type="id"/>
     <item name="icon_light" type="id"/>
+    <item name="icon_water" type="id"/>
+    <item name="icon_grape" type="id"/>
 
     <item name="icon_oz_uk" type="id"/>
     <item name="icon_oz_us" type="id"/>
@@ -25,4 +28,7 @@
 
     <item name="icon_on" type="id"/>
     <item name="icon_off" type="id"/>
+
+    <item name="tips_on" type="id"/>
+    <item name="tips_off" type="id"/>
 </resources>
