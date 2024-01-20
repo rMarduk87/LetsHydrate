@@ -22,7 +22,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WalkThroughActivity"
+            android:name=".WalkThroughtActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

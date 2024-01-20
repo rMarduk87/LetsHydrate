@@ -54,6 +54,15 @@ class IntookCounterFragment :
 
         val percentage = sqliteHelper.getIntook(date) * 100 / sqliteHelper.getTotalIntakeValue(date)
         val intPercentage = percentage.toInt()
+        startanimation(intPercentage)
+        setBackGround()
+
+        setTopChart()
+        binding.textView60.text = requireContext().getString(R.string.intook_report) + " ("+
+                sharedPref.getString(AppUtils.UNIT_STRING,"ml") + ")"
+    }
+
+    private fun startanimation(intPercentage: Int) {
         binding.waterLevelViewL!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewL!!.progressValue = intPercentage
         binding.waterLevelViewD!!.centerTitle = "$intPercentage%"
@@ -62,11 +71,10 @@ class IntookCounterFragment :
         binding.waterLevelViewW!!.progressValue = intPercentage
         binding.waterLevelViewG!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewG!!.progressValue = intPercentage
-        setBackGround()
-
-        setTopChart()
-        binding.textView60.text = requireContext().getString(R.string.intook_report) + " ("+
-                sharedPref.getString(AppUtils.UNIT_STRING,"ml") + ")"
+        binding.waterLevelViewL!!.setAnimDuration(3000)
+        binding.waterLevelViewD!!.setAnimDuration(3000)
+        binding.waterLevelViewW!!.setAnimDuration(3000)
+        binding.waterLevelViewG!!.setAnimDuration(3000)
     }
 
     private fun setTopChart() {

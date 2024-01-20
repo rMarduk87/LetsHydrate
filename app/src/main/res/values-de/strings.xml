@@ -275,4 +275,5 @@
     <string name="new_qta_hint">Menge in Maßeinheit hinzufügen</string>
     <string name="please_enter_a_quantity_at_least_equal_to">Bitte geben Sie eine Menge ein, die mindestens gleich ist</string>
     <string name="times">mal</string>
+    <string name="multi">Multiple opt.</string>
 </resources>

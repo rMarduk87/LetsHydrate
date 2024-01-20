@@ -279,4 +279,5 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="new_qta_hint">Agregar cantidad en unidad de medida</string>
     <string name="please_enter_a_quantity_at_least_equal_to">Por favor introduzca una cantidad al menos igual a</string>
     <string name="times">veces</string>
+    <string name="multi">Multiple opt.</string>
 </resources>

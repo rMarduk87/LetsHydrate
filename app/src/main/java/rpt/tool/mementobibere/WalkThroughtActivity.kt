@@ -14,22 +14,22 @@ import com.skydoves.balloon.BalloonAlign
 import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.databinding.ActivityWalkThroughBinding
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.balloon.walktrought.FifthWalkthroughBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.walktrought.FirstWalkthroughBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.walktrought.FourthWalkthroughBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.walktrought.SecondWalkthroughBalloonFactory
-import rpt.tool.mementobibere.utils.balloon.walktrought.ThirdWalkthroughBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.FifthWalkthroughtBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.FirstWalkthroughtBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.FourthWalkthroughtBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.SecondWalkthroughtBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.walktrought.ThirdWalkthroughtBalloonFactory
 
-class WalkThroughActivity : AppCompatActivity() {
+class WalkThroughtActivity : AppCompatActivity() {
 
 
     private lateinit var binding: ActivityWalkThroughBinding
     private lateinit var sharedPref: SharedPreferences
-    private val firstWalkthroughBalloon by balloon<FirstWalkthroughBalloonFactory>()
-    private val secondWalkthroughBalloon by balloon<SecondWalkthroughBalloonFactory>()
-    private val thirdWalkthroughBalloon by balloon<ThirdWalkthroughBalloonFactory>()
-    private val fourthWalkthroughBalloon by balloon<FourthWalkthroughBalloonFactory>()
-    private val fifthWalkthroughBalloon by balloon<FifthWalkthroughBalloonFactory>()
+    private val firstWalkthroughBalloon by balloon<FirstWalkthroughtBalloonFactory>()
+    private val secondWalkthroughBalloon by balloon<SecondWalkthroughtBalloonFactory>()
+    private val thirdWalkthroughBalloon by balloon<ThirdWalkthroughtBalloonFactory>()
+    private val fourthWalkthroughBalloon by balloon<FourthWalkthroughtBalloonFactory>()
+    private val fifthWalkthroughBalloon by balloon<FifthWalkthroughtBalloonFactory>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +39,12 @@ class WalkThroughActivity : AppCompatActivity() {
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
-        binding.mainLayout.setOnTouchListener { _, _ ->  false }
-        binding.imageView2.setOnTouchListener { _, _ ->  false }
-        binding.imageView3.setOnTouchListener { _, _ ->  false }
-        binding.imageView4.setOnTouchListener { _, _ ->  false }
-        binding.imageView5.setOnTouchListener { _, _ ->  false }
-        binding.imageView6.setOnTouchListener { _, _ ->  false }
+        binding.mainLayout.isClickable = false
+        binding.imageView2.isClickable = false
+        binding.imageView3.isClickable = false
+        binding.imageView4.isClickable = false
+        binding.imageView5.isClickable = false
+        binding.imageView6.isClickable = false
         startWalkThrough(binding.root)
     }
 

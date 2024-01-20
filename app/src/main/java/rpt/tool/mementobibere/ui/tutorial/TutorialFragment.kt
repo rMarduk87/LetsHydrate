@@ -42,10 +42,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var start: Boolean = false
     private var saveIntook: Float = 0f
     private var isTutorial: Boolean = false
-    private var refreshed: Boolean = false
-    private var clicked: Int = 0
-    private var counter: Int = 0
-    private var enabled: Boolean = true
     private lateinit var unit: String
     private lateinit var menuNotify: Menu
     private lateinit var menuNotNotify: Menu
@@ -56,7 +52,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private lateinit var sharedPref: SharedPreferences
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var dateNow: String
-    private var notificStatus: Boolean = false
     private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
     private var themeInt: Int = 0
@@ -69,9 +64,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var value_250: Float = 250f
     private var value_300: Float = 300f
     private var btnSelected: Int? = null
-    private var intookToRefresh: Float = 0f
-    private var waters: Array<String> = arrayOf()
-    private val avisBalloon by balloon<BloodDonorInfoBalloonFactory>()
     private val firstHelpBalloon by balloon<FirstHelpBalloonFactory>()
     private val secondHelpBalloon by balloon<SecondHelpBalloonFactory>()
     private val thirdHelpBalloon by balloon<ThirdHelpBalloonFactory>()
@@ -139,22 +131,22 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             setValueForDrinking()
         }
 
-        binding.mainActivityParent.setOnTouchListener { _, _ ->  false }
-        binding.bottomBarNotify.setOnTouchListener { _, _ ->  false }
-        binding.bottomBarNotNotify.setOnTouchListener { _, _ ->  false }
-        binding.cardView.setOnTouchListener { _, _ ->  false }
-        binding.calendarAvis.setOnTouchListener { _, _ ->  false }
-        binding.calendarAvisHelp.setOnTouchListener { _, _ ->  false }
-        binding.infoAvis!!.setOnTouchListener { _, _ ->  false }
-        binding.op50ml!!.setOnTouchListener { _, _ ->  false }
-        binding.op100ml!!.setOnTouchListener { _, _ ->  false }
-        binding.op150ml!!.setOnTouchListener { _, _ ->  false }
-        binding.op200ml!!.setOnTouchListener { _, _ ->  false }
-        binding.op250ml!!.setOnTouchListener { _, _ ->  false }
-        binding.op300ml!!.setOnTouchListener { _, _ ->  false }
-        binding.opCustom.setOnTouchListener { _, _ ->  false }
-        binding.opDrinkAll.setOnTouchListener { _, _ ->  false }
-        binding.opScan.setOnTouchListener { _, _ ->  false }
+        binding.mainActivityParent.isClickable = false
+        binding.bottomBarNotify.isClickable = false
+        binding.bottomBarNotNotify.isClickable = false
+        binding.cardView.isClickable = false
+        binding.calendarAvis.isClickable = false
+        binding.calendarAvisHelp.isClickable = false
+        binding.infoAvis!!.isClickable = false
+        binding.op50ml!!.isClickable = false
+        binding.op100ml!!.isClickable = false
+        binding.op150ml!!.isClickable = false
+        binding.op200ml!!.isClickable = false
+        binding.op250ml!!.isClickable = false
+        binding.op300ml!!.isClickable = false
+        binding.opCustom.isClickable = false
+        binding.opDrinkAll.isClickable = false
+        binding.opScan.isClickable = false
     }
 
     private fun initIntookValue() {

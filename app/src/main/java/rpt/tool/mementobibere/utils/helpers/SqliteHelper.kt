@@ -334,12 +334,17 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return db.rawQuery(selectQuery, arrayOf(date))
     }
     fun getMaxTodayIntookStats(date: String): Int {
-        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC LIMIT 1"
+        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC"
         val db = this.readableDatabase
         var intook = -1
         db.rawQuery(selectQuery, arrayOf(date)).use {
             if (it.moveToFirst()) {
-                intook = it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK))
+                intook = if(it.count == 1){
+                    it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK))
+                } else{
+                    -1
+                }
+
             }
         }
         return intook

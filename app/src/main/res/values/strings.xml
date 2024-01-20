@@ -250,5 +250,6 @@
     <string name="new_qta_hint">Add quantity in measurement unit</string>
     <string name="please_enter_a_quantity_at_least_equal_to">Please enter a quantity at least equal to</string>
     <string name="times">times</string>
+    <string name="multi">Multiple opt.</string>
 
 </resources>

@@ -275,4 +275,5 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="new_qta_hint">Ajouter une quantité dans l\'unité de mesure</string>
     <string name="please_enter_a_quantity_at_least_equal_to">Veuillez saisir une quantité au moins égale à</string>
     <string name="times">fois</string>
+    <string name="multi">Multiple opt.</string>
 </resources>

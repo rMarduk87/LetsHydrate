@@ -37,7 +37,7 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.WalkThroughActivity
+import rpt.tool.mementobibere.WalkThroughtActivity
 import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
@@ -145,7 +145,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 .toCalculatedValue(current_unitInt,new_unitInt)
         }
         if (sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true)) {
-            startActivity(Intent(requireContext(), WalkThroughActivity::class.java))
+            startActivity(Intent(requireContext(), WalkThroughtActivity::class.java))
             requireActivity().finish()
         } else if (totalIntake <= 0) {
             startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
