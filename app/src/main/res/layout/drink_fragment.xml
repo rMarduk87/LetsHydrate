@@ -492,13 +492,44 @@
 
                 <View
                     style="@style/DividerVertical"
-                    app:layout_constraintStart_toEndOf="@id/opCustom"
+                    app:layout_constraintStart_toEndOf="@id/op350ml"
                     app:layout_constraintTop_toBottomOf="parent" />
 
                 <View
                     style="@style/DividerVertical"
-                    app:layout_constraintStart_toEndOf="@id/opDrinkAll"
+                    app:layout_constraintStart_toEndOf="@id/opCustom"
                     app:layout_constraintTop_toBottomOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/op350ml"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/opCustom"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/two" />
+
+                    <TextView
+                        android:id="@+id/ml350"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/_350_ml"
+                        android:textColor="@color/colorBlack" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/opCustom"
@@ -511,7 +542,7 @@
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/opDrinkAll"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/op350ml"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.airbnb.lottie.LottieAnimationView
@@ -541,7 +572,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/opScan"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/opCustom"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -558,37 +589,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/drink_all"
-                        android:textColor="@color/colorBlack" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/opScan"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/opDrinkAll"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/barcode" />
-
-                    <TextView
-                        android:id="@+id/tvScan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/barcode"
                         android:textColor="@color/colorBlack" />
 
                 </LinearLayout>

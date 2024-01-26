@@ -109,15 +109,81 @@ class IntookCounterFragment :
             binding.noData.visibility = View.VISIBLE
         }
 
-        binding.most!!.text = sqliteHelper.getMaxTodayIntookStats(date)
-            .toExtractIntookOption(unit).ifEmpty {
-                requireContext().getString(R.string.none)
-            }
+        var textMax = requireContext().getString(R.string.none)
 
-        binding.least!!.text = sqliteHelper.getMinTodayIntookStats(date)
-            .toExtractIntookOption(unit).ifEmpty {
-            requireContext().getString(R.string.none)
+        var list = sqliteHelper.getMaxTodayIntookStats(date)
+
+        if(list.isNotEmpty()){
+            if(list.size==1){
+                textMax = list[0].intook.toExtractIntookOption(unit)
+            }
+            else{
+                var isMulti = false
+                var max = 0
+                for(i in list.indices){
+                    if(i==0){
+                        max = list[i].intook
+                    }
+                    else{
+                        if(list[i].count.toInt() > list[i-1].count.toInt()){
+                            max = list[i].intook
+                            isMulti = false
+                        }
+                        else if((list[i].count.toInt() == list[i-1].count.toInt()) &&
+                            max == list[i-1].intook) {
+                            isMulti = true
+                            max = -1
+                        }
+                    }
+                }
+                if(!isMulti){
+                    textMax = max.toExtractIntookOption(unit)
+                }
+                else{
+                    textMax = (-1).toExtractIntookOption(unit)
+                }
+            }
         }
+
+        binding.most!!.text = textMax
+
+        var textMin = requireContext().getString(R.string.none)
+
+        var listMin = sqliteHelper.getMinTodayIntookStats(date)
+
+        if(listMin.isNotEmpty()){
+            if(listMin.size==1){
+                textMin = listMin[0].intook.toExtractIntookOption(unit)
+            }
+            else{
+                var isMulti = false
+                var min = 0
+                for(i in listMin.indices){
+                    if(i==0){
+                        min = listMin[i].intook
+                    }
+                    else{
+                        if(listMin[i].count.toInt() < listMin[i-1].count.toInt()){
+                            min = listMin[i].intook
+                            isMulti = false
+                        }
+                        else if((listMin[i].count.toInt() == listMin[i-1].count.toInt()) &&
+                            min == listMin[i-1].intook) {
+                            isMulti = true
+                            min = -1
+                        }
+                    }
+                }
+                if(!isMulti){
+                    textMin = min.toExtractIntookOption(unit)
+                }
+                else{
+                    textMin = (-1).toExtractIntookOption(unit)
+                }
+            }
+        }
+
+        binding.least!!.text = textMin
 
         if(binding.most!!.text != requireContext().getString(R.string.none)){
             if(binding.least!!.text != requireContext().getString(R.string.none)){
@@ -169,6 +235,11 @@ class IntookCounterFragment :
             }?.counter.toDefaultFloatIfNull() ),
             6.toExtractIntookOption(unit) to (model.singleOrNull { s ->
                 s.type == 6.toExtractIntookOption(
+                    unit
+                )
+            }?.counter.toDefaultFloatIfNull() ),
+            7.toExtractIntookOption(unit) to (model.singleOrNull { s ->
+                s.type == 7.toExtractIntookOption(
                     unit
                 )
             }?.counter.toDefaultFloatIfNull() ),

@@ -462,6 +462,7 @@ class InitUserInfoFragment:
         editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unit))
         editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unit))
         editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unit))
+        editor.putFloat(AppUtils.VALUE_350_KEY,AppUtils.firstConversion(350f,unit))
         editor.putInt(AppUtils.UNIT_NEW_KEY, unit)
         editor.apply()
     }

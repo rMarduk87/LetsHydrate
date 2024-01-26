@@ -195,7 +195,8 @@ class AppUtils {
                 200f->3f
                 250f->4f
                 300f->5f
-                else->6f
+                350f->6f
+                else->7f
             }
         }
 
@@ -326,6 +327,7 @@ class AppUtils {
         const val VALUE_200_KEY = "200"
         const val VALUE_250_KEY = "250"
         const val VALUE_300_KEY = "300"
+        const val VALUE_350_KEY = "350"
         const val NO_UPDATE_UNIT = "no_update_unit"
         const val UNIT_STRING = "unit_string"
         const val WEIGHT_UNIT_KEY = "weight_unit"
