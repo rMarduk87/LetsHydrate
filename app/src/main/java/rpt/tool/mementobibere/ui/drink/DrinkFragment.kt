@@ -87,6 +87,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private var value_200: Float = 200f
     private var value_250: Float = 250f
     private var value_300: Float = 300f
+    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private var intookToRefresh: Float = 0f
     private var waters: Array<String> = arrayOf()
@@ -103,6 +104,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
         value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
         value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
+        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
         sqliteHelper = SqliteHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
         waters = requireContext().resources.getStringArray(R.array.water)
@@ -169,6 +171,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         binding.ml200!!.text = "${value_200.toNumberString()} $unit"
         binding.ml250!!.text = "${value_250.toNumberString()} $unit"
         binding.ml300!!.text = "${value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -300,7 +303,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 showMessage(getString(R.string.you_already_achieved_the_goal), viewWindow)
             }
             binding.tvCustom.text = requireContext().getText(R.string.custom)
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,binding.opScan,outValue.resourceId,-1)
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,binding.op350ml,outValue.resourceId,-1)
 
             // remove pending notifications
             val mNotificationManager : NotificationManager = requireActivity()
@@ -318,7 +321,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         op300ml: LinearLayout,
         opCustom: LinearLayout,
         opDrinkAll: LinearLayout,
-        opScan: LinearLayout,
+        op350ml: LinearLayout,
         resourceId: Int,
         oneHighLight: Int,
         highlight: Int? = null
@@ -331,7 +334,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         op300ml.background = requireContext().getDrawable((if(oneHighLight==6){highlight}else{resourceId})!!)
         opCustom.background = requireContext().getDrawable((if(oneHighLight==7){highlight}else{resourceId})!!)
         opDrinkAll.background = requireContext().getDrawable((if(oneHighLight==8){highlight}else{resourceId})!!)
-        opScan.background = requireContext().getDrawable((if(oneHighLight==9){highlight}else{resourceId})!!)
+        op350ml.background = requireContext().getDrawable((if(oneHighLight==9){highlight}else{resourceId})!!)
     }
 
 
@@ -349,7 +352,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         alertDialogBuilder.setView(promptsView)
 
         alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
             dialog.cancel()
         }
 
@@ -641,7 +643,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml50!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,1,background)
+                binding.op350ml,outValue.resourceId,1,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -654,7 +656,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml100!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,2,background)
+                binding.op350ml,outValue.resourceId,2,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -667,7 +669,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml150!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,3,background)
+                binding.op350ml,outValue.resourceId,3,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -680,7 +682,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml200!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,4,background)
+                binding.op350ml,outValue.resourceId,4,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -693,7 +695,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml250!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,5,background)
+                binding.op350ml,outValue.resourceId,5,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -706,7 +708,20 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             selectedOption = binding.ml300!!.text.toString().toExtractFloat()
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,6,background)
+                binding.op350ml,outValue.resourceId,6,background)
+            addDrinkedWater()
+            randomizeBalloon()
+        }
+
+        binding.op350ml.setOnClickListener {
+            if (snackbar != null) {
+                snackbar?.dismiss()
+            }
+            btnSelected = 6
+            selectedOption = binding.ml350!!.text.toString().toExtractFloat()
+            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
+                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
+                binding.op350ml,outValue.resourceId,7,background)
             addDrinkedWater()
             randomizeBalloon()
         }
@@ -730,7 +745,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 if (!TextUtils.isEmpty(inputText)) {
                     binding.tvCustom.text = "$inputText $unit"
                     selectedOption = binding.tvCustom.text.toString().toExtractFloat()
-                    btnSelected = 6
+                    btnSelected = 7
                     addDrinkedWater()
                     randomizeBalloon()
                 }
@@ -743,7 +758,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
             addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                 binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,7,background)
+                binding.op350ml,outValue.resourceId,8,background)
         }
 
         binding.opDrinkAll.setOnClickListener {
@@ -752,11 +767,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     snackbar?.dismiss()
                 }
                 clicked += 1
-                btnSelected = 6
+                btnSelected = 7
                 selectedOption = AppUtils.calculateOption(inTook,totalIntake)!!
                 addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
                     binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                    binding.opScan,outValue.resourceId,8,background)
+                    binding.op350ml,outValue.resourceId,8,background)
                 addDrinkedWater()
                 randomizeBalloon()
             }
@@ -764,32 +779,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 showMessage(getString(R.string.option_selectable_once_a_day), it)
             }
         }
-
-        binding.opScan.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-
-            val li = LayoutInflater.from(requireContext())
-            val promptsView = li.inflate(R.layout.custom_input_dialog3, null)
-
-            val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setView(promptsView)
-
-            alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-                binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
-                dialog.cancel()
-            }
-
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
-
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.opScan,outValue.resourceId,9,background)
-
-        }
-
 
         if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
             setValueForDrinking()
@@ -1297,12 +1286,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
         value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
         value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
+        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
         binding.ml50!!.text = "${value_50.toNumberString()} $unit"
         binding.ml100!!.text = "${value_100.toNumberString()} $unit"
         binding.ml150!!.text = "${value_150.toNumberString()} $unit"
         binding.ml200!!.text = "${value_200.toNumberString()} $unit"
         binding.ml250!!.text = "${value_250.toNumberString()} $unit"
         binding.ml300!!.text = "${value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
         binding.tvTotalIntake!!.text = "/" +totalIntake.toNumberString() + " " + "$unit"
     }
 

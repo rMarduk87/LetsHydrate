@@ -63,6 +63,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var value_200: Float = 200f
     private var value_250: Float = 250f
     private var value_300: Float = 300f
+    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private val firstHelpBalloon by balloon<FirstHelpBalloonFactory>()
     private val secondHelpBalloon by balloon<SecondHelpBalloonFactory>()
@@ -83,6 +84,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
         value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
         value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
+        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
         sqliteHelper = SqliteHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
         setTheme()
@@ -146,7 +148,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         binding.op300ml!!.isClickable = false
         binding.opCustom.isClickable = false
         binding.opDrinkAll.isClickable = false
-        binding.opScan.isClickable = false
+        binding.op350ml!!.isClickable = false
     }
 
     private fun initIntookValue() {
@@ -157,6 +159,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         binding.ml200!!.text = "${value_200.toNumberString()} $unit"
         binding.ml250!!.text = "${value_250.toNumberString()} $unit"
         binding.ml300!!.text = "${value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -352,7 +355,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
                 mainAnchor = binding.tutorial as View,
                 subAnchorList = listOf(view),
             )
-        },3000)
+        },2000)
 
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -382,7 +385,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
             binding.opDrinkAll.background = requireContext().getDrawable(outValue.resourceId)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            binding.op350ml.background = requireContext().getDrawable(outValue.resourceId)
             addDrinkedWater()
         }, 2500)
 
@@ -418,7 +421,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             if (snackbar != null) {
                 snackbar?.dismiss()
             }
-            btnSelected = 6
+            btnSelected = 7
             selectedOption = AppUtils.calculateOption(inTook,totalIntake)!!
             binding.op50ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.op100ml.background = requireContext().getDrawable(outValue.resourceId)
@@ -428,7 +431,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.op300ml.background = requireContext().getDrawable(outValue.resourceId)
             binding.opCustom.background = requireContext().getDrawable(outValue.resourceId)
             binding.opDrinkAll.background = requireContext().getDrawable(background)
-            binding.opScan.background = requireContext().getDrawable(outValue.resourceId)
+            binding.op350ml.background = requireContext().getDrawable(outValue.resourceId)
             addDrinkedWater()
         }, 3400)
 

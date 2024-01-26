@@ -134,7 +134,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             3-> "200"
             4-> "250"
             5-> "300"
-            6-> "custom"
+            6-> "350"
+            7-> "custom"
             else->"multi opt."
         }
         1-> result = when(this){
@@ -144,7 +145,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             3-> "7.03"
             4-> "8.79"
             5-> "10.56"
-            6-> "custom"
+            6-> "12.32"
+            7-> "custom"
             else->"multi opt."
         }
         2-> result = when(this){
@@ -154,7 +156,8 @@ fun Int.toExtractIntookOption(unit: Int): String {
             3-> "6.76"
             4-> "8.45"
             5-> "10.14"
-            6-> "custom"
+            6-> "11.83"
+            7-> "custom"
             else->"multi opt."
         }
     }

@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.lifecycle.MutableLiveData
+import rpt.tool.mementobibere.data.models.MaxMinChartModel
 import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
 import rpt.tool.mementobibere.utils.extensions.toCalendar
 import rpt.tool.mementobibere.utils.extensions.toMonth
@@ -98,7 +99,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
             if(counter<5){
                 counter += 1
-                db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 6 WHERE $KEY_INTOOK_COUNT = 5")
+                db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 7 WHERE $KEY_INTOOK_COUNT = 5")
             }
             if (counter<6){
                 counter += 1
@@ -333,32 +334,33 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
     }
-    fun getMaxTodayIntookStats(date: String): Int {
-        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC"
+    fun getMaxTodayIntookStats(date: String): List<MaxMinChartModel> {
+        val selectQuery = "SELECT $KEY_INTOOK, $KEY_INTOOK_COUNT FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC"
         val db = this.readableDatabase
-        var intook = -1
+        val list : ArrayList<MaxMinChartModel> = arrayListOf<MaxMinChartModel>()
         db.rawQuery(selectQuery, arrayOf(date)).use {
             if (it.moveToFirst()) {
-                intook = if(it.count == 1){
-                    it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK))
-                } else{
-                    -1
+                for(i in 0 until it.count){
+                    list.add(MaxMinChartModel(it.getInt(0),it.getFloat(1)))
+                    it.moveToNext()
                 }
-
             }
         }
-        return intook
+        return list
     }
-    fun getMinTodayIntookStats(date: String): Int {
-        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT ASC LIMIT 1"
+    fun getMinTodayIntookStats(date: String): List<MaxMinChartModel> {
+        val selectQuery = "SELECT $KEY_INTOOK ,$KEY_INTOOK_COUNT FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT ASC"
         val db = this.readableDatabase
-        var intook = -1
+        val list : ArrayList<MaxMinChartModel> = arrayListOf<MaxMinChartModel>()
         db.rawQuery(selectQuery, arrayOf(date)).use {
             if (it.moveToFirst()) {
-                intook = it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK))
+                for(i in 0 until it.count){
+                    list.add(MaxMinChartModel(it.getInt(0),it.getFloat(1)))
+                    it.moveToNext()
+                }
             }
         }
-        return intook
+        return list
     }
 
     fun addReachedGoal(date: String, value: Float, unit: String) : Long {
