@@ -7,7 +7,7 @@ Let's Hydrate is an android app to remind you to drink water and track your wate
 
 ## ScreenShots
 
-<img width="383" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/9b8af9fd-d85a-43ef-a345-9da6809b5f3f">
+<img width="381" alt="1" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/23ad463f-43f9-46d3-8573-a6e54b5853cf">
 <img width="383" alt="2" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/eb6946c7-b8da-40e8-8681-f14f555f8f8d">
 <img width="393" alt="3" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/3daffc7d-5f6c-4e43-9dcf-65c7df328eba">
 <img width="382" alt="4" src="https://github.com/rMarduk87/MementoBibere/assets/30796324/909a6520-c1cc-4875-a6cc-1f28ca8167a8">
