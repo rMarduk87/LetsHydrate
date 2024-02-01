@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 26
         targetSdk 33
-        versionCode 18
+        versionCode 19
         versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -79,6 +79,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     //CrashLytics
     implementation("com.google.firebase:firebase-crashlytics-ktx")
+    //DotsIndicator
+    implementation("com.tbuonomo:dotsindicator:5.0")
     //BottomBar
     implementation 'com.github.st235:expandablebottombar:1.5.3'
     //InApp Update
