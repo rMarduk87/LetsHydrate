@@ -20,6 +20,7 @@ import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.util.*
 
 class NotificationHelper(val ctx: Context) {
@@ -31,12 +32,7 @@ class NotificationHelper(val ctx: Context) {
 
     private fun createChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-            val notificationsNewMessageRingtone = prefs.getString(
-                AppUtils.NOTIFICATION_TONE_URI_KEY, RingtoneManager.getDefaultUri(
-                    RingtoneManager.TYPE_NOTIFICATION
-                ).toString()
-            )
+            val notificationsNewMessageRingtone = SharedPreferencesManager.notificationTone
             val notificationChannel = NotificationChannel(
                 CHANNEL_ONE_ID,
                 CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH
@@ -96,24 +92,13 @@ class NotificationHelper(val ctx: Context) {
     }
 
     private fun shallNotify(): Boolean {
-        val prefs = ctx.getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         val sqliteHelper = SqliteHelper(ctx)
 
-        val startTimestamp = prefs.getLong(AppUtils.WAKEUP_TIME_KEY, 0)
-        val stopTimestamp = prefs.getLong(AppUtils.SLEEPING_TIME_KEY, 0)
+        val startTimestamp = SharedPreferencesManager.wakeUpTime
+        val stopTimestamp = SharedPreferencesManager.sleepingTime
         var totalIntake = 0f
 
-        totalIntake = try {
-            prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            var totalIntakeOld = prefs.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = prefs.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(prefs.getInt(AppUtils.UNIT_KEY,0),prefs.getInt(AppUtils.UNIT_NEW_KEY,0))
-        }
+        totalIntake = SharedPreferencesManager.totalIntake
 
         if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
             return false

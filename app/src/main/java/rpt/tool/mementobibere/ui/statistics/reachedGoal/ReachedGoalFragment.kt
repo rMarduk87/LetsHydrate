@@ -22,6 +22,7 @@ import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.defaultSetUp
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.recyclerview.items.reachedGoal.ReachedGoalItem
@@ -31,21 +32,13 @@ import java.util.Calendar
 class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
     ReachedGoalStatsFragmentBinding::inflate) {
 
-    private lateinit var sharedPref: SharedPreferences
-    private var themeInt: Int = 0
-    private var unit: Int = 0
     private val itemAdapter = ItemAdapter<ReachedGoalItem>()
     private val fastAdapter = FastAdapter.with(itemAdapter)
 
     private val viewModel: ReachedGoalViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(
-            AppUtils.USERS_SHARED_PREF,
-            AppUtils.PRIVATE_MODE
-        )
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY, 0)
-        unit = sharedPref.getInt(AppUtils.UNIT_KEY, 0)
+
         super.onViewCreated(view, savedInstanceState)
         setBackGround()
 
@@ -72,7 +65,7 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setBackGround() {
-        when (themeInt) {
+        when (SharedPreferencesManager.themeInt) {
             0 -> toLightTheme()
             1 -> toDarkTheme()
             2 -> toWaterTheme()

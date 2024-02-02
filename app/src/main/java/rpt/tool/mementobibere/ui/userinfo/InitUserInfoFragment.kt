@@ -21,6 +21,7 @@ import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.InitUserInfoFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.Calendar
@@ -33,7 +34,6 @@ class InitUserInfoFragment:
     private var workType: Int = 0
     private var wakeupTime: Long = 0
     private var sleepingTime: Long = 0
-    private lateinit var sharedPref: SharedPreferences
     private var unit : Int = 0
     private var weightUnit : Int = 0
     private var gender : Int = 0
@@ -47,10 +47,8 @@ class InitUserInfoFragment:
 
         requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-
-        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY, 1558323000000)
-        sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
+        wakeupTime = SharedPreferencesManager.wakeUpTime
+        sleepingTime = SharedPreferencesManager.sleepingTime
 
         binding.etWakeUpTime.editText!!.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -114,9 +112,7 @@ class InitUserInfoFragment:
 
             btnMan.setOnClickListener{
                 gender = 0
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.GENDER_KEY, gender)
-                editor.apply()
+                SharedPreferencesManager.gender = gender
                 showMessage(
                     getString(R.string.you_selected_man), it,
                     type=AppUtils.Companion.TypeMessage.MAN
@@ -125,9 +121,7 @@ class InitUserInfoFragment:
 
             btnWoman.setOnClickListener{
                 gender = 1
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.GENDER_KEY, gender)
-                editor.apply()
+                SharedPreferencesManager.gender = gender
                 showMessage(
                     getString(R.string.you_selected_woman), it,
                     type=AppUtils.Companion.TypeMessage.WOMAN
@@ -185,9 +179,7 @@ class InitUserInfoFragment:
 
             btnCalm.setOnClickListener{
                 workType = 0
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(
                     getString(R.string.you_selected_calm), it,
                     type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -196,9 +188,7 @@ class InitUserInfoFragment:
 
             btnNormal.setOnClickListener{
                 workType = 1
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(
                     getString(R.string.you_selected_normal), it,
                     type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -207,9 +197,7 @@ class InitUserInfoFragment:
 
             btnLively.setOnClickListener{
                 workType = 2
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(
                     getString(R.string.you_selected_lively), it,
                     type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -218,9 +206,7 @@ class InitUserInfoFragment:
 
             btnIntense.setOnClickListener{
                 workType = 3
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(
                     getString(R.string.you_selected_intense), it,
                     type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -270,9 +256,7 @@ class InitUserInfoFragment:
 
             btnCold.setOnClickListener{
                 climate = 0
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(
                     getString(R.string.you_selected_cold), it,
                     type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -281,9 +265,7 @@ class InitUserInfoFragment:
 
             btnFresh.setOnClickListener{
                 climate = 1
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(
                     getString(R.string.you_selected_fresh), it,
                     type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -292,9 +274,7 @@ class InitUserInfoFragment:
 
             btnMild.setOnClickListener{
                 climate = 2
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(
                     getString(R.string.you_selected_mild), it,
                     type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -303,9 +283,7 @@ class InitUserInfoFragment:
 
             btnTorrid.setOnClickListener{
                 climate = 3
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(
                     getString(R.string.you_selected_torrid), it,
                     type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -354,28 +332,24 @@ class InitUserInfoFragment:
 
                 else -> {
 
-                    val editor = sharedPref.edit()
-                    editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
-                    editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                    editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
-                    editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
-                    editor.putBoolean(AppUtils.FIRST_RUN_KEY, false)
-                    editor.putBoolean(AppUtils.SET_WEIGHT_UNIT,true)
-                    editor.putBoolean(AppUtils.SET_GENDER_KEY, true)
-                    editor.putBoolean(AppUtils.SET_NEW_WORK_TYPE_KEY, true)
-                    editor.putBoolean(AppUtils.SET_CLIMATE_KEY, true)
-                    editor.putBoolean(AppUtils.START_TUTORIAL_KEY, true)
-                    editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonor)
-                    editor.putBoolean(AppUtils.SET_BLOOD_KEY, true)
-                    editor.apply()
+                    SharedPreferencesManager.weight = weight.toInt()
+                    SharedPreferencesManager.workType = workType
+                    SharedPreferencesManager.wakeUpTime = wakeupTime
+                    SharedPreferencesManager.sleepingTime = sleepingTime
+                    SharedPreferencesManager.firstRun = false
+                    SharedPreferencesManager.setWeight = true
+                    SharedPreferencesManager.setGender = true
+                    SharedPreferencesManager.setWorkOut = true
+                    SharedPreferencesManager.setClimate = true
+                    SharedPreferencesManager.startTutorial = true
+                    SharedPreferencesManager.bloodDonorKey = bloodDonor
+                    SharedPreferencesManager.setBloodDonor = true
 
                     val totalIntake = AppUtils.calculateIntake(weight.toInt(), workType,weightUnit,
                         gender, climate, 0,unit )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
-                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
-
-                    editor.apply()
+                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -430,7 +404,7 @@ class InitUserInfoFragment:
 
         }
 
-        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        unit = SharedPreferencesManager.current_unitInt
 
         when (unit) {
             0 -> menu.select(R.id.icon_ml)
@@ -455,22 +429,19 @@ class InitUserInfoFragment:
     }
 
     private fun setSystemUnit() {
-        val editor = sharedPref.edit()
-        editor.putFloat(AppUtils.VALUE_50_KEY,AppUtils.firstConversion(50f,unit))
-        editor.putFloat(AppUtils.VALUE_100_KEY,AppUtils.firstConversion(100f,unit))
-        editor.putFloat(AppUtils.VALUE_150_KEY,AppUtils.firstConversion(150f,unit))
-        editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unit))
-        editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unit))
-        editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unit))
-        editor.putFloat(AppUtils.VALUE_350_KEY,AppUtils.firstConversion(350f,unit))
-        editor.putInt(AppUtils.UNIT_NEW_KEY, unit)
-        editor.apply()
+        SharedPreferencesManager.value_50 = AppUtils.firstConversion(50f,unit)
+        SharedPreferencesManager.value_100 = AppUtils.firstConversion(100f,unit)
+        SharedPreferencesManager.value_150 = AppUtils.firstConversion(150f,unit)
+        SharedPreferencesManager.value_200 = AppUtils.firstConversion(200f,unit)
+        SharedPreferencesManager.value_250 = AppUtils.firstConversion(250f,unit)
+        SharedPreferencesManager.value_300 = AppUtils.firstConversion(300f,unit)
+        SharedPreferencesManager.value_350 = AppUtils.firstConversion(350f,unit)
+        SharedPreferencesManager.new_unitInt = unit
+
     }
 
     private fun setWeightUnit() {
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.WEIGHT_UNIT_KEY,weightUnit)
-        editor.apply()
+        SharedPreferencesManager.weightUnit = weightUnit
     }
 
     @SuppressLint("InflateParams", "RestrictedApi")

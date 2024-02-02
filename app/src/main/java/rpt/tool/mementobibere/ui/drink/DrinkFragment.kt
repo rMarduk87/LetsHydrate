@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.NotificationManager
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
@@ -41,7 +40,6 @@ import rpt.tool.mementobibere.WalkThroughtActivity
 import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
-import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.extensions.toMonth
@@ -50,6 +48,7 @@ import rpt.tool.mementobibere.utils.extensions.toStringHour
 import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import java.math.RoundingMode
@@ -72,39 +71,17 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private lateinit var viewWindow: View
     private var totalIntake: Float = 0f
     private var inTook: Float = 0f
-    private lateinit var sharedPref: SharedPreferences
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var dateNow: String
     private var notificStatus: Boolean = false
     private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
-    private var themeInt: Int = 0
-    private var current_unitInt: Int = 0
-    private var new_unitInt: Int = 0
-    private var value_50: Float = 50f
-    private var value_100: Float = 100f
-    private var value_150: Float = 150f
-    private var value_200: Float = 200f
-    private var value_250: Float = 250f
-    private var value_300: Float = 300f
-    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private var intookToRefresh: Float = 0f
     private var waters: Array<String> = arrayOf()
     private val avisBalloon by balloon<BloodDonorInfoBalloonFactory>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
-        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
-        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
-        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
-        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
-        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
-        value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
-        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
         sqliteHelper = SqliteHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
         waters = requireContext().resources.getStringArray(R.array.water)
@@ -116,12 +93,12 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         setBackGround()
 
-        if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
+        if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = VISIBLE
             binding.calendarAvisHelp.visibility = VISIBLE
         }
-        else if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
+        else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = VISIBLE
             binding.infoAvis.visibility = VISIBLE
@@ -133,18 +110,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.calendarAvisHelp.visibility = GONE
         }
 
-        totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            val totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }
-        if (sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true)) {
+        totalIntake = SharedPreferencesManager.totalIntake
+
+        if (SharedPreferencesManager.firstRun) {
             startActivity(Intent(requireContext(), WalkThroughtActivity::class.java))
             requireActivity().finish()
         } else if (totalIntake <= 0) {
@@ -154,22 +122,23 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         viewWindow = requireActivity().window.decorView.findViewById<View>(android.R.id.content)
         initBottomBar()
-        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
-            value_300 = AppUtils.firstConversion(300f,new_unitInt)
+        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
+            SharedPreferencesManager.value_300 =  AppUtils.firstConversion(300f,
+                SharedPreferencesManager.new_unitInt)
             initIntookValue()
             setValueForDrinking()
         }
     }
 
     private fun initIntookValue() {
-        unit = AppUtils.calculateExtensions(new_unitInt)
-        binding.ml50.text = "${value_50.toNumberString()} $unit"
-        binding.ml100.text = "${value_100.toNumberString()} $unit"
-        binding.ml150.text = "${value_150.toNumberString()} $unit"
-        binding.ml200.text = "${value_200.toNumberString()} $unit"
-        binding.ml250.text = "${value_250.toNumberString()} $unit"
-        binding.ml300.text = "${value_300.toNumberString()} $unit"
-        binding.ml350.text = "${value_350.toNumberString()} $unit"
+        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
+        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
+        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -182,6 +151,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun createMenu() {
+        var themeInt = SharedPreferencesManager.themeInt
 
         var colorString = if(themeInt==0){
             "#41B279"
@@ -253,10 +223,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
     private fun goToStatsActivity() {
         Handler(requireContext().mainLooper).postDelayed({
-            val edit = sharedPref.edit()
-            edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
-            edit.putString(AppUtils.UNIT_STRING,unit)
-            edit.apply()
+            SharedPreferencesManager.totalIntake = totalIntake
+            SharedPreferencesManager.unitString = unit
             safeNavController?.safeNavigate(DrinkFragmentDirections
                 .actionDrinkFragmentToStatsFragment())
         }, TIME)
@@ -266,9 +234,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun goToBottomInfo() {
         Handler(requireContext().mainLooper).postDelayed({
 
-            val edit = sharedPref.edit()
-            edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
-            edit.apply()
+            SharedPreferencesManager.totalIntake = totalIntake
             safeNavController?.safeNavigate(
                 DrinkFragmentDirections.actionDrinkFragmentToInfoFragment())
 
@@ -337,9 +303,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
 
     private fun addLastIntook(toFloat: Float) {
-        val edit = sharedPref.edit()
-        edit.putFloat(AppUtils.LAST_INTOOK_KEY,toFloat)
-        edit.apply()
+        SharedPreferencesManager.lastIntook = toFloat
     }
 
     private fun goToBottomCuriosity() {
@@ -361,16 +325,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         val alarm = AlarmHelper()
         if(enabled){
             notificStatus = !notificStatus
-            val editor = sharedPref.edit()
-            editor.putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus)
-            editor.apply()
+            SharedPreferencesManager.notificationStatus =  notificStatus
             if (notificStatus) {
                 binding.bottomBarNotNotify.visibility = View.GONE
                 binding.bottomBarNotify.visibility = View.VISIBLE
                 Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
                 alarm.setAlarm(
                     requireContext(),
-                    sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
+                    SharedPreferencesManager.notificationFreq.toLong())
             } else {
                 binding.bottomBarNotNotify.visibility = View.VISIBLE
                 binding.bottomBarNotify.visibility = View.GONE
@@ -381,6 +343,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun setBackGround() {
+        var themeInt = SharedPreferencesManager.themeInt
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
@@ -456,48 +419,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun setTheme() {
-        val theme = themeInt.toMainTheme()
+        val theme = SharedPreferencesManager.themeInt.toMainTheme()
         requireActivity().setTheme(theme)
 
     }
 
     private fun updateValues() {
-        /*totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }*/
-
-        //var noUpdate = sharedPref.getBoolean(AppUtils.NO_UPDATE_UNIT,false)
-        /*if(!noUpdate){
-            totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }
-            totalIntake = totalIntake
-                .toCalculatedValue(current_unitInt,calculateRealUnit(current_unitInt,new_unitInt))
-
-            unit = AppUtils.calculateExtensions(new_unitInt)
-            sqliteHelper.updateTotalIntake(
-                AppUtils.getCurrentOnlyDate()!!,
-                totalIntake, unit)
-        }*/
-
-        val editor = sharedPref.edit()
-        editor.putBoolean(AppUtils.NO_UPDATE_UNIT, false)
-        editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
-        editor.apply()
+        SharedPreferencesManager.noUpdateUnit = false
+        SharedPreferencesManager.totalIntake = totalIntake
 
         inTook = sqliteHelper.getIntook(dateNow)
 
@@ -520,46 +449,31 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
         }
 
-        val new = sharedPref.getBoolean(AppUtils.RESET_NOTIFICATION_KEY,true)
+        val new = SharedPreferencesManager.resetNotification
         if(new){
             val mNotificationManager : NotificationManager = requireActivity()
                 .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mNotificationManager.deleteNotificationChannel("rpt.tools.mementobibere.CHANNELONE")
             }
-            val edit = sharedPref.edit()
-            edit.putBoolean(AppUtils.RESET_NOTIFICATION_KEY,false)
-            edit.apply()
+            SharedPreferencesManager.resetNotification = false
         }
 
-        if(!sharedPref.getBoolean(AppUtils.SET_GENDER_KEY, false)){
+        if(!SharedPreferencesManager.setGender){
             setGender()
         }
 
-        if(!sharedPref.getBoolean(AppUtils.SET_BLOOD_KEY, false)){
+        if(!SharedPreferencesManager.setBloodDonor){
             setBloodDonor()
         }
 
-        if(!sharedPref.getBoolean(AppUtils.SET_NEW_WORK_TYPE_KEY, false)){
+        if(!SharedPreferencesManager.setWorkOut){
             setNewWorkType()
         }
 
-        if(!sharedPref.getBoolean(AppUtils.SET_CLIMATE_KEY, false)){
+        if(!SharedPreferencesManager.setClimate){
             setClimate()
         }
-
-        /*totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }*/
 
         setValueForDrinking()
 
@@ -570,23 +484,23 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             true
         )
 
-        if(!sharedPref.getBoolean(AppUtils.SET_WEIGHT_UNIT, false)){
+        if(!SharedPreferencesManager.setWeight){
             safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
         }
 
         if(!AppUtils.isValidDate(
-                Date(sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY,0L)).toStringHour(),
-                Date(sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY,0L)).toStringHour())){
+                Date(SharedPreferencesManager.sleepingTime).toStringHour(),
+                Date(SharedPreferencesManager.wakeUpTime).toStringHour())){
             safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToAdjustHourBottomSheetFragment())
         }
 
-        notificStatus = sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY, true)
+        notificStatus = SharedPreferencesManager.notificationStatus
         val alarm = AlarmHelper()
         if (!alarm.checkAlarm(requireContext()) && notificStatus) {
             binding.bottomBarNotNotify.visibility = GONE
             binding.bottomBarNotify.visibility = VISIBLE
             var isAvisDay = sqliteHelper.getAvisDay(dateNow)
-            var freq = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong()
+            var freq = SharedPreferencesManager.notificationFreq.toLong()
             if(isAvisDay){
                 freq /= 2
             }
@@ -605,19 +519,16 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.bottomBarNotify.visibility = VISIBLE
         }
 
-        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
-
         updateValues()
 
         var background =
-            when(themeInt){
+            when(SharedPreferencesManager.themeInt){
                 2->R.drawable.option_select_bg_w
                 3->R.drawable.option_select_bg_g
                 else -> R.drawable.option_select_bg
             }
 
-        if(sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)){
+        if(SharedPreferencesManager.setTips){
             if(inTook > 0){
                 binding.bubble.visibility = VISIBLE
                 binding.se.visibility = VISIBLE
@@ -778,7 +689,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             }
         }
 
-        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
             setValueForDrinking()
         }
 
@@ -828,9 +739,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     sqliteHelper.addAvis(avis)
                     if(sdf.format(calendar.time) == dateNow){
                         if(totalIntake < 2000){
-                            val editor = sharedPref.edit()
-                            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,2000f)
-                            editor.apply()
+                            SharedPreferencesManager.totalIntake = 2000f
                         }
                     }
                     safeNavController?.safeNavigate(DrinkFragmentDirections
@@ -863,14 +772,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 )}"
         }
 
-        if(sharedPref.getBoolean(AppUtils.START_TUTORIAL_KEY,false)){
+        if(SharedPreferencesManager.startTutorial){
             safeNavController?.safeNavigate(DrinkFragmentDirections
                 .actionDrinkFragmentToTutorialFragment())
         }
     }
 
     private fun randomizeBalloon() {
-        if(sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)){
+        if(SharedPreferencesManager.setTips){
             if(binding.bubble.visibility == INVISIBLE || binding.bubble.visibility == GONE){
                 binding.top.visibility = VISIBLE
                 binding.bubble.visibility = VISIBLE
@@ -906,15 +815,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
 
         alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonorChoice)
-            editor.putBoolean(AppUtils.SET_BLOOD_KEY,true)
-            editor.apply()
+            SharedPreferencesManager.setBloodDonor = true
+            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
         }.setNegativeButton("Cancel") { _, _ ->
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.BLOOD_DONOR_KEY, bloodDonorChoice)
-            editor.putBoolean(AppUtils.SET_BLOOD_KEY,true)
-            editor.apply()
+            SharedPreferencesManager.setBloodDonor = true
+            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
         }
 
         val alertDialog = alertDialogBuilder.create()
@@ -955,11 +860,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             when (genderChoice) {
                 -1 -> showMessage(getString(R.string.gender_hint), promptsView, true)
                 else -> {
-
-                    val editor = sharedPref.edit()
-                    editor.putInt(AppUtils.GENDER_KEY, genderChoice)
-                    editor.putBoolean(AppUtils.SET_GENDER_KEY,true)
-                    editor.apply()
+                    SharedPreferencesManager.setGender = true
+                    SharedPreferencesManager.gender = genderChoice
                 }
             }
         }.setNegativeButton("Cancel") { _, _ ->
@@ -991,9 +893,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnCalm.setOnClickListener{
             workType = 0
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-            editor.apply()
+            SharedPreferencesManager.workType = workType
             showMessage(
                 getString(R.string.you_selected_calm), it,
                 type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -1002,9 +902,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnNormal.setOnClickListener{
             workType = 1
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-            editor.apply()
+            SharedPreferencesManager.workType = workType
             showMessage(
                 getString(R.string.you_selected_normal), it,
                 type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -1013,9 +911,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnLively.setOnClickListener{
             workType = 2
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-            editor.apply()
+            SharedPreferencesManager.workType = workType
             showMessage(
                 getString(R.string.you_selected_lively), it,
                 type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -1024,9 +920,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnIntense.setOnClickListener{
             workType = 3
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-            editor.apply()
+            SharedPreferencesManager.workType = workType
             showMessage(
                 getString(R.string.you_selected_intense), it,
                 type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
@@ -1038,26 +932,25 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 -1 -> showMessage(getString(R.string.work_type_hint), promptsView, true)
                 else -> {
 
-                    val editor = sharedPref.edit()
                     val totalIntake = AppUtils.calculateIntake(
-                        sharedPref.getInt(AppUtils.WEIGHT_KEY, 0),
+                        SharedPreferencesManager.weight,
                         workType,
-                        sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
-                        sharedPref.getInt(AppUtils.GENDER_KEY,0),
-                        sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),0,current_unitInt
+                        SharedPreferencesManager.weightUnit,
+                        SharedPreferencesManager.gender,
+                        SharedPreferencesManager.climate,0,
+                        SharedPreferencesManager.current_unitInt
                     )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
-                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
+                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
 
                     sqliteHelper.updateTotalIntake(
                         AppUtils.getCurrentOnlyDate()!!,
                         df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0))
+                            SharedPreferencesManager.new_unitInt)
                     )
-                    editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                    editor.putBoolean(AppUtils.SET_NEW_WORK_TYPE_KEY,true)
-                    editor.apply()
+                    SharedPreferencesManager.workType = workType
+                    SharedPreferencesManager.setWorkOut = true
                     safeNavController?.safeNavigate(DrinkFragmentDirections
                         .actionDrinkFragmentToSelfFragment())
                 }
@@ -1091,9 +984,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnCold.setOnClickListener{
             climate = 0
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.CLIMATE_KEY, climate)
-            editor.apply()
+            SharedPreferencesManager.climate = climate
             showMessage(
                 getString(R.string.you_selected_cold), it,
                 type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -1102,9 +993,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnFresh.setOnClickListener{
             climate = 1
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.CLIMATE_KEY, climate)
-            editor.apply()
+            SharedPreferencesManager.climate = climate
             showMessage(
                 getString(R.string.you_selected_fresh), it,
                 type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -1113,9 +1002,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnMild.setOnClickListener{
             climate = 2
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.CLIMATE_KEY, climate)
-            editor.apply()
+            SharedPreferencesManager.climate = climate
             showMessage(
                 getString(R.string.you_selected_mild), it,
                 type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -1124,9 +1011,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         btnTorrid.setOnClickListener{
             climate = 3
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.CLIMATE_KEY, climate)
-            editor.apply()
+            SharedPreferencesManager.climate = climate
             showMessage(
                 getString(R.string.you_selected_torrid), it,
                 type=AppUtils.Companion.TypeMessage.CLIMATE
@@ -1137,25 +1022,25 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             when (climate) {
                 -1 -> showMessage(getString(R.string.climate_set_hint), promptsView, true)
                 else -> {
-                    val editor = sharedPref.edit()
                     val totalIntake = AppUtils.calculateIntake(
-                        sharedPref.getInt(AppUtils.WEIGHT_KEY, 0),
-                        sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
-                        sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0),
-                        sharedPref.getInt(AppUtils.GENDER_KEY,0), climate,0, current_unitInt
+                        SharedPreferencesManager.weight,
+                        SharedPreferencesManager.workType,
+                        SharedPreferencesManager.weightUnit,
+                        SharedPreferencesManager.gender,
+                        climate,0,
+                        SharedPreferencesManager.current_unitInt
                     )
                     val df = DecimalFormat("#")
                     df.roundingMode = RoundingMode.CEILING
-                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
+                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
 
                     sqliteHelper.updateTotalIntake(
                         AppUtils.getCurrentOnlyDate()!!,
                         df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0))
+                            SharedPreferencesManager.new_unitInt)
                     )
-                    editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                    editor.putBoolean(AppUtils.SET_CLIMATE_KEY,true)
-                    editor.apply()
+                    SharedPreferencesManager.climate = climate
+                    SharedPreferencesManager.setClimate = true
                     safeNavController?.safeNavigate(DrinkFragmentDirections
                         .actionDrinkFragmentToSelfFragment())
                 }
@@ -1233,16 +1118,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
     override fun onResume() {
         super.onResume()
-
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
         setTheme()
         setBackGround()
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.UNIT_KEY,new_unitInt)
-        editor.apply()
-        refreshAlarm(sharedPref.getBoolean(AppUtils.NOTIFICATION_STATUS_KEY,true))
+        refreshAlarm(SharedPreferencesManager.notificationStatus)
     }
 
 
@@ -1277,21 +1155,14 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun setValueForDrinking() {
-        unit = AppUtils.calculateExtensions(new_unitInt)
-        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
-        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
-        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
-        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
-        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
-        value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
-        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
-        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${value_300.toNumberString()} $unit"
-        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
+        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
+        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
+        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
         binding.tvTotalIntake!!.text = "/" +totalIntake.toNumberString() + " " + "$unit"
     }
 
@@ -1316,7 +1187,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
                     alarm.setAlarm(
                         requireContext(),
-                        sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
+                        SharedPreferencesManager.notificationFreq.toLong())
 
                 } else {
                     binding.bottomBarNotNotify.visibility = VISIBLE
@@ -1335,7 +1206,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             binding.bottomBarNotify.visibility = VISIBLE
             alarm.setAlarm(
                 requireContext(),
-                sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30).toLong())
+                SharedPreferencesManager.notificationFreq.toLong())
         }
         else{
             binding.bottomBarNotNotify.visibility = VISIBLE

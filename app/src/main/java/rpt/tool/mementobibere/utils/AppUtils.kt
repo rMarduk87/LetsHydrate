@@ -303,12 +303,12 @@ class AppUtils {
             return 0
         }
 
+        val PRIVATE_MODE = 0
 
         const val UNIT_KEY: String = "current_unit"
         const val UNIT_NEW_KEY: String = "new_unit"
         const val THEME_KEY: String = "theme"
         const val USERS_SHARED_PREF = "user_pref"
-        val PRIVATE_MODE = 0
         const val WEIGHT_KEY = "weight"
         const val WORK_TIME_KEY = "worktime"
         const val TOTAL_INTAKE_KEY = "totalintake"
@@ -317,8 +317,6 @@ class AppUtils {
         const val NOTIFICATION_MSG_KEY = "notificationmsg"
         const val SLEEPING_TIME_KEY = "sleepingtime"
         const val WAKEUP_TIME_KEY = "wakeuptime"
-        const val START_TIME_KEY = "starttime"
-        const val STOP_TIME_KEY = "stoptime"
         const val NOTIFICATION_TONE_URI_KEY = "notificationtone"
         const val FIRST_RUN_KEY = "firstrun"
         const val VALUE_50_KEY = "50"
@@ -350,7 +348,6 @@ class AppUtils {
         const val INDEX_MONTH_KEY : String = "month"
         const val INDEX_YEAR_KEY : String = "year"
         const val DATE : String = "date"
-        const val FIRST_STATS_KEY : String = "stats"
 
         enum class TypeMessage {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
