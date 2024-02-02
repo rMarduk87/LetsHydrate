@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 26
         targetSdk 33
-        versionCode 19
+        versionCode 20
         versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,6 +27,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             ndk { debugSymbolLevel = 'full' }
+            signingConfig signingConfigs.debug
         }
 
         debug {

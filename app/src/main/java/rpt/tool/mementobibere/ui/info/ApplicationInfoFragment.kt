@@ -152,7 +152,7 @@ class ApplicationInfoFragment:
                 showMessage(getString(R.string.please_a_notification_message), it, true)
             }
             else{
-                var editor = sharedPref.edit()
+                val editor = sharedPref.edit()
                 editor.putString(AppUtils.NOTIFICATION_MSG_KEY, notificMsg)
                 editor.putString(AppUtils.NOTIFICATION_TONE_URI_KEY,currentToneUri.toString())
                 editor.apply()

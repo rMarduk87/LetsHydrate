@@ -110,36 +110,34 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         waters = requireContext().resources.getStringArray(R.array.water)
         setTheme()
         super.onViewCreated(view, savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            requireActivity().window.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setBackGround()
 
         if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = VISIBLE
-            binding.calendarAvisHelp!!.visibility = VISIBLE
+            binding.calendarAvisHelp.visibility = VISIBLE
         }
         else if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
             sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = VISIBLE
-            binding.infoAvis!!.visibility = VISIBLE
-            binding.calendarAvisHelp!!.visibility = VISIBLE
+            binding.infoAvis.visibility = VISIBLE
+            binding.calendarAvisHelp.visibility = VISIBLE
         }
         else{
             binding.calendarAvis.visibility = GONE
-            binding.infoAvis!!.visibility = GONE
-            binding.calendarAvisHelp!!.visibility = GONE
+            binding.infoAvis.visibility = GONE
+            binding.calendarAvisHelp.visibility = GONE
         }
 
         totalIntake = try {
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
@@ -165,13 +163,13 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
     private fun initIntookValue() {
         unit = AppUtils.calculateExtensions(new_unitInt)
-        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${value_300.toNumberString()} $unit"
-        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
+        binding.ml50.text = "${value_50.toNumberString()} $unit"
+        binding.ml100.text = "${value_100.toNumberString()} $unit"
+        binding.ml150.text = "${value_150.toNumberString()} $unit"
+        binding.ml200.text = "${value_200.toNumberString()} $unit"
+        binding.ml250.text = "${value_250.toNumberString()} $unit"
+        binding.ml300.text = "${value_300.toNumberString()} $unit"
+        binding.ml350.text = "${value_350.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -255,7 +253,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
     private fun goToStatsActivity() {
         Handler(requireContext().mainLooper).postDelayed({
-            var edit = sharedPref.edit()
+            val edit = sharedPref.edit()
             edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
             edit.putString(AppUtils.UNIT_STRING,unit)
             edit.apply()
@@ -268,7 +266,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     private fun goToBottomInfo() {
         Handler(requireContext().mainLooper).postDelayed({
 
-            var edit = sharedPref.edit()
+            val edit = sharedPref.edit()
             edit.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
             edit.apply()
             safeNavController?.safeNavigate(
@@ -339,7 +337,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
 
     private fun addLastIntook(toFloat: Float) {
-        var edit = sharedPref.edit()
+        val edit = sharedPref.edit()
         edit.putFloat(AppUtils.LAST_INTOOK_KEY,toFloat)
         edit.apply()
     }
@@ -363,7 +361,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         val alarm = AlarmHelper()
         if(enabled){
             notificStatus = !notificStatus
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.putBoolean(AppUtils.NOTIFICATION_STATUS_KEY, notificStatus)
             editor.apply()
             if (notificStatus) {
@@ -468,7 +466,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
@@ -481,7 +479,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
@@ -496,7 +494,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 totalIntake, unit)
         }*/
 
-        var editor = sharedPref.edit()
+        val editor = sharedPref.edit()
         editor.putBoolean(AppUtils.NO_UPDATE_UNIT, false)
         editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntake)
         editor.apply()
@@ -529,7 +527,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 mNotificationManager.deleteNotificationChannel("rpt.tools.mementobibere.CHANNELONE")
             }
-            var edit = sharedPref.edit()
+            val edit = sharedPref.edit()
             edit.putBoolean(AppUtils.RESET_NOTIFICATION_KEY,false)
             edit.apply()
         }
@@ -555,7 +553,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                 .toCalculatedValue(current_unitInt,new_unitInt)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()

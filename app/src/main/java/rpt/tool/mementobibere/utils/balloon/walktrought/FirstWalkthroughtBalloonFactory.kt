@@ -1,7 +1,6 @@
-package rpt.tool.mementobibere.utils.balloon.tutorial
+package rpt.tool.mementobibere.utils.balloon.walktrought
 
 import android.content.Context
-import android.widget.Toast
 import androidx.annotation.Keep
 import androidx.lifecycle.LifecycleOwner
 import com.skydoves.balloon.ArrowPositionRules
@@ -13,11 +12,11 @@ import com.skydoves.balloon.overlay.BalloonOverlayRoundRect
 import rpt.tool.mementobibere.R
 
 @Keep
-class FourthHelpBalloonFactory : Balloon.Factory() {
+class FirstWalkthroughtBalloonFactory : Balloon.Factory() {
 
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
         return Balloon.Builder(context)
-            .setText(context.getText(R.string.click_opt_all))
+            .setText(context.getText(R.string.walkthrough_text_one))
             .setArrowSize(10)
             .setWidthRatio(1.0f)
             .setHeight(BalloonSizeSpec.WRAP)

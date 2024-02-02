@@ -107,7 +107,7 @@ class NotificationHelper(val ctx: Context) {
             prefs.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = prefs.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = prefs.edit()
+            val editor = prefs.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()

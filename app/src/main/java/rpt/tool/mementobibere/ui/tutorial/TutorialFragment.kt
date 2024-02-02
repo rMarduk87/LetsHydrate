@@ -118,7 +118,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
@@ -313,7 +313,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         }catch (ex:Exception){
             var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.remove(AppUtils.TOTAL_INTAKE_KEY)
             editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
             editor.apply()
@@ -481,7 +481,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
 
         Handler(Looper.getMainLooper()).postDelayed({
             seventhHelpBalloon.dismiss()
-            var editor = sharedPref.edit()
+            val editor = sharedPref.edit()
             editor.putBoolean(AppUtils.START_TUTORIAL_KEY, false)
             editor.apply()
             safeNavController?.safeNavigate(TutorialFragmentDirections
