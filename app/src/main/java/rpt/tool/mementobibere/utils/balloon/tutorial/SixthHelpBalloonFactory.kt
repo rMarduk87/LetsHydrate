@@ -2,6 +2,7 @@ package rpt.tool.mementobibere.utils.balloon.tutorial
 
 import android.content.Context
 import android.widget.Toast
+import androidx.annotation.Keep
 import androidx.lifecycle.LifecycleOwner
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.Balloon
@@ -11,6 +12,7 @@ import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.overlay.BalloonOverlayRoundRect
 import rpt.tool.mementobibere.R
 
+@Keep
 class SixthHelpBalloonFactory : Balloon.Factory() {
 
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
