@@ -4,6 +4,7 @@ package rpt.tool.mementobibere
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -19,8 +20,9 @@ import rpt.tool.mementobibere.utils.balloon.walktrought.FirstWalkthroughtBalloon
 import rpt.tool.mementobibere.utils.balloon.walktrought.FourthWalkthroughtBalloonFactory
 import rpt.tool.mementobibere.utils.balloon.walktrought.SecondWalkthroughtBalloonFactory
 import rpt.tool.mementobibere.utils.balloon.walktrought.ThirdWalkthroughtBalloonFactory
+import rpt.tool.mementobibere.utils.view.ViewUtils
 
-class WalkThroughtActivity : AppCompatActivity() {
+class WalkThroughtActivity : LetsHydrateBaseActivity() {
 
 
     private lateinit var binding: ActivityWalkThroughBinding
@@ -38,6 +40,7 @@ class WalkThroughtActivity : AppCompatActivity() {
         setContentView(binding.root)
         sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        modifyOrentation()
 
         binding.mainLayout.isClickable = false
         binding.imageView2.isClickable = false

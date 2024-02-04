@@ -59,15 +59,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
     private var themeInt: Int = 0
-    private var current_unitInt: Int = 0
-    private var new_unitInt: Int = 0
-    private var value_50: Float = 50f
-    private var value_100: Float = 100f
-    private var value_150: Float = 150f
-    private var value_200: Float = 200f
-    private var value_250: Float = 250f
-    private var value_300: Float = 300f
-    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private val firstHelpBalloon by balloon<FirstHelpBalloonFactory>()
     private val secondHelpBalloon by balloon<SecondHelpBalloonFactory>()
@@ -463,9 +454,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
 
         Handler(Looper.getMainLooper()).postDelayed({
             seventhHelpBalloon.dismiss()
-            val editor = sharedPref.edit()
-            editor.putBoolean(AppUtils.START_TUTORIAL_KEY, false)
-            editor.apply()
+            SharedPreferencesManager.startTutorial = false
             safeNavController?.safeNavigate(TutorialFragmentDirections
                 .actionTutorialFragmentToDrinkFragment())
         }, 2650)

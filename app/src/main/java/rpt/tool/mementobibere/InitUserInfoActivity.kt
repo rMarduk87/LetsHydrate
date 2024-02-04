@@ -1,26 +1,28 @@
 package rpt.tool.mementobibere
 
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import rpt.tool.mementobibere.databinding.ActivityInitUserInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toAppTheme
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
+import rpt.tool.mementobibere.utils.view.ViewUtils
 
-class InitUserInfoActivity : AppCompatActivity() {
+class InitUserInfoActivity : LetsHydrateBaseActivity() {
 
     private lateinit var binding: ActivityInitUserInfoBinding
     private var themeInt : Int = 0
-    private lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        sharedPref = getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        themeInt = SharedPreferencesManager.themeInt
         setTheme()
         super.onCreate(savedInstanceState)
         binding = ActivityInitUserInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        modifyOrentation()
     }
 
     private fun setTheme() {

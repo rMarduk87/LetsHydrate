@@ -34,6 +34,7 @@ import github.com.st235.lib_expandablebottombar.MenuItem
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
+import rpt.tool.mementobibere.InitUserInfoMissedActivity
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.WalkThroughtActivity
@@ -459,20 +460,10 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             SharedPreferencesManager.resetNotification = false
         }
 
-        if(!SharedPreferencesManager.setGender){
-            setGender()
-        }
-
-        if(!SharedPreferencesManager.setBloodDonor){
-            setBloodDonor()
-        }
-
-        if(!SharedPreferencesManager.setWorkOut){
-            setNewWorkType()
-        }
-
-        if(!SharedPreferencesManager.setClimate){
-            setClimate()
+        if(!SharedPreferencesManager.setGender || !SharedPreferencesManager.setBloodDonor ||
+            !SharedPreferencesManager.setWorkOut || !SharedPreferencesManager.setClimate ||
+            !SharedPreferencesManager.setWeight){
+            setValueMissed()
         }
 
         setValueForDrinking()
@@ -483,10 +474,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             outValue,
             true
         )
-
-        if(!SharedPreferencesManager.setWeight){
-            safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
-        }
 
         if(!AppUtils.isValidDate(
                 Date(SharedPreferencesManager.sleepingTime).toStringHour(),
@@ -792,265 +779,9 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
     }
 
-    private fun setBloodDonor() {
-        var bloodDonorChoice = 0
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog_, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-        val userBlood = promptsView
-            .findViewById(R.id.btnAvis) as LottieAnimationView
-
-        userBlood.setOnClickListener {
-            if(bloodDonorChoice==0){
-                bloodDonorChoice = 1
-                showMessage(getString(R.string.you_selected_avis), it)
-            }
-            else{
-                bloodDonorChoice = 0
-                showMessage(getString(R.string.you_selected_no_avis), it)
-            }
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            SharedPreferencesManager.setBloodDonor = true
-            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
-        }.setNegativeButton("Cancel") { _, _ ->
-            SharedPreferencesManager.setBloodDonor = true
-            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setGender() {
-        var genderChoice = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog2, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-        val userMaleBtn = promptsView
-            .findViewById(R.id.btnMan) as LottieAnimationView
-
-        val userWomanBtn = promptsView
-            .findViewById(R.id.btnWoman) as LottieAnimationView
-
-        userMaleBtn.setOnClickListener {
-            genderChoice = 0
-            showMessage(
-                getString(R.string.you_selected_man), it,
-                type=AppUtils.Companion.TypeMessage.MAN
-            )
-        }
-
-        userWomanBtn.setOnClickListener {
-            genderChoice = 1
-            showMessage(
-                getString(R.string.you_selected_woman), it,
-                type=AppUtils.Companion.TypeMessage.WOMAN
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (genderChoice) {
-                -1 -> showMessage(getString(R.string.gender_hint), promptsView, true)
-                else -> {
-                    SharedPreferencesManager.setGender = true
-                    SharedPreferencesManager.gender = genderChoice
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.gender_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setNewWorkType(){
-        var workType = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog4, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-
-        val btnCalm = promptsView
-            .findViewById(R.id.btnCalm) as LottieAnimationView
-        val btnNormal = promptsView
-            .findViewById(R.id.btnNormal) as LottieAnimationView
-        val btnLively = promptsView
-            .findViewById(R.id.btnLively) as LottieAnimationView
-        val btnIntense = promptsView
-            .findViewById(R.id.btnIntense) as LottieAnimationView
-
-
-        btnCalm.setOnClickListener{
-            workType = 0
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_calm), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnNormal.setOnClickListener{
-            workType = 1
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_normal), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnLively.setOnClickListener{
-            workType = 2
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_lively), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnIntense.setOnClickListener{
-            workType = 3
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_intense), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (workType) {
-                -1 -> showMessage(getString(R.string.work_type_hint), promptsView, true)
-                else -> {
-
-                    val totalIntake = AppUtils.calculateIntake(
-                        SharedPreferencesManager.weight,
-                        workType,
-                        SharedPreferencesManager.weightUnit,
-                        SharedPreferencesManager.gender,
-                        SharedPreferencesManager.climate,0,
-                        SharedPreferencesManager.current_unitInt
-                    )
-                    val df = DecimalFormat("#")
-                    df.roundingMode = RoundingMode.CEILING
-                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
-
-                    sqliteHelper.updateTotalIntake(
-                        AppUtils.getCurrentOnlyDate()!!,
-                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            SharedPreferencesManager.new_unitInt)
-                    )
-                    SharedPreferencesManager.workType = workType
-                    SharedPreferencesManager.setWorkOut = true
-                    safeNavController?.safeNavigate(DrinkFragmentDirections
-                        .actionDrinkFragmentToSelfFragment())
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.work_type_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setClimate(){
-        var climate = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog5, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-
-        val btnCold = promptsView
-            .findViewById(R.id.btnCold) as LottieAnimationView
-        val btnFresh = promptsView
-            .findViewById(R.id.btnFresh) as LottieAnimationView
-        val btnMild = promptsView
-            .findViewById(R.id.btnMild) as LottieAnimationView
-        val btnTorrid = promptsView
-            .findViewById(R.id.btnTorrid) as LottieAnimationView
-
-
-        btnCold.setOnClickListener{
-            climate = 0
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_cold), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnFresh.setOnClickListener{
-            climate = 1
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_fresh), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnMild.setOnClickListener{
-            climate = 2
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_mild), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnTorrid.setOnClickListener{
-            climate = 3
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_torrid), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (climate) {
-                -1 -> showMessage(getString(R.string.climate_set_hint), promptsView, true)
-                else -> {
-                    val totalIntake = AppUtils.calculateIntake(
-                        SharedPreferencesManager.weight,
-                        SharedPreferencesManager.workType,
-                        SharedPreferencesManager.weightUnit,
-                        SharedPreferencesManager.gender,
-                        climate,0,
-                        SharedPreferencesManager.current_unitInt
-                    )
-                    val df = DecimalFormat("#")
-                    df.roundingMode = RoundingMode.CEILING
-                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
-
-                    sqliteHelper.updateTotalIntake(
-                        AppUtils.getCurrentOnlyDate()!!,
-                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            SharedPreferencesManager.new_unitInt)
-                    )
-                    SharedPreferencesManager.climate = climate
-                    SharedPreferencesManager.setClimate = true
-                    safeNavController?.safeNavigate(DrinkFragmentDirections
-                        .actionDrinkFragmentToSelfFragment())
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.climate_set_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+    private fun setValueMissed() {
+        startActivity(Intent(requireContext(), InitUserInfoMissedActivity::class.java))
+        requireActivity().finish()
     }
 
     private fun restoreDailyIntook() {

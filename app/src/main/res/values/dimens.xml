@@ -13,4 +13,5 @@
     <dimen name="textSize">15sp</dimen>
     <dimen name="editBalloonOverlayPadding">6dp</dimen>
     <dimen name="editBalloonOverlayRadius">11dp</dimen>
+    <bool name="isTablet">false</bool>
 </resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/bottomSheetParent"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+android:layout_marginBottom="8dp"
+android:background="@color/colorSecondaryDark"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+<TextView
+    android:id="@+id/textView7"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="64dp"
+    android:textColor="@color/colorWhite"
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="TextContrastCheck"
+    android:text="@string/enter_hour_input_title" />
+
+<Button
+    android:id="@+id/btnUpdate"
+    style="@android:style/Widget.Material.Button.Borderless"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginEnd="8dp"
+    android:drawableEnd="@drawable/ic_checked"
+    android:text="@string/update"
+    android:textColor="@color/colorWhite"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:ignore="TextContrastCheck"
+    tools:text="@string/update" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etWakeUpTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:theme="@style/TextInputLayoutAppearance"
+        app:layout_constraintEnd_toStartOf="@+id/etSleepTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/wakeup_hint"
+            android:inputType="numberSigned"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etSleepTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:theme="@style/TextInputLayoutAppearance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etWakeUpTime"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/sleeping_hint"
+            android:inputType="numberSigned"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            tools:ignore="KeyboardInaccessibleWidget,RtlSymmetry,TouchTargetSizeCheck,VisualLintTextFieldSize" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+<View
+    style="@style/DividerHorizontal"
+    android:id="@+id/view2"
+    android:layout_marginTop="16sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/etWakeUpTime" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
