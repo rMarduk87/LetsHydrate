@@ -22,6 +22,7 @@ fun Int.toMainTheme(): Int {
         1->return R.style.MainThemeD
         2->return R.style.MainThemeW
         3->return R.style.MainThemeG
+        4->return R.style.MainThemeB
     }
     return R.style.MainTheme
 }
@@ -32,6 +33,7 @@ fun Int.toAppTheme(): Int {
         1->return R.style.AppThemeD
         2->return R.style.AppThemeW
         3->return R.style.AppThemeG
+        4->return R.style.AppThemeB
     }
     return R.style.AppTheme
 }

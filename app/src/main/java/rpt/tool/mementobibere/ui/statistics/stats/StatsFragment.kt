@@ -368,6 +368,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> R.raw.cry_d
             2-> R.raw.cry_w
             3-> R.raw.cry_g
+            4-> R.raw.cry_b
             else -> R.raw.cry
         }
     }
@@ -539,6 +540,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
     private fun setThemeColor(): Int {
         when(themeInt){
             3-> return Color.parseColor("#FF6200EE")
+            4-> return Color.parseColor("#F6E000")
         }
         return Color.BLACK
     }
@@ -549,6 +551,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> return R.color.darkGreen
             2-> return R.color.colorSecondaryDarkW
             3-> return R.color.purple_500
+            4-> return R.color.bee
         }
         return R.color.colorSecondaryDark
     }
@@ -560,6 +563,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_dark)
             2-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_water)
             3-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_grape)
+            4-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_bee)
         }
         return requireContext().getDrawable(R.drawable.graph_fill_gradiant)
     }
@@ -570,7 +574,27 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorBlack))
+        binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.reports.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repWeekTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repMonthTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repReachedTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repDrinkFreqTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnShowRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnAddRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.monthOrYearTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.monthLabel.setTextColor(requireContext().getColor(R.color.bee))
+        binding.bubble.setImageDrawable(requireContext().getDrawable(R.drawable.ic_bubbles_b))
     }
 
     private fun toGrapeTheme() {

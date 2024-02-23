@@ -162,8 +162,11 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         else if(themeInt ==2){
             "#4167B2"
         }
-        else{
+        else if(themeInt ==3){
             "#FF6200EE"
+        }
+        else{
+            "#F6E000"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -216,7 +219,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         when(i.id) {
             R.id.icon_bell -> manageNotification()
             R.id.icon_info -> goToBottomInfo()
-            R.id.icon_curiosity -> goToBottomCuriosity()
+            R.id.icon_trophy -> goToThrophyList()
             R.id.icon_stats -> goToStatsActivity()
         }
     }
@@ -306,7 +309,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         SharedPreferencesManager.lastIntook = toFloat
     }
 
-    private fun goToBottomCuriosity() {
+    private fun goToThrophyList() {
         val li = LayoutInflater.from(requireContext())
         val promptsView = li.inflate(R.layout.custom_input_dialog3, null)
 
@@ -349,7 +352,24 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
+        binding.undoTV.setTextColor(resources.getColor(R.color.colorWhite))
+        binding.redoTV.setTextColor(resources.getColor(R.color.colorWhite))
+        binding.refreshTV.setTextColor(resources.getColor(R.color.colorWhite))
     }
 
     private fun toGrapeTheme() {
@@ -525,6 +545,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             when(SharedPreferencesManager.themeInt){
                 2->R.drawable.option_select_bg_w
                 3->R.drawable.option_select_bg_g
+                4->R.drawable.option_select_bg_b
                 else -> R.drawable.option_select_bg
             }
 

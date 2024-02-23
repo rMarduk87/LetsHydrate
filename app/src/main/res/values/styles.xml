@@ -88,6 +88,27 @@
         <item name="android:fontFamily">@font/kanit</item>
     </style>
 
+    <style name="AppThemeB" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowDisablePreview">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/bee</item>
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
+    <style name="MainThemeB" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="colorPrimary">@color/bee</item>
+        <item name="colorPrimaryDark">@color/bee</item>
+        <item name="colorAccent">@color/honey</item>
+        <item name="android:fontFamily">@font/kanit</item>
+    </style>
+
     <style name="ErrorText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/red</item>
         <item name="android:textSize">16sp</item>
@@ -191,5 +212,6 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
+
 
 </resources>

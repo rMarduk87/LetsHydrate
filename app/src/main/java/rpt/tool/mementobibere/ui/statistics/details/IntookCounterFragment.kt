@@ -72,10 +72,13 @@ class IntookCounterFragment :
         binding.waterLevelViewW!!.progressValue = intPercentage
         binding.waterLevelViewG!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewG!!.progressValue = intPercentage
+        binding.waterLevelViewB!!.centerTitle = "$intPercentage%"
+        binding.waterLevelViewB!!.progressValue = intPercentage
         binding.waterLevelViewL!!.setAnimDuration(3000)
         binding.waterLevelViewD!!.setAnimDuration(3000)
         binding.waterLevelViewW!!.setAnimDuration(3000)
         binding.waterLevelViewG!!.setAnimDuration(3000)
+        binding.waterLevelViewB!!.setAnimDuration(3000)
     }
 
     private fun setTopChart() {
@@ -199,6 +202,7 @@ class IntookCounterFragment :
             1->binding.chartDaily.barsColor = resources.getColor(R.color.darkGreen)
             2->binding.chartDaily.barsColor = resources.getColor(R.color.colorSecondaryW)
             3->binding.chartDaily.barsColor = resources.getColor(R.color.purple_500)
+            4->binding.chartDaily.barsColor = resources.getColor(R.color.bee)
         }
     }
 
@@ -258,7 +262,19 @@ class IntookCounterFragment :
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
+        binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.waterLevelViewL!!.visibility = View.GONE
+        binding.waterLevelViewD!!.visibility = View.GONE
+        binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.VISIBLE
+        setLayout(binding.waterLevelViewB.id)
     }
 
     private fun toGrapeTheme() {
@@ -267,6 +283,7 @@ class IntookCounterFragment :
         binding.waterLevelViewL!!.visibility = View.GONE
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.VISIBLE
         setLayout(binding.waterLevelViewG.id)
     }
@@ -278,6 +295,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.VISIBLE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewW.id)
     }
     private fun toDarkTheme() {
@@ -287,6 +305,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.VISIBLE
         binding.waterLevelViewW!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewD.id)
     }
     private fun toLightTheme() {
@@ -296,6 +315,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewL.id)
     }
 

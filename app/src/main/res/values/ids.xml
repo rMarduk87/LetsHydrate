@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="icon_bell" type="id" />
-    <item name="icon_curiosity" type="id" />
+    <item name="icon_trophy" type="id" />
     <item name="icon_info" type="id" />
     <item name="icon_stats" type="id" />
 
@@ -13,6 +13,7 @@
     <item name="icon_light" type="id"/>
     <item name="icon_water" type="id"/>
     <item name="icon_grape" type="id"/>
+    <item name="icon_bee" type="id"/>
 
     <item name="icon_oz_uk" type="id"/>
     <item name="icon_oz_us" type="id"/>
