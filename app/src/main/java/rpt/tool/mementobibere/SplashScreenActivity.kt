@@ -3,7 +3,6 @@ package rpt.tool.mementobibere
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -12,10 +11,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import rpt.tool.mementobibere.databinding.ActivitySplashScreenBinding
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.view.ViewUtils
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : LetsHydrateBaseActivity() {
+class SplashScreenActivity : AppCompatActivity() {
 
     private var time: Long = ANIMATION_TIME
     private val timeoutHandler = Handler()
@@ -60,6 +58,6 @@ class SplashScreenActivity : LetsHydrateBaseActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-        modifyOrentation()
+
     }
 }

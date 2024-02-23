@@ -6,7 +6,6 @@ import android.media.RingtoneManager
 import rpt.tool.mementobibere.Application
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 
 object SharedPreferencesManager {
     private val ctx: Context
@@ -54,23 +53,8 @@ object SharedPreferencesManager {
     var bloodDonorKey: Int
         get() = sharedPreferences.getInt(AppUtils.BLOOD_DONOR_KEY,0)
         set(value) = sharedPreferences.edit().putInt(AppUtils.BLOOD_DONOR_KEY, value).apply()
-
-    private fun getAndConvert(): Float {
-        return try {
-            sharedPreferences.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            val totalIntakeOld = sharedPreferences.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPreferences.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPreferences.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }
-    }
-
     var totalIntake: Float
-        get() = getAndConvert()
+        get() = sharedPreferences.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
         set(value) = sharedPreferences.edit().putFloat(AppUtils.TOTAL_INTAKE_KEY, value).apply()
     var firstRun: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.FIRST_RUN_KEY, true)

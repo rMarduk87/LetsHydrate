@@ -26,7 +26,7 @@ import rpt.tool.mementobibere.utils.log.w
 
 
 
-class MainActivity : LetsHydrateBaseActivity() {
+class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sharedPref: SharedPreferences
     private lateinit var appUpdateManager: AppUpdateManager
@@ -42,7 +42,6 @@ class MainActivity : LetsHydrateBaseActivity() {
         setContentView(binding.root)
         initPermissions()
         initInAppUpdate()
-        modifyOrentation()
     }
 
 

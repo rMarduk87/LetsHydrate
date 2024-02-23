@@ -10,18 +10,12 @@ import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonHighlightAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.overlay.BalloonOverlayRoundRect
-import rpt.tool.mementobibere.Application
 import rpt.tool.mementobibere.R
 
 @Keep
 class FirstHelpBalloonFactory : Balloon.Factory() {
-    private lateinit var _context:Context
 
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
-        _context = context
-        if(context==null){
-            _context = Application.instance
-        }
         return Balloon.Builder(context)
             .setText(context.getText(R.string.welcome))
             .setArrowSize(10)

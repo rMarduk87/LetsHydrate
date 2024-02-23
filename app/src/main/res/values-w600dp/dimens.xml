@@ -4,5 +4,4 @@
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
     <dimen name="recycler_view_item_icon_sizexxl">128dp</dimen>
-    <bool name="isTablet">true</bool>
 </resources>

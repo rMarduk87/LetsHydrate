@@ -18,9 +18,6 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".InitUserInfoMissedActivity"
-            android:exported="false" />
-        <activity
             android:name=".InitUserInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
