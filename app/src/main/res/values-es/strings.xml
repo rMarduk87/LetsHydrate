@@ -202,7 +202,7 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="woman">Mujer</string>
     <string name="gender">Elige tu género</string>
     <string name="info_label">INFORMACIÓN</string>
-    <string name="curiosity">Curiosidad</string>
+    <string name="trophy">Trofeos</string>
     <string name="reached_daily">Alcanzado diariamente</string>
     <string name="d_stats">Bevute Quotidiane</string>
     <string name="goal">Objetivo</string>
@@ -281,4 +281,5 @@ Si tiene alguna pregunta sobre esta Política de Privacidad, puede contactarnos:
     <string name="times">veces</string>
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
+    <string name="bee">Abejas</string>
 </resources>

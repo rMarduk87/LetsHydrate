@@ -59,15 +59,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
     private var themeInt: Int = 0
-    private var current_unitInt: Int = 0
-    private var new_unitInt: Int = 0
-    private var value_50: Float = 50f
-    private var value_100: Float = 100f
-    private var value_150: Float = 150f
-    private var value_200: Float = 200f
-    private var value_250: Float = 250f
-    private var value_300: Float = 300f
-    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private val firstHelpBalloon by balloon<FirstHelpBalloonFactory>()
     private val secondHelpBalloon by balloon<SecondHelpBalloonFactory>()
@@ -175,8 +166,11 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         else if(themeInt ==2){
             "#4167B2"
         }
-        else{
+        else if(themeInt ==3){
             "#FF6200EE"
+        }
+        else{
+            "#F6E000"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -223,12 +217,27 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     }
 
     private fun setBackGround() {
+        var themeInt = SharedPreferencesManager.themeInt
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toGrapeTheme() {
@@ -305,12 +314,13 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         totalIntake = SharedPreferencesManager.totalIntake
         setValueForDrinking()
 
-        var background = if(themeInt!=2){
-            R.drawable.option_select_bg
-        }
-        else{
-            R.drawable.option_select_bg_w
-        }
+        var background =
+            when(SharedPreferencesManager.themeInt){
+                2->R.drawable.option_select_bg_w
+                3->R.drawable.option_select_bg_g
+                4->R.drawable.option_select_bg_b
+                else -> R.drawable.option_select_bg
+            }
 
         outValue = TypedValue()
         requireContext().applicationContext.theme.resolveAttribute(

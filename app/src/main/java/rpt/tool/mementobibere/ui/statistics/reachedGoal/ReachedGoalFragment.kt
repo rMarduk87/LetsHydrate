@@ -70,7 +70,12 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
             1 -> toDarkTheme()
             2 -> toWaterTheme()
             3 -> toGrapeTheme()
+            4 -> toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
     }
 
     private fun toGrapeTheme() {

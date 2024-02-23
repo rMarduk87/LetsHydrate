@@ -356,28 +356,28 @@ class AppUtils {
         val listIds = arrayOf(
             R.id.icon_bell,
             R.id.icon_info,
-            R.id.icon_curiosity,
+            R.id.icon_trophy,
             R.id.icon_stats
         )
 
         val listIconNotify = arrayOf(
             R.drawable.ic_bell,
             R.drawable.ic_info,
-            R.drawable.ic_curiosity,
+            R.drawable.ic_trophy,
             R.drawable.ic_stats
         )
 
         val listStringNotify = arrayOf(
             R.string.notific,
             R.string.info,
-            R.string.curiosity,
+            R.string.trophy,
             R.string.stats
         )
 
         val listIconNotNotify = arrayOf(
             R.drawable.ic_bell_disabled,
             R.drawable.ic_info,
-            R.drawable.ic_curiosity,
+            R.drawable.ic_trophy,
             R.drawable.ic_stats
         )
 
@@ -392,14 +392,16 @@ class AppUtils {
             R.id.icon_light,
             R.id.icon_dark,
             R.id.icon_water,
-            R.id.icon_grape
+            R.id.icon_grape,
+            R.id.icon_bee
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
             R.drawable.ic_dark,
             R.drawable.ic_water,
-            R.drawable.ic_grape
+            R.drawable.ic_grape,
+            R.drawable.ic_bee
 
         )
 
@@ -407,7 +409,8 @@ class AppUtils {
             R.string.light,
             R.string.dark,
             R.string.water,
-            R.string.grape
+            R.string.grape,
+            R.string.bee
 
         )
 
@@ -471,20 +474,6 @@ class AppUtils {
             R.id.icon_daily,
             R.id.icon_intook,
             R.id.icon_reach
-        )
-
-        val listIconStats = arrayOf(
-            R.drawable.ic_stats,
-            R.drawable.ic_daily,
-            R.drawable.ic_intook,
-            R.drawable.ic_reached
-        )
-
-        val listStringStats = arrayOf(
-            R.string.all,
-            R.string.reached_daily,
-            R.string.intook,
-            R.string.reached
         )
 
         val listIdsSplash = arrayOf(

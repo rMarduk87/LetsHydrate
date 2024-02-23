@@ -198,7 +198,7 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="woman">Donna</string>
     <string name="gender">Scegli il tuo genere</string>
     <string name="info_label">INFORMAZIONI</string>
-    <string name="curiosity">Curiosità</string>
+    <string name="trophy">Trofei</string>
     <string name="reached_daily">Raggiunto giornalmente</string>
     <string name="d_stats">Bevute Quotidiane</string>
     <string name="goal">Obiettivo</string>
@@ -277,4 +277,5 @@ Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servi
     <string name="times">volte</string>
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
+    <string name="bee">Api</string>
 </resources>

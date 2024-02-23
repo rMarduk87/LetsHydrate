@@ -78,6 +78,7 @@ class ApplicationInfoFragment:
             1->"#29704D"
             2->"#6A91DE"
             3->"#FF6200EE"
+            4->"#F6E000"
             else -> {"#41B279"}
         }
 
@@ -478,7 +479,70 @@ class ApplicationInfoFragment:
             1-> toDarkTheme()
             2-> toWaterTheme()
             3-> toGrapeTheme()
+            4-> toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.etNotificationText.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etNotificationText.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.view.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view3.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view4.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view5.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view6.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view7.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.userInfo.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.etWeight.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWorkType.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etTarget.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWeight.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWorkType.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etTarget.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etClimate.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etClimate.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorBlack))
     }
 
     private fun toGrapeTheme() {
@@ -813,6 +877,7 @@ class ApplicationInfoFragment:
                 R.id.icon_dark -> themeInt = 1
                 R.id.icon_water -> themeInt = 2
                 R.id.icon_grape -> themeInt = 3
+                R.id.icon_bee -> themeInt = 4
             }
 
             setThemeToShared()
@@ -836,6 +901,7 @@ class ApplicationInfoFragment:
             1 -> menu.select(R.id.icon_dark)
             2 -> menu.select(R.id.icon_water)
             3 -> menu.select(R.id.icon_grape)
+            4 -> menu.select(R.id.icon_bee)
             else -> {
                 menu.select(R.id.icon_light)
                 themeInt = 0
@@ -972,6 +1038,7 @@ class ApplicationInfoFragment:
                 1->"#29704D"
                 2->"#6A91DE"
                 3->"#FF6200EE"
+                4->"#F6E000"
                 else -> {"#41B279"}
             }
             setLayout()
