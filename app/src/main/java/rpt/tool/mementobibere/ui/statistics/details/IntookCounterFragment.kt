@@ -18,23 +18,24 @@ import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
 class IntookCounterFragment :
     BaseFragment<IntookCounterStatsBottomSheetFragmentBinding>
         (IntookCounterStatsBottomSheetFragmentBinding::inflate),OnChartValueSelectedListener {
 
-    private lateinit var sharedPref: SharedPreferences
+
     private var themeInt : Int = 0
     private var unit : Int = 0
     private lateinit var sqliteHelper: SqliteHelper
     private var date : String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        date = sharedPref.getString(AppUtils.DATE,AppUtils.getCurrentDate()!!)!!
+
+        date = SharedPreferencesManager.date
+        unit = SharedPreferencesManager.current_unitInt
+        themeInt = SharedPreferencesManager.themeInt
         super.onViewCreated(view, savedInstanceState)
         setBackGround()
 
@@ -44,13 +45,13 @@ class IntookCounterFragment :
         val remaining = sqliteHelper.getTotalIntakeValue(date) - sqliteHelper.getIntook(date)
 
         if (remaining > 0) {
-            binding.remainingIntake!!.text = "$remaining " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
+            binding.remainingIntake!!.text = "$remaining " + SharedPreferencesManager.unitString
         } else {
-            binding.remainingIntake!!.text = "0 " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
+            binding.remainingIntake!!.text = "0 " + SharedPreferencesManager.unitString
         }
 
         binding.targetIntake!!.text = "${sqliteHelper.getTotalIntakeValue(date)
-        } " + sharedPref.getString(AppUtils.UNIT_STRING,"ml")
+        } " + SharedPreferencesManager.unitString
 
         val percentage = sqliteHelper.getIntook(date) * 100 / sqliteHelper.getTotalIntakeValue(date)
         val intPercentage = percentage.toInt()
@@ -59,7 +60,7 @@ class IntookCounterFragment :
 
         setTopChart()
         binding.textView60.text = requireContext().getString(R.string.intook_report) + " ("+
-                sharedPref.getString(AppUtils.UNIT_STRING,"ml") + ")"
+                SharedPreferencesManager.unitString + ")"
     }
 
     private fun startanimation(intPercentage: Int) {
@@ -71,10 +72,13 @@ class IntookCounterFragment :
         binding.waterLevelViewW!!.progressValue = intPercentage
         binding.waterLevelViewG!!.centerTitle = "$intPercentage%"
         binding.waterLevelViewG!!.progressValue = intPercentage
+        binding.waterLevelViewB!!.centerTitle = "$intPercentage%"
+        binding.waterLevelViewB!!.progressValue = intPercentage
         binding.waterLevelViewL!!.setAnimDuration(3000)
         binding.waterLevelViewD!!.setAnimDuration(3000)
         binding.waterLevelViewW!!.setAnimDuration(3000)
         binding.waterLevelViewG!!.setAnimDuration(3000)
+        binding.waterLevelViewB!!.setAnimDuration(3000)
     }
 
     private fun setTopChart() {
@@ -198,6 +202,7 @@ class IntookCounterFragment :
             1->binding.chartDaily.barsColor = resources.getColor(R.color.darkGreen)
             2->binding.chartDaily.barsColor = resources.getColor(R.color.colorSecondaryW)
             3->binding.chartDaily.barsColor = resources.getColor(R.color.purple_500)
+            4->binding.chartDaily.barsColor = resources.getColor(R.color.bee)
         }
     }
 
@@ -257,7 +262,19 @@ class IntookCounterFragment :
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
+        binding.textView8.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.waterLevelViewL!!.visibility = View.GONE
+        binding.waterLevelViewD!!.visibility = View.GONE
+        binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.VISIBLE
+        setLayout(binding.waterLevelViewB.id)
     }
 
     private fun toGrapeTheme() {
@@ -266,6 +283,7 @@ class IntookCounterFragment :
         binding.waterLevelViewL!!.visibility = View.GONE
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.VISIBLE
         setLayout(binding.waterLevelViewG.id)
     }
@@ -277,6 +295,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.VISIBLE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewW.id)
     }
     private fun toDarkTheme() {
@@ -286,6 +305,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.VISIBLE
         binding.waterLevelViewW!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewD.id)
     }
     private fun toLightTheme() {
@@ -295,6 +315,7 @@ class IntookCounterFragment :
         binding.waterLevelViewD!!.visibility = View.GONE
         binding.waterLevelViewW!!.visibility = View.GONE
         binding.waterLevelViewG!!.visibility = View.GONE
+        binding.waterLevelViewB!!.visibility = View.GONE
         setLayout(binding.waterLevelViewL.id)
     }
 

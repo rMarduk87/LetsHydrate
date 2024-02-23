@@ -39,6 +39,7 @@ import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toStats
 import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import java.text.SimpleDateFormat
@@ -48,7 +49,6 @@ import kotlin.math.max
 class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::inflate),
     CompoundButton.OnCheckedChangeListener {
 
-    private lateinit var sharedPref: SharedPreferences
     private var themeInt : Int = 0
     private var isMonth : Boolean = true
     private var indexMonth : Int = 0
@@ -65,11 +65,10 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        unit = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        themeInt = SharedPreferencesManager.themeInt
+        unit = SharedPreferencesManager.current_unitInt
         setBackGround()
-        if(sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)){
+        if(SharedPreferencesManager.setTips){
             binding.bubble.visibility = View.VISIBLE
             binding.se.visibility = View.VISIBLE
         }
@@ -87,9 +86,11 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         getDateList(AppUtils.START_DATE,AppUtils.getCurrentDate()!!,"MMM yyyy")!!
         listOfYears = AppUtils.
         getDateListForYear(AppUtils.START_DATE,AppUtils.getCurrentDate()!!,"yyyy")!!
-        isMonth = sharedPref.getBoolean(AppUtils.STAT_IS_MONTH_KEY,true)
-        indexMonth = sharedPref.getInt(AppUtils.INDEX_MONTH_KEY,listOfMonths.size -1)
-        indexYear = sharedPref.getInt(AppUtils.INDEX_YEAR_KEY,listOfYears.size -1)
+        isMonth = SharedPreferencesManager.isMonth
+        indexMonth = if(SharedPreferencesManager.indexMonth != -1){
+            SharedPreferencesManager.indexMonth }else{listOfMonths.size-1}
+        indexYear = if(SharedPreferencesManager.indexYear != -1){
+            SharedPreferencesManager.indexYear }else{listOfYears.size-1}
 
         if(isMonth){
             binding.monthOrYearTV.text = listOfMonths[indexMonth].text
@@ -211,7 +212,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
 
             val sqliteHelper = SqliteHelper(requireContext())
 
-            val unit = AppUtils.calculateExtensions(sharedPref.getInt(AppUtils.UNIT_KEY, 0))
+            val unit = AppUtils.calculateExtensions(SharedPreferencesManager.current_unitInt)
 
             var value = 0f
             if(!TextUtils.isEmpty(userIputQta.editText!!.text.toString())){
@@ -224,23 +225,18 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                     TextUtils.isEmpty(userInput.editText!!.text.toString()) ->
                         showError(getString(R.string.please_input_a_valid_date))
 
-                    value != 0f && value < sharedPref.getFloat(
-                        AppUtils.TOTAL_INTAKE_KEY, 0f
-                    ) -> showError(
+                    value != 0f && value < SharedPreferencesManager.totalIntake -> showError(
                         "${getString(R.string.please_enter_a_quantity_at_least_equal_to)} "
-                                + sharedPref.getFloat(
-                        AppUtils.TOTAL_INTAKE_KEY, 0f
-                    ) + " " + AppUtils.calculateExtensions(
-                            sharedPref.getInt(AppUtils.UNIT_KEY,0)))
+                                + SharedPreferencesManager.totalIntake +
+                                " " + AppUtils.calculateExtensions(
+                            SharedPreferencesManager.current_unitInt))
 
                     else -> {
 
                         var qta =  if(value != 0f){
                             value
                         }else{
-                            sharedPref.getFloat(
-                                AppUtils.TOTAL_INTAKE_KEY, 0f
-                            )
+                            SharedPreferencesManager.totalIntake
                         }
 
                         sqliteHelper.addReachedGoal(
@@ -248,8 +244,8 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
                         )
                         sqliteHelper.addAll(
                             userInput.editText!!.text.toString(),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f),
-                            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f),unit,
+                            SharedPreferencesManager.totalIntake,
+                            SharedPreferencesManager.totalIntake,unit,
                             userInput.editText!!.text.toString().toMonth(),
                             userInput.editText!!.text.toString().toYear()
                         )
@@ -302,11 +298,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         weekAverage = sumWeek/7
         binding.weekAverageTV.text = "${weekAverage.toNumberString()} ${
             AppUtils.calculateExtensions(
-                sharedPref.getInt(
-                    AppUtils.UNIT_KEY,
-                    0
-                )
-            )
+                SharedPreferencesManager.current_unitInt)
         } / ${requireContext().getString(R.string.day)}"
 
         var sumMonth = 0f
@@ -322,12 +314,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         monthAverage = sumMonth/AppUtils.getTotalDays(AppUtils.getCurrentDate()!!.toMonth(),
             AppUtils.getCurrentDate()!!.toYear())
         binding.monthAverageTV.text = "${monthAverage.toNumberString()} ${
-            AppUtils.calculateExtensions(
-                sharedPref.getInt(
-                    AppUtils.UNIT_KEY,
-                    0
-                )
-            )
+            AppUtils.calculateExtensions(SharedPreferencesManager.current_unitInt)
         } / ${requireContext().getString(R.string.day)}"
 
         var percentage = 0f
@@ -381,14 +368,13 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> R.raw.cry_d
             2-> R.raw.cry_w
             3-> R.raw.cry_g
+            4-> R.raw.cry_b
             else -> R.raw.cry
         }
     }
 
     private fun putDate(date: String) {
-        val editor = sharedPref.edit()
-        editor.putString(AppUtils.DATE, date)
-        editor.apply()
+        SharedPreferencesManager.date = date
     }
 
     private fun setForwardMonth() {
@@ -554,6 +540,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
     private fun setThemeColor(): Int {
         when(themeInt){
             3-> return Color.parseColor("#FF6200EE")
+            4-> return Color.parseColor("#F6E000")
         }
         return Color.BLACK
     }
@@ -564,6 +551,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> return R.color.darkGreen
             2-> return R.color.colorSecondaryDarkW
             3-> return R.color.purple_500
+            4-> return R.color.bee
         }
         return R.color.colorSecondaryDark
     }
@@ -575,6 +563,7 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_dark)
             2-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_water)
             3-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_grape)
+            4-> return requireContext().getDrawable(R.drawable.graph_fill_gradiant_bee)
         }
         return requireContext().getDrawable(R.drawable.graph_fill_gradiant)
     }
@@ -585,7 +574,27 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorBlack))
+        binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.reports.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repWeekTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repMonthTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repReachedTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.repDrinkFreqTV.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnShowRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.btnAddRecord.setTextColor(requireContext().getColor(R.color.colorWhite))
+        binding.monthOrYearTV.setTextColor(requireContext().getColor(R.color.bee))
+        binding.monthLabel.setTextColor(requireContext().getColor(R.color.bee))
+        binding.bubble.setImageDrawable(requireContext().getDrawable(R.drawable.ic_bubbles_b))
     }
 
     private fun toGrapeTheme() {
@@ -658,21 +667,18 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         }
 
         isMonth = checked
-
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.INDEX_MONTH_KEY,indexMonth)
-        editor.putInt(AppUtils.INDEX_YEAR_KEY,indexYear)
-        editor.putBoolean(AppUtils.STAT_IS_MONTH_KEY,isMonth)
-        editor.apply()
+        SharedPreferencesManager.indexMonth = indexMonth
+        SharedPreferencesManager.indexYear = indexYear
+        SharedPreferencesManager.isMonth = isMonth
 
         binding.monthLabel.text = text
         if(isMonth){
-            indexMonth = sharedPref.getInt(AppUtils.INDEX_MONTH_KEY,listOfMonths.size -1)
+            indexMonth = SharedPreferencesManager.indexMonth
             binding.monthOrYearTV.text = listOfMonths[indexMonth].text
             //binding.monthSwitch.isChecked = !checked
         }
         else{
-            indexYear = sharedPref.getInt(AppUtils.INDEX_YEAR_KEY,listOfYears.size -1)
+            indexYear = SharedPreferencesManager.indexYear
             binding.monthOrYearTV.text = listOfYears[indexYear]
             //binding.monthSwitch.isChecked = checked
         }

@@ -198,7 +198,7 @@
     <string name="woman">Frau</string>
     <string name="gender">Wählen Sie Ihr Geschlecht</string>
     <string name="info_label">INFORMATIONEN</string>
-    <string name="curiosity">Neugier</string>
+    <string name="trophy">Trophäen</string>
     <string name="reached_daily">Täglich erreicht</string>
     <string name="d_stats">Tägliches Trinken</string>
     <string name="goal">Ziel</string>
@@ -277,4 +277,5 @@
     <string name="times">mal</string>
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
+    <string name="bee">Bienen</string>
 </resources>

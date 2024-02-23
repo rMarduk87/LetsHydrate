@@ -173,7 +173,7 @@
     <string name="woman">Woman</string>
     <string name="gender">Choose your gender</string>
     <string name="info_label">INFORMATION</string>
-    <string name="curiosity">Curiosity</string>
+    <string name="trophy">Trophy</string>
     <string name="reached_daily">Reached Daily</string>
     <string name="d_stats">Daily Drink</string>
     <string name="goal">Goal</string>
@@ -252,5 +252,6 @@
     <string name="times">times</string>
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
+    <string name="bee">Bee</string>
 
 </resources>

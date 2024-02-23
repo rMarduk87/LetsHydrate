@@ -10,6 +10,7 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.SelectWeightBottomSheetFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalculateWeight
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -18,33 +19,30 @@ class SelectWeightBottomSheetFragment:
 
     private var themeInt: Int = 0
     private var weightUnit : Int = 0
-    private lateinit var sharedPref: SharedPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
+        themeInt = SharedPreferencesManager.themeInt
         initBottomBars()
         setBackGround()
         binding.btnUpdate.setOnClickListener {
 
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.WEIGHT_UNIT_KEY,weightUnit)
-            val weight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0).toCalculateWeight(weightUnit)
-            editor.putInt(AppUtils.WEIGHT_KEY,weight)
+            SharedPreferencesManager.weightUnit = weightUnit
+            val weight = SharedPreferencesManager.weight.toCalculateWeight(weightUnit)
+            SharedPreferencesManager.weight = weight
             val totalIntake = AppUtils.calculateIntake(
                 weight,
-                sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0),
+                SharedPreferencesManager.workType,
                 weightUnit,
-                sharedPref.getInt(AppUtils.GENDER_KEY, 0),
-                sharedPref.getInt(AppUtils.CLIMATE_KEY, 0),0,
-                sharedPref.getInt(AppUtils.UNIT_KEY,0)
+                SharedPreferencesManager.gender,
+                SharedPreferencesManager.climate,
+                SharedPreferencesManager.current_unitInt,
+                SharedPreferencesManager.new_unitInt
             )
             val df = DecimalFormat("#")
             df.roundingMode = RoundingMode.CEILING
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
-            editor.putBoolean(AppUtils.SET_WEIGHT_UNIT,true)
-            editor.apply()
+            SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
+            SharedPreferencesManager.setWeight = true
             dismiss()
         }
 
@@ -60,8 +58,11 @@ class SelectWeightBottomSheetFragment:
         else if(themeInt ==2){
             "#4167B2"
         }
-        else{
+        else if(themeInt ==3){
             "#FF6200EE"
+        }
+        else{
+            "#F6E000"
         }
         val menu = binding.weightSystemBottomBar.menu
 
@@ -94,9 +95,7 @@ class SelectWeightBottomSheetFragment:
     }
 
     private fun setWeightUnit() {
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.WEIGHT_UNIT_KEY,weightUnit)
-        editor.apply()
+        SharedPreferencesManager.weightUnit = weightUnit
     }
 
     private fun setBackGround() {
@@ -105,7 +104,17 @@ class SelectWeightBottomSheetFragment:
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.view2.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.gray)
     }
 
     private fun toGrapeTheme() {

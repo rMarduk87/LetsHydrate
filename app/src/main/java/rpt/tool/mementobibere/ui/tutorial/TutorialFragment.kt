@@ -1,6 +1,7 @@
 package rpt.tool.mementobibere.ui.tutorial
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
@@ -19,7 +20,9 @@ import com.skydoves.balloon.balloon
 import github.com.st235.lib_expandablebottombar.Menu
 import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.R
+import rpt.tool.mementobibere.WalkThroughtActivity
 import rpt.tool.mementobibere.databinding.TutorialFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
@@ -35,6 +38,7 @@ import rpt.tool.mementobibere.utils.extensions.toExtractFloat
 import rpt.tool.mementobibere.utils.extensions.toMainTheme
 import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 
@@ -55,15 +59,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private var selectedOption: Float? = null
     private var snackbar: Snackbar? = null
     private var themeInt: Int = 0
-    private var current_unitInt: Int = 0
-    private var new_unitInt: Int = 0
-    private var value_50: Float = 50f
-    private var value_100: Float = 100f
-    private var value_150: Float = 150f
-    private var value_200: Float = 200f
-    private var value_250: Float = 250f
-    private var value_300: Float = 300f
-    private var value_350: Float = 350f
     private var btnSelected: Int? = null
     private val firstHelpBalloon by balloon<FirstHelpBalloonFactory>()
     private val secondHelpBalloon by balloon<SecondHelpBalloonFactory>()
@@ -74,17 +69,6 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     private val seventhHelpBalloon by balloon<SeventhHelpBalloonFactory>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
-        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
-        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
-        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
-        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
-        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
-        value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
-        value_350 = sharedPref.getFloat(AppUtils.VALUE_350_KEY,350f)
         sqliteHelper = SqliteHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
         setTheme()
@@ -97,12 +81,12 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
 
         setBackGround()
 
-        if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
+        if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = View.VISIBLE
             binding.calendarAvisHelp!!.visibility = View.VISIBLE
         }
-        else if(sharedPref.getInt(AppUtils.BLOOD_DONOR_KEY,0)==1 &&
+        else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(dateNow)){
             binding.calendarAvis.visibility = View.VISIBLE
             binding.infoAvis!!.visibility = View.VISIBLE
@@ -114,21 +98,21 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.calendarAvisHelp!!.visibility = View.GONE
         }
 
-        totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
+        totalIntake = SharedPreferencesManager.totalIntake
+
+        if (SharedPreferencesManager.firstRun) {
+            startActivity(Intent(requireContext(), WalkThroughtActivity::class.java))
+            requireActivity().finish()
+        } else if (totalIntake <= 0) {
+            startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
+            requireActivity().finish()
         }
 
         viewWindow = requireActivity().window.decorView.findViewById<View>(android.R.id.content)
         initBottomBar()
-        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
+            SharedPreferencesManager.value_300 =  AppUtils.firstConversion(300f,
+                SharedPreferencesManager.new_unitInt)
             initIntookValue()
             setValueForDrinking()
         }
@@ -152,14 +136,14 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     }
 
     private fun initIntookValue() {
-        unit = AppUtils.calculateExtensions(current_unitInt)
-        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${value_300.toNumberString()} $unit"
-        binding.ml350!!.text = "${value_350.toNumberString()} $unit"
+        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
+        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
+        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
     }
 
     private fun initBottomBar() {
@@ -182,8 +166,11 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
         else if(themeInt ==2){
             "#4167B2"
         }
-        else{
+        else if(themeInt ==3){
             "#FF6200EE"
+        }
+        else{
+            "#F6E000"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -230,12 +217,27 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     }
 
     private fun setBackGround() {
+        var themeInt = SharedPreferencesManager.themeInt
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
             2->toWaterTheme()
             3->toGrapeTheme()
+            4->toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
+        if(sqliteHelper.getAvisDay(dateNow)){
+            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
+            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+        }
+        else{
+            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
+            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
+        }
+        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
     }
 
     private fun toGrapeTheme() {
@@ -309,26 +311,16 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
         }
 
-        totalIntake = try {
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-        }catch (ex:Exception){
-            var totalIntakeOld = sharedPref.getInt(AppUtils.TOTAL_INTAKE_KEY,0)
-            val editor = sharedPref.edit()
-            editor.remove(AppUtils.TOTAL_INTAKE_KEY)
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY,totalIntakeOld.toFloat())
-            editor.apply()
-            sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f)
-                .toCalculatedValue(current_unitInt,new_unitInt)
-        }
-
+        totalIntake = SharedPreferencesManager.totalIntake
         setValueForDrinking()
 
-        var background = if(themeInt!=2){
-            R.drawable.option_select_bg
-        }
-        else{
-            R.drawable.option_select_bg_w
-        }
+        var background =
+            when(SharedPreferencesManager.themeInt){
+                2->R.drawable.option_select_bg_w
+                3->R.drawable.option_select_bg_g
+                4->R.drawable.option_select_bg_b
+                else -> R.drawable.option_select_bg
+            }
 
         outValue = TypedValue()
         requireContext().applicationContext.theme.resolveAttribute(
@@ -337,7 +329,7 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
             true
         )
 
-        if (!sharedPref.getBoolean(AppUtils.FIRST_RUN_KEY, true) || totalIntake > 0) {
+        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
             setValueForDrinking()
         }
 
@@ -492,14 +484,8 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     override fun onResume() {
         super.onResume()
 
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        current_unitInt = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        new_unitInt = sharedPref.getInt(AppUtils.UNIT_NEW_KEY,0)
         setTheme()
         setBackGround()
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.UNIT_KEY,new_unitInt)
-        editor.apply()
     }
 
 
@@ -533,19 +519,14 @@ class TutorialFragment : BaseFragment<TutorialFragmentBinding>(TutorialFragmentB
     }
 
     private fun setValueForDrinking() {
-        unit = AppUtils.calculateExtensions(new_unitInt)
-        value_50 = sharedPref.getFloat(AppUtils.VALUE_50_KEY,50f)
-        value_100 = sharedPref.getFloat(AppUtils.VALUE_100_KEY,100f)
-        value_150 = sharedPref.getFloat(AppUtils.VALUE_150_KEY,150f)
-        value_200 = sharedPref.getFloat(AppUtils.VALUE_200_KEY,200f)
-        value_250 = sharedPref.getFloat(AppUtils.VALUE_250_KEY,250f)
-        value_300 = sharedPref.getFloat(AppUtils.VALUE_300_KEY,300f)
-        binding.ml50!!.text = "${value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${value_300.toNumberString()} $unit"
+        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
+        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
+        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
+        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
+        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
+        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
+        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
+        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
         binding.tvTotalIntake!!.text = "/" +totalIntake.toNumberString() + " " + "$unit"
     }
 }

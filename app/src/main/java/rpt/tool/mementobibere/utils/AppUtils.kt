@@ -303,12 +303,12 @@ class AppUtils {
             return 0
         }
 
+        val PRIVATE_MODE = 0
 
         const val UNIT_KEY: String = "current_unit"
         const val UNIT_NEW_KEY: String = "new_unit"
         const val THEME_KEY: String = "theme"
         const val USERS_SHARED_PREF = "user_pref"
-        val PRIVATE_MODE = 0
         const val WEIGHT_KEY = "weight"
         const val WORK_TIME_KEY = "worktime"
         const val TOTAL_INTAKE_KEY = "totalintake"
@@ -317,8 +317,6 @@ class AppUtils {
         const val NOTIFICATION_MSG_KEY = "notificationmsg"
         const val SLEEPING_TIME_KEY = "sleepingtime"
         const val WAKEUP_TIME_KEY = "wakeuptime"
-        const val START_TIME_KEY = "starttime"
-        const val STOP_TIME_KEY = "stoptime"
         const val NOTIFICATION_TONE_URI_KEY = "notificationtone"
         const val FIRST_RUN_KEY = "firstrun"
         const val VALUE_50_KEY = "50"
@@ -350,7 +348,6 @@ class AppUtils {
         const val INDEX_MONTH_KEY : String = "month"
         const val INDEX_YEAR_KEY : String = "year"
         const val DATE : String = "date"
-        const val FIRST_STATS_KEY : String = "stats"
 
         enum class TypeMessage {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
@@ -359,28 +356,28 @@ class AppUtils {
         val listIds = arrayOf(
             R.id.icon_bell,
             R.id.icon_info,
-            R.id.icon_curiosity,
+            R.id.icon_trophy,
             R.id.icon_stats
         )
 
         val listIconNotify = arrayOf(
             R.drawable.ic_bell,
             R.drawable.ic_info,
-            R.drawable.ic_curiosity,
+            R.drawable.ic_trophy,
             R.drawable.ic_stats
         )
 
         val listStringNotify = arrayOf(
             R.string.notific,
             R.string.info,
-            R.string.curiosity,
+            R.string.trophy,
             R.string.stats
         )
 
         val listIconNotNotify = arrayOf(
             R.drawable.ic_bell_disabled,
             R.drawable.ic_info,
-            R.drawable.ic_curiosity,
+            R.drawable.ic_trophy,
             R.drawable.ic_stats
         )
 
@@ -395,14 +392,16 @@ class AppUtils {
             R.id.icon_light,
             R.id.icon_dark,
             R.id.icon_water,
-            R.id.icon_grape
+            R.id.icon_grape,
+            R.id.icon_bee
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
             R.drawable.ic_dark,
             R.drawable.ic_water,
-            R.drawable.ic_grape
+            R.drawable.ic_grape,
+            R.drawable.ic_bee
 
         )
 
@@ -410,7 +409,8 @@ class AppUtils {
             R.string.light,
             R.string.dark,
             R.string.water,
-            R.string.grape
+            R.string.grape,
+            R.string.bee
 
         )
 
@@ -474,20 +474,6 @@ class AppUtils {
             R.id.icon_daily,
             R.id.icon_intook,
             R.id.icon_reach
-        )
-
-        val listIconStats = arrayOf(
-            R.drawable.ic_stats,
-            R.drawable.ic_daily,
-            R.drawable.ic_intook,
-            R.drawable.ic_reached
-        )
-
-        val listStringStats = arrayOf(
-            R.string.all,
-            R.string.reached_daily,
-            R.string.intook,
-            R.string.reached
         )
 
         val listIdsSplash = arrayOf(

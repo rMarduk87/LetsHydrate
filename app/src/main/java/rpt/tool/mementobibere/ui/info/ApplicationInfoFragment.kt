@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
@@ -30,6 +29,7 @@ import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toYear
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import java.math.RoundingMode
@@ -45,8 +45,7 @@ class ApplicationInfoFragment:
     private var inTook: Float = 0f
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var principal : PartialPrincipalInfoBinding
-    private lateinit var sharedPref: SharedPreferences
-    private var themeInt : Int = 0
+
     private var unitBottomBar : Int = 0
     private var currentToneUri: String? = ""
     private var notificMsg: String = ""
@@ -66,26 +65,20 @@ class ApplicationInfoFragment:
     private var genderChoiceOld : Int = -1
     private var climate: Int = -1
     private var climateOld: Int = -1
+    private var themeInt: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        sharedPref = requireActivity().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        oldWeight = sharedPref.getInt(AppUtils.WEIGHT_KEY, 0)
-        oldWorkTime = sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0)
-        unitIntUsed = sharedPref.getInt(AppUtils.UNIT_KEY,0)
-        weightUnit = sharedPref.getInt(AppUtils.WEIGHT_UNIT_KEY,0)
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
-        genderChoiceOld = sharedPref.getInt(AppUtils.GENDER_KEY, -1)
-        climateOld = sharedPref.getInt(AppUtils.CLIMATE_KEY, -1)
+
         super.onViewCreated(view, savedInstanceState)
         principal = PartialPrincipalInfoBinding.bind(binding.root)
         val htmlLegacy = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
 
-        stringColor = when(themeInt){
+        stringColor = when(SharedPreferencesManager.themeInt){
             0->"#41B279"
             1->"#29704D"
             2->"#6A91DE"
             3->"#FF6200EE"
+            4->"#F6E000"
             else -> {"#41B279"}
         }
 
@@ -102,16 +95,10 @@ class ApplicationInfoFragment:
         }
 
         binding.principal.etNotificationText.editText!!.setText(
-            sharedPref.getString(
-                AppUtils.NOTIFICATION_MSG_KEY,
-                getString(R.string.hey_lets_drink_some_water)
-            )
+            SharedPreferencesManager.notificationMsg
         )
 
-        currentToneUri = sharedPref.getString(
-            AppUtils.NOTIFICATION_TONE_URI_KEY,
-            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION).toString()
-        )
+        currentToneUri = SharedPreferencesManager.notificationTone
 
         binding.principal.etRingtone.editText!!.setText(
             RingtoneManager.getRingtone(
@@ -132,16 +119,6 @@ class ApplicationInfoFragment:
             intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentToneUri)
             startActivityForResult(intent, 999)
         }
-        val editor = sharedPref.edit()
-
-        if(sharedPref.contains(AppUtils.START_TIME_KEY)){
-            editor.remove(AppUtils.START_TIME_KEY)
-        }
-
-        if(sharedPref.contains(AppUtils.STOP_TIME_KEY)){
-            editor.remove(AppUtils.STOP_TIME_KEY)
-        }
-        editor.apply()
 
         manageUserInfo()
 
@@ -152,10 +129,8 @@ class ApplicationInfoFragment:
                 showMessage(getString(R.string.please_a_notification_message), it, true)
             }
             else{
-                val editor = sharedPref.edit()
-                editor.putString(AppUtils.NOTIFICATION_MSG_KEY, notificMsg)
-                editor.putString(AppUtils.NOTIFICATION_TONE_URI_KEY,currentToneUri.toString())
-                editor.apply()
+                SharedPreferencesManager.notificationMsg = notificMsg
+                SharedPreferencesManager.notificationTone = currentToneUri.toString()
                 saveUserInfo()
                 safeNavController?.safeNavigate(
                     ApplicationInfoFragmentDirections.actionInfoFragmentToDrinkFragment())
@@ -168,7 +143,6 @@ class ApplicationInfoFragment:
         weight = binding.principal.etWeight.editText!!.text.toString()
         customTarget = binding.principal.etTarget.editText!!.text.toString()
 
-        val editor = sharedPref.edit()
 
         if(genderChoice==-1){
             showMessage(getString(R.string.gender_hint))
@@ -184,9 +158,7 @@ class ApplicationInfoFragment:
             )
             val df = DecimalFormat("#")
             df.roundingMode = RoundingMode.CEILING
-            editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, df.format(totalIntake).toFloat())
-
-            editor.apply()
+            SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
 
             sqliteHelper.updateTotalIntake(
                 AppUtils.getCurrentOnlyDate()!!,
@@ -205,16 +177,16 @@ class ApplicationInfoFragment:
                 showMessage(getString(R.string.please_input_a_valid_rest_time))
             else -> {
 
-                editor.putInt(AppUtils.WEIGHT_KEY, weight.toInt())
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
-                editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
-                editor.putInt(AppUtils.GENDER_KEY,genderChoice)
-                editor.putInt(AppUtils.CLIMATE_KEY,climate)
+                SharedPreferencesManager.weight = weight.toInt()
+                SharedPreferencesManager.workType = workType
+                SharedPreferencesManager.wakeUpTime = wakeupTime
+                SharedPreferencesManager.sleepingTime = sleepingTime
+                SharedPreferencesManager.gender = genderChoice
+                SharedPreferencesManager.climate = climate
 
                 if (currentTarget != customTarget.toFloat()
                     .toCalculatedValue(unitIntUsed,unitBottomBar) && !recalculated) {
-                    editor.putFloat(AppUtils.TOTAL_INTAKE_KEY, customTarget.toFloat())
+                    SharedPreferencesManager.totalIntake = customTarget.toFloat()
 
                     sqliteHelper.updateTotalIntake(
                         AppUtils.getCurrentOnlyDate()!!,
@@ -222,8 +194,7 @@ class ApplicationInfoFragment:
                     )
                 }
 
-                editor.putBoolean(AppUtils.NO_UPDATE_UNIT,true)
-                editor.apply()
+                SharedPreferencesManager.noUpdateUnit = true
 
                 Toast.makeText(requireContext(), getString(R.string.values_updated_successfully), Toast.LENGTH_SHORT).show()
                 var alarm = AlarmHelper()
@@ -236,10 +207,10 @@ class ApplicationInfoFragment:
         val is24h = android.text.format.DateFormat.is24HourFormat(requireContext())
 
 
-        binding.principal.etWeight.editText!!.setText("" + sharedPref.getInt(AppUtils.WEIGHT_KEY, 0))
-        binding.principal.etTarget.editText!!.setText("" + sharedPref.getFloat(AppUtils.TOTAL_INTAKE_KEY, 0f).toNumberString())
+        binding.principal.etWeight.editText!!.setText("" + SharedPreferencesManager.weight)
+        binding.principal.etTarget.editText!!.setText("" + SharedPreferencesManager.totalIntake.toNumberString())
 
-        workType = sharedPref.getInt(AppUtils.WORK_TIME_KEY, 0)
+        workType = SharedPreferencesManager.workType
 
         var text = when(workType){
             0->getString(R.string.calm)
@@ -251,7 +222,7 @@ class ApplicationInfoFragment:
 
         binding.principal.etWorkType.editText!!.setText(text)
 
-        climate = sharedPref.getInt(AppUtils.CLIMATE_KEY, -1)
+        climate = SharedPreferencesManager.climate
 
         var textC = when(climate){
             0->getString(R.string.cold)
@@ -271,8 +242,8 @@ class ApplicationInfoFragment:
         }
 
 
-        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY, 1558323000000)
-        sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
+        wakeupTime = SharedPreferencesManager.wakeUpTime
+        sleepingTime = SharedPreferencesManager.sleepingTime
         val cal = Calendar.getInstance()
         cal.timeInMillis = wakeupTime
         binding.principal.etWakeUpTime.editText!!.setText(
@@ -336,7 +307,7 @@ class ApplicationInfoFragment:
             mTimePicker.show()
         }
 
-        genderChoice = sharedPref.getInt(AppUtils.GENDER_KEY,-1)
+        genderChoice = SharedPreferencesManager.gender
         when(genderChoice){
             0->{
                 binding.principal.textView18.text = " (" + getString(R.string.man) + ")"
@@ -384,33 +355,25 @@ class ApplicationInfoFragment:
 
             btnCalm.setOnClickListener{
                 workType = 0
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(getString(R.string.you_selected_calm),false)
             }
 
             btnNormal.setOnClickListener{
                 workType = 1
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(getString(R.string.you_selected_normal),false)
             }
 
             btnLively.setOnClickListener{
                 workType = 2
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(getString(R.string.you_selected_lively),false)
             }
 
             btnIntense.setOnClickListener{
                 workType = 3
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.WORK_TIME_KEY, workType)
-                editor.apply()
+                SharedPreferencesManager.workType = workType
                 showMessage(getString(R.string.you_selected_intense),false)
             }
 
@@ -457,33 +420,25 @@ class ApplicationInfoFragment:
 
             btnCold.setOnClickListener{
                 climate = 0
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(getString(R.string.you_selected_cold),false)
             }
 
             btnFresh.setOnClickListener{
                 climate = 1
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(getString(R.string.you_selected_fresh),false)
             }
 
             btnMild.setOnClickListener{
                 climate = 2
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(getString(R.string.you_selected_mild),false)
             }
 
             btnTorrid.setOnClickListener{
                 climate = 3
-                val editor = sharedPref.edit()
-                editor.putInt(AppUtils.CLIMATE_KEY, climate)
-                editor.apply()
+                SharedPreferencesManager.climate = climate
                 showMessage(getString(R.string.you_selected_torrid),false)
             }
 
@@ -519,12 +474,75 @@ class ApplicationInfoFragment:
 
     private fun setLayout() {
 
-        when(themeInt){
+        when(SharedPreferencesManager.themeInt){
             0-> toLightTheme()
             1-> toDarkTheme()
             2-> toWaterTheme()
             3-> toGrapeTheme()
+            4-> toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.etNotificationText.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etNotificationText.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etRingtone.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etPrivacy.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.view.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view3.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view4.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view5.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view6.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.view7.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.userInfo.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.etWeight.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWorkType.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etTarget.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWeight.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWorkType.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etTarget.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etClimate.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.etClimate.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
+        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorBlack))
     }
 
     private fun toGrapeTheme() {
@@ -859,6 +877,7 @@ class ApplicationInfoFragment:
                 R.id.icon_dark -> themeInt = 1
                 R.id.icon_water -> themeInt = 2
                 R.id.icon_grape -> themeInt = 3
+                R.id.icon_bee -> themeInt = 4
             }
 
             setThemeToShared()
@@ -882,13 +901,14 @@ class ApplicationInfoFragment:
             1 -> menu.select(R.id.icon_dark)
             2 -> menu.select(R.id.icon_water)
             3 -> menu.select(R.id.icon_grape)
+            4 -> menu.select(R.id.icon_bee)
             else -> {
                 menu.select(R.id.icon_light)
                 themeInt = 0
             }
         }
 
-        unitBottomBar = sharedPref.getInt(AppUtils.UNIT_KEY,0)
+        unitBottomBar = SharedPreferencesManager.current_unitInt
 
         when (unitBottomBar) {
             0 -> menu2.select(R.id.icon_ml)
@@ -900,7 +920,7 @@ class ApplicationInfoFragment:
             }
         }
 
-        notificFrequency = sharedPref.getInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, 30)
+        notificFrequency = SharedPreferencesManager.notificationFreq.toInt()
         when (notificFrequency) {
             30 -> menu3.select(R.id.icon_30)
             45 -> menu3.select(R.id.icon_45)
@@ -917,10 +937,10 @@ class ApplicationInfoFragment:
                 R.id.icon_45 -> notificFrequency = 45
                 R.id.icon_60 -> notificFrequency = 60
             }
-            sharedPref.edit().putInt(AppUtils.NOTIFICATION_FREQUENCY_KEY, notificFrequency).apply()
+            SharedPreferencesManager.notificationFreq = notificFrequency.toFloat()
         }
 
-        splash = sharedPref.getBoolean(AppUtils.SEE_SPLASH_KEY,true)
+        splash = SharedPreferencesManager.showSplashScreen
 
         when (splash) {
             true -> menu4.select(R.id.icon_on)
@@ -937,7 +957,7 @@ class ApplicationInfoFragment:
 
         }
 
-        tips = sharedPref.getBoolean(AppUtils.SEE_TIPS_KEY,true)
+        tips = SharedPreferencesManager.setTips
 
         when (tips) {
             true -> menu5.select(R.id.tips_on)
@@ -956,30 +976,25 @@ class ApplicationInfoFragment:
     }
 
     private fun setTips() {
-        val editor = sharedPref.edit()
-        editor.putBoolean(AppUtils.SEE_TIPS_KEY, splash)
-        editor.apply()
+        SharedPreferencesManager.setTips = tips
     }
 
     private fun setSplash() {
-        val editor = sharedPref.edit()
-        editor.putBoolean(AppUtils.SEE_SPLASH_KEY, splash)
-        editor.apply()
+        SharedPreferencesManager.showSplashScreen = splash
     }
 
     private fun setSystemUnit() {
         if(unitBottomBar!=unitIntUsed){
 
             getAllAndUpdate(unitBottomBar)
-            val editor = sharedPref.edit()
-            editor.putInt(AppUtils.UNIT_NEW_KEY, unitBottomBar)
-            editor.putFloat(AppUtils.VALUE_50_KEY,AppUtils.firstConversion(50f,unitBottomBar))
-            editor.putFloat(AppUtils.VALUE_100_KEY,AppUtils.firstConversion(100f,unitBottomBar))
-            editor.putFloat(AppUtils.VALUE_150_KEY,AppUtils.firstConversion(150f,unitBottomBar))
-            editor.putFloat(AppUtils.VALUE_200_KEY,AppUtils.firstConversion(200f,unitBottomBar))
-            editor.putFloat(AppUtils.VALUE_250_KEY,AppUtils.firstConversion(250f,unitBottomBar))
-            editor.putFloat(AppUtils.VALUE_300_KEY,AppUtils.firstConversion(300f,unitBottomBar))
-            editor.apply()
+            SharedPreferencesManager.new_unitInt = unitBottomBar
+            SharedPreferencesManager.value_50 = AppUtils.firstConversion(50f,unitBottomBar)
+            SharedPreferencesManager.value_100 = AppUtils.firstConversion(100f,unitBottomBar)
+            SharedPreferencesManager.value_150 = AppUtils.firstConversion(150f,unitBottomBar)
+            SharedPreferencesManager.value_200 = AppUtils.firstConversion(200f,unitBottomBar)
+            SharedPreferencesManager.value_250 = AppUtils.firstConversion(250f,unitBottomBar)
+            SharedPreferencesManager.value_300 = AppUtils.firstConversion(300f,unitBottomBar)
+            SharedPreferencesManager.value_350 = AppUtils.firstConversion(350f,unitBottomBar)
             unitIntUsed = unitBottomBar
             binding.principal.etTarget.editText!!.setText(
                 sqliteHelper.getTotalIntakeValue(AppUtils.getCurrentDate()!!).toNumberString())
@@ -1015,16 +1030,15 @@ class ApplicationInfoFragment:
     }
 
     private fun setThemeToShared() {
-        var old = sharedPref.getInt(AppUtils.THEME_KEY, 0)
-        val editor = sharedPref.edit()
-        editor.putInt(AppUtils.THEME_KEY, themeInt)
-        editor.apply()
+        var old = SharedPreferencesManager.themeInt
+        SharedPreferencesManager.themeInt = themeInt
         if(old != themeInt){
             stringColor = when(themeInt){
                 0->"#41B279"
                 1->"#29704D"
                 2->"#6A91DE"
                 3->"#FF6200EE"
+                4->"#F6E000"
                 else -> {"#41B279"}
             }
             setLayout()
@@ -1039,7 +1053,7 @@ class ApplicationInfoFragment:
 
             val uri = data!!.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI) as Uri
             currentToneUri = uri.toString()
-            sharedPref.edit().putString(AppUtils.NOTIFICATION_TONE_URI_KEY, currentToneUri).apply()
+            SharedPreferencesManager.notificationTone = currentToneUri.toString()
             val ringtone = RingtoneManager.getRingtone(requireContext(), uri)
             binding.principal.etRingtone.editText!!.setText(ringtone.getTitle(requireContext()))
 

@@ -12,15 +12,14 @@ import rpt.tool.mementobibere.BaseBottomSheetDialog
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.AdjustHourBottomSheetFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.util.Calendar
 
 class AdjustHourBottomSheetFragment:
     BaseBottomSheetDialog<AdjustHourBottomSheetFragmentBinding>(AdjustHourBottomSheetFragmentBinding::inflate) {
 
-    private lateinit var sharedPref: SharedPreferences
     private var wakeupTime: Long = 0
     private var sleepingTime: Long = 0
-    private var themeInt : Int = 0
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,13 +27,11 @@ class AdjustHourBottomSheetFragment:
 
         val is24h = android.text.format.DateFormat.is24HourFormat(requireContext())
 
-        sharedPref = requireContext().getSharedPreferences(AppUtils.USERS_SHARED_PREF, AppUtils.PRIVATE_MODE)
 
-        themeInt = sharedPref.getInt(AppUtils.THEME_KEY,0)
         setBackground()
 
-        wakeupTime = sharedPref.getLong(AppUtils.WAKEUP_TIME_KEY, 1558323000000)
-        sleepingTime = sharedPref.getLong(AppUtils.SLEEPING_TIME_KEY, 1558369800000)
+        wakeupTime = SharedPreferencesManager.wakeUpTime
+        sleepingTime = SharedPreferencesManager.sleepingTime
         val cal = Calendar.getInstance()
         cal.timeInMillis = wakeupTime
         binding.etWakeUpTime.editText!!.setText(
@@ -109,12 +106,8 @@ class AdjustHourBottomSheetFragment:
 
                 else -> {
 
-                    val editor = sharedPref.edit()
-
-                    editor.putLong(AppUtils.WAKEUP_TIME_KEY, wakeupTime)
-                    editor.putLong(AppUtils.SLEEPING_TIME_KEY, sleepingTime)
-
-                    editor.apply()
+                    SharedPreferencesManager.wakeUpTime = wakeupTime
+                    SharedPreferencesManager.sleepingTime = sleepingTime
                     dismiss()
                 }
             }
@@ -136,12 +129,27 @@ class AdjustHourBottomSheetFragment:
     }
 
     private fun setBackground() {
-        when(themeInt){
+        when(SharedPreferencesManager.themeInt){
             0-> toLightTheme()
             1-> toDarkTheme()
             2-> toWaterTheme()
             3-> toGrapeTheme()
+            4-> toBeeTheme()
         }
+    }
+
+    private fun toBeeTheme() {
+        setBackgroundColor(requireContext().getColor(R.color.bee))
+        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
+        binding.etWakeUpTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etWakeUpTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
+        binding.etSleepTime.editText!!.
+        setBackgroundColor(requireContext().getColor(R.color.gray))
     }
 
     private fun toGrapeTheme() {
