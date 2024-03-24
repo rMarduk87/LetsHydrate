@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 26
         targetSdk 33
-        versionCode 21
+        versionCode 22
         versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -76,7 +76,7 @@ dependencies {
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     //Firebase
-    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation platform('com.google.firebase:firebase-bom:32.8.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     //CrashLytics
     implementation("com.google.firebase:firebase-crashlytics-ktx")
