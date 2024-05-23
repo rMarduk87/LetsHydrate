@@ -278,4 +278,5 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
     <string name="bee">Abeilles</string>
+    <string name="migrate">Cette application sera supprimée à partir du 01/07/2024\nMerci d\'utiliser Hydratons-nous</string>
 </resources>

@@ -2,11 +2,14 @@ package rpt.tool.mementobibere
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
@@ -23,7 +26,7 @@ import rpt.tool.mementobibere.databinding.ActivityMainBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.w
-
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +45,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initPermissions()
         initInAppUpdate()
+        showMigration()
+    }
+
+    private fun showMigration() {
+        var genderChoice = -1
+        val li = LayoutInflater.from(this)
+        val promptsView = li.inflate(R.layout.custom_input_dialog_by, null)
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setView(promptsView)
+
+
+        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
+        }.setNegativeButton("Cancel") { _, _ ->
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
 

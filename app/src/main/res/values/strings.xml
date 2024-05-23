@@ -253,5 +253,6 @@
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
     <string name="bee">Bee</string>
+    <string name="migrate">This app will be deleted starting 01/07/2024\nThank you for using Let\'s Hydrate</string>
 
 </resources>
