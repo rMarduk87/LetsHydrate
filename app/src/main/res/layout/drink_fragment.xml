@@ -153,16 +153,6 @@
         app:progressView_radius="12dp" />
 
     <ImageView
-        android:id="@+id/tutorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_tutorial"
-        app:layout_constraintStart_toStartOf="@+id/btnUndo"
-        app:layout_constraintTop_toTopOf="@+id/tvIntook">
-
-    </ImageView>
-
-    <ImageView
         android:id="@+id/calendarAvis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

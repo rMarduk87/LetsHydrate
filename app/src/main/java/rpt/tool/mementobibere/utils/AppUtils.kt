@@ -390,28 +390,18 @@ class AppUtils {
 
         val listIdsInfoTheme = arrayOf(
             R.id.icon_light,
-            R.id.icon_dark,
-            R.id.icon_water,
-            R.id.icon_grape,
-            R.id.icon_bee
+            R.id.icon_dark
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
-            R.drawable.ic_dark,
-            R.drawable.ic_water,
-            R.drawable.ic_grape,
-            R.drawable.ic_bee
+            R.drawable.ic_dark
 
         )
 
         val listStringInfoTheme= arrayOf(
             R.string.light,
-            R.string.dark,
-            R.string.water,
-            R.string.grape,
-            R.string.bee
-
+            R.string.dark
         )
 
         val listIdsInfoSystem = arrayOf(

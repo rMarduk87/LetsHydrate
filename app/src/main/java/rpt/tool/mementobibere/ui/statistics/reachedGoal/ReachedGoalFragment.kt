@@ -68,22 +68,7 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
         when (SharedPreferencesManager.themeInt) {
             0 -> toLightTheme()
             1 -> toDarkTheme()
-            2 -> toWaterTheme()
-            3 -> toGrapeTheme()
-            4 -> toBeeTheme()
         }
-    }
-
-    private fun toBeeTheme() {
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
-    }
-
-    private fun toGrapeTheme() {
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
-    }
-
-    private fun toWaterTheme() {
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
     }
 
     private fun toDarkTheme() {

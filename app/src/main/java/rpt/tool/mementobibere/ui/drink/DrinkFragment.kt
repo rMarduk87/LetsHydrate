@@ -36,7 +36,6 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.WalkthroughActivity
 import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
@@ -112,10 +111,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         totalIntake = SharedPreferencesManager.totalIntake
 
-        if (SharedPreferencesManager.firstRun) {
-            startActivity(Intent(requireContext(), WalkthroughActivity::class.java))
-            requireActivity().finish()
-        } else if (totalIntake <= 0) {
+         if (totalIntake <= 0) {
             startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
             requireActivity().finish()
         }
@@ -151,22 +147,21 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun createMenu() {
+        if(SharedPreferencesManager.themeInt > 1){
+            SharedPreferencesManager.themeInt = 1
+        }
+
         var themeInt = SharedPreferencesManager.themeInt
 
-        var colorString = if(themeInt==0){
-            "#41B279"
-        }
-        else if(themeInt==1){
-            "#29704D"
-        }
-        else if(themeInt ==2){
-            "#4167B2"
-        }
-        else if(themeInt ==3){
-            "#FF6200EE"
-        }
-        else{
-            "#F6E000"
+
+        var colorString = when (themeInt) {
+            0 -> {
+                "#41B279"
+            }
+            1 -> {
+                "#29704D"
+            }
+            else -> "#41B279"
         }
 
         for (i in AppUtils.listIds.indices) {
@@ -350,60 +345,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
-            2->toWaterTheme()
-            3->toGrapeTheme()
-            4->toBeeTheme()
         }
-    }
-
-    private fun toBeeTheme() {
-        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_b)
-        if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
-        }
-        else{
-            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
-            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
-        }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
-        binding.undoTV.setTextColor(resources.getColor(R.color.colorWhite))
-        binding.redoTV.setTextColor(resources.getColor(R.color.colorWhite))
-        binding.refreshTV.setTextColor(resources.getColor(R.color.colorWhite))
-    }
-
-    private fun toGrapeTheme() {
-        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_g)
-        if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
-        }
-        else{
-            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
-            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
-        }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
-        binding.undoTV.setTextColor(resources.getColor(R.color.colorWhite))
-        binding.redoTV.setTextColor(resources.getColor(R.color.colorWhite))
-        binding.refreshTV.setTextColor(resources.getColor(R.color.colorWhite))
-    }
-
-    private fun toWaterTheme() {
-        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_w)
-        if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
-        }
-        else{
-            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorWhite))
-            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorWhite))
-        }
-        binding.bottomBarNotify.setBackgroundColorRes(R.color.colorWhite)
-        binding.bottomBarNotNotify.setBackgroundColorRes(R.color.colorWhite)
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
-        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
     }
 
     private fun toDarkTheme() {
@@ -541,13 +483,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
 
         updateValues()
 
-        var background =
-            when(SharedPreferencesManager.themeInt){
-                2->R.drawable.option_select_bg_w
-                3->R.drawable.option_select_bg_g
-                4->R.drawable.option_select_bg_b
-                else -> R.drawable.option_select_bg
-            }
+        var background = R.drawable.option_select_bg
 
         if(SharedPreferencesManager.setTips){
             if(inTook > 0){
@@ -779,11 +715,6 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             showMessage(
                 getString(R.string.tomorrow_you_will_donate), it, duration = 3500
             )
-        }
-
-        binding.tutorial!!.setOnClickListener {
-            safeNavController?.safeNavigate(DrinkFragmentDirections.
-                actionDrinkFragmentToTutorialFragment())
         }
 
         if ((inTook * 100 / totalIntake) >= 130) {

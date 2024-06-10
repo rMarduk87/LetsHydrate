@@ -76,9 +76,6 @@ class ApplicationInfoFragment:
         stringColor = when(SharedPreferencesManager.themeInt){
             0->"#41B279"
             1->"#29704D"
-            2->"#6A91DE"
-            3->"#FF6200EE"
-            4->"#F6E000"
             else -> {"#41B279"}
         }
 
@@ -465,10 +462,12 @@ class ApplicationInfoFragment:
         }
 
         if(Locale.getDefault().language == "de"){
-            binding.principal.etWeight.editText!!.hint = requireContext().getString(R.string.weight_hint) + " " + AppUtils.calculateExtensionsForWeight(weightUnit,requireContext()) +  " ein"
+            binding.principal.etWeight.editText!!.hint = requireContext().getString(R.string.weight_hint) + " " +
+                    AppUtils.calculateExtensionsForWeight(weightUnit,requireContext()) +  " ein"
         }
         else{
-            binding.principal.etWeight.editText!!.hint = requireContext().getString(R.string.weight_hint) + " " + AppUtils.calculateExtensionsForWeight(weightUnit,requireContext())
+            binding.principal.etWeight.editText!!.hint = requireContext().getString(R.string.weight_hint) + " " +
+                    AppUtils.calculateExtensionsForWeight(weightUnit,requireContext())
         }
     }
 
@@ -477,196 +476,7 @@ class ApplicationInfoFragment:
         when(SharedPreferencesManager.themeInt){
             0-> toLightTheme()
             1-> toDarkTheme()
-            2-> toWaterTheme()
-            3-> toGrapeTheme()
-            4-> toBeeTheme()
         }
-    }
-
-    private fun toBeeTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.bee))
-        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.etNotificationText.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etNotificationText.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view3.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view4.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view5.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view6.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view7.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.userInfo.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.etWeight.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWeight.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorBlack))
-    }
-
-    private fun toGrapeTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.purple_500))
-        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.etNotificationText.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etNotificationText.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view3.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view4.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view5.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view6.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.view7.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.userInfo.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.etWeight.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWeight.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorBlack))
-    }
-
-    private fun toWaterTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
-        binding.principal.infoTopTitle.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.darkTV.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.systemUnitTV.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.notificationTV.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.legal.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etNotificationText.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etNotificationText.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etRingtone.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etPrivacy.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view3.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view4.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view5.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view6.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view7.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.userInfo.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWeight.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWeight.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWorkType.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etWakeUpTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etSleepTime.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etTarget.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.etClimate.editText!!.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorWhite))
     }
 
     private fun toDarkTheme() {
