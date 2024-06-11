@@ -341,7 +341,7 @@ class InitUserInfoFragment:
                     SharedPreferencesManager.setGender = true
                     SharedPreferencesManager.setWorkOut = true
                     SharedPreferencesManager.setClimate = true
-                    SharedPreferencesManager.startTutorial = true
+                    SharedPreferencesManager.startTutorial = false
                     SharedPreferencesManager.bloodDonorKey = bloodDonor
                     SharedPreferencesManager.setBloodDonor = true
 

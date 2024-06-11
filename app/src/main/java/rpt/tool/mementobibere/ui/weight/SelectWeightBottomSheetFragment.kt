@@ -49,20 +49,16 @@ class SelectWeightBottomSheetFragment:
     }
 
     private fun initBottomBars() {
-        var colorString = if(themeInt==0){
-            "#41B279"
-        }
-        else if(themeInt==1){
-            "#29704D"
-        }
-        else if(themeInt ==2){
-            "#4167B2"
-        }
-        else if(themeInt ==3){
-            "#FF6200EE"
-        }
-        else{
-            "#F6E000"
+        var colorString = when (themeInt) {
+            0 -> {
+                "#41B279"
+            }
+            1 -> {
+                "#29704D"
+            }
+            else -> {
+                "#29704D"
+            }
         }
         val menu = binding.weightSystemBottomBar.menu
 
@@ -102,37 +98,7 @@ class SelectWeightBottomSheetFragment:
         when(themeInt){
             0->toLightTheme()
             1->toDarkTheme()
-            2->toWaterTheme()
-            3->toGrapeTheme()
-            4->toBeeTheme()
         }
-    }
-
-    private fun toBeeTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.bee))
-        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.view2.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.gray)
-    }
-
-    private fun toGrapeTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.purple_500))
-        binding.textView7.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorBlack))
-        binding.view2.
-        setBackgroundColor(requireContext().getColor(R.color.gray))
-        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.gray)
-    }
-
-    private fun toWaterTheme() {
-        setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDarkW))
-        binding.textView7.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.btnUpdate.setTextColor(requireContext().getColor(R.color.colorWhite))
-        binding.view2.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.weightSystemBottomBar.setBackgroundColorRes(R.color.colorWhite)
     }
 
     private fun toDarkTheme() {

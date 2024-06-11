@@ -57,8 +57,8 @@
 
         <TextView
             android:id="@+id/se"
-            android:layout_width="285dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_215"
+            android:layout_height="@dimen/dp_55"
             android:background="@drawable/bg_notification"
             android:ellipsize="end"
             android:gravity="center"
@@ -145,22 +145,12 @@
         app:progressView_labelSpace="10dp"
         app:progressView_labelText="0%"
         app:progressView_labelTypeface="bold"
-        app:progressView_max="130"
+        app:progressView_max="100"
         app:progressView_min="0"
         app:progressView_padding="1dp"
         app:progressView_progress="0"
         app:progressView_progressFromPrevious="true"
         app:progressView_radius="12dp" />
-
-    <ImageView
-        android:id="@+id/tutorial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_tutorial"
-        app:layout_constraintStart_toStartOf="@+id/btnUndo"
-        app:layout_constraintTop_toTopOf="@+id/tvIntook">
-
-    </ImageView>
 
     <ImageView
         android:id="@+id/calendarAvis"

@@ -45,26 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initPermissions()
         initInAppUpdate()
-        showMigration()
     }
-
-    private fun showMigration() {
-        var genderChoice = -1
-        val li = LayoutInflater.from(this)
-        val promptsView = li.inflate(R.layout.custom_input_dialog_by, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(this)
-        alertDialogBuilder.setView(promptsView)
-
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-        }.setNegativeButton("Cancel") { _, _ ->
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
 
     override fun onResume() {
         super.onResume()

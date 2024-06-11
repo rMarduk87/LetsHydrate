@@ -11,9 +11,6 @@
 
     <item name="icon_dark" type="id"/>
     <item name="icon_light" type="id"/>
-    <item name="icon_water" type="id"/>
-    <item name="icon_grape" type="id"/>
-    <item name="icon_bee" type="id"/>
 
     <item name="icon_oz_uk" type="id"/>
     <item name="icon_oz_us" type="id"/>
@@ -26,9 +23,7 @@
     <item name="icon_intook" type="id"/>
     <item name="icon_reach" type="id"/>
     <item name="icon_daily" type="id"/>
-
-    <item name="icon_on" type="id"/>
-    <item name="icon_off" type="id"/>
+    
 
     <item name="tips_on" type="id"/>
     <item name="tips_off" type="id"/>

@@ -200,10 +200,6 @@ class AppUtils {
             }
         }
 
-        fun calculatePercentual(intook: Float, intake: Float): Float {
-            return (intook * 100 / intake).toNumberString().toExtractFloat()
-        }
-
         fun calculateOption(inTook: Float, totalIntake: Float): Float? {
             return totalIntake - inTook
         }
@@ -390,28 +386,18 @@ class AppUtils {
 
         val listIdsInfoTheme = arrayOf(
             R.id.icon_light,
-            R.id.icon_dark,
-            R.id.icon_water,
-            R.id.icon_grape,
-            R.id.icon_bee
+            R.id.icon_dark
         )
 
         val listInfoTheme = arrayOf(
             R.drawable.ic_light,
-            R.drawable.ic_dark,
-            R.drawable.ic_water,
-            R.drawable.ic_grape,
-            R.drawable.ic_bee
+            R.drawable.ic_dark
 
         )
 
         val listStringInfoTheme= arrayOf(
             R.string.light,
-            R.string.dark,
-            R.string.water,
-            R.string.grape,
-            R.string.bee
-
+            R.string.dark
         )
 
         val listIdsInfoSystem = arrayOf(
@@ -474,21 +460,6 @@ class AppUtils {
             R.id.icon_daily,
             R.id.icon_intook,
             R.id.icon_reach
-        )
-
-        val listIdsSplash = arrayOf(
-            R.id.icon_on,
-            R.id.icon_off
-        )
-
-        val listIconSplash = arrayOf(
-            R.drawable.ic_on,
-            R.drawable.ic_off
-        )
-
-        val listStringSplash = arrayOf(
-            R.string.on,
-            R.string.off
         )
 
         val listIdsTips = arrayOf(

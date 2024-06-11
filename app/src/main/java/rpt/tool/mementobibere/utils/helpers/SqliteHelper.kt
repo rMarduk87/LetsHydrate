@@ -141,7 +141,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     private fun updateValuesOfCounter(db: SQLiteDatabase) {
-        getAllReached(db).use{ reached ->
+        getAllReached(db = db).use{ reached ->
             if (reached.moveToFirst()) {
                 for (i in 0 until reached.count) {
                     val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ?"
@@ -390,27 +390,15 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return 0
     }
 
-    private fun getAllReached(db: SQLiteDatabase? = null) : Cursor{
-        val selectQuery = "SELECT * FROM $TABLE_REACHED"
+    fun getAllReached(orderBy: Boolean = false ,db: SQLiteDatabase? = null) : Cursor{
+        var selectQuery = "SELECT * FROM $TABLE_REACHED"
+        if(orderBy){
+            selectQuery += " ORDER BY datetime(substr(date, 7, 4) || '-' || substr(date, 4, 2) || '-' || substr(date, 1, 2) || ' ' || substr(date, 12, 8)) ASC"
+        }
         val dbToUse = db ?: this.readableDatabase
         return dbToUse.rawQuery(selectQuery, null)
     }
 
-    fun getAllReachedForStats(): MutableLiveData<List<ReachedGoal>> {
-        val list : ArrayList<ReachedGoal> = arrayListOf<ReachedGoal>()
-        val entry = MutableLiveData<List<ReachedGoal>>()
-        getAllReached().use { it ->
-            if (it.moveToFirst()) {
-                for (i in 0 until it.count) {
-                    list.add(ReachedGoal(it.getString(1).toCalendar(), it.getFloat(2)
-                        .toReachedStatsString(),it.getString(3)))
-                    it.moveToNext()
-                }
-                entry.postValue(list.sortedBy { it.day })
-            }
-        }
-        return entry
-    }
     fun addAvis(date: String) : Long {
         val selectQuery = "SELECT * FROM $TABLE_AVIS WHERE $KEY_DATE = ?"
         if (checkExistance(date,selectQuery) == 0) {

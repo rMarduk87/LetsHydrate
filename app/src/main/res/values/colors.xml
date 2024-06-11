@@ -51,4 +51,7 @@
     <color name="overlay">#BF000000</color>
     <color name="bee">#F6E000</color>
     <color name="honey">#f9c901</color>
+    <color name="green_card">#7AC5C1</color>
+    <color name="app_transparant">#0000</color>
+    <color name="item_line">#E1E1E1</color>
 </resources>
