@@ -504,8 +504,6 @@ class ApplicationInfoFragment:
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
         binding.principal.view4.
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
-        binding.principal.view5.
-        setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
         binding.principal.view6.
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
         binding.principal.view7.
@@ -536,7 +534,6 @@ class ApplicationInfoFragment:
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
         binding.principal.etClimate.editText!!.
         setBackgroundColor(requireContext().getColor(R.color.gray_btn_bg_pressed_color))
-        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorBlack))
         binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorBlack))
     }
@@ -565,8 +562,6 @@ class ApplicationInfoFragment:
         binding.principal.view3.
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.view4.
-        setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.view5.
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.view6.
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
@@ -598,7 +593,6 @@ class ApplicationInfoFragment:
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.etClimate.editText!!.
         setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.principal.splashScreen.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.tips.setTextColor(requireContext().getColor(R.color.colorWhite))
         binding.principal.textView17.setTextColor(requireContext().getColor(R.color.colorWhite))
     }
@@ -613,7 +607,6 @@ class ApplicationInfoFragment:
         val menu = principal.darkThemeBottomBar.menu
         val menu2 = principal.unitSystemBottomBar.menu
         val menu3 = principal.notificationBottomBar.menu
-        val menu4 = principal.splashScreenBottomBar.menu
         val menu5 = principal.tipsBottomBar.menu
 
         for (i in AppUtils.listIdsInfoTheme.indices) {
@@ -655,19 +648,6 @@ class ApplicationInfoFragment:
             )
         }
 
-        for (i in AppUtils.listIdsSplash.indices) {
-            menu4.add(
-                MenuItemDescriptor.Builder(
-                    requireContext(),
-                    AppUtils.listIdsSplash[i],
-                    AppUtils.listIconSplash[i],
-                    AppUtils.listStringSplash[i],
-                    Color.parseColor(stringColor)
-                )
-                    .build()
-            )
-        }
-
         for (i in AppUtils.listIdsTips.indices) {
             menu5.add(
                 MenuItemDescriptor.Builder(
@@ -685,9 +665,6 @@ class ApplicationInfoFragment:
             when(i.id) {
                 R.id.icon_light -> themeInt = 0
                 R.id.icon_dark -> themeInt = 1
-                R.id.icon_water -> themeInt = 2
-                R.id.icon_grape -> themeInt = 3
-                R.id.icon_bee -> themeInt = 4
             }
 
             setThemeToShared()
@@ -709,9 +686,6 @@ class ApplicationInfoFragment:
         when (themeInt) {
             0 -> menu.select(R.id.icon_light)
             1 -> menu.select(R.id.icon_dark)
-            2 -> menu.select(R.id.icon_water)
-            3 -> menu.select(R.id.icon_grape)
-            4 -> menu.select(R.id.icon_bee)
             else -> {
                 menu.select(R.id.icon_light)
                 themeInt = 0
@@ -752,21 +726,6 @@ class ApplicationInfoFragment:
 
         splash = SharedPreferencesManager.showSplashScreen
 
-        when (splash) {
-            true -> menu4.select(R.id.icon_on)
-            false -> menu4.select(R.id.icon_off)
-        }
-
-        principal.splashScreenBottomBar.onItemSelectedListener = { _, i, _ ->
-            when(i.id) {
-                R.id.icon_on -> splash = true
-                R.id.icon_off -> splash = false
-            }
-
-            setSplash()
-
-        }
-
         tips = SharedPreferencesManager.setTips
 
         when (tips) {
@@ -787,10 +746,6 @@ class ApplicationInfoFragment:
 
     private fun setTips() {
         SharedPreferencesManager.setTips = tips
-    }
-
-    private fun setSplash() {
-        SharedPreferencesManager.showSplashScreen = splash
     }
 
     private fun setSystemUnit() {
@@ -846,9 +801,6 @@ class ApplicationInfoFragment:
             stringColor = when(themeInt){
                 0->"#41B279"
                 1->"#29704D"
-                2->"#6A91DE"
-                3->"#FF6200EE"
-                4->"#F6E000"
                 else -> {"#41B279"}
             }
             setLayout()

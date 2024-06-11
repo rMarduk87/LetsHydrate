@@ -57,8 +57,8 @@
 
         <TextView
             android:id="@+id/se"
-            android:layout_width="285dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/dp_215"
+            android:layout_height="@dimen/dp_55"
             android:background="@drawable/bg_notification"
             android:ellipsize="end"
             android:gravity="center"
@@ -145,7 +145,7 @@
         app:progressView_labelSpace="10dp"
         app:progressView_labelText="0%"
         app:progressView_labelTypeface="bold"
-        app:progressView_max="130"
+        app:progressView_max="100"
         app:progressView_min="0"
         app:progressView_padding="1dp"
         app:progressView_progress="0"

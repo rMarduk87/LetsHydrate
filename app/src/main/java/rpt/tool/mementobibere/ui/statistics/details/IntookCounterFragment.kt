@@ -64,10 +64,14 @@ class IntookCounterFragment :
     }
 
     private fun startanimation(intPercentage: Int) {
-        binding.waterLevelViewL!!.centerTitle = "$intPercentage%"
-        binding.waterLevelViewL!!.progressValue = intPercentage
-        binding.waterLevelViewD!!.centerTitle = "$intPercentage%"
-        binding.waterLevelViewD!!.progressValue = intPercentage
+        var i = 0
+        while(i<intPercentage){
+            binding.waterLevelViewL!!.centerTitle = "$i%"
+            binding.waterLevelViewL!!.progressValue = i
+            binding.waterLevelViewD!!.centerTitle = "$i%"
+            binding.waterLevelViewD!!.progressValue = i
+            i++
+        }
         binding.waterLevelViewL!!.setAnimDuration(3000)
         binding.waterLevelViewD!!.setAnimDuration(3000)
     }

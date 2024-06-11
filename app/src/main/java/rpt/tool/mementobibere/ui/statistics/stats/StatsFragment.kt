@@ -563,22 +563,10 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
     }
 
     private fun toDarkTheme() {
-        binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.darkGreen30))
-        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
-        binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
-        binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
-        binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.darkGreen30))
         setOtherLayout()
     }
 
     private fun toLightTheme() {
-        binding.weeklyView.setBackgroundColor(requireContext().getColor(R.color.colorSecondaryDark))
-        binding.layout.setBackgroundColor(requireContext().getColor(R.color.colorWhite))
-        binding.weekAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
-        binding.monthAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
-        binding.reachedAverageTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
-        binding.drinkFrequencyTV.setTextColor(requireContext().getColor(R.color.colorSecondaryDark))
         setOtherLayout()
     }
 
@@ -611,12 +599,10 @@ class StatsFragment : BaseFragment<StatsFragmentBinding>(StatsFragmentBinding::i
         if(isMonth){
             indexMonth = SharedPreferencesManager.indexMonth
             binding.monthOrYearTV.text = listOfMonths[indexMonth].text
-            //binding.monthSwitch.isChecked = !checked
         }
         else{
             indexYear = SharedPreferencesManager.indexYear
             binding.monthOrYearTV.text = listOfYears[indexYear]
-            //binding.monthSwitch.isChecked = checked
         }
         createChart()
     }

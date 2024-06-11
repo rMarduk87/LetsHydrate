@@ -1100,7 +1100,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
 
 
-        if ((inTook * 100 / totalIntake) > 140) {
+        if ((inTook * 100 / totalIntake) >= 130) {
             showMessage(getString(R.string.you_achieved_the_goal), binding.mainActivityParent)
             sqliteHelper.addReachedGoal(dateNow,inTook,unit)
         }

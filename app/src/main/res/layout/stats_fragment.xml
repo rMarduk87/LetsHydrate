@@ -83,7 +83,7 @@
             android:id="@+id/monthOrYearTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="35dp"
             android:gravity="center_horizontal"
             android:text="March 2018"
             android:textColor="@color/black"
@@ -182,6 +182,7 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             android:tint="@color/black"
+            android:layout_marginRight="28dp"
             app:layout_constraintBottom_toTopOf="@+id/weeklyView"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -197,6 +198,7 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             android:tint="@color/black"
+            android:layout_marginLeft="28dp"
             app:layout_constraintBottom_toTopOf="@+id/weeklyView"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

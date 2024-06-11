@@ -1,67 +1,57 @@
 package rpt.tool.mementobibere.ui.statistics.reachedGoal
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.content.SharedPreferences
+import android.database.Cursor
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.viewModels
-import com.google.android.material.textfield.TextInputLayout
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
-import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.extensions.defaultSetUp
+import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
+import rpt.tool.mementobibere.utils.extensions.toCalendar
+import rpt.tool.mementobibere.utils.extensions.toReachedStatsString
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
-import rpt.tool.mementobibere.utils.navigation.safeNavController
-import rpt.tool.mementobibere.utils.navigation.safeNavigate
-import rpt.tool.mementobibere.utils.view.recyclerview.items.reachedGoal.ReachedGoalItem
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import rpt.tool.mementobibere.utils.view.adapters.ReachedGoalAdapter
+
 
 class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
     ReachedGoalStatsFragmentBinding::inflate) {
 
-    private val itemAdapter = ItemAdapter<ReachedGoalItem>()
-    private val fastAdapter = FastAdapter.with(itemAdapter)
-
-    private val viewModel: ReachedGoalViewModel by viewModels()
+    var reachedList: MutableList<ReachedGoal> = arrayListOf()
+    var adapter: ReachedGoalAdapter? = null
+    var isLoading: Boolean = true
+    private lateinit var sqliteHelper: SqliteHelper
+    var beforeLoad: Int = 0
+    var afterLoad: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         setBackGround()
 
-        binding.recyclerView.defaultSetUp(
-            fastAdapter
+        sqliteHelper = SqliteHelper(requireContext())
+        adapter = ReachedGoalAdapter(requireActivity(), reachedList, object : ReachedGoalAdapter.CallBack {
+
+            override fun onClickSelect(history: ReachedGoal?, position: Int) {
+            }
+
+        })
+
+        binding.recyclerView.setLayoutManager(
+            LinearLayoutManager(
+                requireActivity(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
         )
 
-        addDataToListView()
+        binding.recyclerView.setAdapter(adapter)
 
+        loadReached(false)
     }
 
-    private fun addDataToListView() {
-        viewModel.reachedtItems.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                binding.recyclerView.visibility = View.GONE
-                binding.noData.visibility = View.VISIBLE
-            } else {
-                binding.recyclerView.visibility = View.VISIBLE
-                binding.noData.visibility = View.GONE
-                itemAdapter.set(it)
-            }
-        }
-    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setBackGround() {
@@ -77,6 +67,50 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
 
     private fun toLightTheme() {
         binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
+    }
+
+    private fun loadReached(closeLoader: Boolean) {
+
+       val c: Cursor = sqliteHelper.getAllReached(true)
+
+        val arr_data = ArrayList<HashMap<String, String>>()
+
+        if (c.moveToFirst()) {
+            do {
+                val map = HashMap<String, String>()
+                for (i in 0 until c.columnCount) {
+                    map[c.getColumnName(i)] = c.getString(i)
+                }
+
+                arr_data.add(map)
+            } while (c.moveToNext())
+        }
+
+        for (k in arr_data.indices) {
+            val reached = ReachedGoal()
+            reached.day = arr_data[k]["date"]!!.toCalendar()
+            reached.quantity = arr_data[k]["qta"]!!.toFloat().toReachedStatsString()
+            reached.unit = arr_data[k]["unit"]
+
+            reachedList.add(reached)
+        }
+
+        afterLoad = reachedList.size
+
+        isLoading = if (afterLoad == 0) false
+        else if (afterLoad > beforeLoad) true
+        else false
+
+        if (reachedList.size > 0) {
+            binding.noData.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+        }
+        else{
+            binding.noData.visibility = View.VISIBLE
+            binding.recyclerView.visibility = View.GONE
+        }
+
+        adapter!!.notifyDataSetChanged()
     }
 
 }

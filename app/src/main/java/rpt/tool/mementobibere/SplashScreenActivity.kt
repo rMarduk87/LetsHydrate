@@ -15,15 +15,13 @@ import rpt.tool.mementobibere.utils.AppUtils
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private var time: Long = ANIMATION_TIME
+    private var time: Long = SHOW
     private val timeoutHandler = Handler()
     private lateinit var binding : ActivitySplashScreenBinding
     private lateinit var sharedPref: SharedPreferences
 
     companion object {
-
-        const val ANIMATION_TIME: Long = 3000
-        const val SHOW: Long = 25
+        const val SHOW: Long = 75
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +37,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        if(!sharedPref.getBoolean(AppUtils.SEE_SPLASH_KEY,true)){
-            binding.splash.background = resources.getDrawable(R.mipmap.ic_launcher_background)
-            binding.imageView.visibility = View.VISIBLE
-            time = SHOW
-            binding.rpt.visibility = View.INVISIBLE
-        }
-
         val finalizer = Runnable {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -53,7 +44,7 @@ class SplashScreenActivity : AppCompatActivity() {
         timeoutHandler.postDelayed(finalizer, time)
 
 
-        binding.splash.setOnClickListener{
+        binding.imgSplashLogo.setOnClickListener{
             timeoutHandler.removeCallbacks(finalizer)
             startActivity(Intent(this, MainActivity::class.java))
             finish()

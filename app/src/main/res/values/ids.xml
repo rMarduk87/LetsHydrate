@@ -23,9 +23,7 @@
     <item name="icon_intook" type="id"/>
     <item name="icon_reach" type="id"/>
     <item name="icon_daily" type="id"/>
-
-    <item name="icon_on" type="id"/>
-    <item name="icon_off" type="id"/>
+    
 
     <item name="tips_on" type="id"/>
     <item name="tips_off" type="id"/>

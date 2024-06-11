@@ -158,7 +158,7 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="please_input_a_valid_rest_time">Tu ne peux pas te lever et te coucher en même temps</string>
     <string name="kg">Kg</string>
     <string name="lbl">Livre</string>
-    <string name="enter_weight_input_title">Sélectionnez l\'unité de mesure du poids</string>
+    <string name="enter_weight_input_title">Sélectionnez l\'unité de mesure du\npoids</string>
     <string name="info_fragment_label">ApplicationInfoFragment</string>
     <string name="stats_fragment_label">Stats Fragment</string>
     <string name="notification_silence_label">Silence</string>
@@ -174,7 +174,7 @@ Les <strong>Données d\\\'utilisation</strong> font référence aux données col
     <string name="intook_report">Rapport quotidien</string>
     <string name="opt_max">Opt le plus sélectionné.</string>
     <string name="opt_min">Opt le moins sélectionné.</string>
-    <string name="enter_hour_input_title">Votre heure de départ doit être mineure que votre heure de voyage</string>
+    <string name="enter_hour_input_title">Votre heure de départ doit être\nmineure que votre heure de voyage</string>
     <string name="summary2">Hasta hoy</string>
     <string name="none">Nada</string>
     <string name="day">Jour</string>

@@ -149,7 +149,7 @@
     <string name="intook_report">Daily Report</string>
     <string name="opt_max">Most selected opt.</string>
     <string name="opt_min">Least selected opt.</string>
-    <string name="enter_hour_input_title">Your wake-up time should be less than your bedtime</string>
+    <string name="enter_hour_input_title">Your wake-up time should be less\nthan your bedtime</string>
     <string name="summary2">Until today</string>
     <string name="none">Nothing</string>
     <string name="day">Day</string>
