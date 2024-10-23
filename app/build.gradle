@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 26
         targetSdk 33
-        versionCode 24
+        versionCode 25
         versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -86,6 +86,11 @@ dependencies {
     implementation 'com.github.st235:expandablebottombar:1.5.3'
     //InApp Update
     implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:review:2.0.1'
+    implementation 'com.google.android.play:asset-delivery:2.2.2'
+    implementation 'com.google.android.gms:play-services-tasks:18.2.0'
+    //Lottie
+    implementation 'com.airbnb.android:lottie:6.1.0'
     //JodaTime
     implementation 'joda-time:joda-time:2.12.1'
     //Charts
