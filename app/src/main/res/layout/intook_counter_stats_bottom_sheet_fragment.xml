@@ -40,7 +40,7 @@
             android:layout_height="383dp"
             android:layout_marginTop="16dp">
 
-            <me.itangqi.waveloadingview.WaveLoadingView
+            <rpt.tool.mementobibere.utils.wave.WaveLoadingView
                 android:id="@+id/waterLevelViewL"
                 android:layout_width="250dp"
                 android:layout_height="0dp"
@@ -67,7 +67,7 @@
                 app:wlv_waveAmplitude="60"
                 app:wlv_waveColor="@color/colorSecondaryDark" />
 
-            <me.itangqi.waveloadingview.WaveLoadingView
+            <rpt.tool.mementobibere.utils.wave.WaveLoadingView
                 android:id="@+id/waterLevelViewD"
                 android:layout_width="250dp"
                 android:layout_height="0dp"
