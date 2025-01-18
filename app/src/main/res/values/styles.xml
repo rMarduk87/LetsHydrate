@@ -22,30 +22,6 @@
         <item name="android:fontFamily">@font/kanit</item>
     </style>
 
-    <style name="AppThemeD" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/darkGreen</item>
-        <item name="android:fontFamily">@font/kanit</item>
-    </style>
-
-    <style name="MainThemeD" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="colorPrimary">@color/darkGreen30</item>
-        <item name="colorPrimaryDark">@color/darkGreen30</item>
-        <item name="colorAccent">@color/darkGreen</item>
-        <item name="android:fontFamily">@font/kanit</item>
-    </style>
-
 
     <style name="ErrorText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/red</item>
@@ -57,19 +33,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextInputLayoutAppearance" parent="Widget.Design.TextInputLayout">
-        <!-- reference our hint & error styles -->
-        <item name="hintTextAppearance">@style/HintText</item>
-        <item name="errorTextAppearance">@style/ErrorText</item>
-        <item name="android:background">@drawable/textinput_bg</item>
-    </style>
 
-    <style name="TextInputLayoutAppearanceD" parent="Widget.Design.TextInputLayout">
-        <!-- reference our hint & error styles -->
-        <item name="hintTextAppearance">@style/HintText</item>
-        <item name="errorTextAppearance">@style/ErrorText</item>
-        <item name="android:background">@drawable/textinput_bg_dark</item>
-    </style>
 
     <style name="DividerHorizontal">
         <item name="android:layout_width">match_parent</item>
@@ -110,16 +74,6 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:backgroundDimAmount">0.4</item>
-    </style>
-
-    <style name="dialog_blue_button" parent="android:Widget.Button">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">31dp</item>
-        <item name="android:background">@drawable/blue_button_background</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">21dp</item>
-        <item name="android:paddingRight">21dp</item>
-        <item name="android:textColor">@color/button_text_color</item>
     </style>
 
     <style name="TableHeader" parent="Widget.AppCompat.TextView">
