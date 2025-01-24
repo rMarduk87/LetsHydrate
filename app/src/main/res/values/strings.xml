@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Let\'s hydrate</string>
-    <string name="migrate">This app will be deleted starting 01/07/2024\nThank you for using Let\'s Hydrate</string>
     <string name="goodbye_fragment_label">GoodbyeFragment</string>
     <string name="img">img</string>
-    <string name="migrate_app">This app will be discontinued on 01/03/2025, thank you for using it, a new application is now available and can be reached from the following link</string>
-    <string name="new_appp">Drink Diary</string>
-
+    <string name="migrate_app">This app will be discontinued on </string>
+    <string name="migrate_app_final">\nthank you for using it.</string>
+    <string name="xxx">xxx</string>
 </resources>

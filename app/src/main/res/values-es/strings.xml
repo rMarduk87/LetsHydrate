@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Hidratarnos</string>
-    <string name="goodbye_fragment_label">GoodbyeFragment</string>
+    <string name="app_name">Vamos a hidratarnos</string>
+    <string name="goodbye_fragment_label">Adiós Fragmento</string>
     <string name="img">img</string>
-    <string name="migrate_app">Esta aplicación se discontinuará el 01/03/2025, gracias por usarla, ya hay una nueva aplicación disponible y se puede acceder a ella desde el siguiente enlace</string>
-    <string name="new_appp">Diario de bebidas</string>
+    <string name="migrate_app">Esta aplicación se discontinuará el </string>
+    <string name="migrate_app_final">\nGracias por usarla.</string>
+    <string name="xxx">xxx</string>
 </resources>

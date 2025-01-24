@@ -2,6 +2,7 @@
     <string name="app_name">Idratiamoci</string>
     <string name="goodbye_fragment_label">GoodbyeFragment</string>
     <string name="img">img</string>
-    <string name="migrate_app">Questa app verrà rimossa il 01/03/2025, grazie per averla utilizzata, una nuova applicazione è ora disponibile e può essere raggiunta dal seguente link</string>
-    <string name="new_appp">Drink Diary</string>
+    <string name="migrate_app">Questa app verrà dismessa il </string>
+    <string name="migrate_app_final">\nGrazie per averla utilizzata.</string>
+    <string name="xxx">xxx</string>
 </resources>

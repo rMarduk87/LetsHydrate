@@ -2,6 +2,7 @@
     <string name="app_name">Hydratons-nous</string>
     <string name="goodbye_fragment_label">GoodbyeFragment</string>
     <string name="img">img</string>
-    <string name="migrate_app">Cette application sera abandonnée le 01/03/2025, merci de l\'utiliser, une nouvelle application est désormais disponible et accessible depuis le lien suivant</string>
-    <string name="new_appp">Drink Diary</string>
+    <string name="migrate_app">Cette application sera abandonnée le </string>
+    <string name="migrate_app_final">\nmerci de l\'utiliser.</string>
+    <string name="xxx">xxx</string>
 </resources>
