@@ -28,7 +28,7 @@ val FragmentActivity.safeNavController: NavController?
 
 private fun FragmentActivity.findNavControllerWithFragmentManager(): NavController? {
     runCatching {
-        (supportFragmentManager.findFragmentById(R.id.main_activity_nav_host_fragment) as NavHostFragment)
+        (supportFragmentManager.findFragmentById(R.id.init_user_info_activity_nav_host_fragment) as NavHostFragment)
             .navController
     }.onSuccess {
         return it
@@ -39,7 +39,7 @@ private fun FragmentActivity.findNavControllerWithFragmentManager(): NavControll
 
 private fun FragmentActivity.findNavControllerWithNavHostId(): NavController? {
     runCatching {
-        findNavController(R.id.main_activity_nav_host_fragment)
+        findNavController(R.id.init_user_info_activity_nav_host_fragment)
     }.onSuccess {
         return it
     }
