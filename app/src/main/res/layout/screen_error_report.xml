@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/error_background">
+
+    <include android:id="@+id/header_blocks" layout="@layout/header_error_report"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:layout_below="@+id/header_blocks"
+        android:layout_above="@+id/bottom_block">
+
+        <TextView
+            android:id="@+id/error"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"/>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_block"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_cancel_error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textColor="@color/error_button_stroke"
+            android:textSize="16dp"
+            android:layout_margin="0dp"/>
+
+        <Button
+            android:id="@+id/btn_send_error"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Send"
+            android:textColor="@color/error_button_stroke"
+            android:textSize="16dp"
+            android:layout_margin="0dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

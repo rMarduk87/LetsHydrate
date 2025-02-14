@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/app_transparant">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dp_184"
+                android:layout_height="@dimen/dp_250"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/battery2"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="@dimen/dp_5"
+                android:text="@string/str_battery_desc2"
+                android:textSize="@dimen/dp_15"
+                android:textColor="@color/rdo_gender_select"
+                android:fontFamily="@font/calibri_light"/>
+
+        </LinearLayout>
+
+</RelativeLayout>

@@ -397,4 +397,163 @@
 
     <attr name="btn_date_sel" format="reference">
     </attr>
+
+    <declare-styleable name="MaterialProgressBar">
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MyTextView">
+        <attr name="fontname" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="HTMLTextView">
+        <attr name="htv_text" format="reference|string" />
+        <attr name="htv_text_color" format="color" />
+        <attr name="htv_fontname" format="reference|string" />
+        <attr name="htv_text_align" format="integer" >
+            <enum name="justify" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="center" value="3"/>
+        </attr>
+        <attr name="htv_text_align_last" format="integer" >
+            <enum name="justify" value="0"/>
+            <enum name="left" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="center" value="3"/>
+        </attr>
+        <attr name="htv_language_code" format="reference|string" />
+        <attr name="htv_rtl" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="htv_text_bold" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="htv_text_size" format="integer" />
+        <attr name="htv_view_line" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressMeter">
+        <attr name="cpv_text" format="reference|string" />
+        <attr name="cpv_text_size" format="integer" />
+        <attr name="cpv_text_color" format="color" />
+        <attr name="cpv_background" format="color" />
+        <attr name="cpv_progress" format="integer" />
+        <attr name="cpv_progress_color" format="color" />
+        <attr name="cpv_progress_width" format="integer" />
+        <attr name="cpv_shadow" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="cpv_shadow_thickness" format="integer" />
+        <attr name="cpv_indicator" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="cpv_indicator_shadow" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="cpv_indicator_color" format="color" />
+        <attr name="cpv_indicator_width" format="integer" />
+        <attr name="cpv_animation" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="cpv_animation_duration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="FloatingHintEditTextLayout">
+        <attr name="floatingHintTextAppearance" format="reference" />
+        <attr name="floatingHintSidePadding" format="reference|dimension" />
+        <attr name="floatingHintInAnimation" format="reference" />
+        <attr name="floatingHintOutAnimation" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ReadMoreView">
+        <attr name="rm_text" format="reference|string" />
+        <attr name="rm_read_more_text" format="reference|string" />
+        <attr name="rm_read_less_text" format="reference|string" />
+        <attr name="rm_fontname" format="reference|string" />
+        <attr name="rm_text_size" format="integer" />
+        <attr name="rm_text_color" format="color" />
+        <attr name="rm_read_more_text_color" format="color" />
+        <attr name="rm_max_line" format="integer" />
+        <attr name="rm_text_bold" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ReadMoreTextView">
+        <attr name="rmtv_read_more_text" format="reference|string" />
+        <attr name="rmtv_read_less_text" format="reference|string" />
+        <attr name="rmtv_fontname" format="reference|string" />
+        <attr name="rmtv_read_more_text_color" format="color" />
+        <attr name="rmtv_max_line" format="integer" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PrefixTextView">
+        <attr name="prefix_text" format="reference|string" />
+        <attr name="prefix_text_color" format="reference|color" />
+        <attr name="prefix_text_align" format="integer" >
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="ShapeImageView">
+        <attr name="siv_border" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="siv_border_color" format="color|reference" />
+        <attr name="siv_border_width" format="integer|reference" />
+        <attr name="siv_shadow" format="boolean" >
+            <enum name="no" value="0"/>
+            <enum name="yes" value="1"/>
+        </attr>
+        <attr name="siv_shadow_color" format="color|reference" />
+        <attr name="siv_shadow_thickness" format="integer|reference" />
+
+        <attr name="siv_shape" format="integer" >
+            <enum name="circle" value="0"/>
+            <enum name="square" value="1"/>
+            <enum name="square_rounded" value="2"/>
+            <enum name="arc" value="3"/>
+            <enum name="star" value="4"/>
+            <enum name="heart" value="5"/>
+            <enum name="hexagon" value="6"/>
+            <enum name="octagon" value="7"/>
+            <enum name="diamond" value="8"/>
+            <enum name="pentagon" value="9"/>
+            <enum name="custom" value="10"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalPicker">
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="values" format="reference" />
+        <attr name="android:ellipsize" />
+        <attr name="android:marqueeRepeatLimit" />
+        <attr name="dividerSize" format="dimension" />
+        <attr name="sideItems" format="integer" />
+    </declare-styleable>
+
+    <attr name="horizontalPickerStyle" format="reference" />
+
 </resources>

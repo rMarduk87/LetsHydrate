@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:background="@color/app_transparant">
+
+	<LinearLayout
+        android:id="@+id/item_block"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingTop="@dimen/dp_10"
+		android:paddingStart="@dimen/dp_10"
+		android:paddingEnd="@dimen/dp_10">
+
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:id="@+id/question_block"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:includeFontPadding="true"
+					android:text="@string/faq_q"
+					android:layout_marginEnd="@dimen/dp_5"
+					android:visibility="gone"
+					android:textColor="@color/rdo_gender_select"
+					android:textSize="@dimen/dp_14"
+					android:fontFamily="@font/calibri_bold"/>
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/lbl_question"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_weight="1"
+					android:fontFamily="@font/calibri_bold"
+					android:includeFontPadding="true"
+					android:text="Question"
+					android:textColor="@color/rdo_gender_select"
+					android:textSize="@dimen/dp_14" />
+
+				<ImageView
+					android:id="@+id/img_faq"
+					android:layout_width="@dimen/dp_17"
+					android:layout_height="@dimen/dp_17"
+					android:layout_gravity="center_vertical"
+					android:src="@drawable/ic_faq_plus"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/answer_block"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/dp_5"
+				android:visibility="gone"
+				android:orientation="horizontal">
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:includeFontPadding="true"
+					android:text="@string/faq_a"
+					android:visibility="gone"
+					android:layout_marginEnd="@dimen/dp_5"
+					android:textColor="@color/rdo_gender_select"
+					android:textSize="@dimen/dp_14"
+					android:fontFamily="@font/calibri_regular"/>
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/lbl_answer"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:includeFontPadding="true"
+					android:paddingBottom="2dp"
+					android:layout_gravity="center_vertical"
+					android:text="Answer"
+					android:textColor="@color/rdo_gender_select"
+					android:textSize="@dimen/dp_14"
+					android:fontFamily="@font/calibri_regular"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<View
+			android:id="@+id/divider"
+			android:layout_width="fill_parent"
+			android:layout_height="0.5dp"
+			android:layout_marginTop="@dimen/dp_10"
+			android:background="@color/item_line"></View>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -141,4 +141,46 @@ object SharedPreferencesManager {
     var indexYear: Int
         get() = sharedPreferences.getInt(AppUtils.INDEX_YEAR_KEY,-1)
         set(value) = sharedPreferences.edit().putInt(AppUtils.INDEX_YEAR_KEY, value).apply()
+    var hideWelcomeScreen: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.HIDE_WELCOME_SCREEN,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.HIDE_WELCOME_SCREEN, value).apply()
+    var personWeightUnit: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.PERSON_WEIGHT_UNIT,true)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.PERSON_WEIGHT_UNIT, value).apply()
+    var personWeight: String
+        get() = sharedPreferences.getString(AppUtils.PERSON_WEIGHT, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.PERSON_WEIGHT, value).apply()
+    var userName: String
+        get() = sharedPreferences.getString(AppUtils.USER_NAME, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.USER_NAME, value).apply()
+    var personHeight: String
+        get() = sharedPreferences.getString(AppUtils.PERSON_HEIGHT, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.PERSON_HEIGHT, value).apply()
+    var wakeUpTimeNew: String
+        get() = sharedPreferences.getString(AppUtils.WAKE_UP_TIME, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.WAKE_UP_TIME, value).apply()
+    var bedTime: String
+        get() = sharedPreferences.getString(AppUtils.BED_TIME, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.BED_TIME, value).apply()
+    var ignoreNextStep: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IGNORE_NEXT_STEP,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IGNORE_NEXT_STEP, value).apply()
+    var isMigration: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_MIGRATION,true)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_MIGRATION, value).apply()
+    var setManuallyGoal: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.SET_MANUALLY_GOAL,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.SET_MANUALLY_GOAL, value).apply()
+    var setManuallyGoalValue: Float
+        get() = sharedPreferences.getFloat(AppUtils.SET_MANUALLY_GOAL_VALUE,0f)
+        set(value) = sharedPreferences.edit().putFloat(AppUtils.SET_MANUALLY_GOAL_VALUE, value).apply()
+    var isPregnant: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_PREGNANT,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_PREGNANT, value).apply()
+    var isBreastfeeding: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_BREASTFEEDING,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_BREASTFEEDING, value).apply()
+    var personHeightUnit: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.PERSON_HEIGHT_UNIT,true)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.PERSON_HEIGHT_UNIT, value).apply()
 }

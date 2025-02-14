@@ -10,15 +10,15 @@ plugins {
 
 android {
     namespace 'rpt.tool.mementobibere'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "rpt.tool.mementobibere"
         minSdk 34
-        targetSdk 34
+        targetSdk 35
         versionCode 30
         versionName "1.0.5"
-
+        useLibrary "org.apache.http.legacy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -64,6 +64,23 @@ dependencies {
     //Misc
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.wdullaer:materialdatetimepicker:2.2.0'
+    implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
+    implementation 'androidx.compose.ui:ui-text-android:1.7.8'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
+    implementation 'androidx.print:print:1.0.0'
+    implementation('org.apache.httpcomponents:httpmime:4.5.6')
+            {
+                exclude module: 'httpclient'
+            }
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+    // for image crop
+    implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -113,6 +130,7 @@ dependencies {
     implementation("com.github.skydoves:balloon:1.6.12")
     //Button
     implementation 'info.hoang8f:fbutton:1.0.5'
+    implementation 'androidx.activity:activity-ktx:1.10.0'
     //Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'

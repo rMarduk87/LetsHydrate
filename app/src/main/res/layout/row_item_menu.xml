@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<View
+		android:id="@+id/lbl_divider"
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:layout_marginStart="@dimen/dp_17"
+		android:layout_marginTop="@dimen/dp_5"
+		android:layout_marginBottom="@dimen/dp_5"
+		android:visibility="gone"
+		android:background="@color/menu_line"/>
+
+	<LinearLayout
+        android:id="@+id/item_block"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<View
+			android:id="@+id/selected_view"
+			android:layout_width="@dimen/dp_3"
+			android:layout_height="fill_parent"
+			android:background="@color/blue_color"
+			android:visibility="gone"
+			/>
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:paddingRight="5dp"
+			android:paddingLeft="5dp">
+
+			<ImageView
+				android:id="@+id/menu_img"
+				android:layout_width="@dimen/dp_22"
+				android:layout_height="@dimen/dp_22"
+				android:layout_marginStart="10dp"
+				android:layout_marginEnd="10dp"
+				android:src="@drawable/ic_launcher_background"
+				android:tint="@color/rdo_gender_select"/>
+
+			<TextView
+				android:id="@+id/menu_name"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:includeFontPadding="true"
+				android:text="Product Name"
+				android:textColor="@color/rdo_gender_select"
+				android:textSize="@dimen/dp_12"
+				android:fontFamily="@font/calibri_light"/>
+
+		</LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

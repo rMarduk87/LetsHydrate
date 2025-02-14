@@ -1,79 +1,79 @@
 <resources>
-    <string name="app_name">Idratiamoci</string>
-    <string name="btn_notific">Avviso</string>
-    <string name="fabb_add">Aggiungi</string>
-    <string name="btn_stats">Statistiche</string>
+    <string name="app_name">Let\'s hydrate</string>
+    <string name="btn_notific">Notific</string>
+    <string name="fabb_add">Add</string>
+    <string name="btn_stats">Stats</string>
     <string name="title_activity_stats">StatsActivity</string>
-    <string name="pref_notification_message_value">Ehi... beviamo un po\' d\'acqua...</string>
-    <string name="add_info_text">Per favore inserisci alcuni dati per poter rendere migliore la tua esperienza!!!</string>
-    <string name="str_continue">Continua</string>
-    <string name="enter_your_name_hint">Inserisci il tuo nome</string>
-    <string name="age_hint">Inserisci la tua età</string>
-    <string name="weight_hint">Inserisci il peso</string>
-    <string name="custom_intake_hint">Inserisci il tuo obiettivo di assunzione personalizzato in</string>
-    <string name="workout_hint">Tipo di allenamento quotidiano</string>
-    <string name="wakeup_hint">A che ora ti alzi</string>
-    <string name="sleeping_hint">A che ora vai a dormire</string>
-    <string name="tagline_text">Mantieniti idratato...</string>
-    <string name="get_started">Inizia</string>
-    <string name="edit_info_text">Modifica le tue informazioni</string>
-    <string name="update">Aggiorna</string>
-    <string name="notif_setting_header">Impostazioni di notifica</string>
-    <string name="notif_messsage_hint">Messaggio di notifica</string>
-    <string name="notif_tone_hint">Tono di notifica</string>
-    <string name="notif_freq_hint">Frequenza di notifica</string>
-    <string name="walkthrough_text_one">Chiara, pura, essenziale per la vita e la salute. L\'acqua è il componente principale del corpo umano, basti pensare che rappresenta circa il 60 per cento del peso nei maschi adulti, mentre dal 50 al 55 per cento nelle donne e fino al 75 per cento in un neonato
-     </string>
-    <string name="walkthrough_text_two">La mancanza di acqua può portare alla disidratazione. Anche una lieve disidratazione può prosciugarti e
-         renderti stanco.
-     </string>
-    <string name="walkthrough_text_three">Ogni cellula, tessuto e organo del tuo corpo ha bisogno di acqua per funzionare correttamente, elemento alla base delle principali funzioni fisiche e cognitive
-     </string>
-    <string name="dot">punto</string>
+    <string name="pref_notification_message_value">Hey… Lets drink some water…</string>
+    <string name="add_info_text">Please enter some data to make your experience better!!!</string>
+    <string name="str_continue">Continue</string>
+    <string name="enter_your_name_hint">Enter your name</string>
+    <string name="age_hint">Enter your age</string>
+    <string name="weight_hint">Enter your weight</string>
+    <string name="custom_intake_hint">Enter your custom intake target in</string>
+    <string name="workout_hint">Type of daily workout</string>
+    <string name="wakeup_hint">Your wake up time</string>
+    <string name="sleeping_hint">Your Sleep time</string>
+    <string name="tagline_text">Lets keep you hydrated…</string>
+    <string name="get_started">Get Started</string>
+    <string name="edit_info_text">Edit Your Info</string>
+    <string name="update">Update</string>
+    <string name="notif_setting_header">Notification Settings</string>
+    <string name="notif_messsage_hint">Notification Message</string>
+    <string name="notif_tone_hint">Notification Tone</string>
+    <string name="notif_freq_hint">Notification Frequency</string>
+    <string name="walkthrough_text_one">Clear, pure, essential for life and health. Water is the main component of the human body, just think that it represents about 60 percent of the weight in adult males, while from 50 to 55 percent in women and up to 75 percent in a newborn
+    </string>
+    <string name="walkthrough_text_two">Lack of water can lead to dehydration. Even mild dehydration can drain you and
+        make you tired.
+    </string>
+    <string name="walkthrough_text_three">Every cell, tissue and organ in your body needs water to work properly, an element at the base of the main physical and cognitive functions
+    </string>
+    <string name="dot">dot</string>
     <string name="dialog_OK_button">OK</string>
     <string name="dialog_NO_button">No</string>
-    <string name="dialog_Later_button">Forse più tardi</string>
-    <string name="rationale_dialog_ok">Ok</string>
-    <string name="rationale_dialog_cancel">Annulla</string>
+    <string name="dialog_Later_button">Maybe later</string>
+    <string name="rationale_dialog_ok">OK</string>
+    <string name="rationale_dialog_cancel">Cancel</string>
     <string name="unhandled_request_code_exception_message" translatable="false">Request code %d is not handled by the RequestResultsDispatcher object. Please add a withRequestCode block to the buildRequestResultsDispatcher function.</string>
     <string name="init_user_info_fragment_label">InitUserInfo</string>
-    <string name="generic_error">Si è verificato un errore.</string>
-    <string name="close">Chiudi</string>
-    <string name="showErrorFrag">Errore</string>
-    <string name="select_wakeup_time">Seleziona a che ora ti svegli</string>
-    <string name="select_sleeping_time">Seleziona a che ora vai a dormire</string>
-    <string name="please_input_your_weight">Inserisci il tuo peso</string>
-    <string name="please_input_a_valid_weight">Inserisci un peso valido</string>
-    <string name="please_input_your_workout_time">Inserisci il tempo di allenamento</string>
-    <string name="please_input_a_valid_workout_time">Inserisci un tempo di allenamento valido</string>
-    <string name="hey_lets_drink_some_water">Ehi... beviamo un po\' d\'acqua....</string>
-    <string name="select_ringtone_for_notifications">Seleziona la suoneria per le notifiche:</string>
-    <string name="please_a_notification_message">Per favore inserisci un messaggio di notifica</string>
-    <string name="please_select_a_notification_frequency">Seleziona una frequenza di notifica</string>
-    <string name="please_input_your_custom_target">Inserisci il tuo target personalizzato</string>
-    <string name="values_updated_successfully">Valori aggiornati con successo</string>
-    <string name="please_click_back_again_to_exit">Fai nuovamente clic su INDIETRO per uscire</string>
-    <string name="you_achieved_the_goal">Hai raggiunto l\'obiettivo</string>
-    <string name="your_water_intake_was_saved">Il tuo consumo di acqua è stato salvato...!!</string>
-    <string name="you_already_achieved_the_goal">Hai già raggiunto l\'obiettivo</string>
-    <string name="please_select_an_option">Seleziona un\'opzione</string>
-    <string name="notification_enabled">Notifica abilitata..</string>
-    <string name="notification_disabled">Notifica disabilitata..</string>
-    <string name="empty">Vuoto</string>
-    <string name="walkthrough_text_four">Quanto bere?\nAdolescenti, adulti e anziani: maschi 2,5 litri al giorno, femmine 2 litri al giorno</string>
-    <string name="back">Indietro</string>
-    <string name="_30_mins">30 minuti</string>
-    <string name="_45_mins">45 minuti</string>
-    <string name="_60_mins">60 minuti</string>
+    <string name="generic_error">There was an error.</string>
+    <string name="close">Close</string>
+    <string name="showErrorFrag">Error</string>
+    <string name="select_wakeup_time">Select Wakeup Time</string>
+    <string name="select_sleeping_time">Select Sleeping Time</string>
+    <string name="please_input_your_weight">Please input your weight</string>
+    <string name="please_input_a_valid_weight">Please input a valid weight</string>
+    <string name="please_input_your_workout_time">Please input your workout time</string>
+    <string name="please_input_a_valid_workout_time">Please input a valid workout time</string>
+    <string name="hey_lets_drink_some_water">Hey… Lets drink some water....</string>
+    <string name="select_ringtone_for_notifications">Select ringtone for notifications:</string>
+    <string name="please_a_notification_message">Please a notification message</string>
+    <string name="please_select_a_notification_frequency">Please select a notification frequency</string>
+    <string name="please_input_your_custom_target">Please input your custom target</string>
+    <string name="values_updated_successfully">Values updated successfully</string>
+    <string name="please_click_back_again_to_exit">Please click BACK again to exit</string>
+    <string name="you_achieved_the_goal">You achieved the goal</string>
+    <string name="your_water_intake_was_saved">Your water intake was saved…!!</string>
+    <string name="you_already_achieved_the_goal">You already achieved the goal</string>
+    <string name="please_select_an_option">Please select an option</string>
+    <string name="notification_enabled">Notification Enabled..</string>
+    <string name="notification_disabled">Notification Disabled..</string>
+    <string name="empty">Empty</string>
+    <string name="walkthrough_text_four">How much to drink?\nAdolescents, adults and the elderly: males 2.5 liters a day, females 2 liters a day</string>
+    <string name="back">Back</string>
+    <string name="_30_mins">30 Mins</string>
+    <string name="_45_mins">45 Mins</string>
+    <string name="_60_mins">60 Mins</string>
     <string name="_1100_ml">1100 ml</string>
     <string name="_3100_ml">3100 ml</string>
-    <string name="remaining">Quantitativo restante</string>
-    <string name="target">Obiettivo</string>
-    <string name="summary">Riepilogo</string>
-    <string name="check_out_the_app_at">Ehi, scarica questa fantastica app!</string>
-    <string name="share_via">Condividi tramite</string>
-    <string name="no_app_available">Nessuna app disponibile</string>
-    <string name="btn_settings">Impostazioni</string>
+    <string name="remaining">Remaining</string>
+    <string name="target">Target</string>
+    <string name="summary">Summary</string>
+    <string name="check_out_the_app_at">Hey, Download this awesome app!</string>
+    <string name="share_via">Share via</string>
+    <string name="no_app_available">No App Available</string>
+    <string name="btn_settings">Settings</string>
     <string name="_50_ml">50</string>
     <string name="_100_ml">100</string>
     <string name="_150_ml">150</string>
@@ -81,14 +81,14 @@
     <string name="_250_ml">250</string>
     <string name="todo">TODO</string>
     <string name="todo2">TODO2</string>
-    <string name="daily_drink_target">Obiettivo di oggi</string>
-    <string name="daily_drink_target_large">Obiettivo di oggi</string>
+    <string name="daily_drink_target">Daily Target</string>
+    <string name="daily_drink_target_large">Daily Target</string>
     <string name="custom">Custom</string>
     <string name="_2000">2000</string>
     <string name="_3500_ml">/3500 ml</string>
-    <string name="credits_text">Crediti</string>
-    <string name="send_mail">Invia e-mail</string>
-    <string name="dialog_mail_message">Hai qualche suggerimento per l\'app?\n(bug, cose da aggiungere, errori, traduzioni da aggiungere, ecc. ecc.)\nInvia un\'email!!!(Se possibile in inglese)</string>
+    <string name="credits_text">Credits</string>
+    <string name="send_mail">Send mail for suggestions or feedback</string>
+    <string name="dialog_mail_message">Do you have any suggestions for the app?\n(bugs, things to add, errors, translations to add, etc, etc)\nSend an email!!!(In English if possible)</string>
     <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
     <string name="suggestions_for_memento_bibere">Suggestions for Memento Bibere</string>
     <string name="your_message_here">Your message here</string>
@@ -103,180 +103,676 @@
     <string name="dialog_default_title">Here\'s a message!</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="LOADING">Loading...</string>
+    <string name="LOADING">Loading…</string>
     <string name="default_progressbar">Default Progressbar:</string>
-    <string name="wathsnew">Novità</string>
-    <string name="dialog_new_message">\nAggiunta analisi di crash e bug</string>
-    <string name="dialog_new_version_message">Novità per la versione </string>
-    <string name="intake_report">Statistiche</string>
-    <string name="info_settings"><![CDATA[IMPOSTAZIONI]]></string>
+    <string name="wathsnew">What\'s new</string>
+    <string name="dialog_new_message">\nAdded crash and bug analysis</string>
+    <string name="dialog_new_version_message">What\'s new for the release </string>
+    <string name="intake_report">Report</string>
+    <string name="info_settings"><![CDATA[SETTINGS]]></string>
     <string name="info_title">INFO</string>
-    <string name="legal">LEGALE</string>
+    <string name="legal">LEGAL</string>
     <string name="privacy">Privacy</string>
-    <string name="settings_title">IMPOSTAZIONI</string>
-    <string name="use_dark_theme">Tema dell\'App</string>
-    <string name="dark">Scuro</string>
-    <string name="light">Chiaro</string>
+    <string name="settings_title">SETTINGS</string>
+    <string name="use_dark_theme">Theme of App</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
     <string name="oz_uk">Oz(UK)</string>
     <string name="oz_us">Oz(Us)</string>
     <string name="ml">ml</string>
-    <string name="type_unit">Unità di misura</string>
-    <string name="policy_val"><![CDATA[<h1>Informativa sulla privacy</h1>\n<p>Ultimo aggiornamento: 5 settembre 2023</p>\n<p>La presente Informativa sulla privacy descrive le nostre politiche e procedure sulla raccolta, l\\\'utilizzo e la divulgazione delle tue informazioni quando utilizzare il Servizio e ti informa sui tuoi diritti alla privacy e su come la legge ti protegge.</p>\n<p>Utilizziamo i tuoi dati personali per fornire e migliorare il Servizio. Utilizzando il Servizio, accetti la raccolta e l\\\'utilizzo delle informazioni in conformità con la presente Informativa sulla privacy. La presente Informativa sulla privacy è stata creata con l\\\'aiuto del <a href=\"https://www.termsfeed.com/privacy-policy-generator/\" target=\"_blank\">Privacy Policy Generator</a>.</p>\n<h1>Interpretazione e definizioni</h1>\n<h2>Interpretazione</h2>\n<p>Le parole la cui lettera iniziale è maiuscola hanno significati definiti alle seguenti condizioni. Le seguenti definizioni avranno lo stesso significato indipendentemente dal fatto che appaiano al singolare o al plurale.</p>\n<h2>Definizioni</h2>\n<p>Ai fini della presente Informativa sulla privacy:</p> \n<ul>\n<li>\n<p>
-Per <strong>Account</strong> si intende un account univoco creato per consentirti di accedere al nostro Servizio o a parti del nostro Servizio.</p>\n</li>\n<li>\n<p>
-<strong>Affiliato</strong> indica un\\\'entità che controlla, è controllata da o è sotto il controllo comune di una parte, dove "controllo"; indica la proprietà del 50% o più delle azioni, delle partecipazioni o di altri titoli con diritto di voto per l\\\'elezione degli amministratori o di altri organi di gestione.</p>\n</li>\n<li>\n<p>
-<strong>Applicazione</strong> si riferisce a Memento Bibere, il programma software fornito dalla Società.</p>\n</li>\n<li>\n<p>
-<strong>Azienda</strong> (denominata \"la Società\", \"Noi\", \"Ci\" o \"Nostro\" nel presente Contratto) si riferisce a Memento Bibere.</p>\n</ li>\n<li>\n<p>
-Per <strong>Paese</strong> si intende: Italia</p>\n</li>\n<li>\n<p>
-Per <strong>Dispositivo</strong> si intende qualsiasi dispositivo che può accedere al Servizio come un computer, un cellulare o un tablet digitale.</p>\n</li>\n<li>\n<p>
-I <strong>dati personali</strong> sono qualsiasi informazione relativa a un individuo identificato o identificabile.</p>\n</li>\n<li>\n<p>
-<strong>Servizio</strong> si riferisce all\\\'Applicazione.</p>\n</li>\n<li>\n<p>
-			Per <strong>Fornitore di servizi</strong> si intende qualsiasi persona fisica o giuridica che elabora i dati per conto della Società. Si riferisce a società terze o individui impiegati dalla Società per facilitare il Servizio, fornire il Servizio per conto della Società, eseguire servizi relativi al Servizio o assistere la Società nell\\\'analisi di come viene utilizzato il Servizio.</ p>\n</li>\n<li>\n<p>
-I <strong>Dati di utilizzo</strong> si riferiscono ai dati raccolti automaticamente, generati dall\\\'uso del Servizio o dall\\\'infrastruttura del Servizio stesso (ad esempio, la durata della visita di una pagina).</p>\n</li >\n<li>\n<p>
-Per <strong>Tu</strong> si intende l\\\'individuo che accede o utilizza il Servizio, oppure la società o altra entità legale per conto della quale tale individuo accede o utilizza il Servizio, a seconda dei casi.</p>\n</li >\n</ul>\n<h1>Raccolta e utilizzo dei dati personali</h1>\n<h2>Tipi di dati raccolti</h2>\n<h3>Dati personali</h3>\n<p >Durante l\\\'utilizzo del nostro servizio, potremmo chiederti di fornirci determinate informazioni di identificazione personale che possono essere utilizzate per contattarti o identificarti. Le informazioni di identificazione personale possono includere, ma non sono limitate a:</p>\n<ul>\n<li>Dati di utilizzo</li>\n</ul>\n<h3>Dati di utilizzo</h3>\n<p>I dati di utilizzo vengono raccolti automaticamente quando si utilizza il Servizio.</p>\n<p>I dati di utilizzo possono includere informazioni come l\\\'indirizzo del protocollo Internet del tuo dispositivo (ad esempio indirizzo IP), tipo di browser, browser versione, le pagine del nostro Servizio che visiti, l\\\'ora e la data della tua visita, il tempo trascorso su quelle pagine, identificatori univoci del dispositivo e altri dati diagnostici.</p>\n<p>Quando accedi al Servizio tramite o tramite un dispositivo mobile, potremmo raccogliere automaticamente determinate informazioni, incluso, ma non limitato a, il tipo di dispositivo mobile che utilizzi, l\\\'ID univoco del tuo dispositivo mobile, l\\\'indirizzo IP del tuo dispositivo mobile, il tuo sistema operativo mobile, il tipo di dispositivo mobile Browser Internet che utilizzi, identificatori univoci del dispositivo e altri dati diagnostici.</p>\n<p>Potremmo anche raccogliere informazioni che il tuo browser invia ogni volta che visiti il nostro Servizio o quando accedi al Servizio da o tramite un dispositivo mobile.</p>\n<h2>Utilizzo dei tuoi dati personali</h2>\n<p>La Società può utilizzare i dati personali per i seguenti scopi:</p>\n<ul>\n<li>\n<p>
-<strong>Per fornire e mantenere il nostro Servizio</strong>, incluso il monitoraggio dell\\\'utilizzo del nostro Servizio.</p>\n</li>\n<li>\n<p>
-<strong>Per gestire il tuo account:</strong> per gestire la tua registrazione come utente del Servizio. I dati personali forniti possono darti accesso a diverse funzionalità del Servizio a tua disposizione come utente registrato.</p>\n</li>\n<li>\n<p>
-<strong>Per l\\\'esecuzione di un contratto:</strong> lo sviluppo, la conformità e l\\\'esecuzione del contratto di acquisto dei prodotti, articoli o servizi acquistati o di qualsiasi altro contratto con noi tramite il Servizio.</p>\n</li>\n<li>\n<p>
-<strong>Per contattarti:</strong> per contattarti tramite e-mail, telefonate, SMS o altre forme equivalenti di comunicazione elettronica, come le notifiche push di un\\\'applicazione mobile riguardanti aggiornamenti o comunicazioni informative relative al funzionalità, prodotti o servizi contrattuali, inclusi gli aggiornamenti di sicurezza, quando necessari o ragionevoli per la loro implementazione.</p>\n</li>\n<li>\n<p>
-<strong>Per fornirti</strong> notizie, offerte speciali e informazioni generali su altri beni, servizi ed eventi che offriamo che sono simili a quelli che hai già acquistato o su cui hai chiesto informazioni a meno che tu non abbia scelto di non ricevere tali informazioni .</p>\n</li>\n<li>\n<p>
-<strong>Per gestire le tue richieste:</strong> per partecipare e gestire le tue richieste a noi.</p>\n</li>\n<li>\n<p>
-			<strong>Per trasferimenti aziendali:</strong> potremmo utilizzare le tue informazioni per valutare o condurre una fusione, cessione, ristrutturazione, riorganizzazione, scioglimento o altra vendita o trasferimento di alcuni o tutti i nostri beni, sia come entità in funzionamento che nell\\\'ambito di un fallimento, liquidazione o procedimento simile, in cui i dati personali da noi detenuti sugli utenti del nostro Servizio rientrano tra le risorse trasferite.</p>\n</li>\n<li>\n<p>
-<strong>Per altri scopi</strong>: potremmo utilizzare le tue informazioni per altri scopi, come l\\\'analisi dei dati, l\\\'identificazione delle tendenze di utilizzo, la determinazione dell\\\'efficacia delle nostre campagne promozionali e per valutare e migliorare il nostro Servizio, prodotti, servizi, marketing e la tua esperienza.</p>\n</li>\n</ul>\n<p>Potremmo condividere le tue informazioni personali nelle seguenti situazioni:</p>\n<ul>\n<li>
-<strong>Con i fornitori di servizi:</strong> potremmo condividere le tue informazioni personali con i fornitori di servizi per monitorare e analizzare l\\\'utilizzo del nostro Servizio e per contattarti.</li>\n<li>
-		<strong>Per trasferimenti aziendali:</strong> possiamo condividere o trasferire le vostre informazioni personali in relazione a, o durante le negoziazioni di, qualsiasi fusione, vendita di beni aziendali, finanziamento o acquisizione di tutta o parte della nostra attività a un altro azienda.</li>\n<li>
-<strong>Con gli affiliati:</strong> potremmo condividere le tue informazioni con i nostri affiliati, nel qual caso richiederemo a tali affiliati di rispettare la presente Informativa sulla privacy. Gli affiliati includono la nostra società madre e qualsiasi altra società controllata, partner di joint venture o altre società che controlliamo o che sono sotto controllo comune con noi.</li>\n<li>
-<strong>Con partner commerciali:</strong> potremmo condividere le tue informazioni con i nostri partner commerciali per offrirti determinati prodotti, servizi o promozioni.</li>\n<li>
-		<strong>Con altri utenti:</strong> quando condividi informazioni personali o interagisci in altro modo nelle aree pubbliche con altri utenti, tali informazioni potrebbero essere visualizzate da tutti gli utenti e potrebbero essere distribuite pubblicamente all\\\'esterno.</li>\n<li >
-<strong>Con il tuo consenso</strong>: potremmo divulgare le tue informazioni personali per qualsiasi altro scopo con il tuo consenso.</li>\n</ul>\n<h2>Conservazione dei tuoi dati personali</h2>\n<p>La Società conserverà i tuoi dati personali solo per il tempo necessario agli scopi indicati nella presente Informativa sulla privacy. Conserveremo e utilizzeremo i tuoi dati personali nella misura necessaria per rispettare i nostri obblighi legali (ad esempio, se ci viene richiesto di conservare i tuoi dati per rispettare le leggi applicabili), risolvere controversie e applicare i nostri accordi e politiche legali.</ p>\n<p>La Società conserverà inoltre i Dati di utilizzo per scopi di analisi interna. I dati di utilizzo vengono generalmente conservati per un periodo di tempo più breve, tranne quando questi dati vengono utilizzati per rafforzare la sicurezza o migliorare la funzionalità del nostro servizio, oppure siamo legalmente obbligati a conservare questi dati per periodi di tempo più lunghi.</p>\n<h2>Trasferimento dei tuoi Dati Personali</h2>\n<p>Le tue informazioni, inclusi i Dati Personali, sono trattati presso le sedi operative della Società ed in ogni altro luogo in cui le parti coinvolte nel trattamento si trovano situato. Ciò significa che queste informazioni potrebbero essere trasferite e mantenute su computer situati al di fuori del tuo stato, provincia, paese o altra giurisdizione governativa in cui le leggi sulla protezione dei dati potrebbero differire da quelle della tua giurisdizione.</p>\n<p>		Il tuo consenso alla presente Informativa sulla privacy seguito dall\\\'invio di tali informazioni rappresenta il tuo consenso a tale trasferimento.</p>\n<p>La Società adotterà tutte le misure ragionevolmente necessarie per garantire che i tuoi dati siano trattati in modo sicuro e in conformità con questa Informativa sulla privacy e nessun trasferimento dei tuoi dati personali avrà luogo a un\\\'organizzazione o a un paese a meno che non siano in atto controlli adeguati, inclusa la sicurezza dei tuoi dati e altre informazioni personali.</p>\n<h2>Elimina i tuoi dati personali</h2>\n<p>Hai il diritto di eliminare o richiederci assistenza nell\\\'eliminazione dei dati personali che abbiamo raccolto su di te.</p>\n<p>Il nostro servizio potrebbe darti la possibilità di eliminare determinati informazioni su di te dall\\\'interno del Servizio.</p>\n<p>Puoi aggiornare, modificare o eliminare le tue informazioni in qualsiasi momento accedendo al tuo account, se ne hai uno, e visitando la sezione delle impostazioni dell\\\'account che consente di gestire le tue informazioni personali. Puoi anche contattarci per richiedere l\\\'accesso, correggere o eliminare qualsiasi informazione personale che ci hai fornito.</p>\n<p>Tieni presente, tuttavia, che potremmo dover conservare determinate informazioni quando abbiamo un obbligo legale o base legale per farlo.</p>\n<h2>Divulgazione dei tuoi dati personali</h2>\n<h3>Transazioni commerciali</h3>\n<p>Se la Società è coinvolta in un fusione, acquisizione o vendita di beni, i tuoi dati personali potrebbero essere trasferiti. Forniremo un avviso prima che i tuoi dati personali vengano trasferiti e diventino soggetti a una diversa Informativa sulla privacy.</p>\n<h3>Forze dell\\\'ordine</h3>\n<p>In determinate circostanze, alla Società potrebbe essere richiesto di divulgare I tuoi dati personali se richiesto dalla legge o in risposta a richieste valide da parte delle autorità pubbliche (ad esempio un tribunale o un ente governativo).</p>\n<h3>Altri requisiti legali</h3>\n<p> La Società può divulgare i tuoi dati personali in buona fede, ritenendo che tale azione sia necessaria per:</p>\n<ul>\n<li>Rispettare un obbligo legale</li>\n<li>Proteggere e difendere i diritti o la proprietà della Società</li>\n<li>Prevenire o indagare su possibili illeciti in relazione al Servizio</li>\n<li>Proteggere la sicurezza personale degli Utenti del Servizio o del pubblico</li >\n<li>Proteggere dalla responsabilità legale</li>\n</ul>\n<h2>Sicurezza dei tuoi dati personali</h2>\n<p>La sicurezza dei tuoi dati personali è importante per noi, ma ricorda che nessun metodo di trasmissione su Internet o metodo di archiviazione elettronica è sicuro al 100%. Anche se ci impegniamo a utilizzare mezzi commercialmente accettabili per proteggere i tuoi dati personali, non possiamo garantirne l\\\'assoluta sicurezza.</p>\n<h1>Privacy dei bambini</h1>\n<p>Il nostro servizio non garantisce rivolgersi a chiunque abbia meno di 13 anni. Non raccogliamo consapevolmente informazioni di identificazione personale da chiunque abbia meno di 13 anni. Se sei un genitore o tutore e sei consapevole che tuo figlio ci ha fornito dati personali, ti preghiamo di contattarci. Se veniamo a conoscenza di aver raccolto dati personali da persone di età inferiore a 13 anni senza la verifica del consenso dei genitori, adottiamo misure per rimuovere tali informazioni dai nostri server.</p>\n<p>Se dobbiamo fare affidamento sul consenso come base legale per l\\\'elaborazione delle tue informazioni e il tuo Paese richiede il consenso di un genitore, potremmo richiedere il consenso dei tuoi genitori prima di raccogliere e utilizzare tali informazioni.</p>\n<h1>Collegamenti ad altri siti web</h1>\n<p>Il nostro Servizio può contenere collegamenti ad altri siti Web che non sono gestiti da Noi. Se fai clic su un collegamento di terze parti, verrai indirizzato al sito di quella terza parte. Ti consigliamo vivamente di rivedere l\\\'Informativa sulla privacy di ogni sito che visiti.</p>\n<p>Non abbiamo alcun controllo e non ci assumiamo alcuna responsabilità per il contenuto, le politiche sulla privacy o le pratiche di siti o servizi di terze parti.</p>\n<h1>Modifiche alla presente Informativa sulla privacy</h1>\n<p>Potremmo aggiornare la nostra Informativa sulla privacy di tanto in tanto. Ti informeremo di eventuali modifiche pubblicando la nuova Informativa sulla privacy in questa pagina.</p>\n<p>Ti informeremo tramite e-mail e/o un avviso ben visibile sul Nostro Servizio, prima che la modifica diventi effettiva e aggiorna la sezione &quot;Ultimo aggiornamento&quot; data nella parte superiore della presente Informativa sulla privacy.</p>\n<p>Si consiglia di rivedere periodicamente la presente Informativa sulla privacy per eventuali modifiche. Le modifiche alla presente Informativa sulla privacy diventano effettive quando vengono pubblicate su questa pagina.</p>\n<h1>Contattaci</h1>\n<p>Se hai domande sulla presente Informativa sulla privacy, puoi contattarci: </p>\n<ul>\n<li>Via email: riccardo.pezzolati@gmail.com</li>\n</ul>]]></string>
-    <string name="enter_custom_input">Inserisci l\'input personalizzato</string>
-    <string name="enter_custom_input_title">In unità di misura selezionata</string>
-    <string name="notif_sleep_header">Modalità sonno (non riceverai alcuna notifica dall\'app)</string>
-    <string name="sleep_mode_start_hint">Avvia la modalità sonno</string>
-    <string name="sleep_mode_stop_hint">Termina la modalità sonno</string>
-    <string name="notification_sleep">Modalità riposo attiva</string>
-    <string name="html_credits"><![CDATA[<h1>Per creare questa app:</h1>\n\n<ul>\n<li>Le <strong>icone</strong> sono state scaricate da <a href=\"https://www.freepik.com\">freepik</a></li>\n<li>Le <strong>animazioni</strong> sono state scaricate da <a href=\" https://lottiefiles.com\">LottieFiles</a></li>\n</ul>\n\n<h2>Libreria utilizzata:</h2>\n<ul>\n<li><strong>Timber</strong> -> com.jakewharton.timber:timber:5.0.1</li>\n<li><strong>Lottie</strong> -> com.airbnb.android:lottie:6.1.0 </li>\n<li><strong>Animazione Android</strong> -> com.daimajia.easing:library:2.0@aar e com.daimajia.androidanimations:library:2.3@aar</li>\n<li><strong>Dots Indicator</strong> -> com.tgoodman:dotsindicator:5.0Indicatore di punti -> com.tgoodman:dotsindicator:5.0</li>\n<li><strong>Grafico</strong> ispirato a com.github.PhilJay:MPAndroidChart:v3.1.0 libreria</li>\n<li><strong>BottomMenu</strong> di nl.joery.animatedbottombar:library:1.1.0</li>\n<li> <strong>SweetDialog</strong> di cn.pedant.sweetalert:library:1.3</li>\n</ul>]]></string>
+    <string name="type_unit">System unit</string>
+    <string name="policy_val"><![CDATA[<h1>Privacy Policy</h1>\n<p>Last updated: September 05, 2023</p>\n<p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>\n<p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the <a href=\"https://www.termsfeed.com/privacy-policy-generator/\" target=\"_blank\">Privacy Policy Generator</a>.</p>\n<h1>Interpretation and Definitions</h1>\n<h2>Interpretation</h2>\n<p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>\n<h2>Definitions</h2>\n<p>For the purposes of this Privacy Policy:</p>\n<ul>\n<li>\n<p><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</p>\n</li>\n<li>\n<p><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p>\n</li>\n<li>\n<p><strong>Application</strong> refers to Memento Bibere, the software program provided by the Company.</p>\n</li>\n<li>\n<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Memento Bibere.</p>\n</li>\n<li>\n<p><strong>Country</strong> refers to:  Italy</p>\n</li>\n<li>\n<p><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</p>\n</li>\n<li>\n<p><strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.</p>\n</li>\n<li>\n<p><strong>Service</strong> refers to the Application.</p>\n</li>\n<li>\n<p><strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</p>\n</li>\n<li>\n<p><strong>Usage Data</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</p>\n</li>\n<li>\n<p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>\n</li>\n</ul>\n<h1>Collecting and Using Your Personal Data</h1>\n<h2>Types of Data Collected</h2>\n<h3>Personal Data</h3>\n<p>While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:</p>\n<ul>\n<li>Usage Data</li>\n</ul>\n<h3>Usage Data</h3>\n<p>Usage Data is collected automatically when using the Service.</p>\n<p>Usage Data may include information such as Your Device\\\'s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>\n<p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>\n<p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>\n<h2>Use of Your Personal Data</h2>\n<p>The Company may use Personal Data for the following purposes:</p>\n<ul>\n<li>\n<p><strong>To provide and maintain our Service</strong>, including to monitor the usage of our Service.</p>\n</li>\n<li>\n<p><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</p>\n</li>\n<li>\n<p><strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased or of any other contract with Us through the Service.</p>\n</li>\n<li>\n<p><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication, such as a mobile application\\\'s push notifications regarding updates or informative communications related to the functionalities, products or contracted services, including the security updates, when necessary or reasonable for their implementation.</p>\n</li>\n<li>\n<p><strong>To provide You</strong> with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless You have opted not to receive such information.</p>\n</li>\n<li>\n<p><strong>To manage Your requests:</strong> To attend and manage Your requests to Us.</p>\n</li>\n<li>\n<p><strong>For business transfers:</strong> We may use Your information to evaluate or conduct a merger, divestiture, restructuring, reorganization, dissolution, or other sale or transfer of some or all of Our assets, whether as a going concern or as part of bankruptcy, liquidation, or similar proceeding, in which Personal Data held by Us about our Service users is among the assets transferred.</p>\n</li>\n<li>\n<p><strong>For other purposes</strong>: We may use Your information for other purposes, such as data analysis, identifying usage trends, determining the effectiveness of our promotional campaigns and to evaluate and improve our Service, products, services, marketing and your experience.</p>\n</li>\n</ul>\n<p>We may share Your personal information in the following situations:</p>\n<ul>\n<li><strong>With Service Providers:</strong> We may share Your personal information with Service Providers to monitor and analyze the use of our Service,  to contact You.</li>\n<li><strong>For business transfers:</strong> We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of Our business to another company.</li>\n<li><strong>With Affiliates:</strong> We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</li>\n<li><strong>With business partners:</strong> We may share Your information with Our business partners to offer You certain products, services or promotions.</li>\n<li><strong>With other users:</strong> when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside.</li>\n<li><strong>With Your consent</strong>: We may disclose Your personal information for any other purpose with Your consent.</li>\n</ul>\n<h2>Retention of Your Personal Data</h2>\n<p>The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.</p>\n<p>The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</p>\n<h2>Transfer of Your Personal Data</h2>\n<p>Your information, including Personal Data, is processed at the Company\\\'s operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</p>\n<p>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</p>\n<p>The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</p>\n<h2>Delete Your Personal Data</h2>\n<p>You have the right to delete or request that We assist in deleting the Personal Data that We have collected about You.</p>\n<p>Our Service may give You the ability to delete certain information about You from within the Service.</p>\n<p>You may update, amend, or delete Your information at any time by signing in to Your Account, if you have one, and visiting the account settings section that allows you to manage Your personal information. You may also contact Us to request access to, correct, or delete any personal information that You have provided to Us.</p>\n<p>Please note, however, that We may need to retain certain information when we have a legal obligation or lawful basis to do so.</p>\n<h2>Disclosure of Your Personal Data</h2>\n<h3>Business Transactions</h3>\n<p>If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>\n<h3>Law enforcement</h3>\n<p>Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).</p>\n<h3>Other legal requirements</h3>\n<p>The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>\n<ul>\n<li>Comply with a legal obligation</li>\n<li>Protect and defend the rights or property of the Company</li>\n<li>Prevent or investigate possible wrongdoing in connection with the Service</li>\n<li>Protect the personal safety of Users of the Service or the public</li>\n<li>Protect against legal liability</li>\n</ul>\n<h2>Security of Your Personal Data</h2>\n<p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</p>\n<h1>Children\\\'s Privacy</h1>\n<p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, We take steps to remove that information from Our servers.</p>\n<p>If We need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, We may require Your parent\\\'s consent before We collect and use that information.</p>\n<h1>Links to Other Websites</h1>\n<p>Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party\\\'s site. We strongly advise You to review the Privacy Policy of every site You visit.</p>\n<p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>\n<h1>Changes to this Privacy Policy</h1>\n<p>We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>\n<p>We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.</p>\n<p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>\n<h1>Contact Us</h1>\n<p>If you have any questions about this Privacy Policy, You can contact us:</p>\n<ul>\n<li>By email: riccardo.pezzolati@gmail.com</li>\n</ul>]]></string>
+    <string name="enter_custom_input">Enter Custom Input</string>
+    <string name="enter_custom_input_title">In selected measurement unit</string>
+    <string name="notif_sleep_header">Sleep mode(you will not receive any notifications from the app)</string>
+    <string name="sleep_mode_start_hint">Start sleep mode</string>
+    <string name="sleep_mode_stop_hint">End sleep mode</string>
+    <string name="notification_sleep">Active sleep mode</string>
+    <string name="html_credits"><![CDATA[<h1>My To make this app:</h1>\n\n<ul>\n<li>The <strong>icons</strong> were downloaded from <a href=\"https://www.freepik.com\">freepik</a></li>\n<li>The <strong>animations</strong> were downloaded from <a href=\"https://lottiefiles.com\">LottieFiles</a></li>\n</ul>\n\n<h2>Library used:</h2>\n<ul>\n<li><strong>Timber</strong> -> com.jakewharton.timber:timber:5.0.1</li>\n<li><strong>Lottie</strong> -> com.airbnb.android:lottie:6.1.0</li>\n<li><strong>Android Animation</strong> -> com.daimajia.easing:library:2.0@aar and com.daimajia.androidanimations:library:2.3@aar</li>\n<li><strong>Dots Indicator</strong> -> com.tgoodman:dotsindicator:5.0Dots Indicator -> com.tgoodman:dotsindicator:5.0</li>\n<li><strong>Chart</strong> inspired by com.github.PhilJay:MPAndroidChart:v3.1.0 library</li>\n<li><strong>BottomMenu</strong> by nl.joery.animatedbottombar:library:1.1.0</li>\n<li><strong>SweetDialog</strong> by cn.pedant.sweetalert:library:1.3</li>\n</ul>]]></string>
     <string name="drink_fragment_label">DrinkFragment</string>
-    <string name="please_input_a_valid_rest_time">Non puoi alzarti e andare a letto alla stessa ora</string>
+    <string name="please_input_a_valid_rest_time">You can\'t get up and go to bed at the same time</string>
     <string name="kg">Kg</string>
-    <string name="lbl">Libbra</string>
-    <string name="enter_weight_input_title">Seleziona unità di misura del peso</string>
+    <string name="lbl">Pound</string>
+    <string name="enter_weight_input_title">Select weight unit of measurement</string>
     <string name="info_fragment_label">ApplicationInfoFragment</string>
     <string name="stats_fragment_label">Stats Fragment</string>
-    <string name="notification_silence_label">Silenzio</string>
+    <string name="notification_silence_label">Silence</string>
     <string name="all_stats_fragment_label">AllStatsFragment</string>
     <string name="intook_stats_fragment_label">IntookCounterStatsFragment</string>
     <string name="reached_goal_stats_fragment_label">Reached Goal Stats Fragment</string>
     <string name="all">All Stats</string>
     <string name="intook">Intook Count</string>
     <string name="reached">Reached Obj</string>
-    <string name="undo">Annulla</string>
-    <string name="redo">Ripristina</string>
-    <string name="reset">Azzera</string>
-    <string name="intook_report">Report giornaliero</string>
-    <string name="opt_max">Opzione più selezionata.</string>
-    <string name="opt_min">Opzione meno selezionata.</string>
-    <string name="enter_hour_input_title">L\'orario della sveglia deve essere inferiore all\'orario nel quale vai a dormire</string>
-    <string name="summary2">Fino ad oggi</string>
-    <string name="none">Niente</string>
-    <string name="day">Giorno</string>
-    <string name="quantity">Quantità</string>
-    <string name="intake_report_percent">% dell\' obiettivo</string>
-    <string name="str_back">INDIETRO</string>
-    <string name="reached_goal">Obiettivo raggiunto</string>
-    <string name="reached_goal_part2">(Le quantità sottostanti sono indicate nell\'unità di misura in vigore quando sono state inserite)</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="reset">Reset</string>
+    <string name="intook_report">Daily Report</string>
+    <string name="opt_max">Most selected opt.</string>
+    <string name="opt_min">Least selected opt.</string>
+    <string name="enter_hour_input_title">Your wake-up time should be less\nthan your bedtime</string>
+    <string name="summary2">Until today</string>
+    <string name="none">Nothing</string>
+    <string name="quantity">Quantity</string>
+    <string name="intake_report_percent">% of Target</string>
+    <string name="reached_goal">Reached Goal</string>
+    <string name="reached_goal_part2">(The quantities below are indicated\nin the unit of measurement in effect when\nthey were entered)</string>
     <string name="code">Code</string>
-    <string name="last_opt">Ultima opzione selezionata.</string>
-    <string name="new_data_hint">Aggiungi una data</string>
-    <string name="enter_data_input_title">Hai raggiunto il tuo obiettivo di bere prima di oggi? Inseriscilo qui</string>
-    <string name="please_input_a_valid_date">Per favore inserisci una data valida</string>
-    <string name="please_input_a_valid_date_range">La data non può essere successiva a\noggi o precedente al 31-08-2023</string>
-    <string name="intook_report_title">Rapporto sull\'assunzione</string>
+    <string name="last_opt">Last opt selected.</string>
+    <string name="new_data_hint">Add a date</string>
+    <string name="enter_data_input_title">Have you reached your drinking goal before today? Enter it here</string>
+    <string name="please_input_a_valid_date">Please input a valida date</string>
+    <string name="please_input_a_valid_date_range">The date cannot be greater\nthan today or before 08–31–2023</string>
+    <string name="intook_report_title">Intake Report</string>
     <string name="splash_screen">Splashscreen</string>
-    <string name="init_user_info_gender">L\'acqua è il principale costituente del corpo umano e rappresenta circa il 60% del peso corporeo nei maschi adulti, dal 50 al 55% nelle femmine.\nPertanto verrà calcolato un fabbisogno diverso in base al sesso.</string>
-    <string name="gender_hint">Scegli il tuo sesso</string>
-    <string name="init_user_info_gender_min">Il fabbisogno idrico tra uomini e donne è diverso, scegli il tuo sesso per calcolarlo.</string>
-    <string name="man">Uomo</string>
-    <string name="woman">Donna</string>
-    <string name="gender">Scegli il tuo genere</string>
-    <string name="info_label">INFORMAZIONI</string>
-    <string name="trophy">Trofei</string>
-    <string name="reached_daily">Raggiunto giornalmente</string>
-    <string name="d_stats">Bevute Quotidiane</string>
-    <string name="goal">Obiettivo</string>
-    <string name="other_info">Altre informazioni</string>
-    <string name="avis">Doni sangue? Fai clic qui sotto</string>
-    <string name="walkthrough_text_five">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\n\nNella schermata dove indichi la quantità bevuta , potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
-    <string name="walkthrough_text_five_2">Se sei un donatore di sangue intero è importante idratarti bene (almeno 2 litri) il giorno prima della donazione e il giorno stesso dopo la donazione\n\nNella schermata dove indichi la quantità bevuta , potrai cliccare sull\'icona del calendario per indicare quando donerai, attivando la modifica della quantità consigliata e la maggiore frequenza delle notifiche.</string>
-    <string name="tomorrow_you_will_donate">Domani donerai il sangue o oggi hai già donato, bere è fondamentale!!</string>
-    <string name="you_selected_man">Hai selezionato Uomo</string>
-    <string name="you_selected_woman">Hai selezionato Donna</string>
-    <string name="you_selected_avis">Sei un donatore di sangue</string>
-    <string name="you_selected_no_avis">Non sei un donatore di sangue</string>
+    <string name="init_user_info_gender">Water is the main constituent of the human body and represents approximately 60% of body weight in adult males, 50 to 55% in females.\nTherefore, a different requirement will be calculated based on sex.</string>
+    <string name="gender_hint">Please choice your gender</string>
+    <string name="init_user_info_gender_min">The water requirement between men and women is different, choose your gender to calculate it.</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="gender">Choose your gender</string>
+    <string name="info_label">INFORMATION</string>
+    <string name="trophy">Trophy</string>
+    <string name="reached_daily">Reached Daily</string>
+    <string name="d_stats">Daily Drink</string>
+    <string name="goal">Goal</string>
+    <string name="other_info">Other Info</string>
+    <string name="avis">Blood donor</string>
+    <string name="walkthrough_text_five">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="walkthrough_text_five_2">If you are a whole blood donor it is important to hydrate well (at least 2 liters) the day before the donation and the same day after donating\n\nOn the screen where you indicate the quantity drunk, you can click on the calendar icon to indicate when you will donate, activating the modification of the recommended quantity and the greater frequency of notifications.</string>
+    <string name="tomorrow_you_will_donate">Tomorrow you will donate blood or today you have already donated, drinking is essential!!</string>
+    <string name="you_selected_man">You selected Man</string>
+    <string name="you_selected_woman">You selected Woman</string>
+    <string name="you_selected_avis">You ara a blood donor</string>
+    <string name="you_selected_no_avis">You are not a blood donor</string>
     <string name="water">Water</string>
-    <string name="drink">Bevuto</string>
+    <string name="drink">Drink</string>
     <string name="_300_ml">300</string>
-    <string name="drink_all">Bevi tutto</string>
-    <string name="barcode">Barcode</string>
-    <string name="option_selectable_once_a_day">Opzione selezionabile una volta al giorno</string>
-    <string name="weight_unit">Unità di misura del peso</string>
-    <string name="climate_hint">Clima della zona in cui vivi</string>
-    <string name="init_user_info_worktype">In base al tipo di allenamento quotidiano varia la quantità di acqua consigliata</string>
-    <string name="calm">Sedentario</string>
-    <string name="normal">Normale</string>
-    <string name="lively">Vivace</string>
-    <string name="intense">Intenso</string>
-    <string name="you_selected_calm">Hai selezionato nessun tipo di allenamento</string>
-    <string name="you_selected_normal">Hai selezionato il tipo di allenamento normale</string>
-    <string name="you_selected_lively">Hai selezionato il tipo di allenamento vivace</string>
-    <string name="you_selected_intense">Hai selezionato il tipo di allenamento intenso</string>
-    <string name="init_user_info_climate">Il clima e la temperatura influenzano notevolmente la quantità di acqua consigliata quotidianamente, più fa caldo più acqua ha bisogno il tuo corpo</string>
-    <string name="cold">Freddo</string>
-    <string name="fresh">Fresco</string>
-    <string name="mild">Mite</string>
-    <string name="torrid">Torrido</string>
-    <string name="you_selected_cold">Hai selezionato il clima freddo</string>
-    <string name="you_selected_fresh">Hai selezionato il clima fresco</string>
-    <string name="you_selected_mild">Hai selezionato un clima mite</string>
-    <string name="you_selected_torrid">Hai selezionato il clima torrido</string>
-    <string name="work_type_hint">Scegli il tipo di allenamento quotidiano</string>
-    <string name="climate_set_hint">Scegli il tipo di clima</string>
-    <string name="tips">Visualizzare suggerimenti bevuta</string>
-    <string name="avis_info">Clicca sul calendario per indicare quando farai la donazione sangue</string>
-    <string name="welcome">Benvenuto su Idratiamoci</string>
-    <string name="click_opt">Clicca su una delle opzioni per indicare la quantità bevuta</string>
-    <string name="click_opt_custom">Con questa opzione puoi scegliere la quantità che preferisci</string>
-    <string name="click_opt_all">Hai bevuto la quantità giornaliera?Clicca qui</string>
-    <string name="click_opt_undo">Fai clic qui per annullare l\'ultima opzione selezionata</string>
-    <string name="click_opt_redo">Fai clic qui per ripristinare l\'ultima opzione selezionata</string>
-    <string name="click_opt_refresh">Clicca qui per azzerare la quantità bevuta finora</string>
+    <string name="drink_all">Drink all</string>
+    <string name="barcode">Scan Barcode</string>
+    <string name="option_selectable_once_a_day">Option selectable once a day</string>
+    <string name="weight_unit">Unit of measurement of weight</string>
+    <string name="climate_hint">Climate of the area where you live</string>
+    <string name="init_user_info_worktype">Based on the type of daily training, the recommended amount of water varies</string>
+    <string name="calm">Sedentary</string>
+    <string name="normal">Normal</string>
+    <string name="lively">Lively</string>
+    <string name="intense">Intense</string>
+    <string name="you_selected_calm">You have selected no workout type</string>
+    <string name="you_selected_normal">You selected normal workout type</string>
+    <string name="you_selected_lively">You selected lively workout type</string>
+    <string name="you_selected_intense">You selected intense workout type</string>
+    <string name="init_user_info_climate">The climate and temperature greatly influence the amount of water recommended daily, the hotter it is the more water your body needs</string>
+    <string name="cold">Cold</string>
+    <string name="fresh">Fresh</string>
+    <string name="mild">Mild</string>
+    <string name="torrid">Torrid</string>
+    <string name="you_selected_cold">You selected cold climate</string>
+    <string name="you_selected_fresh">You selected fresh climate</string>
+    <string name="you_selected_mild">You selected mild climate</string>
+    <string name="you_selected_torrid">You selected torrid climate</string>
+    <string name="work_type_hint">Please choose the type of daily workout</string>
+    <string name="climate_set_hint">Please choose the type of climate</string>
+    <string name="tips">View drinking tips</string>
+    <string name="avis_info">Click on the calendar to indicate when you will donate blood</string>
+    <string name="welcome">Welcome to Let\'s Hydrate</string>
+    <string name="click_opt">Click on one of the options to indicate the quantity drunk</string>
+    <string name="click_opt_custom">With this option you can choose any quantity you like</string>
+    <string name="click_opt_all">Have you drunk the daily amount?Click here</string>
+    <string name="click_opt_undo">Click here to cancel the last selected option</string>
+    <string name="click_opt_redo">Click here to restore the last selected option</string>
+    <string name="click_opt_refresh">Click here to reset the amount drunk so far</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="get_reload">Ricarica</string>
-    <string name="weekly_average">Media settimanale</string>
-    <string name="monthly_average">Media mensile</string>
-    <string name="average_completion">Completamento medio (Sett.)</string>
-    <string name="drink_frequency">Frequenza di bevuta (Sett.)</string>
-    <string name="weekly_completion">Completamento settimanale</string>
-    <string name="sun">Dom</string>
-    <string name="mon">Lun</string>
-    <string name="tue">Mar</string>
-    <string name="wed">Mer</string>
-    <string name="thu">Gio</string>
-    <string name="fri">Ven</string>
-    <string name="sat">Sab</string>
-    <string name="add_reached_day">Aggiungi record</string>
-    <string name="month">Mese</string>
-    <string name="year">Anno</string>
-    <string name="show_reached_day">Mostra l\'obiettivo raggiunto</string>
-    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">Una mente e un corpo sani sono idratati. Provalo!</string>
-    <string name="intake_report_month">Report corrente</string>
+    <string name="get_reload">Reload</string>
+    <string name="weekly_average">Weekly average</string>
+    <string name="monthly_average">Monthly average</string>
+    <string name="weekly_completion">Weekly completion</string>
+    <string name="add_reached_day">Add reached day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="show_reached_day">Show reached goal</string>
+    <string name="a_healthy_mind_and_body_is_a_hydrated_one_come_and_have_a_try">A healthy mind and body is a hydrated one. Come and have a try!</string>
+    <string name="intake_report_month">Current report</string>
     <string name="grape">Grape</string>
-    <string name="change_view">Cambia Vista</string>
-    <string name="enter_intake_input_title">Inserisci qui la quantità bevuta nella data scelta(se non selezioni nulla verrà utilizzato il massimo quantitativo calcolato oggi)</string>
-    <string name="new_qta_hint">Aggiungi la quantità nell\'unità di misura</string>
-    <string name="please_enter_a_quantity_at_least_equal_to">Inserisci una quantità almeno uguale a</string>
-    <string name="times">volte</string>
+    <string name="change_view">Change View</string>
+    <string name="enter_intake_input_title">Enter here the quantity drunk on the chosen date(if you do not select anything, the maximum quantity calculated today will be used)</string>
+    <string name="new_qta_hint">Add quantity in measurement unit</string>
+    <string name="please_enter_a_quantity_at_least_equal_to">Please enter a quantity at least equal to</string>
     <string name="multi">Multiple opt.</string>
     <string name="_350_ml">350</string>
-    <string name="bee">Api</string>
-    <string name="migrate">Questa app verrà eliminata a partire dal 07/01/2024\nGrazie per aver utilizzato Idratiamoci</string>
+    <string name="bee">Bee</string>
+    <string name="migrate">This app will be deleted starting 01/07/2024\nThank you for using Let\'s Hydrate</string>
+    <string name="img">img</string>
+
+
+    <string name="only_digit_character" translatable="false">0123456789abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="only_digit" translatable="false">0123456789</string>
+    <string name="only_character" translatable="false">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <string name="str_no_internet">The Internet connection appears to be offline.</string>
+
+    <!-- for testing -->
+
+    <string name="admob_app_id" translatable="false">ca-app-pub-2337353105916756~2279901954</string>
+    <string name="admob_banner_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="admob_rewarded_video_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+
+    <!-- onBoarding -->
+
+    <string name="str_back">Back</string>
+    <string name="str_next">Next</string>
+    <string name="str_allow">Allow</string>
+    <string name="str_get_started">Get Started</string>
+    <string name="str_your_name">Your Name</string>
+    <string name="str_gender">Gender</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
+    <string name="str_height">Height</string>
+    <string name="str_cm">cm</string>
+    <string name="str_feet">feet</string>
+    <string name="str_kg">kg</string>
+    <string name="str_lb">lb</string>
+    <string name="str_you_should_drink_at_least">You should drink at least</string>
+    <string name="str_to_reach_your_daily_goal">water to reach your daily goal</string>
+    <string name="str_set_your_goal_manually">SET YOUR GOAL MANUALLY</string>
+    <string name="str_storage_permission">Please allow Water Let\'s hydrate access to photos, media and files on your device.</string>
+    <string name="str_your_name_validation">Please enter your name.</string>
+    <string name="str_valid_name_validation">Please enter valid name.</string>
+    <string name="str_height_validation">Please enter height.</string>
+    <string name="str_set_daily_goal">Set daily goal</string>
+    <string name="str_set_daily_goal_validation">Please set daily goal.</string>
+    <string name="str_save">Save</string>
+    <string name="str_note">Note: Your suggested daily goal is a rough estimate based on several factors and should not be used for medical purposes. To obtain your specific hydration needs, please consult your physician.</string>
+
+    <string name="str_wakeup_time">Wake-up Time</string>
+    <string name="str_bed_time">Bed Time</string>
+    <string name="str_goal_consume">You need to consume $1 to reach your goal of $2.</string>
+    <string name="str_min">Mins</string>
+    <string name="str_hour">Hour</string>
+
+
+    <string name="other_factors">Other Factors</string>
+    <string name="weather_conditions">Weather Condition</string>
+    <string name="sunny">Sunny</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="rainy">Rainy</string>
+    <string name="snow">Snow</string>
+    <string name="active">Active</string>
+    <string name="pregnant">Pregnant</string>
+    <string name="breastfeeding">Breastfeeding</string>
+
+    <!-- menu -->
+
+    <string name="str_hello">Hello,</string>
+
+    <string name="str_drink_water">Drink Water</string>
+    <string name="str_drink_history">Drink History</string>
+    <string name="str_settings">Settings</string>
+    <string name="str_drink_report">Drink Report</string>
+    <string name="str_rate_us">Rate</string>
+    <string name="str_share">Share</string>
+    <string name="str_tell_a_friend">Tell a Friend</string>
+    <string name="str_achievements">Achievements</string>
+
+    <string name="str_home">Home</string>
+    <string name="str_faqs">FAQs</string>
+    <string name="str_contact">Contact</string>
+
+    <!-- home -->
+
+    <string name="str_share_text">Hooray…! I drank $1 of water today. Join me to keep hydrated with Water Let\'s hydrate $2</string>
+
+    <string name="str_next_reminder">NEXT REMINDER at $1</string>
+    <string name="str_history">History</string>
+
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+
+    <string name="str_your_goal">Your goal</string>
+    <string name="str_consumed">Consumed</string>
+    <string name="str_container">Container</string>
+
+    <string name="str_welcome">Welcome</string>
+    <string name="str_input_some_info_b4_we_get_started">Enter the information below and help us to customize your hydration plan.</string>
+    <string name="str_choose_unit">Choose Weight Unit</string>
+    <string name="str_choose_capacity_unit">Choose Capacity Unit</string>
+    <string name="str_weight">Weight</string>
+    <string name="str_skip">Skip</string>
+    <string name="str_weight_validation">Please enter weight.</string>
+    <string name="str_daily_goal_reached">Daily goal reached!</string>
+    <string name="str_share_your_achievement_with_your_friends">Share your achievement with your friends!</string>
+
+    <!-- home set goal dialog -->
+
+    <string name="str_ok">OK</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_total">TOTAL</string>
+    <string name="str_set_goal">Set Goal</string>
+    <string name="str_set_goal_validation">Please set a goal.</string>
+
+    <!-- history -->
+
+    <string name="str_history_remove_confirm_message">Are you sure? Do you want to delete history log?</string>
+
+    <!-- reminder -->
+
+    <string name="str_edit">Edit</string>
+    <string name="str_delete">Delete</string>
+
+    <string name="str_automatic">Automatic</string>
+    <string name="str_manual">Manual</string>
+
+    <string name="str_delete_all_reminder">DELETE ALL REMINDERS</string>
+
+    <string name="str_off">Off</string>
+    <string name="str_silent">Silent</string>
+    <string name="str_auto">Auto</string>
+    <string name="str_custom_sound">Custom sound</string>
+    <string name="str_vibration">Vibration</string>
+    <string name="str_advance_settings">ADVANCED SETTINGS</string>
+    <string name="str_you_should_not_drink_more_then_target">You should not drink more than $1 water a day.</string>
+
+    <string name="str_set_reminder">Set Reminder</string>
+    <string name="str_reminder">Reminders</string>
+    <string name="str_set_alarm_validation">You have already added reminder for this time.</string>
+    <string name="str_successfully_set_alarm">You have successfully added this reminder.</string>
+    <string name="str_successfully_cancel_alarm">You have successfully canceled this reminder.</string>
+    <string name="str_reminder_remove_confirm_message">Are you sure? Do you want to delete reminder?</string>
+    <string name="str_reminder_remove_all_confirm_message">Are you sure? Do you want to delete all reminders?</string>
+    <string name="str_yes">Yes</string>
+    <string name="str_no">No</string>
+    <string name="str_set_specific_time_reminder">Manually set reminder</string>
+    <string name="str_set_specific_time_duration_reminder">Auto reminder</string>
+    <string name="str_from">From</string>
+    <string name="str_to">To</string>
+    <string name="str_from_to_validation">Please select both from &amp; to time.</string>
+    <string name="str_from_to_invalid_validation">Please select valid wake-up &amp; bed time.</string>
+    <string name="str_interval">Interval</string>
+    <string name="str_minutes">Minutes</string>
+    <string name="str_every">Every</string>
+    <string name="str_no_reminders_added_yet">No reminders added yet!</string>
+    <string name="str_no_drink_history_found">No drink history found!</string>
+
+    <!-- settings -->
+
+    <string name="str_no_backup_found">No backup found!</string>
+
+    <string name="str_my_profile">My Profile</string>
+    <string name="str_personal_data_daily_goal_settings">Personal data, Daily goal settings</string>
+    <string name="str_disable_notification">Disable Notification</string>
+    <string name="str_if_goal_is_achieved">If goal is achieved</string>
+    <string name="str_goal">Goal</string>
+    <string name="str_disable_sound">Disable Sound</string>
+    <string name="str_while_add_water">When you add water</string>
+    <string name="str_auto_backup">Auto Backup</string>
+
+
+    <string name="str_about_us">About Us</string>
+    <string name="str_contact_us">Contact Us</string>
+    <string name="str_feedback">Feedback</string>
+    <string name="str_language">Language</string>
+    <string name="str_privacy_policy">Privacy Policy</string>
+    <string name="str_faq">FAQ</string>
+    <string name="str_backup_and_restore">Backup &amp; Restore</string>
+    <string name="str_backup">Backup</string>
+    <string name="str_restore">Restore</string>
+    <string name="str_change_weight">Change Weight / Capacity</string>
+    <string name="str_clear_all_data">Clear all data</string>
+
+
+    <string name="str_camera">Choose from Camera</string>
+    <string name="str_gallery">Choose from Gallery</string>
+    <string name="str_remove_photo">Remove Photo</string>
+    <string name="app_share_txt">I have been using Water Let\'s hydrate and I think you might like it. Check it out on your phone: #1</string>
+    <string name="str_remove_photo_confirmation_message">Are you sure? Do you want to remove profile photo?</string>
+
+    <!-- notification -->
+
+    <string name="str_today_completed">Today Completed:</string>
+    <string name="str_have_u_had_any_water_yet">Have you had any water yet?</string>
+    <string name="str_today">Today</string>
+    <string name="str_yesterday">Yesterday</string>
+    <string name="str_custom_date">Custom Date</string>
+    <string name="str_snooze">Snooze</string>
+    <string name="str_snooze_for">Snooze for</string>
+    <string name="str_add_water">Add water</string>
+
+    <!-- drink report -->
+
+    <string name="str_week">WEEK</string>
+    <string name="str_month">MONTH</string>
+    <string name="str_year">YEAR</string>
+
+    <string name="average_intake">Average Intake</string>
+    <string name="drink_frequency">Drink Frequency</string>
+    <string name="average_completion">Average Completion</string>
+
+    <string name="day">day</string>
+    <string name="times">times</string>
+    <string name="time">time</string>
+
+    <!-- back and restore -->
+
+    <string name="str_daily">Daily</string>
+    <string name="str_weekly">Weekly</string>
+    <string name="str_monthly">Monthly</string>
+    <string name="str_yearly">Yearly</string>
+
+    <string name="str_restore_msg">Your data has been restored successfully.</string>
+    <string name="str_backup_msg">Your data has been backed up successfully.</string>
+
+    <string name="str_clear_all_data_confirmation_messge">Are you sure? Do you want to clear all backup data?</string>
+    <string name="str_restore_all_data_confirmation_messge">Are you sure? Do you want to restore selected data?</string>
+
+    <!-- Add custom -->
+
+    <string name="str_customize">Customize</string>
+    <string name="str_customize_your_drink">Customize your drink</string>
+    <string name="str_capacity">Capacity ($1)</string>
+
+    <string name="str_enter_value_validation">Please enter value.</string>
+
+    <string name="add_widget">Add widget</string>
+
+    <string-array name="month_list2" translatable="false">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
+    <string-array name="month_list">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
+
+    <!-- Battery optimization -->
+
+    <string name="str_battery_desc1">After clicking on \"Settings\" select \"Water Let\'s hydrate\" app from \'All apps\' filter.</string>
+    <string name="str_battery_desc2">Please select \"Don\'t Optimize\" from popup to receive regular reminder for drinking water.</string>
+
+
+    <!-- FAQ -->
+
+    <string name="faq_q">Q:</string>
+    <string name="faq_a">A:</string>
+
+    <string name="faq_question_1">Why doesn\'t the Reminder work?</string>
+    <string name="faq_question_2">What if the drink target recommended is not suitable for me?</string>
+    <string name="faq_question_3">How to change height and weight?</string>
+    <string name="faq_question_4">How to add drink water?</string>
+    <string name="faq_question_5">How to backup data?</string>
+    <string name="faq_question_6">How to restore data?</string>
+    <string name="faq_question_7">How to add customize cups?</string>
+    <string name="faq_question_8">How to check my drink water history?</string>
+    <string name="faq_question_9">How to check my drink water report?</string>
+    <string name="faq_question_11">What if I added drink log by mistake?</string>
+    <string name="faq_question_12">How to change weather?</string>
+    <string name="faq_question_13">How to change active / pregnant / breastfeeding status?</string>
+
+
+    <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start &amp; end time appropriately?\n2. Have you enabled Water Let\'s hydrate to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Water Diary running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Water Diary to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
+    <string name="faq_answer_2">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit the drink target by clicking on \"My Profile\".</string>
+    <string name="faq_answer_3">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit height and weight by clicking on \"My Profile\".</string>
+    <string name="faq_answer_4">There are 2 ways:\n1. You can click on the plus icon to add on the drink log.\n2. You can also add drink log by clicking on the application widget from android\'s home screen or today\'s widget from iPhone.</string>
+    <string name="faq_answer_5">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, backup data to your phone.</string>
+    <string name="faq_answer_6">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, restore data from your phone.</string>
+    <string name="faq_answer_7">You can click on the change container icon on the top left of the home screen, then tap on your choice of container. You can also add your customized drink.</string>
+    <string name="faq_answer_8">You can click on the menu and select Drink History then view your drink history.</string>
+    <string name="faq_answer_9">You can click on the menu and select Drink Report option then view using following 3 options:\n1. Weekly Report\n2. Monthly Report\n3. Yearly Report</string>
+
+    <string name="faq_answer_11">You need to tap on menu and select \"Drink History\" from the list of menu options. Inside Drink History you can tap on delete icon against wrong drink log entry.</string>
+    <string name="faq_answer_12">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change weather by clicking on \"My Profile\".</string>
+    <string name="faq_answer_13">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change active / pregnant / breastfeeding status by clicking on \"My Profile\".</string>
+    <!--Read More and Read Less-->
+    <string name="str_read_less">Read Less</string>
+    <string name="str_read_more">Read More</string>
+
+
+    <!-- Map -->
+    <string name="open_gps_dialog">Do you want open GPS setting?</string>
+    <string name="dialog_cancel_button">Cancel</string>
+    <string name="dialog_ok_button">OK</string>
+    <string name="_4500">4500</string>
+    <string name="_ml">ml</string>
+    <string name="_08_00_am">08:00 AM</string>
+    <string name="_10_00_pm">10:00 PM</string>
+    <string name="_15_mins">15 Mins</string>
+    <string name="_1_hour">1 Hour</string>
+
+    <!-- Country Code -->
+    <string-array name="CountryCodes" >
+        <item>93,AF</item>
+        <item>355,AL</item>
+        <item>213,DZ</item>
+        <item>376,AD</item>
+        <item>244,AO</item>
+        <item>672,AQ</item>
+        <item>54,AR</item>
+        <item>374,AM</item>
+        <item>297,AW</item>
+        <item>61,AU</item>
+        <item>43,AT</item>
+        <item>994,AZ</item>
+        <item>973,BH</item>
+        <item>880,BD</item>
+        <item>375,BY</item>
+        <item>32,BE</item>
+        <item>501,BZ</item>
+        <item>229,BJ</item>
+        <item>975,BT</item>
+        <item>591,BO</item>
+        <item>387,BA</item>
+        <item>267,BW</item>
+        <item>55,BR</item>
+        <item>673,BN</item>
+        <item>359,BG</item>
+        <item>226,BF</item>
+        <item>95,MM</item>
+        <item>257,BI</item>
+        <item>855,KH</item>
+        <item>237,CM</item>
+        <item>1,CA</item>
+        <item>238,CV</item>
+        <item>236,CF</item>
+        <item>235,TD</item>
+        <item>56,CL</item>
+        <item>86,CN</item>
+        <item>61,CX</item>
+        <item>61,CC</item>
+        <item>57,CO</item>
+        <item>269,KM</item>
+        <item>242,CG</item>
+        <item>243,CD</item>
+        <item>682,CK</item>
+        <item>506,CR</item>
+        <item>385,HR</item>
+        <item>53,CU</item>
+        <item>357,CY</item>
+        <item>420,CZ</item>
+        <item>45,DK</item>
+        <item>253,DJ</item>
+        <item>670,TL</item>
+        <item>593,EC</item>
+        <item>20,EG</item>
+        <item>503,SV</item>
+        <item>240,GQ</item>
+        <item>291,ER</item>
+        <item>372,EE</item>
+        <item>251,ET</item>
+        <item>500,FK</item>
+        <item>298,FO</item>
+        <item>679,FJ</item>
+        <item>358,FI</item>
+        <item>33,FR</item>
+        <item>689,PF</item>
+        <item>241,GA</item>
+        <item>220,GM</item>
+        <item>995,GE</item>
+        <item>49,DE</item>
+        <item>233,GH</item>
+        <item>350,GI</item>
+        <item>30,GR</item>
+        <item>299,GL</item>
+        <item>502,GT</item>
+        <item>224,GN</item>
+        <item>245,GW</item>
+        <item>592,GY</item>
+        <item>509,HT</item>
+        <item>504,HN</item>
+        <item>852,HK</item>
+        <item>36,HU</item>
+        <item>91,IN</item>
+        <item>62,ID</item>
+        <item>98,IR</item>
+        <item>964,IQ</item>
+        <item>353,IE</item>
+        <item>44,IM</item>
+        <item>972,IL</item>
+        <item>39,IT</item>
+        <item>225,CI</item>
+        <item>81,JP</item>
+        <item>962,JO</item>
+        <item>7,KZ</item>
+        <item>254,KE</item>
+        <item>686,KI</item>
+        <item>965,KW</item>
+        <item>996,KG</item>
+        <item>856,LA</item>
+        <item>371,LV</item>
+        <item>961,LB</item>
+        <item>266,LS</item>
+        <item>231,LR</item>
+        <item>218,LY</item>
+        <item>423,LI</item>
+        <item>370,LT</item>
+        <item>352,LU</item>
+        <item>853,MO</item>
+        <item>389,MK</item>
+        <item>261,MG</item>
+        <item>265,MW</item>
+        <item>60,MY</item>
+        <item>960,MV</item>
+        <item>223,ML</item>
+        <item>356,MT</item>
+        <item>692,MH</item>
+        <item>222,MR</item>
+        <item>230,MU</item>
+        <item>262,YT</item>
+        <item>52,MX</item>
+        <item>691,FM</item>
+        <item>373,MD</item>
+        <item>377,MC</item>
+        <item>976,MN</item>
+        <item>382,ME</item>
+        <item>212,MA</item>
+        <item>258,MZ</item>
+        <item>264,NA</item>
+        <item>674,NR</item>
+        <item>977,NP</item>
+        <item>31,NL</item>
+        <item>599,AN</item>
+        <item>687,NC</item>
+        <item>64,NZ</item>
+        <item>505,NI</item>
+        <item>227,NE</item>
+        <item>234,NG</item>
+        <item>683,NU</item>
+        <item>850,KP</item>
+        <item>47,NO</item>
+        <item>968,OM</item>
+        <item>92,PK</item>
+        <item>680,PW</item>
+        <item>507,PA</item>
+        <item>675,PG</item>
+        <item>595,PY</item>
+        <item>51,PE</item>
+        <item>63,PH</item>
+        <item>870,PN</item>
+        <item>48,PL</item>
+        <item>351,PT</item>
+        <item>1,PR</item>
+        <item>974,QA</item>
+        <item>40,RO</item>
+        <item>7,RU</item>
+        <item>250,RW</item>
+        <item>590,BL</item>
+        <item>685,WS</item>
+        <item>378,SM</item>
+        <item>239,ST</item>
+        <item>966,SA</item>
+        <item>221,SN</item>
+        <item>381,RS</item>
+        <item>248,SC</item>
+        <item>232,SL</item>
+        <item>65,SG</item>
+        <item>421,SK</item>
+        <item>386,SI</item>
+        <item>677,SB</item>
+        <item>252,SO</item>
+        <item>27,ZA</item>
+        <item>82,KR</item>
+        <item>34,ES</item>
+        <item>94,LK</item>
+        <item>290,SH</item>
+        <item>508,PM</item>
+        <item>249,SD</item>
+        <item>597,SR</item>
+        <item>268,SZ</item>
+        <item>46,SE</item>
+        <item>41,CH</item>
+        <item>963,SY</item>
+        <item>886,TW</item>
+        <item>992,TJ</item>
+        <item>255,TZ</item>
+        <item>66,TH</item>
+        <item>228,TG</item>
+        <item>690,TK</item>
+        <item>676,TO</item>
+        <item>216,TN</item>
+        <item>90,TR</item>
+        <item>993,TM</item>
+        <item>688,TV</item>
+        <item>971,AE</item>
+        <item>256,UG</item>
+        <item>44,GB</item>
+        <item>380,UA</item>
+        <item>598,UY</item>
+        <item>1,US</item>
+        <item>998,UZ</item>
+        <item>678,VU</item>
+        <item>39,VA</item>
+        <item>58,VE</item>
+        <item>84,VN</item>
+        <item>681,WF</item>
+        <item>967,YE</item>
+        <item>260,ZM</item>
+        <item>263,ZW</item>
+    </string-array>
+
 </resources>

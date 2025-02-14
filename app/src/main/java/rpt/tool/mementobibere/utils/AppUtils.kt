@@ -2,22 +2,214 @@ package rpt.tool.mementobibere.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.media.Ringtone
 import android.net.ParseException
+import android.text.InputFilter
+import android.text.Spanned
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.data.models.MonthChartModel
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
-import rpt.tool.mementobibere.utils.extensions.toExtractFloat
-import rpt.tool.mementobibere.utils.extensions.toNumberString
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
+import rpt.tool.mementobibere.utils.log.d
+import rpt.tool.mementobibere.utils.log.e
 import java.text.DateFormat
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import java.util.Locale
+import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
+import kotlin.math.pow
 
 
 class AppUtils {
+
+    class DigitsInputFilter(
+        private val mMaxIntegerDigitsLength: Int,
+        private val mMaxDigitsAfterLength: Int,
+        private val mMax: Double
+    ) :
+        InputFilter {
+        private val DOT = "."
+
+
+        override fun filter(
+            source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dstart: Int,
+            dend: Int
+        ): CharSequence? {
+            val allText = getAllText(source, dest, dstart)
+            val onlyDigitsText = getOnlyDigitsPart(allText)
+
+            if (allText.isEmpty()) {
+                return null
+            } else {
+                val enteredValue: Double
+                try {
+                    enteredValue = onlyDigitsText.toDouble()
+                } catch (e: NumberFormatException) {
+                    return ""
+                }
+                return checkMaxValueRule(enteredValue, onlyDigitsText)
+            }
+        }
+
+
+        private fun checkMaxValueRule(
+            enteredValue: Double,
+            onlyDigitsText: String
+        ): CharSequence {
+            return if (enteredValue > mMax) {
+                ""
+            } else {
+                handleInputRules(onlyDigitsText)!!
+            }
+        }
+
+        private fun handleInputRules(onlyDigitsText: String): CharSequence? {
+            return if (isDecimalDigit(onlyDigitsText)) {
+                checkRuleForDecimalDigits(onlyDigitsText)
+            } else {
+                checkRuleForIntegerDigits(onlyDigitsText.length)
+            }
+        }
+
+        private fun isDecimalDigit(onlyDigitsText: String): Boolean {
+            return onlyDigitsText.contains(DOT)
+        }
+
+        private fun checkRuleForDecimalDigits(onlyDigitsPart: String): CharSequence? {
+            val afterDotPart =
+                onlyDigitsPart.substring(onlyDigitsPart.indexOf(DOT), onlyDigitsPart.length - 1)
+            if (afterDotPart.length > mMaxDigitsAfterLength) {
+                return ""
+            }
+            return null
+        }
+
+        private fun checkRuleForIntegerDigits(allTextLength: Int): CharSequence? {
+            if (allTextLength > mMaxIntegerDigitsLength) {
+                return ""
+            }
+            return null
+        }
+
+        private fun getOnlyDigitsPart(text: String): String {
+            return text.replace("[^0-9?!\\.]".toRegex(), "")
+        }
+
+        private fun getAllText(source: CharSequence, dest: Spanned, dstart: Int): String {
+            var allText = ""
+            if (dest.toString().isNotEmpty()) {
+                allText = if (source.toString().isEmpty()) {
+                    deleteCharAtIndex(dest, dstart)
+                } else {
+                    StringBuilder(dest).insert(dstart, source).toString()
+                }
+            }
+            return allText
+        }
+
+        private fun deleteCharAtIndex(dest: Spanned, dstart: Int): String {
+            val builder = StringBuilder(dest)
+            builder.deleteCharAt(dstart)
+            return builder.toString()
+        }
+    }
+
+    class InputFilterRange(private val min: Double, var elements: List<Double>) :
+        InputFilter {
+        override fun filter(
+            source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dstart: Int,
+            dend: Int
+        ): CharSequence? {
+            try {
+                //Log.d("CharSequence",""+dest.toString() +" @@@ "+ source.toString());
+                val str = dest.toString() + source.toString()
+                d("CharSequence", " -> " + str.length)
+
+                /*if(str.length()>=5)
+            return null;*/
+                val input = (dest.toString() + source.toString()).toDouble()
+                if (isInRange(min, elements, input, str)) return null
+            } catch (nfe: java.lang.NumberFormatException) {
+                nfe.message?.let { e(Throwable(nfe), it) }
+            }
+            return ""
+        }
+
+        private fun isInRange(a: Double, b: List<Double>, c: Double, cc: String): Boolean {
+            //return b > a ? c >= a && c <= b : c >= b && c <= a;
+            if (cc.length > 4) {
+                return false
+            }
+
+            for (k in b.indices) {
+                //Log.d("CharSequence"," -> "+b.get(k)+" @@@ "+c);
+                /*String tb=""+b.get(k);
+            String tc=""+c;
+            Log.d("CharSequence"," -> "+tb+" @@@ "+tc);*/
+
+                if (b[k] == c)  //if(tb.equalsIgnoreCase(tc))
+                    return true
+            }
+            return false
+        }
+    }
+
+    class InputFilterWeightRange(private val min: Double, private val max: Double) :
+        InputFilter {
+        override fun filter(
+            source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dstart: Int,
+            dend: Int
+        ): String? {
+            try {
+                val str = dest.toString() + source.toString()
+
+                val input = (dest.toString() + source.toString()).toDouble()
+                if (isInRange(min, max, input, str)) return null
+            } catch (nfe: java.lang.NumberFormatException) {
+                nfe.message?.let { e(Throwable(nfe), it) }
+            }
+            return ""
+        }
+
+        private fun isInRange(a: Double, b: Double, c: Double, cc: String): Boolean {
+            //return b > a ? c >= a && c <= b : c >= b && c <= a;
+            if (cc.length > 5) {
+                return false
+            }
+            if (c > b) {
+                return false
+            }
+            if (c < a) {
+                return false
+            }
+
+            if (c % 0.5 == 0.0) return true
+
+
+            return false
+        }
+    }
+
+
     companion object {
         fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int,
                             oldUnit: Int, unit: Int): Float {
@@ -119,8 +311,8 @@ class AppUtils {
 
         fun isValidDate(wakeupTime: String, sleepingTime: String): Boolean {
 
-            var calendarStringW = wakeupTime.split(":")
-            var calendarStringS = sleepingTime.split(":")
+            val calendarStringW = wakeupTime.split(":")
+            val calendarStringS = sleepingTime.split(":")
 
             val calendarWake = Calendar.getInstance()
             calendarWake.set(2023,9,27,calendarStringW[0].toInt(),calendarStringW[1].toInt())
@@ -160,6 +352,7 @@ class AppUtils {
             return 20
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun getCurrentDate(): String? {
             val c = Calendar.getInstance().time
             val df = SimpleDateFormat("dd-MM-yyyy")
@@ -167,13 +360,13 @@ class AppUtils {
         }
 
         fun getMaxDate(): Long {
-            var calendarTodayMinOne = Calendar.getInstance()
+            val calendarTodayMinOne = Calendar.getInstance()
             calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, -1)
             return calendarTodayMinOne.timeInMillis
         }
 
         fun getMinDate(): Long {
-            var calendarTodayMinOne = Calendar.getInstance()
+            val calendarTodayMinOne = Calendar.getInstance()
             calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, 1)
             return calendarTodayMinOne.timeInMillis
         }
@@ -204,24 +397,27 @@ class AppUtils {
             return totalIntake - inTook
         }
 
+        @SuppressLint("SimpleDateFormat")
         @Throws(ParseException::class)
         fun getDateList(strStartDate: String?, strEndDate: String?, formatOutput: String):
-                List<MonthChartModel>? {
+                List<MonthChartModel> {
 
             val dateList: MutableList<MonthChartModel> = ArrayList()
             val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
             val outputFormatterIndex = SimpleDateFormat("dd-MM-yyyy")
             val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
 
-            val startDate: Date = inputFormatter.parse(strStartDate)
-            val endDate: Date = inputFormatter.parse(strEndDate)
+            val startDate: Date? = strStartDate?.let { inputFormatter.parse(it) }
+            val endDate: Date? = strEndDate?.let { inputFormatter.parse(it) }
 
             val startWith = Calendar.getInstance()
-            startWith.time = startDate
+            if (startDate != null) {
+                startWith.time = startDate
+            }
             startWith[Calendar.DAY_OF_MONTH] = 1
-            while (startWith.time.time <= endDate.time) {
-                var dataForOutputIndex = outputFormatterIndex.format(startWith.time)
-                var dataForOutputText = outputFormatter.format(startWith.time)
+            while (startWith.time.time <= endDate!!.time) {
+                val dataForOutputIndex = outputFormatterIndex.format(startWith.time)
+                val dataForOutputText = outputFormatter.format(startWith.time)
                 dateList.add(MonthChartModel(dataForOutputIndex,dataForOutputText))
                 startWith
                     .add(Calendar.MONTH, 1)
@@ -229,6 +425,7 @@ class AppUtils {
             return dateList
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun getDateListForYear(strStartDate: String?, strEndDate: String?, formatOutput: String):
                 List<String>? {
 
@@ -236,14 +433,16 @@ class AppUtils {
             val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
             val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
 
-            val startDate: Date = inputFormatter.parse(strStartDate)
-            val endDate: Date = inputFormatter.parse(strEndDate)
+            val startDate: Date? = strStartDate?.let { inputFormatter.parse(it) }
+            val endDate: Date? = strEndDate?.let { inputFormatter.parse(it) }
 
             val startWith = Calendar.getInstance()
-            startWith.time = startDate
+            if (startDate != null) {
+                startWith.time = startDate
+            }
             startWith[Calendar.DAY_OF_MONTH] = 1
-            while (startWith.time.time <= endDate.time) {
-                var dataForOutput = outputFormatter.format(startWith.time)
+            while (startWith.time.time <= endDate!!.time) {
+                val dataForOutput = outputFormatter.format(startWith.time)
                 if(!dateList.contains(dataForOutput)){
                     dateList.add(dataForOutput)
                 }
@@ -253,14 +452,17 @@ class AppUtils {
             return dateList
         }
 
+        @SuppressLint("SimpleDateFormat")
         fun getWeekList(strStartDate: String): List<String> {
 
             val now = Calendar.getInstance()
 
             val format = SimpleDateFormat("dd-MM-yyyy")
-            val startDate: Date = format.parse(strStartDate)
+            val startDate: Date? = format.parse(strStartDate)
 
-            now.time = startDate
+            if (startDate != null) {
+                now.time = startDate
+            }
 
             val dateList: MutableList<String> = ArrayList()
             val delta = -now[Calendar.DAY_OF_WEEK] + 1 //add 2 if your week start on monday
@@ -276,7 +478,7 @@ class AppUtils {
 
         fun getTotalDays(currentDate: String, year: String): Int {
             val cal = GregorianCalendar()
-            var feb = if(cal.isLeapYear(year.toInt())){
+            val feb = if(cal.isLeapYear(year.toInt())){
                 29
             }
             else{
@@ -298,6 +500,675 @@ class AppUtils {
             }
             return 0
         }
+
+        fun checkBlankData(data: String?): Boolean {
+            return data == "" || data!!.isEmpty() || data.isEmpty() || data == "null"
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getMillisecondFromDate(givenDateString: String?, format: String?): Long {
+            val sdf = SimpleDateFormat(format)
+            var timeInMilliseconds: Long = 0
+            try {
+                val mDate = givenDateString?.let { sdf.parse(it) }
+                timeInMilliseconds = mDate!!.time
+                //println("Date in milli :: " + timeInMilliseconds);
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return timeInMilliseconds
+        }
+
+        fun getMillisecond(): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            cal[Calendar.HOUR] = 0
+            cal[Calendar.MINUTE] = 0
+            cal[Calendar.SECOND] = 0
+            cal[Calendar.AM_PM] = 0
+            return cal.timeInMillis
+        }
+
+        fun getCurrentGMTMillisecond(): Long {
+            val current_cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.getDefault())
+            return current_cal.timeInMillis
+        }
+
+        fun getMillisecond(year: Int, month: Int, day: Int): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            cal[Calendar.YEAR] = year
+            cal[Calendar.MONTH] = month
+            cal[Calendar.DAY_OF_MONTH] = day
+            cal[Calendar.HOUR_OF_DAY] = 0
+            cal[Calendar.MINUTE] = 0
+            cal[Calendar.SECOND] = 0
+            cal[Calendar.AM_PM] = 0
+            return cal.timeInMillis
+        }
+
+        fun getMillisecond(
+            year: Int,
+            month: Int,
+            day: Int,
+            hour: Int,
+            minute: Int,
+            format: Int
+        ): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            cal[Calendar.YEAR] = year
+            cal[Calendar.MONTH] = month
+            cal[Calendar.DAY_OF_MONTH] = day
+            cal[Calendar.HOUR] = hour
+            cal[Calendar.MINUTE] = minute
+            cal[Calendar.SECOND] = 0
+            cal[Calendar.AM_PM] = format
+            return cal.timeInMillis
+        }
+
+        fun getMillisecond(
+            year: Int,
+            month: Int,
+            day: Int,
+            hour: Int,
+            minute: Int,
+            format: String
+        ): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            cal[Calendar.YEAR] = year
+            cal[Calendar.MONTH] = month
+            cal[Calendar.DAY_OF_MONTH] = day
+            cal[Calendar.HOUR] = hour
+            cal[Calendar.MINUTE] = minute
+            cal[Calendar.SECOND] = 0
+            if (format.uppercase(Locale.getDefault()) == "PM") cal[Calendar.AM_PM] = 1
+            else cal[Calendar.AM_PM] = 0
+            return cal.timeInMillis
+        }
+
+        fun getMillisecond(year: Int, month: Int, day: Int, hour: Int, minute: Int): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            cal[Calendar.YEAR] = year
+            cal[Calendar.MONTH] = month
+            cal[Calendar.DAY_OF_MONTH] = day
+            cal[Calendar.HOUR_OF_DAY] = hour
+            cal[Calendar.MINUTE] = minute
+            cal[Calendar.SECOND] = 0
+            return cal.timeInMillis
+        }
+
+        fun getCurrentMillisecond(): Long {
+            val cal = Calendar.getInstance(Locale.getDefault())
+            return cal.timeInMillis
+        }
+
+        fun getTimeWithAP(time: String): String {
+            val fformat: String
+            val separated = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            var fhour = ("" + separated[0]).toInt()
+            val fmin = ("" + separated[1]).toInt()
+            if (fhour == 0) {
+                fhour += 12
+                fformat = "AM"
+            } else if (fhour == 12) {
+                fformat = "PM"
+            } else if (fhour > 12) {
+                fhour -= 12
+                fformat = "PM"
+            } else {
+                fformat = "AM"
+            }
+
+            return (get_2_point("" + fhour) + ":" + get_2_point("" + fmin)).toString() + " " + fformat
+        }
+
+        private fun getDaySuffix(n: Int): String {
+            if (n < 1 || n > 31) return "Invalid date"
+            if (n in 11..13) return "th"
+
+            return when (n % 10) {
+                1 -> "st"
+                2 -> "nd"
+                3 -> "rd"
+                else -> "th"
+            }
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getFullMonth(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = ""
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("MMMM").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getShortMonth(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = ""
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("MMM").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getMonth(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = ""
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("MM").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getDay(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = ""
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("dd").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getYear(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = ""
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("yyyy").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getDayswithPrefix(dateInString: String?, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            var formated = "0"
+            try {
+                val date = dateInString?.let { sdf.parse(it) }
+                formated = date?.let { SimpleDateFormat("dd").format(it) }.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return formated + getDaySuffix(formated.toInt())
+        }
+
+        fun getCurrentDateTime(is24TimeFormat: Boolean): String {
+            val dateFormat =
+                if (is24TimeFormat) SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+                else SimpleDateFormat("yyyy-MM-dd KK:mm a", Locale.getDefault())
+
+            val date = Date()
+            return dateFormat.format(date)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun set_format_date(year: Int, month: Int, day: Int, format: String?): String {
+            val sdf = SimpleDateFormat(format)
+            val formatedDate = sdf.format(Date(year, month, day))
+            return formatedDate
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getFormatDate(format: String?): String {
+            //SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.getDefault());
+            val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+            val date = Date()
+            return dateFormat.format(date)
+        }
+        
+        @SuppressLint("SimpleDateFormat")
+        fun getCurrentDate(format: String?): String {
+            val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+            val date = Date()
+            return dateFormat.format(date)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getCurrentTime(is24TimeFormat: Boolean): String {
+            val dateFormat =
+                if (is24TimeFormat) SimpleDateFormat("HH:mm", Locale.getDefault())
+                else SimpleDateFormat("KK:mm a", Locale.getDefault())
+
+            val date = Date()
+            return dateFormat.format(date)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getDate(milliSeconds: Long, dateFormat: String?): String {
+            // Create a DateFormatter object for displaying date in specified format.
+            val formatter = SimpleDateFormat(dateFormat)
+
+            // Create a calendar object that will convert the date and time value in milliseconds to date.
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            calendar.timeInMillis = milliSeconds
+            return formatter.format(calendar.time)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun FormateDateFromString(
+            inputFormat: String?,
+            outputFormat: String?,
+            inputDate: String?
+        ): String {
+            var parsed: Date? = null
+            var outputDate = ""
+
+            /*SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, Locale.getDefault());
+        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, Locale.getDefault());*/
+            val df_input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            val df_output = SimpleDateFormat(outputFormat, Locale.getDefault())
+
+            try {
+                parsed = inputDate?.let { df_input.parse(it) }
+                outputDate = parsed?.let { df_output.format(it) }.toString()
+            } catch (e: Exception) {
+                e.message?.let { e(Throwable(e), it) }
+            }
+
+            return outputDate
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun DayDifferent(str_date1: String?, str_date2: String?): Long {
+            /*String inputString1 = "23 01 1997";
+		String inputString2 = "27 04 1997";*/
+            var diff: Long = 0
+            var days_diff: Long = 0
+            val myFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            try {
+                val date1 = str_date1?.let { myFormat.parse(it) }
+                val date2 = str_date2?.let { myFormat.parse(it) }
+                diff = date2!!.time - date1!!.time
+                println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS))
+                days_diff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return days_diff
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun DayDifferent(str_date1: String?, str_date2: String?, format: String?): Long {
+            /*String inputString1 = "23 01 1997";
+		String inputString2 = "27 04 1997";*/
+            var diff: Long = 0
+            var days_diff: Long = 0
+            val myFormat = SimpleDateFormat(format, Locale.getDefault())
+            try {
+                val date1 = str_date1?.let { myFormat.parse(it) }
+                val date2 = str_date2?.let { myFormat.parse(it) }
+                diff = date2!!.time - date1!!.time
+                println("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS))
+                days_diff = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return days_diff
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getDaysAgo(date: String): String {
+            val dateString = date
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+
+            var convertedDate = Date()
+            var serverDate = Date()
+
+            try {
+                convertedDate = dateFormat.parse(dateString)!!
+                val c = Calendar.getInstance(Locale.getDefault())
+                val formattedDate = dateFormat.format(c.time)
+                serverDate = dateFormat.parse(formattedDate)!!
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            //long days1 = (convertedDate.getTime() - serverDate.getTime());
+            val days1 = (serverDate.time - convertedDate.time)
+
+            val seconds = days1 / 1000
+            val minutes = seconds / 60
+            val hours = minutes / 60
+            val days = hours / 24
+            val months = days / 31
+            val years = days / 365
+
+            println("serverDate:" + serverDate.time)
+            println("convertedDate:" + convertedDate.time)
+            println("days1:$days1")
+            println("seconds:$seconds")
+            println("minutes:$minutes")
+            println("hours:$hours")
+            println("days:$days")
+            println("months:$months")
+            println("years:$years")
+
+            return if (seconds < 86400)  // 24  60 60 ( less than 1 day )
+            {
+                "today"
+            } else if (seconds < 172800)  // 48  60  60 ( less than 2 day )
+            {
+                "yesterday"
+            } else if (seconds < 2592000)  // 30  24  60 * 60 ( less than 1 month )
+            {
+                "$days days ago"
+            } else if (seconds < 31104000)  // 12  30  24  60  60
+            {
+                if (months <= 1) "one month ago" else "$months months ago"
+            } else {
+                if (years <= 1) "one year ago" else "$years years ago"
+            }
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun check_current_time_between_2date(start_date: String?, end_date: String?): Boolean {
+            try {
+                val mToday = Date()
+                val sdf = SimpleDateFormat("hh:mm aa")
+                val curTime = sdf.format(mToday)
+
+                val start = start_date?.let { sdf.parse(it) }
+                val end = end_date?.let { sdf.parse(it) }
+                val userDate = sdf.parse(curTime)
+
+                if (end!!.before(start)) {
+                    val mCal = Calendar.getInstance(Locale.getDefault())
+                    mCal.time = end
+                    mCal.add(Calendar.DAY_OF_YEAR, 1)
+                    end.time = mCal.timeInMillis
+                }
+
+                if (userDate != null) {
+                    d("curTime", userDate.toString())
+                }
+                d("start", start.toString())
+                d("end", end.toString())
+
+                if (userDate != null) {
+                    return userDate.after(start) && userDate.before(end)
+                }
+            } catch (e: Exception) {
+                return false
+            }
+            return true
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun check_specific_time_between_2date(
+            start_date: String?,
+            end_date: String?,
+            my_date: String?
+        ): Boolean {
+            try {
+                val sdf = SimpleDateFormat("hh:mm aa")
+
+                val start = start_date?.let { sdf.parse(it) }
+                val end = end_date?.let { sdf.parse(it) }
+                val userDate = my_date?.let { sdf.parse(it) }
+
+                if (end!!.before(start)) {
+                    val mCal = Calendar.getInstance(Locale.getDefault())
+                    mCal.time = end
+                    mCal.add(Calendar.DAY_OF_YEAR, 1)
+                    end.time = mCal.timeInMillis
+                }
+
+                d("curTime", userDate.toString())
+                d("start", start.toString())
+                d("end", end.toString())
+
+                return if (userDate === start) true
+                else if (userDate!!.after(start) && userDate.before(end)) true
+                else false
+            } catch (e: Exception) {
+                return false
+            }
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getGMTDate(dateFormat: String?): String {
+            val formatter = SimpleDateFormat(dateFormat)
+            val cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.getDefault())
+            formatter.timeZone = TimeZone.getTimeZone("GMT")
+
+            return formatter.format(cal.time)
+        }
+
+        fun get_total_days_of_month(month: Int, year: Int): Int {
+            val day = 31
+
+            if (month == 4 || month == 6 || month == 9 || month == 11) return 30
+            else if (month == 2) {
+                return if (year % 4 == 0) 29
+                else 28
+            }
+            return day
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun different_time(current_time: String?, time: String?): Boolean {
+            val simpleDateFormat = SimpleDateFormat("HH:mm")
+            var CurrentTime: Date? = null
+            var Time: Date? = null
+
+            try {
+                CurrentTime = current_time?.let { simpleDateFormat.parse(it) }
+                Time = time?.let { simpleDateFormat.parse(it) }
+            } catch (e: ParseException) {
+                //Some thing if its not working
+            }
+
+            val difference = Time!!.time - CurrentTime!!.time
+
+            if (difference >= 0) return true
+
+            return false
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun different_time(current_time: String?, time: String?, format: String?): Boolean {
+            val simpleDateFormat = SimpleDateFormat(format)
+            var CurrentTime: Date? = null
+            var Time: Date? = null
+
+            try {
+                CurrentTime = current_time?.let { simpleDateFormat.parse(it) }
+                Time = time?.let { simpleDateFormat.parse(it) }
+            } catch (e: ParseException) {
+                //Some thing if its not working
+            }
+
+            val difference = Time!!.time - CurrentTime!!.time
+
+            if (difference >= 0) return true
+
+            return false
+        }
+
+        fun get_2_point(no: String): String {
+            var no = no
+            if (no.length == 1) no = "0$no"
+            return no
+        }
+
+        fun getTimeHour(time: String): String {
+            val separated = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val fhour = ("" + separated[0]).toInt()
+            return get_2_point("" + fhour)
+        }
+
+        fun getTimeMin(time: String): String {
+            val separated = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val fmin = ("" + separated[1]).toInt()
+            return get_2_point("" + fmin)
+        }
+
+        fun getTimeFormat(time: String): String {
+            val fformat: String
+            val separated = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val fhour = ("" + separated[0]).toInt()
+            fformat = if (fhour == 0) {
+                "AM"
+            } else if (fhour == 12) {
+                "PM"
+            } else if (fhour > 12) {
+                "PM"
+            } else {
+                "AM"
+            }
+            return "" + fformat
+        }
+
+        fun getCurrentTimeSecond(is24TimeFormat: Boolean): String {
+            val dateFormat =
+                if (is24TimeFormat) SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                else SimpleDateFormat("KK:mm:ss a", Locale.getDefault())
+
+            val date = Date()
+            return dateFormat.format(date)
+        }
+
+        @SuppressLint("SimpleDateFormat")
+        fun getLastDateOfMonth(month: Int, year: Int, format: String?): String {
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            // passing month-1 because 0-->jan, 1-->feb... 11-->dec
+            calendar[year, month - 1] = 1
+            calendar[Calendar.DATE] = calendar.getActualMaximum(Calendar.DATE)
+            val date = calendar.time
+            val DATE_FORMAT: DateFormat = SimpleDateFormat(format) //"MM/dd/yyyy"
+            return DATE_FORMAT.format(date)
+        }
+
+
+        /**
+         *
+         * @param value double that is formatted
+         * @return double that has 1 decimal place
+         */
+        private fun format(value: Double): Double {
+            try {
+                if (value != 0.0) {
+                    val df = DecimalFormat("###.##")
+                    return df.format(value).replace(",", ".")
+                        .replace("٫", ".").toDouble()
+                } else {
+                    return (-1).toDouble()
+                }
+            } catch (e: java.lang.Exception) {
+                e.message?.let { e(Throwable(e), it) }
+            }
+
+            return (-1).toDouble()
+        }
+
+        /**
+         *
+         * @param lb - pounds
+         * @return kg rounded to 1 decimal place
+         */
+        fun lbToKgConverter(lb: Double): Double {
+            return format(lb * 0.453592)
+            //0.45359237
+        }
+
+        /**
+         *
+         * @param kg - kilograms
+         * @return lb rounded to 1 decimal place
+         */
+        fun kgToLbConverter(kg: Double): Double {
+            return format(kg * 2.204624420183777)
+            //2.20462262
+        }
+
+        /**
+         *
+         * @param cm - centimeters
+         * @return feet rounded to 1 decimal place
+         */
+        /*public static double cmToFeetConverter(double cm) {
+        return format(cm * 0.032808399 );
+    }*/
+        fun cmToFeetConverter(cm: Double): Double {
+            return format(cm / 30)
+        }
+
+        /**
+         *
+         * @param feet - feet
+         * @return centimeters rounded to 1 decimal place
+         */
+        /*public static double feetToCmConverter(double feet) {
+        return format(feet * 30.48 );
+    }*/
+        fun feetToCmConverter(feet: Double): Double {
+            return format(feet * 30)
+        }
+
+        /**
+         *
+         * @param height in **cm**
+         * @param weight in **kilograms**
+         * @return BMI index with 1 decimal place
+         */
+        fun getBMIKg(height: Double, weight: Double): Double {
+            val meters = height / 100
+            return format(weight / meters.pow(2.0))
+        }
+
+        /**
+         *
+         * @param height in **feet**
+         * @param weight in **pounds**
+         * @return BMI index with 1 decimal place
+         */
+        fun getBMILb(height: Double, weight: Double): Double {
+            val inch = (height * 12).toFloat()
+            return format((weight * 703) / inch.pow(2.0f))
+        }
+
+        /**
+         *
+         * @param bmi (Body Mass Index)
+         * @return BMI classification based on the bmi number
+         */
+        fun getBMIClassification(bmi: Double): String {
+            if (bmi <= 0) return "unknown"
+
+            val classification = if (bmi < 18.5) {
+                "underweight"
+            } else if (bmi < 25) {
+                "normal"
+            } else if (bmi < 30) {
+                "overweight"
+            } else {
+                "obese"
+            }
+
+            return classification
+        }
+
+
 
         val PRIVATE_MODE = 0
 
@@ -344,7 +1215,79 @@ class AppUtils {
         const val INDEX_MONTH_KEY : String = "month"
         const val INDEX_YEAR_KEY : String = "year"
         const val DATE : String = "date"
-
+        var DAILY_WATER_VALUE: Float = 0f
+        var WATER_UNIT_VALUE: String = "ML"
+         const val DAILY_WATER: String = "daily_water"
+         const val WATER_UNIT: String = "water_unit"
+         const val SELECTED_CONTAINER: String = "selected_container"
+         const val HIDE_WELCOME_SCREEN: String = "hide_welcome_screen"
+         const val USER_NAME: String = "user_name"
+         const val USER_GENDER: String = "user_gender"
+         const val USER_PHOTO: String = "user_photo"
+         const val PERSON_HEIGHT: String = "person_height"
+         const val PERSON_HEIGHT_UNIT: String = "person_height_unit"
+         const val PERSON_WEIGHT: String = "person_weight"
+         const val PERSON_WEIGHT_UNIT: String = "person_weight_unit"
+         const val SET_MANUALLY_GOAL: String = "set_manually_goal"
+         const val SET_MANUALLY_GOAL_VALUE: String = "set_manually_goal_value"
+         const val WAKE_UP_TIME: String = "wakeup_time"
+         const val WAKE_UP_TIME_HOUR: String = "wakeup_time_hour"
+         const val WAKE_UP_TIME_MINUTE: String = "wakeup_time_minute"
+         const val BED_TIME: String = "bed_time"
+         const val BED_TIME_HOUR: String = "bed_time_hour"
+         const val BED_TIME_MINUTE: String = "bed_time_minute"
+         const val INTERVAL: String = "interval"
+         const val REMINDER_OPTION: String = "reminder_option" // o for auto, 1 for off, 2 for silent
+         const val REMINDER_VIBRATE: String = "reminder_vibrate"
+         const val REMINDER_SOUND: String = "reminder_sound"
+         const val DISABLE_NOTIFICATION: String = "disable_notification"
+         const val IS_MANUAL_REMINDER: String = "manual_reminder_active"
+         const val DISABLE_SOUND_WHEN_ADD_WATER: String = "disable_sound_when_add_water"
+         const val IGNORE_NEXT_STEP: String = "ignore_next_step"
+         var decimalFormat: DecimalFormat = DecimalFormat("#0.00")
+         var decimalFormat2: DecimalFormat = DecimalFormat("#0.0")
+         var notification_ringtone: Ringtone? = null
+         const val RELOAD_DASHBOARD: Boolean = true
+         const val LOAD_VIDEO_ADS: Boolean = false
+         const val APP_DIRECTORY_NAME: String = "Water Let\'s hydrate"
+         const val APP_PROFILE_DIRECTORY_NAME: String = "profile"
+         const val AUTO_BACK_UP: String = "auto_backup"
+         const val AUTO_BACK_UP_TYPE: String = "auto_backup_type"
+         const val AUTO_BACK_UP_ID: String = "auto_backup_id"
+         const val IS_ACTIVE: String = "is_active"
+         const val IS_PREGNANT: String = "is_pregnant"
+         const val IS_BREASTFEEDING: String = "is_breastfeeding"
+         const val WEATHER_CONSITIONS: String = "weather_conditions"
+         const val IS_MIGRATION: String = "is_migration"
+         const val MALE_WATER: Double = 35.71
+         const val ACTIVE_MALE_WATER: Double = 50.0
+         const val DEACTIVE_MALE_WATER: Double = 14.29
+         const val FEMALE_WATER: Double = 28.57
+         const val ACTIVE_FEMALE_WATER: Double = 40.0
+         const val DEACTIVE_FEMALE_WATER: Double = 11.43
+         const val PREGNANT_WATER: Double = 700.0
+         const val BREASTFEEDING_WATER: Double = 700.0
+         const val WEATHER_SUNNY: Double = 1.0
+         const val WEATHER_CLOUDY: Double = 0.85
+         const val WEATHER_RAINY: Double = 0.68
+         const val WEATHER_SNOW: Double = 0.88
+        const val DEVELOPER_MODE: Boolean = true
+        var share_purchase_title: String = "Share To"
+        var launchables: List<ResolveInfo>? = null
+        var pm: PackageManager? = null
+        var launchables_sel: List<ResolveInfo>? = null
+        const val general_share_title: String = "Share"
+        const val PICK_CONTACT: Int = 1000
+        const val no_internet_message: String = "No Internet Connection!!!"
+        const val youTubeUrlRegEx: String =
+            "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
+        val videoIdRegex: Array<String> = arrayOf(
+            "\\?vi?=([^&]*)",
+            "watch\\?.*v=([^&]*)",
+            "(?:embed|vi?)/([^/?]*)",
+            "^([A-Za-z0-9\\-]*)"
+        )
+        
         enum class TypeMessage {
             NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
         }

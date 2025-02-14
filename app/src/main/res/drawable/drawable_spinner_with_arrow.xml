@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background -->
+    <item>
+
+        <shape>
+            <solid android:color="@color/et_background" />
+            <corners android:radius="@dimen/dp_3" />
+            <stroke android:width="0.5dp" android:color="@color/et_border"  />
+        </shape>
+    </item>
+
+    <item android:right="@dimen/dp_10">
+        <bitmap android:gravity="right|center"
+            android:src="@drawable/ic_down_arrow" />
+    </item>
+
+</layer-list>

@@ -6,9 +6,6 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorSecondary">#18e682</color>
     <color name="colorSecondaryDark">#41B279</color>
     <color name="colorSecondaryLight">#6ADEA4</color>
@@ -52,6 +49,112 @@
     <color name="bee">#F6E000</color>
     <color name="honey">#f9c901</color>
     <color name="green_card">#7AC5C1</color>
+
+
+
+
+
+    <color name="colorPrimary">#a7dbd8</color><!-- @@@ -->
+    <color name="colorPrimaryDark">#a7dbd8</color>
+    <color name="colorAccent">#4586FC</color>
+    <color name="white">#FFFFFF</color>
+
+    <!--  =======================================================  -->
+
+    <color name="shadow_00">#00000000</color>
+    <color name="shadow_10">#03000000</color>
+    <color name="shadow_20">#05000000</color>
+    <color name="shadow_30">#08000000</color>
+    <color name="shadow_50">#0A000000</color>
+    <color name="shadow_70">#0D000000</color>
+    <color name="shadow_90">#0F000000</color>
+
     <color name="app_transparant">#0000</color>
+
+    <color name="screen_back">#F2F2F2</color>
+
+    <color name="app_grey">#f2f2f2</color>
+    <color name="app_text_grey">#4d4d4d</color>
+
+    <color name="line">#525252</color>
+
+    <color name="et_label">#2a2626</color>
+    <color name="et_background">#eeeeee</color>
+    <color name="et_border">#717171</color>
+    <color name="et_text">#1d1b1b</color>
+    <color name="et_placeholder">#a2a0a4</color>
+
+
+
+    <!-- -->
+
+    <!--<color name="btn_back">#FB5578</color>-->
+    <color name="btn_back">#ff7b07</color>
+
+    <color name="black_20">#33000000</color>
+    <color name="white_60">#FBFBFB</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="off_switch">#a1cdcc</color>
+    <color name="app_32">#523D6B70</color>
+    <color name="app_70">#B33D6B70</color>
+    <color name="app_30">#4D3D6B70</color>
+
+
+    <!--<color name="rdo_gender_regular">#003099</color>
+    <color name="rdo_gender_select">#FFFFFF</color>
+    <color name="rdo_gender_regular_icon_color">#75C8FE</color>
+    <color name="rdo_gender_select_icon_color">#AD9BF7</color>
+    <color name="rdo_gender_regular_text_color">#FFFFFF</color>
+    <color name="rdo_gender_select_text_color">#003CBF</color>-->
+
+    <color name="rdo_gender_regular">#0000</color>
+    <color name="rdo_gender_select">#3D6B70</color><!-- @@@ -->
+    <color name="rdo_gender_regular_icon_color">#3D6B70</color>
+    <color name="rdo_gender_select_icon_color">#FFFFFF</color>
+    <color name="rdo_gender_regular_text_color">#3D6B70</color>
+    <color name="rdo_gender_select_text_color">#FFFFFF</color>
+
+    <color name="unactive_dot">#99FFFFFF</color>
+
+    <color name="note_color">#757575</color>
+    <color name="cancel_color">#4B4B4B</color>
+    <color name="set_daily_goal">#2E2E2E</color>
+    <color name="daily_goal_no">#3D6B70</color>
+    <color name="daily_goal_recommended">#979797</color>
+
+
+    <color name="str_green_card">#7AC5C1</color><!-- @@@ -->
+
+
+
+    <color name="grey_color">#7F818F</color>
+    <color name="blue_color">#0019BF</color>
+    <color name="green_color">#08AE08</color>
+    <color name="black_48">#0A124A</color>
+    <color name="grey2_color">#8A8EA8</color>
+    <color name="date_line">#D9DCEF</color>
+    <color name="menu_selected_back">#80A7DBD8</color>
+    <color name="cross">#62B3AE</color>
+
+    <color name="scrollbar_color">#e1e1e1</color>
+
+    <color name="water_color">#7AC5C1</color>
+
     <color name="item_line">#E1E1E1</color>
+    <color name="profile_user_circle_border">#B362B3AE</color>
+
+
+    <color name="menu_line">#66a7dbd8</color>
+    <color name="profile_user_menu_circle_border">#33FFFFFF</color>
+
+    <color name="transparent">#0000</color>
+    <color name="black_dark_transparent">#99000000</color>
+    <color name="black_transparent">#44000000</color>
+    <color name="black_overlay">#33000000</color>
+
+    <color name="error_header">#F37249</color>
+    <color name="error_background">#F7F7F7</color>
+    <color name="error_button">#F2F2F2</color>
+    <color name="error_button_stroke">#737373</color>
+
 </resources>

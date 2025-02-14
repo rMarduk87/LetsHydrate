@@ -1,6 +1,7 @@
 package rpt.tool.mementobibere
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -46,6 +47,17 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun getThemeColor(ctx: Context): Int {
+        return ctx.resources.getColor(R.color.colorPrimaryDark)
+    }
+
+    fun getThemeColorArray(ctx: Context?): IntArray {
+        val colors = intArrayOf(Color.parseColor("#001455da"),
+            Color.parseColor("#FF1455da"))
+
+        return colors
     }
 
     @SuppressLint("InflateParams", "RestrictedApi")
