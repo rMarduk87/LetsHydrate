@@ -447,13 +447,13 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         )
 
         if(!SharedPreferencesManager.setWeight){
-            safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
+            //safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
         }
 
         if(!AppUtils.isValidDate(
                 Date(SharedPreferencesManager.sleepingTime).toStringHour(),
                 Date(SharedPreferencesManager.wakeUpTime).toStringHour())){
-            safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToAdjustHourBottomSheetFragment())
+            //safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToAdjustHourBottomSheetFragment())
         }
 
         notificStatus = SharedPreferencesManager.notificationStatus
@@ -725,8 +725,8 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         }
 
         if(SharedPreferencesManager.startTutorial){
-            safeNavController?.safeNavigate(DrinkFragmentDirections
-                .actionDrinkFragmentToTutorialFragment())
+            //safeNavController?.safeNavigate(DrinkFragmentDirections
+               // .actionDrinkFragmentToTutorialFragment())
         }
     }
 

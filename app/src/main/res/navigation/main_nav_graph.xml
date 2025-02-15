@@ -11,37 +11,20 @@
         android:label="@string/drink_fragment_label"
         tools:layout="@layout/drink_fragment">
         <action
-            android:id="@+id/action_drinkFragment_to_selectWeightBottomSheetFragment"
-            app:destination="@id/selectWeightBottomSheetFragment" />
-        <action
-            android:id="@+id/action_drinkFragment_to_adjustHourBottomSheetFragment"
-            app:destination="@id/adjustHourBottomSheetFragment" />
-        <action
             android:id="@+id/action_drinkFragment_to_infoFragment"
             app:destination="@id/applicationInfoFragment" />
         <action
             android:id="@+id/action_drinkFragment_to_selfFragment"
             app:destination="@id/DrinkFragment" />
         <action
-            android:id="@+id/action_drinkFragment_to_tutorialFragment"
-            app:destination="@id/TutorialFragment" />
-        <action
             android:id="@+id/action_drinkFragment_to_statsFragment"
             app:destination="@id/StatsFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/selectWeightBottomSheetFragment"
-        android:name="rpt.tool.mementobibere.ui.weight.SelectWeightBottomSheetFragment"
-        android:label="SelectWeightBottomSheetFragment" />
-    <dialog
-        android:id="@+id/adjustHourBottomSheetFragment"
-        android:name="rpt.tool.mementobibere.ui.hour.AdjustHourBottomSheetFragment"
-        android:label="AdjustHourBottomSheetFragment" />
     <fragment
         android:id="@+id/applicationInfoFragment"
-        android:name="rpt.tool.mementobibere.ui.info.ApplicationInfoFragment"
+        android:name="rpt.tool.mementobibere.ui.profile.ProfileFragment"
         android:label="@string/info_fragment_label"
-        tools:layout="@layout/application_info_fragment">
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_infoFragment_to_DrinkFragment"
@@ -51,34 +34,16 @@
             app:destination="@id/applicationInfoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/TutorialFragment"
-        android:name="rpt.tool.mementobibere.ui.tutorial.TutorialFragment"
-        android:label="TutorialFragment"
-        tools:layout="@layout/tutorial_fragment">
-        <action
-            android:id="@+id/action_tutorialFragment_to_drinkFragment"
-            app:destination="@id/DrinkFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/StatsFragment"
         android:name="rpt.tool.mementobibere.ui.statistics.stats.StatsFragment"
         android:label="StatFragment"
-        tools:layout="@layout/stats_fragment">
-        <action
-            android:id="@+id/action_statsFragment_to_intookCounterBottomSheetDialog"
-            app:destination="@id/intookCounterFragment" />
+        tools:layout="@layout/fragment_stats">
         <action
             android:id="@+id/action_statsFragment_to_drinkFragment"
             app:destination="@id/DrinkFragment" />
         <action
             android:id="@+id/action_statsFragment_to_reacheGoalFragment"
             app:destination="@id/ReachedGoalFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/intookCounterFragment"
-        android:name="rpt.tool.mementobibere.ui.statistics.details.IntookCounterFragment"
-        android:label="intookCounterFragment"
-        tools:layout="@layout/intook_counter_stats_bottom_sheet_fragment">
     </fragment>
     <fragment
         android:id="@+id/ReachedGoalFragment"

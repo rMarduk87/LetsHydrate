@@ -136,7 +136,7 @@ class AppUtils {
             dend: Int
         ): CharSequence? {
             try {
-                //Log.d("CharSequence",""+dest.toString() +" @@@ "+ source.toString());
+                //D("CharSequence",""+dest.toString() +" @@@ "+ source.toString());
                 val str = dest.toString() + source.toString()
                 d("CharSequence", " -> " + str.length)
 
@@ -157,12 +157,12 @@ class AppUtils {
             }
 
             for (k in b.indices) {
-                //Log.d("CharSequence"," -> "+b.get(k)+" @@@ "+c);
+                //D("CharSequence"," -> "+b.get(k)+" @@@ "+c);
                 /*String tb=""+b.get(k);
             String tc=""+c;
-            Log.d("CharSequence"," -> "+tb+" @@@ "+tc);*/
+            D("CharSequence"," -> "+tb+" @@@ "+tc);*/
 
-                if (b[k] == c)  //if(tb.equalsIgnoreCase(tc))
+                if (b[k] == c)  //if(tb.equals(tc))
                     return true
             }
             return false
@@ -1259,18 +1259,18 @@ class AppUtils {
          const val IS_BREASTFEEDING: String = "is_breastfeeding"
          const val WEATHER_CONSITIONS: String = "weather_conditions"
          const val IS_MIGRATION: String = "is_migration"
-         const val MALE_WATER: Double = 35.71
-         const val ACTIVE_MALE_WATER: Double = 50.0
-         const val DEACTIVE_MALE_WATER: Double = 14.29
-         const val FEMALE_WATER: Double = 28.57
-         const val ACTIVE_FEMALE_WATER: Double = 40.0
-         const val DEACTIVE_FEMALE_WATER: Double = 11.43
-         const val PREGNANT_WATER: Double = 700.0
-         const val BREASTFEEDING_WATER: Double = 700.0
-         const val WEATHER_SUNNY: Double = 1.0
-         const val WEATHER_CLOUDY: Double = 0.85
-         const val WEATHER_RAINY: Double = 0.68
-         const val WEATHER_SNOW: Double = 0.88
+         const val MALE_WATER: Float = 35.71f
+         const val ACTIVE_MALE_WATER: Float = 50.0f
+         const val DEACTIVE_MALE_WATER: Float = 14.29f
+         const val FEMALE_WATER: Float = 28.57f
+         const val ACTIVE_FEMALE_WATER: Float = 40.0f
+         const val DEACTIVE_FEMALE_WATER: Float = 11.43f
+         const val PREGNANT_WATER: Float = 700.0f
+         const val BREASTFEEDING_WATER: Float = 700.0f
+         const val WEATHER_SUNNY: Float = 1.0f
+         const val WEATHER_CLOUDY: Float = 0.85f
+         const val WEATHER_RAINY: Float = 0.68f
+         const val WEATHER_SNOW: Float = 0.88f
         const val DEVELOPER_MODE: Boolean = true
         var share_purchase_title: String = "Share To"
         var launchables: List<ResolveInfo>? = null

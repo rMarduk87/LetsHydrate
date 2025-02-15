@@ -9,6 +9,6 @@
         android:id="@+id/InitUserInfoFragment"
         android:name="rpt.tool.mementobibere.ui.userinfo.InitUserInfoFragment"
         android:label="@string/init_user_info_fragment_label"
-        tools:layout="@layout/init_user_info_fragment">
+        tools:layout="@layout/fragment_init_user_info">
     </fragment>
 </navigation>

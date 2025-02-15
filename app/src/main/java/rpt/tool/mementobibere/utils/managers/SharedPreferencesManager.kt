@@ -183,4 +183,7 @@ object SharedPreferencesManager {
     var personHeightUnit: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.PERSON_HEIGHT_UNIT,true)
         set(value) = sharedPreferences.edit().putBoolean(AppUtils.PERSON_HEIGHT_UNIT, value).apply()
+    var userPhoto: String
+        get() = sharedPreferences.getString(AppUtils.USER_PHOTO, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.USER_PHOTO, value).apply()
 }

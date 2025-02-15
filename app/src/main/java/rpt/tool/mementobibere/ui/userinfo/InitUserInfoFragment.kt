@@ -10,7 +10,7 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.InitUserInfoFragmentBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.log.e
@@ -19,7 +19,7 @@ import rpt.tool.mementobibere.utils.view.adapters.InitUserInfoPagerAdapter
 
 @Suppress("DEPRECATION")
 class InitUserInfoFragment:
-    BaseFragment<InitUserInfoFragmentBinding>(InitUserInfoFragmentBinding::inflate) {
+    BaseFragment<FragmentInitUserInfoBinding>(FragmentInitUserInfoBinding::inflate) {
 
 
     var initUserInfoPagerAdapter: InitUserInfoPagerAdapter? = null

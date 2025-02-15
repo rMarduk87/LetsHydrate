@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <include android:id="@+id/include1" layout="@layout/header_with_back" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@drawable/drawable_rounded_screen_background"
+        android:backgroundTint="@color/str_green_card">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dp_20"/>
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_5">
+
+            <RadioButton
+                android:id="@+id/rdo_week"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:checked="true"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/rdo_back_reminder"
+                android:text="@string/str_week"
+                android:textSize="@dimen/dp_12"
+                android:textColor="@drawable/rdo_back_reminder"
+                android:fontFamily="@font/calibri_regular"
+                tools:ignore="SpUsage" />
+
+            <RadioButton
+                android:id="@+id/rdo_month"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:checked="false"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/rdo_back_reminder"
+                android:text="@string/str_month"
+                android:textSize="@dimen/dp_12"
+                android:textColor="@drawable/rdo_back_reminder"
+                android:fontFamily="@font/calibri_regular"
+                tools:ignore="SpUsage" />
+
+            <RadioButton
+                android:id="@+id/rdo_year"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:checked="false"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:button="@null"
+                android:background="@drawable/rdo_back_reminder"
+                android:text="@string/str_year"
+                android:textSize="@dimen/dp_12"
+                android:textColor="@drawable/rdo_back_reminder"
+                android:fontFamily="@font/calibri_regular"
+                tools:ignore="SpUsage" />
+
+        </RadioGroup>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/white"
+            android:background="?android:colorPrimaryDark"
+            app:tabMode="fixed"
+            android:visibility="gone"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/white">
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <rpt.tool.mementobibere.utils.view.custom.NonSwipeableViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/drawable_rounded_screen_background">
+
+        </rpt.tool.mementobibere.utils.view.custom.NonSwipeableViewPager>
+
+    </LinearLayout>
+
+</LinearLayout>

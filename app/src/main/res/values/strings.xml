@@ -564,6 +564,7 @@
     <string name="_10_00_pm">10:00 PM</string>
     <string name="_15_mins">15 Mins</string>
     <string name="_1_hour">1 Hour</string>
+    <string name="male">Male</string>
 
     <!-- Country Code -->
     <string-array name="CountryCodes" >

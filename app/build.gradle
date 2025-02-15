@@ -79,6 +79,7 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient-android:4.3.5'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     // for image crop
     implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
     //Navigation

@@ -127,13 +127,6 @@ class HorizontalPicker @JvmOverloads constructor(
     private val touchHelper: PickerTouchHelper
 
 
-    var handler: Handler? = null
-    var runnable: Runnable? = null
-
-    var current_progress: Int = 90
-    var new_progress: Int = 150
-
-
     init {
         // create the selector wheel paint
         val paint = TextPaint()
@@ -272,7 +265,7 @@ class HorizontalPicker @JvmOverloads constructor(
 
                 val lineWidth = layout!!.getLineWidth(0)
                 if (lineWidth > itemWidth) {
-                    if (isRtl(values!![i])) {
+                    if (values!![i]?.let { isRtl(it) } == true) {
                         x += (lineWidth - itemWidth) / 2
                     } else {
                         x -= (lineWidth - itemWidth) / 2
@@ -653,7 +646,7 @@ class HorizontalPicker @JvmOverloads constructor(
     /**
      * @return
      */
-    fun getValues(): Array<CharSequence>? {
+    fun getValues(): Array<CharSequence?>? {
         return values
     }
 
@@ -864,7 +857,7 @@ class HorizontalPicker @JvmOverloads constructor(
             if (ellipsize == TruncateAt.MARQUEE
                 && itemWidth < layout!!.getLineWidth(0)
             ) {
-                marquee = Marquee(this, layout, isRtl(values!![item]))
+                marquee = values!![item]?.let { isRtl(it) }?.let { Marquee(this, layout, it) }
                 marquee!!.start(marqueeRepeatLimit)
             }
         }

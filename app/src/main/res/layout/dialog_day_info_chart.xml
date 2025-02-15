@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_transparant"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_rounded_white_back"
+        android:padding="@dimen/dp_15"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="true"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:text=""
+                android:textSize="@dimen/dp_18"
+                android:textColor="@color/daily_goal_no"
+                android:fontFamily="@font/calibri_bold"
+                tools:ignore="SpUsage" />
+
+            <ImageView
+                android:id="@+id/img_cancel"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="end"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/ic_cancel"
+                android:visibility="visible"
+                android:contentDescription="@string/img"
+                app:tint="@color/cross" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:text="@string/str_goal"
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_goal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text=""
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_bold"
+                        tools:ignore="SpUsage" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:text="@string/str_consumed"
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_consumed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text=""
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_bold"
+                        tools:ignore="SpUsage" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/dp_2"
+                        android:text="@string/drink_frequency"
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_frequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_gravity="center_horizontal"
+                        android:text=""
+                        android:textSize="@dimen/dp_15"
+                        android:textColor="@color/daily_goal_no"
+                        android:fontFamily="@font/calibri_bold"
+                        tools:ignore="SpUsage" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

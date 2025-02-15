@@ -25,3 +25,7 @@ fun w(throwable: Throwable, logTag: String = defaultTag) {
 fun e(logThrowable: Throwable, logTag: String = defaultTag) {
     Log.logThrowable(logThrowable, logTag)
 }
+
+fun i(logMessage: String, logTag: String = defaultTag) {
+    Log.logInfo(logMessage, logTag)
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnCamera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/dp_14"
+        android:textSize="@dimen/dp_14"
+        android:textColor="#007bff"
+        android:text="@string/str_camera"
+        android:fontFamily="@font/calibri_regular"
+        tools:ignore="SpUsage" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/menu_line"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnGallery"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/dp_14"
+        android:textSize="@dimen/dp_14"
+        android:textColor="#007bff"
+        android:text="@string/str_gallery"
+        android:fontFamily="@font/calibri_regular"
+        tools:ignore="SpUsage" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/menu_line"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnRemove"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/dp_14"
+        android:textColor="#ff3a30"
+        android:textSize="@dimen/dp_14"
+        android:text="@string/str_remove_photo"
+        android:fontFamily="@font/calibri_regular"
+        tools:ignore="SpUsage" />
+
+    <View
+        android:id="@+id/btnRemoveLine"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/menu_line"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btnCancel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:padding="@dimen/dp_14"
+        android:textSize="@dimen/dp_14"
+        android:textColor="#007bff"
+        android:text="@string/str_cancel"
+        android:fontFamily="@font/calibri_bold"
+        tools:ignore="SpUsage" />
+
+</LinearLayout>

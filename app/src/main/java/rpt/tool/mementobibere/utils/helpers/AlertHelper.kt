@@ -24,7 +24,7 @@ class AlertHelper
     var dialog1: Dialog? = null
 
     fun Show_Alert_Dialog(msg: String?) {
-        val ad: AlertDialog.Builder = AlertDialog.Builder(mContext)
+        val ad = AlertDialog.Builder(mContext)
 
         ad.setTitle("Info")
         ad.setIcon(android.R.drawable.ic_dialog_info)
@@ -63,7 +63,11 @@ class AlertHelper
         pDialog!!.show()
     }
 
-
+    //    public void Close_Progress_Dialog()
+    //    {
+    //        if(pDialog!=null)
+    //        pDialog.dismiss();
+    //    }
     fun Show_Custom_Progress_Dialog() {
         dialog1 = Dialog(mContext, R.style.AppDialogTheme)
         dialog1!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
