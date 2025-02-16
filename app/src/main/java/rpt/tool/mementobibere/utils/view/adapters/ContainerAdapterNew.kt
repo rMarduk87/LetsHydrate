@@ -17,11 +17,11 @@ import rpt.tool.mementobibere.utils.log.e
 
 @SuppressLint("NewApi")
 class ContainerAdapterNew(
-    var mContext: Context, containerArrayList: ArrayList<Container>,
+    var mContext: Context, containerArrayList: MutableList<Container>,
     private val callBack: CallBack
 ) :
     RecyclerView.Adapter<ContainerAdapterNew.ViewHolder?>() {
-    private val containerArrayList: ArrayList<Container> = containerArrayList
+    private val containerArrayList: MutableList<Container> = containerArrayList
 
     override fun getItemId(position: Int): Long {
         return containerArrayList.size.toLong()

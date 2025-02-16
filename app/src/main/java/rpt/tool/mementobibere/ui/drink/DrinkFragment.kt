@@ -3,110 +3,130 @@ package rpt.tool.mementobibere.ui.drink
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.NotificationManager
+import android.appwidget.AppWidgetManager
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
+import android.content.ContentValues
+import android.content.Context
+import android.content.DialogInterface.OnShowListener
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.os.Build
+import android.database.Cursor
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils
-import android.util.TypedValue
+import android.text.InputFilter
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.Window
 import android.view.WindowManager
-import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.skydoves.balloon.BalloonAlign
 import com.skydoves.balloon.balloon
-import github.com.st235.lib_expandablebottombar.Menu
-import github.com.st235.lib_expandablebottombar.MenuItem
-import github.com.st235.lib_expandablebottombar.MenuItemDescriptor
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.DrinkFragmentBinding
+import rpt.tool.mementobibere.databinding.FragmentDrinkBinding
+import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.AppUtils.InputFilterWeightRange
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
-import rpt.tool.mementobibere.utils.extensions.toExtractFloat
-import rpt.tool.mementobibere.utils.extensions.toMainTheme
-import rpt.tool.mementobibere.utils.extensions.toMonth
-import rpt.tool.mementobibere.utils.extensions.toNumberString
-import rpt.tool.mementobibere.utils.extensions.toStringHour
-import rpt.tool.mementobibere.utils.extensions.toYear
+import rpt.tool.mementobibere.utils.data.appmodel.Container
+import rpt.tool.mementobibere.utils.data.appmodel.Menu
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
+import rpt.tool.mementobibere.utils.helpers.AlertHelper
+import rpt.tool.mementobibere.utils.helpers.IntentHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
+import rpt.tool.mementobibere.utils.log.d
+import rpt.tool.mementobibere.utils.log.e
+import rpt.tool.mementobibere.utils.log.v
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import rpt.tool.mementobibere.utils.view.adapters.ContainerAdapterNew
+import rpt.tool.mementobibere.utils.view.adapters.MenuAdapter
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
+import java.util.Random
 
 
-class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::inflate) {
+class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::inflate) {
 
-    private var refreshed: Boolean = false
-    private var clicked: Int = 0
-    private var counter: Int = 0
     private var enabled: Boolean = true
-    private lateinit var unit: String
-    private lateinit var menuNotify: Menu
-    private lateinit var menuNotNotify: Menu
-    private lateinit var outValue: TypedValue
     private lateinit var viewWindow: View
     private var totalIntake: Float = 0f
-    private var inTook: Float = 0f
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var dateNow: String
     private var notificStatus: Boolean = false
-    private var selectedOption: Float? = null
-    private var snackbar: Snackbar? = null
-    private var btnSelected: Int? = null
-    private var intookToRefresh: Float = 0f
-    private var waters: Array<String> = arrayOf()
     private val avisBalloon by balloon<BloodDonorInfoBalloonFactory>()
+    var menu_name: MutableList<Menu> = ArrayList<Menu>()
+    var menuAdapter: MenuAdapter? = null
+    var filter_cal: Calendar? = null
+    var today_cal: Calendar? = null
+    var yesterday_cal: Calendar? = null
+    var containerArrayList: MutableList<Container> = ArrayList()
+    var adapter: ContainerAdapterNew? = null
+    var drink_water: Float = 0f
+    var old_drink_water: Float = 0f
+    var selected_pos: Int = 0
+    var bottomSheetDialog: BottomSheetDialog? = null
+    var handler: Handler? = null
+    var runnable: Runnable? = null
+    var max_bottle_height: Int = 870
+    var progress_bottle_height: Int = 0
+    var cp: Int = 0
+    var np: Int = 0
+    var ringtone: Ringtone? = null
+    var btnclick: Boolean = true
+    lateinit var alertHelper: AlertHelper
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sqliteHelper = SqliteHelper(requireContext())
+        alertHelper = AlertHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
-        waters = requireContext().resources.getStringArray(R.array.water)
-        setTheme()
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        setBackGround()
 
         if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
-            binding.calendarAvis.visibility = VISIBLE
-            binding.calendarAvisHelp.visibility = VISIBLE
+            binding.calendarBloodBlock.visibility = VISIBLE
+            binding.imgCalendarHelper.visibility = GONE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
         }
         else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(dateNow)){
-            binding.calendarAvis.visibility = VISIBLE
-            binding.infoAvis.visibility = VISIBLE
-            binding.calendarAvisHelp.visibility = VISIBLE
+            binding.calendarBloodBlock.visibility = VISIBLE
+            binding.imgCalendarHelper.visibility = VISIBLE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.red))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.red))
         }
         else{
-            binding.calendarAvis.visibility = GONE
-            binding.infoAvis.visibility = GONE
-            binding.calendarAvisHelp.visibility = GONE
+            binding.calendarBloodBlock.visibility = GONE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
         }
 
         totalIntake = SharedPreferencesManager.totalIntake
@@ -116,208 +136,80 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             requireActivity().finish()
         }
 
-        viewWindow = requireActivity().window.decorView.findViewById<View>(android.R.id.content)
-        initBottomBar()
-        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
-            SharedPreferencesManager.value_300 =  AppUtils.firstConversion(300f,
-                SharedPreferencesManager.new_unitInt)
-            initIntookValue()
-            setValueForDrinking()
-        }
-    }
-
-    private fun initIntookValue() {
-        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
-        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
-        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
-    }
-
-    private fun initBottomBar() {
-
-        menuNotify = binding.bottomBarNotify.menu
-        menuNotNotify = binding.bottomBarNotNotify.menu
-
-        createMenu()
-
-    }
-
-    private fun createMenu() {
-        if(SharedPreferencesManager.themeInt > 1){
-            SharedPreferencesManager.themeInt = 1
+        if (SharedPreferencesManager.totalIntake == 0f) {
+            AppUtils.DAILY_WATER_VALUE = 2500f
+        } else {
+            AppUtils.DAILY_WATER_VALUE = SharedPreferencesManager.totalIntake
         }
 
-        var themeInt = SharedPreferencesManager.themeInt
+        if (AppUtils.checkBlankData(SharedPreferencesManager.unitString)) {
+            AppUtils.WATER_UNIT_VALUE = "ml"
+        } else {
+            AppUtils.WATER_UNIT_VALUE = SharedPreferencesManager.unitString
+        }
 
+        animate()
 
-        var colorString = when (themeInt) {
-            0 -> {
-                "#41B279"
+        ringtone = RingtoneManager.getRingtone(
+            requireContext(),
+            Uri.parse(("android.resource://" + requireContext().packageName)
+                    + "/" + R.raw.fill_water_sound)
+        )
+        ringtone!!.isLooping = false
+    }
+
+    private fun animate() {
+        binding.contentFrame.viewTreeObserver
+            .addOnGlobalLayoutListener { // TODO Auto-generated method stub
+                val w: Int = binding.contentFrame.width
+                val h: Int = binding.contentFrame.height
+                v("getWidthHeight", "$w   -   $h")
             }
-            1 -> {
-                "#29704D"
+
+        binding.contentFrameTest.viewTreeObserver
+            .addOnGlobalLayoutListener { // TODO Auto-generated method stub
+                val w: Int = binding.contentFrameTest.width
+                val h: Int = binding.contentFrameTest.height
+                v("getWidthHeight test", "$w   -   $h")
+                max_bottle_height = h - 30
             }
-            else -> "#41B279"
-        }
-
-        for (i in AppUtils.listIds.indices) {
-            menuNotify.add(
-                MenuItemDescriptor.Builder(
-                    requireContext(),
-                    AppUtils.listIds[i],
-                    AppUtils.listIconNotify[i],
-                    AppUtils.listStringNotify[i],
-                    Color.parseColor(colorString)
-                )
-                    .build()
-            )
-        }
-
-        for (i in AppUtils.listIds.indices) {
-            menuNotNotify.add(
-                MenuItemDescriptor.Builder(
-                    requireContext(),
-                    AppUtils.listIds[i],
-                    AppUtils.listIconNotNotify[i],
-                    AppUtils.listStringNotNotify[i],
-                    Color.parseColor(colorString)
-                )
-                    .build()
-            )
-        }
-
-        binding.bottomBarNotify.onItemSelectedListener = { _, i, _ ->
-            manageListeners(i)
-
-
-        }
-
-        binding.bottomBarNotify.onItemReselectedListener = { _, i, _ ->
-            manageListeners(i)
-        }
-
-        binding.bottomBarNotNotify.onItemSelectedListener = { _, i, _ ->
-            manageListeners(i)
-
-        }
-
-        binding.bottomBarNotNotify.onItemReselectedListener = { _, i, _ ->
-            manageListeners(i)
-        }
     }
 
-    private fun manageListeners(i: MenuItem) {
-        when(i.id) {
-            R.id.icon_bell -> manageNotification()
-            R.id.icon_info -> goToBottomInfo()
-            R.id.icon_trophy -> goToThrophyList()
-            R.id.icon_stats -> goToStatsActivity()
-        }
-    }
+    private fun loadPhoto() {
+        if (AppUtils.checkBlankData(SharedPreferencesManager.userPhoto)) {
+            Glide.with(requireActivity()).load(
+                if (SharedPreferencesManager.gender == 1)
+                    R.drawable.female_white
+                else
+                    R.drawable.male_white
+            ).apply(RequestOptions.circleCropTransform())
+                .into(binding.imgUser)
+        } else {
+            var ex = false
 
-    private fun goToStatsActivity() {
-        Handler(requireContext().mainLooper).postDelayed({
-            SharedPreferencesManager.totalIntake = totalIntake
-            SharedPreferencesManager.unitString = unit
-            safeNavController?.safeNavigate(DrinkFragmentDirections
-                .actionDrinkFragmentToStatsFragment())
-        }, TIME)
+            try {
+                val f: File = File(SharedPreferencesManager.userPhoto)
+                if (f.exists()) ex = true
+            } catch (e: Exception) {
+                e.message?.let { e(Throwable(e), it) }
+            }
 
-    }
-
-    private fun goToBottomInfo() {
-        Handler(requireContext().mainLooper).postDelayed({
-
-            SharedPreferencesManager.totalIntake = totalIntake
-            safeNavController?.safeNavigate(
-                DrinkFragmentDirections.actionDrinkFragmentToInfoFragment())
-
-        }, TIME)
-
-    }
-
-    @SuppressLint("SetTextI18n", "UseCompatLoadingForDrawables")
-    private fun addDrinkedWater() {
-
-        if (selectedOption != null) {
-            if ((inTook * 100 / totalIntake) <= 130 && clicked <= 1) {
-                if (sqliteHelper.addIntook(dateNow, selectedOption!!,unit, dateNow.toMonth(),
-                    dateNow.toYear()) > 0) {
-                    sqliteHelper.updateTotalIntake(dateNow,totalIntake,unit)
-                    inTook += selectedOption!!
-                    setWaterLevel(inTook, totalIntake)
-                    showMessage(
-                        getString(R.string.your_water_intake_was_saved), viewWindow, false,
-                        AppUtils.Companion.TypeMessage.SAVE
-                    )
-                    sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
-                    addLastIntook(btnSelected!!.toFloat())
-                }
+            if (ex) {
+                Glide.with(requireActivity()).load(SharedPreferencesManager.userPhoto)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(binding.imgUser)
             } else {
-                binding.intakeProgress.labelText = "${
-                    getString(
-                        R.string.you_achieved_the_goal
-                    )}"
-                showMessage(getString(R.string.you_already_achieved_the_goal), viewWindow)
+                Glide.with(requireActivity()).load(
+                    if (SharedPreferencesManager.gender == 1)
+                        R.drawable.female_white
+                    else
+                        R.drawable.male_white
+                ).apply(RequestOptions.circleCropTransform())
+                    .into(binding.imgUser)
             }
-            binding.tvCustom.text = requireContext().getText(R.string.custom)
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,binding.op350ml,outValue.resourceId,-1)
-
-            // remove pending notifications
-            val mNotificationManager : NotificationManager = requireActivity()
-                .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-            mNotificationManager.cancelAll()
         }
     }
 
-    private fun addBackground(
-        op50ml: LinearLayout,
-        op100ml: LinearLayout,
-        op150ml: LinearLayout,
-        op200ml: LinearLayout,
-        op250ml: LinearLayout,
-        op300ml: LinearLayout,
-        opCustom: LinearLayout,
-        opDrinkAll: LinearLayout,
-        op350ml: LinearLayout,
-        resourceId: Int,
-        oneHighLight: Int,
-        highlight: Int? = null
-    ) {
-        op50ml.background = requireContext().getDrawable((if(oneHighLight==1){highlight}else{resourceId})!!)
-        op100ml.background = requireContext().getDrawable((if(oneHighLight==2){highlight}else{resourceId})!!)
-        op150ml.background = requireContext().getDrawable((if(oneHighLight==3){highlight}else{resourceId})!!)
-        op200ml.background = requireContext().getDrawable((if(oneHighLight==4){highlight}else{resourceId})!!)
-        op250ml.background = requireContext().getDrawable((if(oneHighLight==5){highlight}else{resourceId})!!)
-        op300ml.background = requireContext().getDrawable((if(oneHighLight==6){highlight}else{resourceId})!!)
-        opCustom.background = requireContext().getDrawable((if(oneHighLight==7){highlight}else{resourceId})!!)
-        opDrinkAll.background = requireContext().getDrawable((if(oneHighLight==8){highlight}else{resourceId})!!)
-        op350ml.background = requireContext().getDrawable((if(oneHighLight==9){highlight}else{resourceId})!!)
-    }
-
-
-    private fun addLastIntook(toFloat: Float) {
-        SharedPreferencesManager.lastIntook = toFloat
-    }
-
-    private fun goToThrophyList() {
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog3, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-        alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.cancel()
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
 
     private fun manageNotification() {
         val alarm = AlarmHelper()
@@ -325,143 +217,34 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             notificStatus = !notificStatus
             SharedPreferencesManager.notificationStatus =  notificStatus
             if (notificStatus) {
-                binding.bottomBarNotNotify.visibility = View.GONE
-                binding.bottomBarNotify.visibility = View.VISIBLE
                 Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
                 alarm.setAlarm(
                     requireContext(),
                     SharedPreferencesManager.notificationFreq.toLong())
             } else {
-                binding.bottomBarNotNotify.visibility = View.VISIBLE
-                binding.bottomBarNotify.visibility = View.GONE
                 Snackbar.make(viewWindow, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
                 alarm.cancelAlarm(requireContext())
             }
         }
     }
 
-    private fun setBackGround() {
-        var themeInt = SharedPreferencesManager.themeInt
-        when(themeInt){
-            0->toLightTheme()
-            1->toDarkTheme()
-        }
-    }
-
-    private fun toDarkTheme() {
-        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
-        if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
-        }
-        else{
-            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorBlack))
-            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorBlack))
-        }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
-        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
-    }
-
-    private fun toLightTheme() {
-        binding.mainActivityParent.background = requireContext().getDrawable(R.drawable.ic_app_bg)
-        if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
-        }
-        else{
-            binding.tvIntook.setTextColor(requireContext().getColor(R.color.colorWhite))
-            binding.tvTotalIntake.setTextColor(requireContext().getColor(R.color.colorWhite))
-        }
-        binding.intakeProgress.colorBackground = requireContext().getColor(R.color.teal_700)
-        binding.undoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.redoTV.setTextColor(resources.getColor(R.color.colorBlack))
-        binding.refreshTV.setTextColor(resources.getColor(R.color.colorBlack))
-    }
-
-    private fun setTheme() {
-        val theme = SharedPreferencesManager.themeInt.toMainTheme()
-        requireActivity().setTheme(theme)
-
-    }
-
-    private fun updateValues() {
-        SharedPreferencesManager.noUpdateUnit = false
-        SharedPreferencesManager.totalIntake = totalIntake
-
-        inTook = sqliteHelper.getIntook(dateNow)
-
-        if(totalIntake!=0f){
-            sqliteHelper.addAll(dateNow, inTook, totalIntake,unit,
-                dateNow.toMonth(), dateNow.toYear())
-        }
-
-        setWaterLevel(inTook, totalIntake)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SimpleDateFormat")
     override fun onStart() {
         super.onStart()
 
-        setBackGround()
-
         if(sqliteHelper.getAvisDay(dateNow)){
-            binding.tvIntook.setTextColor(resources.getColor(R.color.red))
-            binding.tvTotalIntake.setTextColor(resources.getColor(R.color.red))
+            binding.lblTotalGoal.setTextColor(resources.getColor(R.color.red))
+            binding.lblTotalDrunk.setTextColor(resources.getColor(R.color.red))
         }
 
-        val new = SharedPreferencesManager.resetNotification
-        if(new){
-            val mNotificationManager : NotificationManager = requireActivity()
-                .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                mNotificationManager.deleteNotificationChannel("rpt.tools.mementobibere.CHANNELONE")
-            }
-            SharedPreferencesManager.resetNotification = false
-        }
-
-        if(!SharedPreferencesManager.setGender){
-            setGender()
-        }
-
-        if(!SharedPreferencesManager.setBloodDonor){
-            setBloodDonor()
-        }
-
-        if(!SharedPreferencesManager.setWorkOut){
-            setNewWorkType()
-        }
-
-        if(!SharedPreferencesManager.setClimate){
-            setClimate()
-        }
-
-        setValueForDrinking()
-
-        outValue = TypedValue()
-        requireContext().applicationContext.theme.resolveAttribute(
-            android.R.attr.selectableItemBackground,
-            outValue,
-            true
-        )
-
-        if(!SharedPreferencesManager.setWeight){
-            //safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToSelectWeightBottomSheetFragment())
-        }
-
-        if(!AppUtils.isValidDate(
-                Date(SharedPreferencesManager.sleepingTime).toStringHour(),
-                Date(SharedPreferencesManager.wakeUpTime).toStringHour())){
-            //safeNavController?.safeNavigate(DrinkFragmentDirections.actionDrinkFragmentToAdjustHourBottomSheetFragment())
+        if(SharedPreferencesManager.userName.isEmpty() || SharedPreferencesManager.personHeight.isEmpty()){
+            startActivity(Intent(requireActivity(),InitUserInfoActivity::class.java))
         }
 
         notificStatus = SharedPreferencesManager.notificationStatus
         val alarm = AlarmHelper()
         if (!alarm.checkAlarm(requireContext()) && notificStatus) {
-            binding.bottomBarNotNotify.visibility = GONE
-            binding.bottomBarNotify.visibility = VISIBLE
-            var isAvisDay = sqliteHelper.getAvisDay(dateNow)
+            val isAvisDay = sqliteHelper.getAvisDay(dateNow)
             var freq = SharedPreferencesManager.notificationFreq.toLong()
             if(isAvisDay){
                 freq /= 2
@@ -471,210 +254,15 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             )
         }
 
-        if (notificStatus) {
-            binding.bottomBarNotNotify.visibility = VISIBLE
-            binding.bottomBarNotify.visibility = GONE
-        }
-
-        if (!notificStatus) {
-            binding.bottomBarNotNotify.visibility = GONE
-            binding.bottomBarNotify.visibility = VISIBLE
-        }
-
-        updateValues()
-
-        var background = R.drawable.option_select_bg
-
-        if(SharedPreferencesManager.setTips){
-            if(inTook > 0){
-                binding.bubble.visibility = VISIBLE
-                binding.se.visibility = VISIBLE
-                binding.top.visibility = VISIBLE
-                val randomIndex: Int = java.util.Random().nextInt(waters.size)
-                val randomWaters: String = waters[randomIndex]
-                binding.se.text = randomWaters
-            }
-            else{
-                binding.top.visibility = GONE
-                binding.bubble.visibility = INVISIBLE
-                binding.se.visibility = INVISIBLE
-            }
-        }
-
-        binding.op50ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 0
-            selectedOption = binding.ml50!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,1,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op100ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 1
-            selectedOption = binding.ml100!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,2,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op150ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 2
-            selectedOption = binding.ml150!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,3,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op200ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 3
-            selectedOption = binding.ml200!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,4,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op250ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 4
-            selectedOption = binding.ml250!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,5,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op300ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 5
-            selectedOption = binding.ml300!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,6,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.op350ml.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            btnSelected = 6
-            selectedOption = binding.ml350!!.text.toString().toExtractFloat()
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,7,background)
-            addDrinkedWater()
-            randomizeBalloon()
-        }
-
-        binding.opCustom.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-
-            val li = LayoutInflater.from(requireContext())
-            val promptsView = li.inflate(R.layout.custom_input_dialog, null)
-
-            val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setView(promptsView)
-
-            val userInput = promptsView
-                .findViewById(R.id.etCustomInput) as TextInputLayout
-
-            alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-                val inputText = userInput.editText!!.text.toString()
-                if (!TextUtils.isEmpty(inputText)) {
-                    binding.tvCustom.text = "$inputText $unit"
-                    selectedOption = binding.tvCustom.text.toString().toExtractFloat()
-                    btnSelected = 7
-                    addDrinkedWater()
-                    randomizeBalloon()
-                }
-            }.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
-
-            addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                binding.op350ml,outValue.resourceId,8,background)
-        }
-
-        binding.opDrinkAll.setOnClickListener {
-            if(clicked < 1 && inTook < totalIntake){
-                if (snackbar != null) {
-                    snackbar?.dismiss()
-                }
-                clicked += 1
-                btnSelected = 7
-                selectedOption = AppUtils.calculateOption(inTook,totalIntake)!!
-                addBackground(binding.op50ml,binding.op100ml,binding.op150ml,binding.op200ml,
-                    binding.op250ml,binding.op300ml,binding.opCustom,binding.opDrinkAll,
-                    binding.op350ml,outValue.resourceId,8,background)
-                addDrinkedWater()
-                randomizeBalloon()
-            }
-            else{
-                showMessage(getString(R.string.option_selectable_once_a_day), it)
-            }
-        }
-
-        if (!SharedPreferencesManager.firstRun || totalIntake > 0) {
-            setValueForDrinking()
-        }
-
-
-        binding.btnUndo.setOnClickListener {
-            if (snackbar != null) {
-                snackbar?.dismiss()
-            }
-            undoLastDailyIntook()
-        }
-
-        binding.btnRedo.setOnClickListener {
-            restoreDailyIntook()
-        }
-
-        binding.btnRefresh.setOnClickListener {
-            resetDailyIntook()
-        }
-
-        binding.calendarAvisHelp!!.setOnClickListener {
+        binding.imgCalendarHelper.setOnClickListener {
             avisBalloon.showAlign(
                 align = BalloonAlign.BOTTOM,
-                mainAnchor = binding.calendarAvis as View,
+                mainAnchor = binding.calendarBloodBlock as View,
                 subAnchorList = listOf(it),
             )
         }
 
-        binding.calendarAvis.setOnClickListener{
+        binding.calendarBloodBlock.setOnClickListener{
             val calendar = Calendar.getInstance()
 
             val mDatePicker = DatePickerDialog(
@@ -684,7 +272,7 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
                     calendar.set(Calendar.MONTH, monthOfYear)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                    var calendarPre = calendar
+                    val calendarPre = calendar
                     calendarPre.add(Calendar.DAY_OF_MONTH, -1)
 
                     val myFormat = "dd-MM-yyyy" // mention the format you need
@@ -710,417 +298,1024 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
             mDatePicker.setTitle("")
             mDatePicker.show()
         }
-
-        binding.infoAvis!!.setOnClickListener {
-            showMessage(
-                getString(R.string.tomorrow_you_will_donate), it, duration = 3500
-            )
-        }
-
-        if ((inTook * 100 / totalIntake) >= 130) {
-            binding.intakeProgress.labelText = "${
-                getString(
-                    R.string.you_achieved_the_goal
-                )}"
-        }
-
-        if(SharedPreferencesManager.startTutorial){
-            //safeNavController?.safeNavigate(DrinkFragmentDirections
-               // .actionDrinkFragmentToTutorialFragment())
-        }
     }
-
-    private fun randomizeBalloon() {
-        if(SharedPreferencesManager.setTips){
-            if(binding.bubble.visibility == INVISIBLE || binding.bubble.visibility == GONE){
-                binding.top.visibility = VISIBLE
-                binding.bubble.visibility = VISIBLE
-                binding.se.visibility = VISIBLE
-            }
-
-            val randomIndex: Int = java.util.Random().nextInt(waters.size)
-            val randomWaters: String = waters[randomIndex]
-            binding.se.text = randomWaters
-        }
-    }
-
-    private fun setBloodDonor() {
-        var bloodDonorChoice = 0
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog_, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-        val userBlood = promptsView
-            .findViewById(R.id.btnAvis) as LottieAnimationView
-
-        userBlood.setOnClickListener {
-            if(bloodDonorChoice==0){
-                bloodDonorChoice = 1
-                showMessage(getString(R.string.you_selected_avis), it)
-            }
-            else{
-                bloodDonorChoice = 0
-                showMessage(getString(R.string.you_selected_no_avis), it)
-            }
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            SharedPreferencesManager.setBloodDonor = true
-            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
-        }.setNegativeButton("Cancel") { _, _ ->
-            SharedPreferencesManager.setBloodDonor = true
-            SharedPreferencesManager.bloodDonorKey = bloodDonorChoice
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setGender() {
-        var genderChoice = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog2, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-        val userMaleBtn = promptsView
-            .findViewById(R.id.btnMan) as LottieAnimationView
-
-        val userWomanBtn = promptsView
-            .findViewById(R.id.btnWoman) as LottieAnimationView
-
-        userMaleBtn.setOnClickListener {
-            genderChoice = 0
-            showMessage(
-                getString(R.string.you_selected_man), it,
-                type=AppUtils.Companion.TypeMessage.MAN
-            )
-        }
-
-        userWomanBtn.setOnClickListener {
-            genderChoice = 1
-            showMessage(
-                getString(R.string.you_selected_woman), it,
-                type=AppUtils.Companion.TypeMessage.WOMAN
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (genderChoice) {
-                -1 -> showMessage(getString(R.string.gender_hint), promptsView, true)
-                else -> {
-                    SharedPreferencesManager.setGender = true
-                    SharedPreferencesManager.gender = genderChoice
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.gender_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setNewWorkType(){
-        var workType = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog4, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-
-        val btnCalm = promptsView
-            .findViewById(R.id.btnCalm) as LottieAnimationView
-        val btnNormal = promptsView
-            .findViewById(R.id.btnNormal) as LottieAnimationView
-        val btnLively = promptsView
-            .findViewById(R.id.btnLively) as LottieAnimationView
-        val btnIntense = promptsView
-            .findViewById(R.id.btnIntense) as LottieAnimationView
-
-
-        btnCalm.setOnClickListener{
-            workType = 0
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_calm), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnNormal.setOnClickListener{
-            workType = 1
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_normal), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnLively.setOnClickListener{
-            workType = 2
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_lively), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        btnIntense.setOnClickListener{
-            workType = 3
-            SharedPreferencesManager.workType = workType
-            showMessage(
-                getString(R.string.you_selected_intense), it,
-                type=AppUtils.Companion.TypeMessage.WORKTYPE, workType = workType
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (workType) {
-                -1 -> showMessage(getString(R.string.work_type_hint), promptsView, true)
-                else -> {
-
-                    val totalIntake = AppUtils.calculateIntake(
-                        SharedPreferencesManager.weight,
-                        workType,
-                        SharedPreferencesManager.weightUnit,
-                        SharedPreferencesManager.gender,
-                        SharedPreferencesManager.climate,0,
-                        SharedPreferencesManager.current_unitInt
-                    )
-                    val df = DecimalFormat("#")
-                    df.roundingMode = RoundingMode.CEILING
-                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
-
-                    sqliteHelper.updateTotalIntake(
-                        AppUtils.getCurrentOnlyDate()!!,
-                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            SharedPreferencesManager.new_unitInt)
-                    )
-                    SharedPreferencesManager.workType = workType
-                    SharedPreferencesManager.setWorkOut = true
-                    safeNavController?.safeNavigate(DrinkFragmentDirections
-                        .actionDrinkFragmentToSelfFragment())
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.work_type_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun setClimate(){
-        var climate = -1
-        val li = LayoutInflater.from(requireContext())
-        val promptsView = li.inflate(R.layout.custom_input_dialog5, null)
-
-        val alertDialogBuilder = AlertDialog.Builder(requireContext())
-        alertDialogBuilder.setView(promptsView)
-
-
-        val btnCold = promptsView
-            .findViewById(R.id.btnCold) as LottieAnimationView
-        val btnFresh = promptsView
-            .findViewById(R.id.btnFresh) as LottieAnimationView
-        val btnMild = promptsView
-            .findViewById(R.id.btnMild) as LottieAnimationView
-        val btnTorrid = promptsView
-            .findViewById(R.id.btnTorrid) as LottieAnimationView
-
-
-        btnCold.setOnClickListener{
-            climate = 0
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_cold), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnFresh.setOnClickListener{
-            climate = 1
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_fresh), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnMild.setOnClickListener{
-            climate = 2
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_mild), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        btnTorrid.setOnClickListener{
-            climate = 3
-            SharedPreferencesManager.climate = climate
-            showMessage(
-                getString(R.string.you_selected_torrid), it,
-                type=AppUtils.Companion.TypeMessage.CLIMATE
-            )
-        }
-
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            when (climate) {
-                -1 -> showMessage(getString(R.string.climate_set_hint), promptsView, true)
-                else -> {
-                    val totalIntake = AppUtils.calculateIntake(
-                        SharedPreferencesManager.weight,
-                        SharedPreferencesManager.workType,
-                        SharedPreferencesManager.weightUnit,
-                        SharedPreferencesManager.gender,
-                        climate,0,
-                        SharedPreferencesManager.current_unitInt
-                    )
-                    val df = DecimalFormat("#")
-                    df.roundingMode = RoundingMode.CEILING
-                    SharedPreferencesManager.totalIntake = df.format(totalIntake).toFloat()
-
-                    sqliteHelper.updateTotalIntake(
-                        AppUtils.getCurrentOnlyDate()!!,
-                        df.format(totalIntake).toFloat(), AppUtils.calculateExtensions(
-                            SharedPreferencesManager.new_unitInt)
-                    )
-                    SharedPreferencesManager.climate = climate
-                    SharedPreferencesManager.setClimate = true
-                    safeNavController?.safeNavigate(DrinkFragmentDirections
-                        .actionDrinkFragmentToSelfFragment())
-                }
-            }
-        }.setNegativeButton("Cancel") { _, _ ->
-            showMessage(getString(R.string.climate_set_hint), promptsView, true)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        alertDialog.show()
-    }
-
-    private fun restoreDailyIntook() {
-        selectedOption = if(refreshed){
-            intookToRefresh
-        }
-        else{
-            selectedOption
-        }
-        if(btnSelected != null) {
-            var totalIntook = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!)
-            if(selectedOption != null){
-                sqliteHelper.resetIntook(AppUtils.getCurrentDate()!!)
-                sqliteHelper.addIntook(AppUtils.getCurrentDate()!!,(totalIntook + selectedOption!!),unit,
-                    AppUtils.getCurrentDate()!!.toMonth(), AppUtils.getCurrentDate()!!.toYear())
-                sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), 1)
-                updateValues()
-                addLastIntook(AppUtils.convertToSelected(selectedOption!!,unit))
-                selectedOption = null
-                counter = 0
-                refreshed = false
-                intookToRefresh = 0f
-                randomizeBalloon()
-            }
-        }
-    }
-
-    private fun undoLastDailyIntook() {
-        var totalIntook = sqliteHelper.getIntook(dateNow)
-        if(selectedOption != null && counter == 0) {
-            sqliteHelper.resetIntook(dateNow)
-            sqliteHelper.addIntook(
-                AppUtils.getCurrentDate()!!,
-                (totalIntook - selectedOption!!),
-                unit,dateNow.toMonth(),dateNow.toYear()
-            )
-            addLastIntook(-1f)
-            sqliteHelper.addOrUpdateIntookCounter(dateNow,btnSelected!!.toFloat(), -1)
-            updateValues()
-            sqliteHelper.removeReachedGoal(dateNow)
-            counter = 1
-            refreshed = false
-        }
-    }
-
-    private fun resetDailyIntook() {
-        var totalIntook = sqliteHelper.getIntook(dateNow)
-        intookToRefresh = inTook
-        if(totalIntook > 0){
-            sqliteHelper.resetIntook(dateNow)
-            updateValues()
-            selectedOption = null
-            sqliteHelper.resetIntookCounter(dateNow)
-            sqliteHelper.removeReachedGoal(dateNow)
-            addLastIntook(-1f)
-            counter = 0
-            binding.intakeProgress.labelText = "0%"
-            clicked = 0
-            refreshed = true
-            binding.top.visibility = GONE
-            binding.bubble.visibility = GONE
-            binding.se.visibility = GONE
-        }
-    }
-
+    
     override fun onResume() {
         super.onResume()
-        setTheme()
-        setBackGround()
         refreshAlarm(SharedPreferencesManager.notificationStatus)
-    }
-
-
-    private fun setWaterLevel(inTook: Float, totalIntake: Float) {
-
-        YoYo.with(Techniques.SlideInDown)
-            .duration(500)
-            .playOn(binding.tvIntook)
-        binding.tvIntook.text = "" + inTook.toNumberString()
-        binding.tvTotalIntake.text = "/"+totalIntake.toNumberString()+ " " + "$unit"
-        val progress = ((inTook / totalIntake) * 100).toInt()
-        YoYo.with(Techniques.Pulse)
-            .duration(500)
-            .playOn(binding.intakeProgress)
-        binding.intakeProgress.progress = progress.toFloat()
-        if(progress <= 140){
-            binding.intakeProgress.setOnProgressChangeListener { binding.intakeProgress.labelText = "${
-                getString(
-                    R.string.drink
-                )} ${it.toInt()}%" }
-            binding.intakeProgress.labelText = "${
-                getString(
-                    R.string.drink
-                )} ${progress}%"
-        }
-
-
-        if ((inTook * 100 / totalIntake) >= 130) {
-            showMessage(getString(R.string.you_achieved_the_goal), binding.mainActivityParent)
-            sqliteHelper.addReachedGoal(dateNow,inTook,unit)
+        if (AppUtils.RELOAD_DASHBOARD) {
+            init()
+        } else {
+            AppUtils.RELOAD_DASHBOARD = true
         }
     }
 
-    private fun setValueForDrinking() {
-        unit = AppUtils.calculateExtensions(SharedPreferencesManager.new_unitInt)
-        binding.ml50!!.text = "${SharedPreferencesManager.value_50.toNumberString()} $unit"
-        binding.ml100!!.text = "${SharedPreferencesManager.value_100.toNumberString()} $unit"
-        binding.ml150!!.text = "${SharedPreferencesManager.value_150.toNumberString()} $unit"
-        binding.ml200!!.text = "${SharedPreferencesManager.value_200.toNumberString()} $unit"
-        binding.ml250!!.text = "${SharedPreferencesManager.value_250.toNumberString()} $unit"
-        binding.ml300!!.text = "${SharedPreferencesManager.value_300.toNumberString()} $unit"
-        binding.ml350!!.text = "${SharedPreferencesManager.value_350.toNumberString()} $unit"
-        binding.tvTotalIntake!!.text = "/" +totalIntake.toNumberString() + " " + "$unit"
+    fun init() {
+
+        initMenuScreen()
+        body()
     }
 
-    companion object {
-        const val TIME: Long = 150
+    @SuppressLint("RtlHardcoded")
+    private fun initMenuScreen() {
+
+        loadPhoto()
+
+        binding.include1.lblToolbarTitle.text = requireContext().getString(R.string.str_today)
+        binding.lblUserName.text = SharedPreferencesManager.userName
+        
+        menu_name.clear()
+        menu_name.add(Menu(requireContext().getString(R.string.str_home), true))
+        menu_name.add(Menu(requireContext().getString(R.string.str_drink_history), false))
+        menu_name.add(Menu(requireContext().getString(R.string.str_drink_report), false))
+        menu_name.add(Menu(requireContext().getString(R.string.str_settings), false))
+        menu_name.add(Menu(requireContext().getString(R.string.str_faqs), false))
+        menu_name.add(Menu(requireContext().getString(R.string.str_privacy_policy), false))
+        menu_name.add(Menu(requireContext().getString(R.string.str_tell_a_friend), false))
+
+        menuAdapter = MenuAdapter(requireActivity(), menu_name as ArrayList<Menu>, object : MenuAdapter.CallBack {
+            @SuppressLint("RtlHardcoded")
+            override fun onClickSelect(menu: Menu?, position: Int) {
+                binding.drawerLayout.closeDrawer(Gravity.LEFT)
+
+                when (position) {
+                    1 -> {
+                        safeNavController?.safeNavigate(
+                            DrinkFragmentDirections.actionDrinkFragmentToHistoryFragment())
+                    }
+                    2 -> {
+                        safeNavController?.safeNavigate(
+                            DrinkFragmentDirections.actionDrinkFragmentToStatsFragment())
+                    }
+                    3 -> {
+                        safeNavController?.safeNavigate(
+                            DrinkFragmentDirections.actionDrinkFragmentToSettingsFragment())
+                    }
+                    4 -> {
+                        safeNavController?.safeNavigate(
+                            DrinkFragmentDirections.actionDrinkFragmentToFaqFragment())
+                    }
+                    5 -> {
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.setData(Uri.parse(AppUtils.PRIVACY_POLICY_ULR))
+                        startActivity(i)
+                    }
+                    6 -> {
+                        val str: String = requireContext().getString(R.string.app_share_txt)
+                            .replace("#1", AppUtils.APP_SHARE_URL)
+
+                        val ih = IntentHelper(requireContext(),requireActivity())
+
+                        ih.ShareText(getApplicationName(requireContext()), str)
+                    }
+                }
+            }
+        })
+
+        binding.btnRateUs.setOnClickListener {
+            val appPackageName: String = requireContext().packageName
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$appPackageName")
+                    )
+                )
+            } catch (anfe: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(
+                            "https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
+        }
+
+        binding.btnContactUs.setOnClickListener {
+            try {
+                val intent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" +
+                            requireContext().getString(R.string.mailto_riccardo_pezzolati_gmail_com)))
+                intent.putExtra(Intent.EXTRA_SUBJECT, "")
+                intent.putExtra(Intent.EXTRA_TEXT, "")
+                startActivity(intent)
+            } catch (ex: java.lang.Exception) {
+                ex.message?.let { it1 -> e(Throwable(ex), it1) }
+            }
+        }
+
+        binding.leftDrawer.setLayoutManager(
+            LinearLayoutManager(
+                activity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        )
+        
+        binding.leftDrawer.setAdapter(menuAdapter)
+        
+        binding.openProfile.setOnClickListener {
+            try {
+                if (binding.drawerLayout.isDrawerOpen(Gravity.LEFT)) 
+                    binding.drawerLayout.closeDrawer(Gravity.LEFT)
+            } catch (e: java.lang.Exception) {
+                e.message?.let { it1 -> e(Throwable(e), it1) }
+            }
+            safeNavController?.safeNavigate(DrinkFragmentDirections
+                .actionDrinkFragmentToProfileFragment())
+        }
+        
+        binding.include1.btnAlarm.setOnClickListener { showReminderDialog() }
+        
+        binding.include1.btnMenu.setOnClickListener {
+            try {
+                if (binding.drawerLayout.isDrawerOpen(Gravity.LEFT)) binding.drawerLayout.closeDrawer(Gravity.LEFT)
+                else binding.drawerLayout.openDrawer(Gravity.LEFT)
+            } catch (e: java.lang.Exception) {
+                e.message?.let { it1 -> e(Throwable(e), it1) }
+            }
+        }
+        
+        binding.include1.imgPre.setOnClickListener {
+            filter_cal!!.add(Calendar.DATE, -1)
+            if (AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT).equals(
+                    AppUtils.getDate(
+                        yesterday_cal!!.timeInMillis, AppUtils.DATE_FORMAT
+                    ), true
+                )
+            ) binding.include1.lblToolbarTitle.text =
+                requireContext().getString(R.string.str_yesterday)
+            else binding.include1.lblToolbarTitle.text = AppUtils.getDate(
+                filter_cal!!.timeInMillis,
+                AppUtils.DATE_FORMAT
+            )
+            setCustomDate(AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT))
+        }
+
+        binding.include1.imgNext.setOnClickListener(View.OnClickListener {
+            filter_cal!!.add(Calendar.DATE, 1)
+            if (filter_cal!!.timeInMillis > today_cal!!.timeInMillis) {
+                filter_cal!!.add(Calendar.DATE, -1)
+                return@OnClickListener
+            }
+
+            if (AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT).equals(
+                    AppUtils.getDate(
+                        today_cal!!.timeInMillis, AppUtils.DATE_FORMAT
+                    ),true
+                )
+            ) binding.include1.lblToolbarTitle.text = requireContext().getString(R.string.str_today)
+            else if (AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                    .equals(
+                        AppUtils.getDate(
+                            yesterday_cal!!.timeInMillis, AppUtils.DATE_FORMAT
+                        ),true
+                    )
+            ) binding.include1.lblToolbarTitle.text = requireContext().getString(R.string.str_yesterday)
+            else binding.include1.lblToolbarTitle.text = AppUtils.getDate(
+                filter_cal!!.timeInMillis,
+                AppUtils.DATE_FORMAT
+            )
+            setCustomDate(AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT))
+        })
     }
+
+    fun getApplicationName(context: Context): String {
+        val applicationInfo = context.applicationInfo
+        val stringId = applicationInfo.labelRes
+        return if (stringId == 0) applicationInfo.nonLocalizedLabel.toString() else context.getString(
+            stringId
+        )
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables", "InflateParams")
+    private fun showReminderDialog() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+
+        val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_reminder,
+            null, false)
+
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+
+        val off_block = view.findViewById<RelativeLayout>(R.id.off_block)
+
+        val img_off = view.findViewById<ImageView>(R.id.img_off)
+        
+
+        if (!SharedPreferencesManager.notificationStatus) {
+            off_block.background =
+                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
+            img_off.setImageResource(R.drawable.ic_off_selected)
+        } else {
+            off_block.background =
+                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
+            img_off.setImageResource(R.drawable.ic_off_normal)
+        }
+
+        off_block.setOnClickListener {
+            off_block.background =
+                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
+            img_off.setImageResource(R.drawable.ic_off_selected)
+            SharedPreferencesManager.notificationStatus =
+                !SharedPreferencesManager.notificationStatus
+            manageNotification()
+        }
+
+        img_cancel.setOnClickListener { dialog.dismiss() }
+
+        dialog.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun setCustomDate(date: String) {
+        count_specific_day_drink(date)
+    }
+
+    private fun count_specific_day_drink(custom_date: String) {
+        val arr_dataO: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            "date ='$custom_date'"
+        )
+        old_drink_water = 0f
+        for (k in arr_dataO.indices) {
+            old_drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                ("" + arr_dataO[k]["n_intook"]).toFloat()
+            else
+                ("" + arr_dataO[k]["n_intook_OZ"]).toFloat()
+        }
+
+        val arr_data22: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            "date ='$custom_date'", "id", 1
+        )
+
+        var total_drink = 0.0
+
+        if (arr_data22.size > 0) {
+            total_drink =
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                    arr_data22[0]["n_total_intake"]!!
+                    .toDouble()
+                else arr_data22[0]["n_total_intake_OZ"]!!.toDouble()
+        }
+
+
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            "date ='$custom_date'"
+        )
+
+        drink_water = 0f
+        for (k in arr_data.indices) {
+            drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                arr_data[k]["n_intook"]!!
+                .toInt()
+            else arr_data[k]["n_intook_OZ"]!!.toInt()
+            
+        }
+        if (custom_date.equals(
+                AppUtils.getCurrentDate(AppUtils.DATE_FORMAT),
+                ignoreCase = true
+            )
+        ) AppUtils.DAILY_WATER_VALUE = SharedPreferencesManager.totalIntake
+        else if (total_drink > 0) AppUtils.DAILY_WATER_VALUE = ("" + total_drink).toFloat()
+        else AppUtils.DAILY_WATER_VALUE = SharedPreferencesManager.totalIntake
+
+        binding.lblTotalDrunk.text = getData("" + (drink_water).toInt() + " " +
+                AppUtils.WATER_UNIT_VALUE)
+        binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE) +
+                " " + AppUtils.WATER_UNIT_VALUE)
+
+        refresh_bottle(false, false)
+    }
+
+    private fun getData(str: String): String {
+        return str.replace(",", ".")
+    }
+
+    private fun refresh_bottle(isFromCurrentProgress: Boolean, isRegularAnimation: Boolean) {
+        val animationDuration = (if (isRegularAnimation) 50 else 5).toLong()
+
+        if (handler != null && runnable != null) handler!!.removeCallbacks(runnable!!)
+
+        btnclick = false
+
+        cp = progress_bottle_height
+        np = Math.round((drink_water * max_bottle_height) / AppUtils.DAILY_WATER_VALUE)
+
+
+        if (cp <= np && isFromCurrentProgress) {
+            binding.animationView.visibility = VISIBLE
+            runnable = Runnable {
+                if (cp > max_bottle_height) {
+                    btnclick = true
+                    callDialog()
+                } else if (cp < np) {
+                    cp += 6
+                    binding.contentFrame.layoutParams.height = cp
+                    binding.contentFrame.requestLayout()
+                    handler!!.postDelayed(runnable!!, animationDuration)
+                } else {
+                    btnclick = true
+                    callDialog()
+                }
+            }
+            handler = Handler()
+            handler!!.postDelayed(runnable!!, animationDuration)
+        } else if (np == 0) {
+            binding.animationView.visibility = GONE
+            binding.contentFrame.layoutParams.height = np
+            binding.contentFrame.requestLayout()
+            btnclick = true
+            callDialog()
+        } else {
+            binding.contentFrame.layoutParams.height = 0
+            cp = 0
+            binding.animationView.visibility = VISIBLE
+            runnable = Runnable {
+                if (cp > max_bottle_height) {
+                    btnclick = true
+                    callDialog()
+                } else if (cp < np) {
+                    cp += 6
+                    binding.contentFrame.layoutParams.height = cp
+                    binding.contentFrame.requestLayout()
+                    handler!!.postDelayed(runnable!!, animationDuration)
+                } else {
+                    btnclick = true
+                    callDialog()
+                }
+            }
+            handler = Handler()
+            handler!!.postDelayed(runnable!!, animationDuration)
+        }
+
+        progress_bottle_height = np
+
+        if (np > 0) binding.animationView.visibility = VISIBLE
+        else binding.animationView.visibility = GONE
+    }
+
+    private fun callDialog() {
+        if (old_drink_water < AppUtils.DAILY_WATER_VALUE) {
+            if (drink_water >= AppUtils.DAILY_WATER_VALUE) {
+                addReached()
+                showDailyGoalReachedDialog()
+            }
+        }
+        old_drink_water = drink_water
+    }
+
+    private fun addReached() {
+        val initialValues = ContentValues()
+
+        initialValues.put(
+            "date",
+            "" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+        )
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+            initialValues.put("qta", "" + drink_water)
+            initialValues.put(
+                "qta_OZ",
+                "" + AppUtils.mlToOzUS(drink_water)
+            )
+        } else {
+            initialValues.put(
+                "qta",
+                "" + AppUtils.ozUSToMl(drink_water)
+            )
+            initialValues.put("qta_OZ", "" + drink_water)
+        }
+
+        sqliteHelper.insert("intake_reached", initialValues)
+    }
+
+    @SuppressLint("InflateParams")
+    fun showDailyGoalReachedDialog() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val view: View = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.dialog_goal_reached, null, false)
+
+
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+        val btn_share = view.findViewById<RelativeLayout>(R.id.btn_share)
+
+        img_cancel.setOnClickListener { dialog.dismiss() }
+
+        btn_share.setOnClickListener {
+            dialog.dismiss()
+            val appPackageName: String = requireContext().packageName
+
+            var share_text: String = requireContext().getString(R.string.str_share_text)
+                .replace("$1", "" + (drink_water).toInt() + " " +
+                        AppUtils.WATER_UNIT_VALUE)
+
+            share_text = share_text.replace("$2", "@ " + AppUtils.APP_SHARE_URL)
+            val ih = IntentHelper(requireContext(),requireActivity())
+            ih.ShareText(getApplicationName(requireContext()), share_text)
+        }
+
+        dialog.setOnDismissListener { }
+
+        dialog.setContentView(view)
+
+        dialog.show()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun body() {
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("d ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
+        )
+        old_drink_water = 0f
+        for (k in arr_data.indices) {
+
+            old_drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                ("" + arr_data[k]["n_intook"]).toFloat()
+            else ("" + arr_data[k]["n_intook_OZ"]).toFloat()
+
+        }
+
+        count_today_drink(false)
+
+        binding.selectedContainerBlock.setOnClickListener { openChangeContainerPicker() }
+
+        binding.openHistory.setOnClickListener {
+            safeNavController?.safeNavigate(DrinkFragmentDirections.
+            actionDrinkFragmentToHistoryFragment())
+        }
+
+        binding.openReachedGoal.setOnClickListener {
+            safeNavController?.safeNavigate(DrinkFragmentDirections
+                .actionDrinkFragmentToReachedGoalFragment())
+        }
+        
+        binding.addWater.setOnClickListener(View.OnClickListener {
+            if (containerArrayList.size > 0) {
+                if (!AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                        .equals(
+                            AppUtils.getDate(
+                                today_cal!!.timeInMillis,
+                                AppUtils.DATE_FORMAT
+                            ),true
+                        )
+                ) {
+                    return@OnClickListener
+                }
+
+                if (!btnclick) return@OnClickListener
+
+                btnclick = false
+
+                val random: Random = Random()
+
+                if (random.nextBoolean()) {
+                    AppUtils.RELOAD_DASHBOARD = false
+                    execute_add_water()
+                    AppUtils.RELOAD_DASHBOARD = true
+                } else {
+                    execute_add_water()
+                }
+            }
+        })
+
+        load_all_container()
+
+        val unit: String = SharedPreferencesManager.unitString
+
+        if (unit.equals("ml", ignoreCase = true)) {
+            binding.containerName.text = "" + 
+                    containerArrayList[selected_pos].containerValue + " " + unit
+            if (containerArrayList[selected_pos].isCustom) Glide.with(requireContext())
+                .load(R.drawable.ic_custom_ml).into(binding.imgSelectedContainer)
+            else Glide.with(requireContext())
+                .load(containerArrayList[selected_pos].containerValue?.let { getImage(it) })
+                .into(binding.imgSelectedContainer)
+        } else {
+            binding.containerName.text = "" + containerArrayList[selected_pos].containerValueOZ + 
+                    " " + unit
+            if (containerArrayList[selected_pos].isCustom) Glide.with(requireContext())
+                .load(R.drawable.ic_custom_ml).into(binding.imgSelectedContainer)
+            else Glide.with(requireContext())
+                .load(containerArrayList[selected_pos].containerValueOZ?.let { getImage(it) })
+                .into(binding.imgSelectedContainer)
+        }
+
+        adapter =
+            ContainerAdapterNew(requireActivity(), containerArrayList, object :
+                ContainerAdapterNew.CallBack {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onClickSelect(menu: Container?, position: Int) {
+                    bottomSheetDialog!!.dismiss()
+
+                    selected_pos = position
+                    
+                    SharedPreferencesManager.selectedContainer = menu!!.containerId!!.toInt()
+
+                    for (k in containerArrayList.indices) {
+                        containerArrayList[k].isSelected(false)
+                    }
+
+                    containerArrayList[position].isSelected(true)
+
+                    adapter!!.notifyDataSetChanged()
+
+                    val unit: String = SharedPreferencesManager.unitString
+
+                    if (unit.equals("ml", ignoreCase = true)) {
+                        binding.containerName.text = "" + menu.containerValue + " " + unit
+                        if (menu.isCustom) Glide.with(requireContext())
+                            .load(R.drawable.ic_custom_ml)
+                            .into(binding.imgSelectedContainer)
+                        else Glide.with(requireContext()).load(menu.containerValue?.let {
+                            getImage(
+                                it
+                            )
+                        })
+                            .into(binding.imgSelectedContainer)
+                    } else {
+                        binding.containerName.text = "" + menu.containerValueOZ + " " + unit
+                        if (menu.isCustom) Glide.with(requireContext())
+                            .load(R.drawable.ic_custom_ml)
+                            .into(binding.imgSelectedContainer)
+                        else Glide.with(requireContext()).load(menu.containerValueOZ?.let {
+                            getImage(
+                                it
+                            )
+                        })
+                            .into(binding.imgSelectedContainer)
+                    }
+                }
+            })
+    }
+
+    private fun count_today_drink(isRegularAnimation: Boolean) {
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("date ='" + AppUtils.getDate(
+                filter_cal!!.timeInMillis,
+                AppUtils.DATE_FORMAT
+            )) + "'"
+        )
+
+        drink_water = 0f
+        for (k in arr_data.indices) {
+            drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                ("" + arr_data[k]["n_intook"]).toFloat()
+            else ("" + arr_data[k]["n_intook_OZ"]).toFloat()
+        }
+
+        binding.lblTotalDrunk.text = getData("" + (drink_water).toInt()
+                + " " + AppUtils.WATER_UNIT_VALUE)
+        binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE)
+                + " " + AppUtils.WATER_UNIT_VALUE)
+
+        refresh_bottle(true, isRegularAnimation)
+    }
+
+    private fun openChangeContainerPicker() {
+        bottomSheetDialog = BottomSheetDialog(requireActivity())
+
+        bottomSheetDialog!!.setOnShowListener(OnShowListener { dialog ->
+            val d = dialog as BottomSheetDialog
+            val bottomSheet =
+                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
+                    ?: return@OnShowListener
+            val bottomSheetBehavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
+            bottomSheet.background = null
+        })
+
+        val layoutInflater = LayoutInflater.from(requireActivity())
+        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_change_container, null, false)
+
+        val containerRecyclerViewN = view.findViewById<RecyclerView>(R.id.containerRecyclerView)
+        val add_custom_container = view.findViewById<RelativeLayout>(R.id.add_custom_container)
+
+        val manager = GridLayoutManager(requireActivity(),
+            3, GridLayoutManager.VERTICAL, false)
+        containerRecyclerViewN.layoutManager = manager
+        containerRecyclerViewN.adapter = adapter
+
+        add_custom_container.setOnClickListener {
+            bottomSheetDialog!!.dismiss()
+            openCustomContainerPicker()
+        }
+
+        bottomSheetDialog!!.setContentView(view)
+
+        bottomSheetDialog!!.show()
+    }
+
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+    private fun openCustomContainerPicker() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+
+        val view: View = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.bottom_sheet_add_custom_container, null, false)
+
+        val btn_cancel = view.findViewById<RelativeLayout>(R.id.btn_cancel)
+        val btn_add = view.findViewById<RelativeLayout>(R.id.btn_add)
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+
+        val txt_value = view.findViewById<AppCompatEditText>(R.id.txt_value)
+        val lbl_unit = view.findViewById<AppCompatTextView>(R.id.lbl_unit)
+
+        lbl_unit.text = requireContext().getString(R.string.str_capacity)
+            .replace("$1", AppUtils.WATER_UNIT_VALUE)
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) txt_value.filters =
+            arrayOf<InputFilter>(InputFilterWeightRange(1.0, 8000.0))
+        else txt_value.filters = arrayOf<InputFilter>(InputFilterWeightRange(1.0, 270.0))
+
+        txt_value.requestFocus()
+
+        btn_cancel.setOnClickListener { dialog.cancel() }
+
+        img_cancel.setOnClickListener { dialog.cancel() }
+
+        btn_add.setOnClickListener {
+            if (AppUtils.checkBlankData(txt_value.text.toString().trim { it <= ' ' })) {
+                alertHelper.customAlert(requireContext().getString(R.string.str_enter_value_validation))
+            } else if (txt_value.text.toString().trim { it <= ' ' }.toInt() == 0) {
+                alertHelper.customAlert(requireContext().getString(R.string.str_enter_value_validation))
+            } else {
+                var tml = 0.0f
+                var tfloz = 0.0f
+
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+                    tml = txt_value.text.toString().trim { it <= ' ' }.toFloat()
+                    tfloz = AppUtils.mlToOzUS(tml)
+                } else {
+                    tfloz = txt_value.text.toString().trim { it <= ' ' }.toFloat()
+                    tml = AppUtils.ozUSToMl(tfloz)
+                }
+
+                d("HeightWeightHelper", "$tml @@@ $tfloz")
+
+                val c: Cursor = sqliteHelper.getMax(
+                    "SELECT MAX(ContainerID) FROM tbl_container_details"
+                )
+                var nextContainerID = 0
+
+                try {
+                    if (c.count > 0) {
+                        c.moveToNext()
+                        nextContainerID = c.getString(0).toInt() + 1
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.message?.let { it1 -> e(Throwable(e), it1) }
+                }
+
+                val initialValues = ContentValues()
+
+                initialValues.put("containerID", "" + nextContainerID)
+                initialValues.put("containerValue", "" + Math.round(tml))
+                initialValues.put("containerValueOZ", "" + Math.round(tfloz))
+                initialValues.put("is_open", "1")
+                initialValues.put("is_custom", "1")
+
+                sqliteHelper.insert("container", initialValues)
+
+                load_all_container()
+
+                SharedPreferencesManager.selectedContainer = nextContainerID
+
+                var tmp_pos = -1
+
+                for (k in containerArrayList.indices) {
+                    try {
+                        if (nextContainerID == containerArrayList[k].containerId!!.toInt()) {
+                            containerArrayList[k].isSelected(true)
+                            tmp_pos = k
+                        } else containerArrayList[k].isSelected(false)
+                    } catch (e: java.lang.Exception) {
+                        containerArrayList[k].isSelected(false)
+                    }
+                }
+
+                val unit: String = SharedPreferencesManager.unitString
+
+                if (tmp_pos >= 0) {
+                    selected_pos = tmp_pos
+
+                    val menu = containerArrayList[tmp_pos]
+
+                    if (unit.equals("ml", ignoreCase = true)) {
+                        binding.containerName.text = "" + menu.containerValue + " " + unit
+                        if (menu.isCustom) Glide.with(requireContext()).load(R.drawable.ic_custom_ml)
+                            .into(binding.imgSelectedContainer
+                            )
+                        else Glide.with(requireContext()).load(getImage(menu.containerValue!!))
+                            .into(
+                                binding.imgSelectedContainer
+                            )
+                    } else {
+                        binding.containerName.text = "" + menu.containerValueOZ + " " + unit
+                        if (menu.isCustom) Glide.with(requireContext()).load(R.drawable.ic_custom_ml)
+                            .into(
+                                binding.imgSelectedContainer
+                            )
+                        else Glide.with(requireContext()).load(getImage(menu.containerValueOZ!!))
+                            .into(
+                                binding.imgSelectedContainer
+                            )
+                    }
+                }
+
+                adapter!!.notifyDataSetChanged()
+
+                dialog.dismiss()
+            }
+        }
+
+        dialog.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun execute_add_water() {
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)
+            && drink_water > 8000
+        ) {
+            showDailyMoreThanTargetDialog()
+            btnclick = true
+            return
+        } else if (!(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+            && drink_water > 270
+        ) {
+            showDailyMoreThanTargetDialog()
+            btnclick = true
+            return
+        }
+
+        var count_drink_after_add_current_water = drink_water
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+            count_drink_after_add_current_water +=
+                ("" + containerArrayList[selected_pos].containerValue).toFloat()
+        else if (!(AppUtils.WATER_UNIT_VALUE.equals("ml",true)))
+            count_drink_after_add_current_water +=
+                ("" + containerArrayList[selected_pos].containerValueOZ).toFloat()
+
+        d(
+            "above8000", (("" + AppUtils.WATER_UNIT_VALUE + " @@@  " + drink_water
+                    + " @@@ " + count_drink_after_add_current_water)
+        ))
+
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)
+            && count_drink_after_add_current_water > 8000
+        ) {
+            if (drink_water >= 8000) showDailyMoreThanTargetDialog()
+            else if (AppUtils.DAILY_WATER_VALUE < (8000 -
+                        ("" + containerArrayList[selected_pos].containerValue).toFloat()))
+                showDailyMoreThanTargetDialog()
+        } else if (!(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+            && count_drink_after_add_current_water > 270
+        ) {
+            if (drink_water >= 270) showDailyMoreThanTargetDialog()
+            else if (AppUtils.DAILY_WATER_VALUE < (270 -
+                        ("" + containerArrayList[selected_pos].containerValueOZ).toFloat()))
+                showDailyMoreThanTargetDialog()
+        }
+
+        if (drink_water == 8000f && AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+            btnclick = true
+            // remove pending notifications
+            val mNotificationManager : NotificationManager = requireActivity()
+            .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+             mNotificationManager.cancelAll()
+            return
+        } else if (drink_water == 270f && !AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+            btnclick = true
+            // remove pending notifications
+            val mNotificationManager : NotificationManager = requireActivity()
+                .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+            mNotificationManager.cancelAll()
+            return
+        }
+
+        if (!SharedPreferencesManager.disableSoundWhenAddWater) {
+            ringtone!!.stop()
+            ringtone!!.play()
+        }
+
+        val initialValues = ContentValues()
+
+        initialValues.put("n_intook", "" + containerArrayList[selected_pos].containerValue)
+        initialValues.put(
+            "n_intook_OZ",
+            "" + containerArrayList[selected_pos].containerValueOZ
+        )
+
+        initialValues.put(
+            "date",
+            "" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+        )
+        initialValues.put("time", "" + AppUtils.getCurrentTime(true))
+        initialValues.put(
+            "dateTime", (("" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                    ) + " " + AppUtils.getCurrentDate("HH:mm:ss"))
+        )
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+            initialValues.put("n_totalintake", "" + AppUtils.DAILY_WATER_VALUE)
+            initialValues.put(
+                "n_totalintake_OZ",
+                "" + AppUtils.mlToOzUS(AppUtils.DAILY_WATER_VALUE)
+            )
+        } else {
+            initialValues.put(
+                "n_totalintake",
+                "" + AppUtils.ozUSToMl(AppUtils.DAILY_WATER_VALUE)
+            )
+            initialValues.put("n_totalintake_OZ", "" + AppUtils.DAILY_WATER_VALUE)
+        }
+
+        sqliteHelper.insert("stats", initialValues)
+
+        addReachedUpdata(containerArrayList[selected_pos])
+
+        count_today_drink(true)
+
+        val intent = Intent(requireActivity(), NewAppWidget::class.java)
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        val ids = AppWidgetManager.getInstance(requireActivity()).getAppWidgetIds(
+            ComponentName(
+                requireActivity(),
+                NewAppWidget::class.java
+            )
+        )
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        requireActivity().sendBroadcast(intent)
+    }
+
+    private fun addReachedUpdata(container: Container) {
+
+        val reachedGoal = sqliteHelper.getdata("intake_reached",
+            "data='"+AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)+"'")
+
+        if(reachedGoal.size>0){
+            val initialValues = ContentValues()
+
+            initialValues.put("qta", "" + container.containerValue!!.toFloat() +
+                    reachedGoal[0]["qta"]!!.toFloat())
+            initialValues.put(
+                "qta_OZ",
+                "" + container.containerValueOZ!!.toFloat() + reachedGoal[0]["qta_oz"]!!.toFloat())
+
+            sqliteHelper.update("intake_reached",initialValues,
+                "data='"+AppUtils.getDate(filter_cal!!.timeInMillis,
+                    AppUtils.DATE_FORMAT)+"'")
+
+        }
+
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showDailyMoreThanTargetDialog() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+
+        val view: View =
+            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_goal_target_reached,
+                null, false)
+
+
+        val lbl_desc = view.findViewById<AppCompatTextView>(R.id.lbl_desc)
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+        val btn_share = view.findViewById<RelativeLayout>(R.id.btn_share)
+        val img_bottle = view.findViewById<ImageView>(R.id.img_bottle)
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+            img_bottle.setImageResource(R.drawable.ic_limit_ml)
+        else img_bottle.setImageResource(R.drawable.ic_limit_oz)
+
+        val desc =
+            if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) "8000 ml" else
+                "270 fl oz"
+
+        lbl_desc.text = requireContext().getString(
+            R.string.str_you_should_not_drink_more_then_target)
+            .replace("$1", desc)
+
+        img_cancel.setOnClickListener { dialog.dismiss() }
+
+        dialog.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun load_all_container() {
+        containerArrayList.clear()
+
+        val arr_container: ArrayList<HashMap<String, String>> =
+            sqliteHelper.getdata("container", "is_custom", 1)
+
+        var selected_container_id = "1"
+
+        selected_container_id = if (SharedPreferencesManager.selectedContainer == 0) "1"
+        else "" + SharedPreferencesManager.selectedContainer
+
+        for (k in arr_container.indices) {
+            val container = Container()
+            container.containerId = arr_container[k]["containerID"]
+            container.containerValue = arr_container[k]["containerValue"]
+            container.containerValueOZ = arr_container[k]["containerValueOZ"]
+            container.isOpen(
+                arr_container[k]["is_open"].equals(
+                    "1",
+                    ignoreCase = true
+                )
+            )
+            container.isSelected(
+                selected_container_id.equals(
+                    arr_container[k]["containerID"],
+                    ignoreCase = true
+                )
+            )
+            container.isCustom(
+                arr_container[k]["is_custom"].equals(
+                    "1",
+                    ignoreCase = true
+                )
+            )
+            if (container.isSelected) selected_pos = k //+1
+
+            containerArrayList.add(container)
+        }
+    }
+
+    fun getImage(`val`: String): Int {
+        var drawable: Int = R.drawable.ic_custom_ml
+
+        if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+            if (`val`.toFloat() == 50f) drawable = R.drawable.ic_50_ml
+            else if (`val`.toFloat() == 100f) drawable = R.drawable.ic_100_ml
+            else if (`val`.toFloat() == 150f) drawable = R.drawable.ic_150_ml
+            else if (`val`.toFloat() == 200f) drawable = R.drawable.ic_200_ml
+            else if (`val`.toFloat() == 250f) drawable = R.drawable.ic_250_ml
+            else if (`val`.toFloat() == 300f) drawable = R.drawable.ic_300_ml
+            else if (`val`.toFloat() == 500f) drawable = R.drawable.ic_500_ml
+            else if (`val`.toFloat() == 600f) drawable = R.drawable.ic_600_ml
+            else if (`val`.toFloat() == 700f) drawable = R.drawable.ic_700_ml
+            else if (`val`.toFloat() == 800f) drawable = R.drawable.ic_800_ml
+            else if (`val`.toFloat() == 900f) drawable = R.drawable.ic_900_ml
+            else if (`val`.toFloat() == 1000f) drawable = R.drawable.ic_1000_ml
+        } else {
+            if (`val`.toFloat() == 1.6907f) drawable =
+                R.drawable.ic_50_ml
+            else if (`val`.toFloat() == 3.3814f) drawable =
+                R.drawable.ic_100_ml
+            else if (`val`.toFloat() == 5.0721f) drawable =
+                R.drawable.ic_150_ml
+            else if (`val`.toFloat() == 6.7628f) drawable =
+                R.drawable.ic_200_ml
+            else if (`val`.toFloat() == 8.45351f) drawable =
+                R.drawable.ic_250_ml
+            else if (`val`.toFloat() == 10.1442f) drawable =
+                R.drawable.ic_300_ml
+            else if (`val`.toFloat() == 16.907f) drawable =
+                R.drawable.ic_500_ml
+            else if (`val`.toFloat() == 20.2884f) drawable =
+                R.drawable.ic_600_ml
+            else if (`val`.toFloat() == 23.6698f) drawable =
+                R.drawable.ic_700_ml
+            else if (`val`.toFloat() == 27.0512f) drawable =
+                R.drawable.ic_800_ml
+            else if (`val`.toFloat() == 30.4326f) drawable =
+                R.drawable.ic_900_ml
+            else if (`val`.toFloat() == 33.814f) drawable =
+                R.drawable.ic_1000_ml
+        }
+
+        return drawable
+    }
+
 
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
@@ -1128,23 +1323,19 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions!!, grantResults)
-        var alarm = AlarmHelper()
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val alarm = AlarmHelper()
         when (requestCode) {
             123 -> {
                 if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    binding.bottomBarNotNotify.visibility = GONE
-                    binding.bottomBarNotify.visibility = VISIBLE
                     Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
                     alarm.setAlarm(
                         requireContext(),
                         SharedPreferencesManager.notificationFreq.toLong())
 
                 } else {
-                    binding.bottomBarNotNotify.visibility = VISIBLE
-                    binding.bottomBarNotify.visibility = GONE
                     Snackbar.make(viewWindow, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
                     alarm.cancelAlarm(requireContext())
                 }
@@ -1153,17 +1344,13 @@ class DrinkFragment : BaseFragment<DrinkFragmentBinding>(DrinkFragmentBinding::i
     }
 
     private fun refreshAlarm(notify: Boolean){
-        var alarm = AlarmHelper()
+        val alarm = AlarmHelper()
         if(notify){
-            binding.bottomBarNotNotify.visibility = GONE
-            binding.bottomBarNotify.visibility = VISIBLE
             alarm.setAlarm(
                 requireContext(),
                 SharedPreferencesManager.notificationFreq.toLong())
         }
         else{
-            binding.bottomBarNotNotify.visibility = VISIBLE
-            binding.bottomBarNotify.visibility = GONE
             alarm.cancelAlarm(requireContext())
             val activity: Activity? = activity
             if (activity != null && activity is MainActivity) {

@@ -13,20 +13,16 @@ import com.bumptech.glide.Glide
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.data.appmodel.Menu
 
+
 @SuppressLint("NewApi")
 class MenuAdapter(
-    var mContext: Context, menu_name: ArrayList<Menu>,
+    var mContext: Context,
+    private val menu_name: ArrayList<Menu>,
     var callBack: CallBack
 ) :
-    RecyclerView.Adapter<MenuAdapter.ViewHolder?>() {
-    private val menu_name: ArrayList<Menu> = menu_name
-
+    RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
     override fun getItemId(position: Int): Long {
         return 0
-    }
-
-    override fun getItemCount(): Int {
-        return menu_name.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +32,7 @@ class MenuAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.setText(menu_name[position].menuName)
+        holder.textView.text = menu_name[position].menuName
 
         Glide.with(mContext).load(getImage(position)).into(holder.imageView)
 
@@ -49,20 +45,20 @@ class MenuAdapter(
 
         holder.selected_view.visibility = View.INVISIBLE
 
-        if (position == 4 || position == 7) holder.lbl_divider.visibility =
-            View.VISIBLE
+        if (position == 4 || position == 7) holder.lbl_divider.visibility = View.VISIBLE
         else holder.lbl_divider.visibility = View.GONE
+    }
+
+    override fun getItemCount(): Int {
+        return menu_name.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textView: TextView = itemView.findViewById<TextView>(R.id.menu_name)
-        var imageView: ImageView =
-            itemView.findViewById<ImageView>(R.id.menu_img)
+        var imageView: ImageView = itemView.findViewById<ImageView>(R.id.menu_img)
         var item_block: LinearLayout = itemView.findViewById<LinearLayout>(R.id.item_block)
-        var selected_view: View =
-            itemView.findViewById<View>(R.id.selected_view)
-        var lbl_divider: View =
-            itemView.findViewById<View>(R.id.lbl_divider)
+        var selected_view: View = itemView.findViewById<View>(R.id.selected_view)
+        var lbl_divider: View = itemView.findViewById<View>(R.id.lbl_divider)
     }
 
     interface CallBack {
@@ -87,4 +83,3 @@ class MenuAdapter(
         return drawable
     }
 }
-

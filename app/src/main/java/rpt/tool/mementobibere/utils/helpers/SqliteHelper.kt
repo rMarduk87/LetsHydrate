@@ -330,11 +330,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return -1
     }
 
-    fun getAllStats(): Cursor {
-        val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"
-        val db = this.readableDatabase
-        return db.rawQuery(selectQuery, null)
-    }
     fun getIntook(date: String): Float {
         val selectQuery = "SELECT $KEY_N_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
         val db = this.readableDatabase
@@ -379,33 +374,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         val db = this.readableDatabase
         return db.rawQuery(selectQuery, arrayOf(date))
     }
-    fun getTotalIntakeValue(date: String) : Float{
-        var total = 0f
-        getTotalIntake(date).use{
-            if (it.moveToFirst()) {
-                total = it.getFloat(1)
-            }
-        }
-        return total
-    }
 
-    fun getAllStatsYear(year : String): Cursor {
-        val selectQuery = "SELECT * FROM $TABLE_STATS WHERE $KEY_YEAR = ? ORDER BY $KEY_DATE DESC"
-        val db = this.readableDatabase
-        return db.rawQuery(selectQuery, arrayOf(year))
-    }
-    fun getAllStatsMonthly(month : String, year : String): Cursor {
-        val selectQuery = "SELECT * FROM $TABLE_STATS WHERE $KEY_YEAR = ? AND $KEY_MONTH = ? ORDER BY $KEY_DATE DESC"
-        val db = this.readableDatabase
-        return db.rawQuery(selectQuery, arrayOf(year,month))
-    }
-
-    fun delete() : Int {
-        val db = this.writableDatabase
-        val response = db.delete(TABLE_STATS,"1",null)
-        db.close()
-        return response
-    }
     fun updateTotalIntake(date: String, totalintake: Float, unit: String): Int {
         val db = this.writableDatabase
         val update = "UPDATE $TABLE_STATS SET $KEY_N_TOTAL_INTAKE = $totalintake, $KEY_UNIT = \"$unit\" WHERE $KEY_DATE = \"$date\""
@@ -766,5 +735,59 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
 
         return maplist
+    }
+
+    fun insert(tableName: String, initialValues: ContentValues) {
+        this.writableDatabase.insert(tableName, null, initialValues)
+    }
+
+    @SuppressLint("Recycle")
+    fun get(query: String): ArrayList<HashMap<String,String>> {
+        val arr_data = ArrayList<HashMap<String,String>>()
+        val c: Cursor = this.readableDatabase.rawQuery(query, null)
+        if (c.moveToFirst()) {
+            do {
+                val map = HashMap<String, String>()
+                for (i in 0 until c.columnCount) {
+                    map[c.getColumnName(i)] = c.getString(i)
+                }
+
+                arr_data.add(map)
+            } while (c.moveToNext())
+        }
+        return  arr_data
+    }
+
+    fun remove(tableName:String,where:String) : Int {
+        val db = this.writableDatabase
+        val response = db.delete(tableName,where,null)
+        db.close()
+        return response
+    }
+
+    fun getMax(query: String): Cursor {
+        return this.readableDatabase.rawQuery(query,null)
+    }
+
+    fun update(table_name: String?, fields: HashMap<String?, String?>, where_con: String?) {
+
+        val initialValues = ContentValues()
+
+        val myVeryOwnIterator: Iterator<*> = fields.keys.iterator()
+        while (myVeryOwnIterator.hasNext()) {
+            val key = myVeryOwnIterator.next() as String
+            val value = fields[key]
+            initialValues.put(key, value)
+        }
+
+        if (table_name != null) {
+            this.writableDatabase.update(table_name, initialValues, where_con, null)
+        }
+    }
+
+    fun update(table_name: String?, fields: ContentValues?, where_con: String?) {
+        if (table_name != null) {
+            this.writableDatabase.update(table_name, fields, where_con, null)
+        }
     }
 }

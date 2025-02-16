@@ -534,6 +534,7 @@
     <string name="faq_question_11">What if I added drink log by mistake?</string>
     <string name="faq_question_12">How to change weather?</string>
     <string name="faq_question_13">How to change active / pregnant / breastfeeding status?</string>
+    <string name="faq_question_14">I am a blood donor, are there any important precautions to take?</string>
 
 
     <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start &amp; end time appropriately?\n2. Have you enabled Water Let\'s hydrate to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Water Diary running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Water Diary to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
@@ -548,7 +549,8 @@
 
     <string name="faq_answer_11">You need to tap on menu and select \"Drink History\" from the list of menu options. Inside Drink History you can tap on delete icon against wrong drink log entry.</string>
     <string name="faq_answer_12">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change weather by clicking on \"My Profile\".</string>
-    <string name="faq_answer_13">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change active / pregnant / breastfeeding status by clicking on \"My Profile\".</string>
+    <string name="faq_answer_13">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change active / pregnant / breastfeeding status by clicking on \"My Profile\".</string>
+    <string name="faq_answer_14">Yes, the day before donating the amount of water to drink must be at least 3000 ml / 101.44 fl oz, the frequency of notifications will double.</string>
     <!--Read More and Read Less-->
     <string name="str_read_less">Read Less</string>
     <string name="str_read_more">Read More</string>
@@ -565,9 +567,14 @@
     <string name="_15_mins">15 Mins</string>
     <string name="_1_hour">1 Hour</string>
     <string name="male">Male</string>
+    <string name="name">Name</string>
+    <string name="str_no_reached_found">No reached goal record found</string>
+    <string name="_0_ml">0 ml</string>
+    <string name="_4500_ml">4500 ml</string>
+    <string name="str_reached_goal">Reached\nGoal</string>
 
     <!-- Country Code -->
-    <string-array name="CountryCodes" >
+    <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>
         <item>213,DZ</item>

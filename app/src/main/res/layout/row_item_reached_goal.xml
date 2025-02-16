@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/super_item_block"
+	android:id="@+id/super_item_block"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
 	android:background="@color/white">
 
 	<LinearLayout
-        android:id="@+id/item_block"
+		android:id="@+id/item_block"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:background="@drawable/drawable_rounded_screen_background"
@@ -38,20 +38,7 @@
 				android:textColor="@color/white"
 				android:textSize="@dimen/dp_16"
 				android:fontFamily="@font/calibri_bold"
-                tools:ignore="SpUsage" />
-
-			<TextView
-				android:id="@+id/lbl_total_day_water"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:includeFontPadding="true"
-				android:layout_gravity="center_vertical"
-				android:gravity="start"
-				android:text="@string/_0_ml"
-				android:textColor="@color/white"
-				android:textSize="@dimen/dp_16"
-				android:fontFamily="@font/calibri_bold"
-                tools:ignore="SpUsage" />
+				tools:ignore="SpUsage" />
 
 		</LinearLayout>
 
@@ -101,7 +88,7 @@
 							android:textColor="@color/rdo_gender_select"
 							android:textSize="@dimen/dp_14"
 							android:fontFamily="@font/calibri_bold"
-                            tools:ignore="SpUsage" />
+							tools:ignore="SpUsage" />
 
 						<TextView
 							android:id="@+id/lbl_time"
@@ -114,15 +101,7 @@
 							android:textColor="@color/rdo_gender_select"
 							android:textSize="@dimen/dp_12"
 							android:fontFamily="@font/calibri_regular"
-                            tools:ignore="SpUsage" />
-
-						<ImageView
-							android:id="@+id/btnRemoveRow"
-							android:layout_width="@dimen/dp_20"
-							android:layout_height="@dimen/dp_20"
-							android:layout_gravity="center_vertical"
-							android:contentDescription="@string/img"
-							android:src="@drawable/trash" />
+							tools:ignore="SpUsage" />
 
 					</LinearLayout>
 
@@ -139,6 +118,6 @@
 
 		</LinearLayout>
 
-    </LinearLayout>
+	</LinearLayout>
 
 </RelativeLayout>

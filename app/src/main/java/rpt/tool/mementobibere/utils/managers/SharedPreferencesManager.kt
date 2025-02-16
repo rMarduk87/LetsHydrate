@@ -186,4 +186,11 @@ object SharedPreferencesManager {
     var userPhoto: String
         get() = sharedPreferences.getString(AppUtils.USER_PHOTO, "").toString()
         set(value) = sharedPreferences.edit().putString(AppUtils.USER_PHOTO, value).apply()
+    var selectedContainer: Int
+        get() = sharedPreferences.getInt(AppUtils.SELECTED_CONTAINER,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.SELECTED_CONTAINER, value).apply()
+    var disableSoundWhenAddWater: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.DISABLE_SOUND_WHEN_ADD_WATER,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.DISABLE_SOUND_WHEN_ADD_WATER, value).apply()
+
 }

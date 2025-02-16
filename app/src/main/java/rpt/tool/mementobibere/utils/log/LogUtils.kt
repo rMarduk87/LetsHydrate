@@ -29,3 +29,7 @@ fun e(logThrowable: Throwable, logTag: String = defaultTag) {
 fun i(logMessage: String, logTag: String = defaultTag) {
     Log.logInfo(logMessage, logTag)
 }
+
+fun v(logMessage: String, logTag: String = defaultTag) {
+    Log.logVerbose(logMessage, logTag)
+}

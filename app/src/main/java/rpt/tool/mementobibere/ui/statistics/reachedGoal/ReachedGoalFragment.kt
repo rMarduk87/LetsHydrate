@@ -1,45 +1,58 @@
 package rpt.tool.mementobibere.ui.statistics.reachedGoal
 
 import android.annotation.SuppressLint
-import android.database.Cursor
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.ReachedGoalStatsFragmentBinding
+import rpt.tool.mementobibere.databinding.FragmentReachedGoalBinding
+import rpt.tool.mementobibere.ui.statistics.history.HistoryFragmentDirections
 import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
-import rpt.tool.mementobibere.utils.extensions.toCalendar
-import rpt.tool.mementobibere.utils.extensions.toReachedStatsString
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
+import rpt.tool.mementobibere.utils.log.i
+import rpt.tool.mementobibere.utils.navigation.safeNavController
+import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.adapters.ReachedGoalAdapter
 
 
-class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
-    ReachedGoalStatsFragmentBinding::inflate) {
+class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
+    FragmentReachedGoalBinding::inflate) {
 
-    var reachedList: MutableList<ReachedGoal> = arrayListOf()
+    var reachedGoals: ArrayList<ReachedGoal> = ArrayList()
     var adapter: ReachedGoalAdapter? = null
     var isLoading: Boolean = true
-    private lateinit var sqliteHelper: SqliteHelper
+    var perPage: Int = 20
+    var page: Int = 0
     var beforeLoad: Int = 0
     var afterLoad: Int = 0
+    var sqliteHelper: SqliteHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
-        setBackGround()
 
         sqliteHelper = SqliteHelper(requireContext())
-        adapter = ReachedGoalAdapter(requireActivity(), reachedList, object : ReachedGoalAdapter.CallBack {
 
-            override fun onClickSelect(history: ReachedGoal?, position: Int) {
+        body()
+    }
+
+    private fun body() {
+        binding.include1.lblToolbarTitle.text = requireContext()
+            .getString(R.string.str_daily_goal_reached)
+        binding.include1.leftIconBlock.setOnClickListener { finish() }
+        binding.include1.rightIconBlock.visibility = View.GONE
+
+        binding.reachedRecyclerView.isNestedScrollingEnabled = false
+
+        adapter = ReachedGoalAdapter(requireActivity(), reachedGoals, object : ReachedGoalAdapter.CallBack {
+            override fun onClickSelect(reachedGoal: ReachedGoal, position: Int) {
             }
+
 
         })
 
-        binding.recyclerView.setLayoutManager(
+        binding.reachedRecyclerView.setLayoutManager(
             LinearLayoutManager(
                 requireActivity(),
                 LinearLayoutManager.VERTICAL,
@@ -47,70 +60,72 @@ class ReachedGoalFragment  : BaseFragment<ReachedGoalStatsFragmentBinding>(
             )
         )
 
-        binding.recyclerView.setAdapter(adapter)
+        binding.reachedRecyclerView.setAdapter(adapter)
 
-        loadReached(false)
-    }
+        load_reached_goal(false)
 
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setBackGround() {
-        when (SharedPreferencesManager.themeInt) {
-            0 -> toLightTheme()
-            1 -> toDarkTheme()
-        }
-    }
-
-    private fun toDarkTheme() {
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg_dark)
-    }
-
-    private fun toLightTheme() {
-        binding.layout.background = requireContext().getDrawable(R.drawable.ic_app_bg)
-    }
-
-    private fun loadReached(closeLoader: Boolean) {
-
-       val c: Cursor = sqliteHelper.getAllReached(true)
-
-        val arr_data = ArrayList<HashMap<String, String>>()
-
-        if (c.moveToFirst()) {
-            do {
-                val map = HashMap<String, String>()
-                for (i in 0 until c.columnCount) {
-                    map[c.getColumnName(i)] = c.getString(i)
+        binding.nestedScrollView.setOnScrollChangeListener(
+            NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                val TAG = "nested_sync"
+                if (scrollY > oldScrollY) {
+                    i(TAG, "Scroll DOWN")
+                }
+                if (scrollY < oldScrollY) {
+                    i(TAG, "Scroll UP")
                 }
 
-                arr_data.add(map)
-            } while (c.moveToNext())
-        }
+                if (scrollY == 0) {
+                    i(TAG, "TOP SCROLL")
+                }
+                if (scrollY == (v.getChildAt(0).measuredHeight - v.measuredHeight)) {
+                    i(TAG, "BOTTOM SCROLL")
+
+                    if (isLoading) {
+                        isLoading = false
+
+                        page++
+
+                        load_reached_goal(true)
+                    }
+                }
+            })
+    }
+
+    private fun finish() {
+        safeNavController?.safeNavigate(ReachedGoalFragmentDirections.
+        actionReachedGoalFragmentToDrinkFragment())
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun load_reached_goal(closeLoader: Boolean) {
+
+        val start_idx = page * perPage
+
+        val query =
+            "SELECT * FROM intake_reached ORDER BY datetime(date) DESC limit $start_idx,$perPage"
+
+        val arr_data = sqliteHelper!!.get(query)
 
         for (k in arr_data.indices) {
-            val reached = ReachedGoal()
-            reached.day = arr_data[k]["date"]!!.toCalendar()
-            reached.quantity = arr_data[k]["qta"]!!.toFloat().toReachedStatsString()
-            reached.unit = arr_data[k]["unit"]
+            val reachedGoal = ReachedGoal()
 
-            reachedList.add(reached)
+            reachedGoal.day = arr_data[k]["date"]
+            reachedGoal.quantity = arr_data[k]["qta"]!!.toFloat()
+            reachedGoal.quantityOZ = arr_data[k]["qta_OZ"]!!.toFloat()
+
+            reachedGoals.add(reachedGoal)
         }
 
-        afterLoad = reachedList.size
+        afterLoad = reachedGoals.size
 
         isLoading = if (afterLoad == 0) false
         else if (afterLoad > beforeLoad) true
         else false
 
-        if (reachedList.size > 0) {
-            binding.noData.visibility = View.GONE
-            binding.recyclerView.visibility = View.VISIBLE
-        }
-        else{
-            binding.noData.visibility = View.VISIBLE
-            binding.recyclerView.visibility = View.GONE
-        }
+        if (reachedGoals.size > 0)
+            binding.lblNoRecordFound.visibility = View.GONE
+        else binding.lblNoRecordFound.visibility = View.VISIBLE
 
         adapter!!.notifyDataSetChanged()
     }
-
 }

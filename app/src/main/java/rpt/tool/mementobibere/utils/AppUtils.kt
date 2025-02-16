@@ -1169,7 +1169,8 @@ class AppUtils {
         }
 
 
-
+        val APP_SHARE_URL: String = ""
+        val PRIVACY_POLICY_ULR: String = ""
         val PRIVATE_MODE = 0
 
         const val UNIT_KEY: String = "current_unit"
@@ -1247,7 +1248,7 @@ class AppUtils {
          var decimalFormat: DecimalFormat = DecimalFormat("#0.00")
          var decimalFormat2: DecimalFormat = DecimalFormat("#0.0")
          var notification_ringtone: Ringtone? = null
-         const val RELOAD_DASHBOARD: Boolean = true
+         var RELOAD_DASHBOARD: Boolean = true
          const val LOAD_VIDEO_ADS: Boolean = false
          const val APP_DIRECTORY_NAME: String = "Water Let\'s hydrate"
          const val APP_PROFILE_DIRECTORY_NAME: String = "profile"
@@ -1272,6 +1273,7 @@ class AppUtils {
          const val WEATHER_RAINY: Float = 0.68f
          const val WEATHER_SNOW: Float = 0.88f
         const val DEVELOPER_MODE: Boolean = true
+        var DATE_FORMAT: String = "dd-MM-yyyy"
         var share_purchase_title: String = "Share To"
         var launchables: List<ResolveInfo>? = null
         var pm: PackageManager? = null
