@@ -184,7 +184,7 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
                     arr_data[k]["time"])
 
             val arr_data2: ArrayList<HashMap<String, String>> =
-                sqliteHelper!!.getdata("tbl_drink_details",
+                sqliteHelper!!.getdata("stats",
                     "date ='" + arr_data[k]["date"] + "'")
 
             var tot = 0f

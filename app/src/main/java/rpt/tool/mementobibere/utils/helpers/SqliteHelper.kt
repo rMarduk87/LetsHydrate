@@ -58,6 +58,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
         addAvisTable(db)
 
+        addContainerTable(db)
+
         addValueToContainer(db)
 
     }
@@ -136,7 +138,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
             if(counter<5){
                 counter += 1
-                db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 7 WHERE $KEY_INTOOK_COUNT = 5")
+                if(tableExists(db,TABLE_INTOOK_COUNTER)){
+                    db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 7 WHERE $KEY_INTOOK_COUNT = 5")
+                }
             }
             if (counter<6){
                 counter += 1
@@ -176,6 +180,23 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             onCreate(db)
         }
+
+    private fun tableExists(db: SQLiteDatabase?, tableName: String?): Boolean {
+        if (tableName == null || db == null || !db.isOpen) {
+            return false
+        }
+        val cursor = db.rawQuery(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?",
+            arrayOf("table", tableName)
+        )
+        if (!cursor.moveToFirst()) {
+            cursor.close()
+            return false
+        }
+        val count = cursor.getInt(0)
+        cursor.close()
+        return count > 0
+    }
 
     private fun updateIntake(db: SQLiteDatabase) {
         val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"

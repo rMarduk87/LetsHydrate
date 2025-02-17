@@ -44,7 +44,6 @@ class InitUserInfoSevenFragment : BaseFragment<FragmentInitUserInfoSevenBinding>
 
             if (SharedPreferencesManager.gender == 1)  // female
             {
-
                 binding.pregnantBlock.isFocusableInTouchMode = true
                 binding.pregnantBlock.isClickable = true
                 binding.pregnantBlock.isFocusable = true
@@ -96,6 +95,7 @@ class InitUserInfoSevenFragment : BaseFragment<FragmentInitUserInfoSevenBinding>
         setActive()
         setBreastfeeding()
         setPregnant()
+        setBloodDonor()
 
         binding.activeBlock.setOnClickListener {
             if (SharedPreferencesManager.workType == 1)
@@ -173,11 +173,11 @@ class InitUserInfoSevenFragment : BaseFragment<FragmentInitUserInfoSevenBinding>
         if (SharedPreferencesManager.bloodDonorKey == 1) {
             binding.bloodDonorBlock.background = requireContext()
                 .resources.getDrawable(R.drawable.rdo_gender_select)
-            binding.imgActive.setImageResource(R.drawable.blood_donation_selected)
+            binding.imgBloodDonor.setImageResource(R.drawable.blood_donation_selected)
         } else {
             binding.bloodDonorBlock.background = requireContext()
                 .resources.getDrawable(R.drawable.rdo_gender_regular)
-            binding.imgActive.setImageResource(R.drawable.blood_donation)
+            binding.imgBloodDonor.setImageResource(R.drawable.blood_donation)
         }
     }
 }

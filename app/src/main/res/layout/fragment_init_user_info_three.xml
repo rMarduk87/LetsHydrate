@@ -15,7 +15,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_30"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -24,7 +24,7 @@
                 android:includeFontPadding="true"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_30"
                 android:text="@string/str_height"
                 android:textSize="@dimen/dp_20"
                 android:textColor="@color/rdo_gender_select"
@@ -84,7 +84,7 @@
 
             </RelativeLayout>
 
-            <rpt.tool.mementobibere.utils.view.custom.horizontalpicker.HorizontalPicker
+            <com.wefika.horizontalpicker.HorizontalPicker
                 android:id="@+id/pickerCM"
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 android:marqueeRepeatLimit="-1"
                 />
 
-            <rpt.tool.mementobibere.utils.view.custom.horizontalpicker.HorizontalPicker
+            <com.wefika.horizontalpicker.HorizontalPicker
                 android:id="@+id/pickerFeet"
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -173,7 +173,7 @@
 
             </RelativeLayout>
 
-            <rpt.tool.mementobibere.utils.view.custom.horizontalpicker.HorizontalPicker
+            <com.wefika.horizontalpicker.HorizontalPicker
                 android:id="@+id/pickerLB"
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                 android:ellipsize="none"
                 android:marqueeRepeatLimit="-1" />
 
-            <rpt.tool.mementobibere.utils.view.custom.horizontalpicker.HorizontalPicker
+            <com.wefika.horizontalpicker.HorizontalPicker
                 android:id="@+id/pickerKG"
                 android:visibility="visible"
                 android:layout_width="match_parent"

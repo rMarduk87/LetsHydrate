@@ -24,11 +24,11 @@ class ContainerAdapterNew(
     private val containerArrayList: MutableList<Container> = containerArrayList
 
     override fun getItemId(position: Int): Long {
-        return containerArrayList.size.toLong()
+        return 0
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return containerArrayList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -24,11 +24,11 @@ class HistoryAdapter(
     private val historyArrayList: ArrayList<History> = historyArrayList
 
     override fun getItemId(position: Int): Long {
-        return historyArrayList.size.toLong()
+        return 0
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return historyArrayList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

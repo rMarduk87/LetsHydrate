@@ -24,6 +24,7 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
 
 
 class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(FragmentInitUserInfoFourBinding::inflate) {
@@ -90,7 +91,7 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
         val tmp_weight = "" + SharedPreferencesManager.personHeight
 
         val isFemale: Boolean = SharedPreferencesManager.gender==1
-        val isActive: Boolean = SharedPreferencesManager.workType==0
+        val isActive: Boolean = SharedPreferencesManager.workType==1
         val isPregnant: Boolean = SharedPreferencesManager.isPregnant
         val isBreastfeeding: Boolean = SharedPreferencesManager.isBreastfeeding
         val weatherIdx: Int = SharedPreferencesManager.climate
@@ -183,13 +184,13 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
             seekbarGoal.min = 900
             seekbarGoal.max = 8000
             lbl_goal2.filters =
-                arrayOf<InputFilter>(AppUtils.InputFilterWeightRange(0.0, 8000.0), LengthFilter(4))
+                arrayOf<InputFilter>(InputFilterWeightRange(0.0, 8000.0), LengthFilter(4))
             //lbl_goal2.setMaxL
         } else {
             seekbarGoal.min = 30
             seekbarGoal.max = 270
             lbl_goal2.filters =
-                arrayOf<InputFilter>(AppUtils.InputFilterWeightRange(0.0, 270.0), LengthFilter(3))
+                arrayOf<InputFilter>(InputFilterWeightRange(0.0, 270.0), LengthFilter(3))
         }
 
         val f =

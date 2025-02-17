@@ -50,7 +50,6 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentDrinkBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.AppUtils.InputFilterWeightRange
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
 import rpt.tool.mementobibere.utils.data.appmodel.Container
 import rpt.tool.mementobibere.utils.data.appmodel.Menu
@@ -66,9 +65,11 @@ import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.adapters.ContainerAdapterNew
 import rpt.tool.mementobibere.utils.view.adapters.MenuAdapter
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 import java.util.Random
 
 
@@ -318,6 +319,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
     @SuppressLint("RtlHardcoded")
     private fun initMenuScreen() {
+
+        filter_cal = Calendar.getInstance(Locale.getDefault());
+        today_cal = Calendar.getInstance(Locale.getDefault());
+        yesterday_cal = Calendar.getInstance(Locale.getDefault());
+        yesterday_cal!!.add(Calendar.DATE, -1);
 
         loadPhoto()
 
@@ -739,7 +745,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun body() {
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            ("d ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
+            ("date ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
         )
         old_drink_water = 0f
         for (k in arr_data.indices) {
@@ -893,7 +899,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         bottomSheetDialog!!.setOnShowListener(OnShowListener { dialog ->
             val d = dialog as BottomSheetDialog
             val bottomSheet =
-                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
+                d.findViewById<View>(R.id.design_bottom_sheet) as FrameLayout?
                     ?: return@OnShowListener
             val bottomSheetBehavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
             bottomSheet.background = null
@@ -1173,19 +1179,24 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun addReachedUpdata(container: Container) {
 
         val reachedGoal = sqliteHelper.getdata("intake_reached",
-            "data='"+AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)+"'")
+            "date='"+AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)+"'")
 
         if(reachedGoal.size>0){
             val initialValues = ContentValues()
 
-            initialValues.put("qta", "" + container.containerValue!!.toFloat() +
-                    reachedGoal[0]["qta"]!!.toFloat())
+            val new = container.containerValue!!.toFloat() +
+                    reachedGoal[0]["qta"]!!.toFloat()
+
+            val newOZ = container.containerValueOZ!!.toFloat() +
+                    reachedGoal[0]["qta_OZ"]!!.toFloat()
+
+            initialValues.put("qta", "" + new)
             initialValues.put(
                 "qta_OZ",
-                "" + container.containerValueOZ!!.toFloat() + reachedGoal[0]["qta_oz"]!!.toFloat())
+                "" + newOZ)
 
             sqliteHelper.update("intake_reached",initialValues,
-                "data='"+AppUtils.getDate(filter_cal!!.timeInMillis,
+                "date='"+AppUtils.getDate(filter_cal!!.timeInMillis,
                     AppUtils.DATE_FORMAT)+"'")
 
         }

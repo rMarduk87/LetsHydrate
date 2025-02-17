@@ -10,9 +10,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -32,14 +30,12 @@ import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import rpt.tool.mementobibere.BaseFragment
@@ -47,9 +43,6 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentProfileBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.AppUtils.DigitsInputFilter
-import rpt.tool.mementobibere.utils.AppUtils.InputFilterRange
-import rpt.tool.mementobibere.utils.AppUtils.InputFilterWeightRange
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.FileUtils
 import rpt.tool.mementobibere.utils.helpers.StringHelper
@@ -58,6 +51,9 @@ import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
+import rpt.tool.mementobibere.utils.view.inputfilter.DigitsInputFilter
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterRange
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
 import java.io.File
 import java.util.Locale
 
@@ -998,8 +994,10 @@ class ProfileFragment:
 
                 val tmp = weight_in_lb.toInt()
 
-                txt_name.filters = arrayOf<InputFilter>(DigitsInputFilter(3, 
-                    0, 287.0))
+                txt_name.filters = arrayOf<InputFilter>(
+                    DigitsInputFilter(3,
+                    0, 287.0)
+                )
                 txt_name.setText(getData("" + tmp))
                 rdo_kg.isClickable = true
                 rdo_lb.isClickable = false

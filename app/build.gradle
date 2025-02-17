@@ -69,10 +69,12 @@ dependencies {
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
     implementation 'androidx.compose.ui:ui-text-android:1.7.8'
     implementation 'com.github.bumptech.glide:glide:4.14.2'
-    implementation 'androidx.activity:activity:1.10.0'
+    implementation 'androidx.activity:activity-ktx:1.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
     implementation 'androidx.print:print:1.0.0'
+    implementation 'com.wefika:horizontal-picker:1.1.1'
     implementation('org.apache.httpcomponents:httpmime:4.5.6')
             {
                 exclude module: 'httpclient'

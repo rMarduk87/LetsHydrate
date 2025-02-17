@@ -24,7 +24,7 @@
                 android:includeFontPadding="true"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_30"
                 android:text="@string/str_your_name"
                 android:textSize="@dimen/dp_20"
                 android:textColor="@color/rdo_gender_select"

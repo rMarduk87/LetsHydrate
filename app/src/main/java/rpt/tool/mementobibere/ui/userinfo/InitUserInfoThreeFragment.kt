@@ -7,13 +7,16 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
 import rpt.tool.mementobibere.BaseFragment
-import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentInitUserInfoThreeBinding
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.extensions.callPrivateFunc
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
-import rpt.tool.mementobibere.utils.view.custom.horizontalpicker.HorizontalPicker
+import rpt.tool.mementobibere.utils.view.inputfilter.DigitsInputFilter
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterRange
+import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
+
 
 class InitUserInfoThreeFragment : 
     BaseFragment<FragmentInitUserInfoThreeBinding>(FragmentInitUserInfoThreeBinding::inflate) {
@@ -81,19 +84,17 @@ class InitUserInfoThreeFragment :
             st[k] = "" + weight_kg_lst[k]
         }
 
-        binding.pickerKG.setValues(st)
-        binding.pickerKG.setSideItems(1)
-        binding.pickerKG.setOnItemSelectedListener(object : HorizontalPicker.OnItemSelected {
-            override fun onItemSelected(index: Int) {
+        binding.pickerKG.values = st
+        binding.pickerKG.sideItems = 1
+        binding.pickerKG.setOnItemSelectedListener { index ->
+            binding.txtWeight.setText(st[index])
 
-                binding.txtWeight.setText(st[index])
-
-                d("MYHSCROLL : ", "onItemSelected KG")
-            }
-        })
+            d("MYHSCROLL : ", "onItemSelected KG")
+        }
 
         try {
-            binding.pickerKG.setTextSize(requireContext().resources.getDimension(R.dimen.dp_30))
+            binding.pickerKG.callPrivateFunc(
+                "setTextSize","requireContext().resources.getDimension(R.dimen.dp_30)")
         } catch (e: java.lang.Exception) {
             e.message?.let { e(Throwable(e), it) }
         }
@@ -111,19 +112,18 @@ class InitUserInfoThreeFragment :
             st[k] = "" + weight_lb_lst[k]
         }
 
-        binding.pickerLB.setValues(st)
-        binding.pickerLB.setSideItems(1)
-        binding.pickerLB.setOnItemSelectedListener(object : HorizontalPicker.OnItemSelected {
-            override fun onItemSelected(index: Int) {
-                binding.txtWeight.setText(st[index])
+        binding.pickerLB.values = st
+        binding.pickerLB.sideItems = 1
+        binding.pickerLB.setOnItemSelectedListener { index ->
+            binding.txtWeight.setText(st[index])
 
-                d("MYHSCROLL : ", "onItemSelected LB")
-                //}
-            }
-        })
+            d("MYHSCROLL : ", "onItemSelected LB")
+            //}
+        }
 
         try {
-            binding.pickerLB.setTextSize(requireContext().resources.getDimension(R.dimen.dp_30))
+            binding.pickerLB.callPrivateFunc(
+                "setTextSize","requireContext().resources.getDimension(R.dimen.dp_30)")
         } catch (e: java.lang.Exception) {
             e.message?.let { e(Throwable(e), it) }
         }
@@ -143,20 +143,18 @@ class InitUserInfoThreeFragment :
             st[k] = "" + height_cm_lst[k]
         }
 
-        binding.pickerCM.setValues(st)
-        binding.pickerCM.setSideItems(1)
-        binding.pickerCM.setOnItemSelectedListener(object : HorizontalPicker.OnItemSelected {
-            override fun onItemSelected(index: Int) {
+        binding.pickerCM.values = st
+        binding.pickerCM.sideItems = 1
+        binding.pickerCM.setOnItemSelectedListener { index ->
+            binding.txtHeight.setText(st[index])
 
-                binding.txtHeight.setText(st[index])
-
-                d("MYHSCROLL : ", "onItemSelected 2")
-                //}
-            }
-        })
+            d("MYHSCROLL : ", "onItemSelected 2")
+            //}
+        }
 
         try {
-            binding.pickerCM.setTextSize(requireContext().resources.getDimension(R.dimen.dp_30))
+            binding.pickerCM.callPrivateFunc(
+                "setTextSize","requireContext().resources.getDimension(R.dimen.dp_30)")
         } catch (e: java.lang.Exception) {
             e.message?.let { e(Throwable(e), it) }
         }
@@ -244,21 +242,18 @@ class InitUserInfoThreeFragment :
             st[k] = "" + height_feet_lst[k]
         }
 
-        binding.pickerFeet.setValues(st)
-        binding.pickerFeet.setSideItems(1)
-        binding.pickerFeet.setOnItemSelectedListener(object : HorizontalPicker.OnItemSelected {
-            override fun onItemSelected(index: Int) {
+        binding.pickerFeet.values = st
+        binding.pickerFeet.sideItems = 1
+        binding.pickerFeet.setOnItemSelectedListener { index ->
+            binding.txtHeight.setText(st[index])
 
-
-                binding.txtHeight.setText(st[index])
-
-                d("MYHSCROLL : ", "onItemSelected")
-                //}
-            }
-        })
+            d("MYHSCROLL : ", "onItemSelected")
+            //}
+        }
 
         try {
-            binding.pickerFeet.setTextSize(requireContext().resources.getDimension(R.dimen.dp_30))
+            binding.pickerFeet.callPrivateFunc(
+                "setTextSize","requireContext().resources.getDimension(R.dimen.dp_30)")
         } catch (e: java.lang.Exception) {
             e.message?.let { e(Throwable(e), it) }
         }
@@ -349,12 +344,12 @@ class InitUserInfoThreeFragment :
 
 
         binding.txtHeight.filters = arrayOf<InputFilter>(
-            AppUtils.InputFilterRange(
+            InputFilterRange(
                 0.00,
                 height_feet_elements
             )
         )
-        binding.txtWeight.filters = arrayOf<InputFilter>(AppUtils.InputFilterWeightRange(0.0, 130.0))
+        binding.txtWeight.filters = arrayOf<InputFilter>(InputFilterWeightRange(0.0, 130.0))
 
 
         isExecute = true
@@ -465,7 +460,7 @@ class InitUserInfoThreeFragment :
                 binding.rdoFeet.isClickable = true
                 binding.rdoCm.isClickable = false
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         240.0
@@ -512,7 +507,7 @@ class InitUserInfoThreeFragment :
                 binding.rdoFeet.isClickable = false
                 binding.rdoCm.isClickable = true
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterRange(
+                    InputFilterRange(
                         0.00,
                         height_feet_elements
                     )
@@ -606,7 +601,7 @@ class InitUserInfoThreeFragment :
                 binding.pickerKG.setSelectedItem(sel_pos)
 
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterWeightRange(
+                    InputFilterWeightRange(
                         0.0,
                         130.0
                     )
@@ -639,7 +634,7 @@ class InitUserInfoThreeFragment :
                 binding.pickerLB.setSelectedItem(sel_pos)
 
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         287.0
@@ -675,7 +670,7 @@ class InitUserInfoThreeFragment :
         if (!AppUtils.checkBlankData(SharedPreferencesManager.personHeight)) {
             if (binding.rdoCm.isChecked) {
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         240.0
@@ -684,7 +679,7 @@ class InitUserInfoThreeFragment :
                 binding.txtHeight.setText(getData(SharedPreferencesManager.personHeight))
             } else {
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterRange(
+                    InputFilterRange(
                         0.00,
                         height_feet_elements
                     )
@@ -694,7 +689,7 @@ class InitUserInfoThreeFragment :
         } else {
             if (binding.rdoCm.isChecked) {
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         240.0
@@ -703,7 +698,7 @@ class InitUserInfoThreeFragment :
                 binding.txtHeight.setText("150")
             } else {
                 binding.txtHeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterRange(
+                    InputFilterRange(
                         0.00,
                         height_feet_elements
                     )
@@ -715,7 +710,7 @@ class InitUserInfoThreeFragment :
         if (!AppUtils.checkBlankData(SharedPreferencesManager.personWeight)) {
             if (binding.rdoKg.isChecked) {
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterWeightRange(
+                    InputFilterWeightRange(
                         0.0,
                         130.0
                     )
@@ -723,7 +718,7 @@ class InitUserInfoThreeFragment :
                 binding.txtWeight.setText(getData(SharedPreferencesManager.personWeight))
             } else {
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         287.0
@@ -734,7 +729,7 @@ class InitUserInfoThreeFragment :
         } else {
             if (binding.rdoKg.isChecked) {
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.InputFilterWeightRange(
+                    InputFilterWeightRange(
                         0.0,
                         130.0
                     )
@@ -742,7 +737,7 @@ class InitUserInfoThreeFragment :
                 binding.txtWeight.setText("80.0")
             } else {
                 binding.txtWeight.filters = arrayOf<InputFilter>(
-                    AppUtils.DigitsInputFilter(
+                    DigitsInputFilter(
                         3,
                         0,
                         287.0

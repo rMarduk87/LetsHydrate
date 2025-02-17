@@ -26,11 +26,11 @@ class ReachedGoalAdapter(
     private val reachedGoalArrayList: ArrayList<ReachedGoal> = reachedGoals
 
     override fun getItemId(position: Int): Long {
-        return reachedGoalArrayList.size.toLong()
+        return 0
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return reachedGoalArrayList.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
