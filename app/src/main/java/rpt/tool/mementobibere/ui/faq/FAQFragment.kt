@@ -1,6 +1,7 @@
 package rpt.tool.mementobibere.ui.faq
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentFaqBinding
 import rpt.tool.mementobibere.utils.data.appmodel.FAQModel
@@ -37,7 +39,7 @@ class FAQFragment : BaseFragment<FragmentFaqBinding>(FragmentFaqBinding::inflate
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(FAQFragmentDirections.actionFaqFragmentToDrinkFragment())
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 
     private fun setFAQData() {

@@ -1,21 +1,19 @@
 package rpt.tool.mementobibere.ui.statistics.reachedGoal
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentReachedGoalBinding
-import rpt.tool.mementobibere.ui.statistics.history.HistoryFragmentDirections
 import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.i
-import rpt.tool.mementobibere.utils.navigation.safeNavController
-import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.adapters.ReachedGoalAdapter
-
 
 class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
     FragmentReachedGoalBinding::inflate) {
@@ -92,8 +90,7 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(ReachedGoalFragmentDirections.
-        actionReachedGoalFragmentToDrinkFragment())
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 
     @SuppressLint("NotifyDataSetChanged")

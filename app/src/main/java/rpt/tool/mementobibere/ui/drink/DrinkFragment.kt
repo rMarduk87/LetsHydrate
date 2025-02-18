@@ -46,6 +46,7 @@ import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.InitUserInfoActivity
 import rpt.tool.mementobibere.MainActivity
+import rpt.tool.mementobibere.MenuNavigationActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentDrinkBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
@@ -60,6 +61,7 @@ import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.log.v
+import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
@@ -102,6 +104,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     var ringtone: Ringtone? = null
     var btnclick: Boolean = true
     lateinit var alertHelper: AlertHelper
+    var isAll: Boolean = false
+    var migrationManager: MigrationManager? = null
+    private var waters: Array<String> = arrayOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -110,22 +115,27 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         dateNow = AppUtils.getCurrentOnlyDate()!!
         super.onViewCreated(view, savedInstanceState)
 
+        migrationManager = MigrationManager()
+        migrationManager!!.migrate()
+
+        waters = requireContext().resources.getStringArray(R.array.water)
+
         if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
-            binding.calendarBloodBlock.visibility = VISIBLE
-            binding.imgCalendarHelper.visibility = GONE
+            binding.bloodDonorContainer.visibility = VISIBLE
+            binding.imgBloodDonorHelp.visibility = GONE
             binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
             binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
         }
         else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(dateNow)){
-            binding.calendarBloodBlock.visibility = VISIBLE
-            binding.imgCalendarHelper.visibility = VISIBLE
+            binding.bloodDonorContainer.visibility = VISIBLE
+            binding.imgBloodDonorHelp.visibility = VISIBLE
             binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.red))
             binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.red))
         }
         else{
-            binding.calendarBloodBlock.visibility = GONE
+            binding.bloodDonorContainer.visibility = GONE
             binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
             binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
         }
@@ -162,55 +172,39 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun animate() {
         binding.contentFrame.viewTreeObserver
             .addOnGlobalLayoutListener { // TODO Auto-generated method stub
-                val w: Int = binding.contentFrame.width
-                val h: Int = binding.contentFrame.height
-                v("getWidthHeight", "$w   -   $h")
+                try{
+                    val w: Int = binding.contentFrame.width
+                    val h: Int = binding.contentFrame.height
+                    v("getWidthHeight", "$w   -   $h")
+                }
+                catch (e:Exception){
+                    e.message?.let { d("Test", it) }
+                }
             }
 
         binding.contentFrameTest.viewTreeObserver
             .addOnGlobalLayoutListener { // TODO Auto-generated method stub
-                val w: Int = binding.contentFrameTest.width
-                val h: Int = binding.contentFrameTest.height
-                v("getWidthHeight test", "$w   -   $h")
-                max_bottle_height = h - 30
+                try{
+                    val w: Int = binding.contentFrameTest.width
+                    val h: Int = binding.contentFrameTest.height
+                    v("getWidthHeight test", "$w   -   $h")
+                    max_bottle_height = h - 30
+                }
+                catch(e:Exception){
+                    e.message?.let { d("Test", it) }
+                }
             }
     }
 
     private fun loadPhoto() {
-        if (AppUtils.checkBlankData(SharedPreferencesManager.userPhoto)) {
-            Glide.with(requireActivity()).load(
-                if (SharedPreferencesManager.gender == 1)
-                    R.drawable.female_white
-                else
-                    R.drawable.male_white
-            ).apply(RequestOptions.circleCropTransform())
-                .into(binding.imgUser)
-        } else {
-            var ex = false
-
-            try {
-                val f: File = File(SharedPreferencesManager.userPhoto)
-                if (f.exists()) ex = true
-            } catch (e: Exception) {
-                e.message?.let { e(Throwable(e), it) }
-            }
-
-            if (ex) {
-                Glide.with(requireActivity()).load(SharedPreferencesManager.userPhoto)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(binding.imgUser)
-            } else {
-                Glide.with(requireActivity()).load(
-                    if (SharedPreferencesManager.gender == 1)
-                        R.drawable.female_white
-                    else
-                        R.drawable.male_white
-                ).apply(RequestOptions.circleCropTransform())
-                    .into(binding.imgUser)
-            }
-        }
+        Glide.with(requireActivity()).load(
+            if (SharedPreferencesManager.gender == 1)
+                R.drawable.female_white
+            else
+                R.drawable.male_white
+        ).apply(RequestOptions.circleCropTransform())
+            .into(binding.imgUser)
     }
-
 
     private fun manageNotification() {
         val alarm = AlarmHelper()
@@ -255,7 +249,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             )
         }
 
-        binding.imgCalendarHelper.setOnClickListener {
+        binding.imgBloodDonorHelp.setOnClickListener {
             avisBalloon.showAlign(
                 align = BalloonAlign.BOTTOM,
                 mainAnchor = binding.calendarBloodBlock as View,
@@ -346,20 +340,20 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
                 when (position) {
                     1 -> {
-                        safeNavController?.safeNavigate(
-                            DrinkFragmentDirections.actionDrinkFragmentToHistoryFragment())
+                        SharedPreferencesManager.menu = 1
+                        startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
                     }
                     2 -> {
-                        safeNavController?.safeNavigate(
-                            DrinkFragmentDirections.actionDrinkFragmentToStatsFragment())
+                        SharedPreferencesManager.menu = 2
+                        startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
                     }
                     3 -> {
-                        safeNavController?.safeNavigate(
-                            DrinkFragmentDirections.actionDrinkFragmentToSettingsFragment())
+                        SharedPreferencesManager.menu = 3
+                        startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
                     }
                     4 -> {
-                        safeNavController?.safeNavigate(
-                            DrinkFragmentDirections.actionDrinkFragmentToFaqFragment())
+                        SharedPreferencesManager.menu = 4
+                        startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
                     }
                     5 -> {
                         val i = Intent(Intent.ACTION_VIEW)
@@ -428,8 +422,8 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             } catch (e: java.lang.Exception) {
                 e.message?.let { it1 -> e(Throwable(e), it1) }
             }
-            safeNavController?.safeNavigate(DrinkFragmentDirections
-                .actionDrinkFragmentToProfileFragment())
+            SharedPreferencesManager.menu = 5
+            startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
         
         binding.include1.btnAlarm.setOnClickListener { showReminderDialog() }
@@ -567,9 +561,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         if (arr_data22.size > 0) {
             total_drink =
                 if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
-                    arr_data22[0]["n_total_intake"]!!
+                    arr_data22[0]["n_totalintake"]!!
                     .toDouble()
-                else arr_data22[0]["n_total_intake_OZ"]!!.toDouble()
+                else arr_data22[0]["n_totalintake_OZ"]!!.toDouble()
         }
 
 
@@ -600,6 +594,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 " " + AppUtils.WATER_UNIT_VALUE)
 
         refresh_bottle(false, false)
+        randomizeTips()
     }
 
     private fun getData(str: String): String {
@@ -629,6 +624,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                     binding.contentFrame.requestLayout()
                     handler!!.postDelayed(runnable!!, animationDuration)
                 } else {
+                    if(isAll){
+                        binding.contentFrame.layoutParams.height = max_bottle_height
+                        binding.contentFrame.requestLayout()
+                        handler!!.postDelayed(runnable!!, animationDuration)
+                    }
                     btnclick = true
                     callDialog()
                 }
@@ -761,13 +761,13 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         binding.selectedContainerBlock.setOnClickListener { openChangeContainerPicker() }
 
         binding.openHistory.setOnClickListener {
-            safeNavController?.safeNavigate(DrinkFragmentDirections.
-            actionDrinkFragmentToHistoryFragment())
+            SharedPreferencesManager.menu = 1
+            startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
 
         binding.openReachedGoal.setOnClickListener {
-            safeNavController?.safeNavigate(DrinkFragmentDirections
-                .actionDrinkFragmentToReachedGoalFragment())
+            SharedPreferencesManager.menu = 6
+            startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
         
         binding.addWater.setOnClickListener(View.OnClickListener {
@@ -792,9 +792,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 if (random.nextBoolean()) {
                     AppUtils.RELOAD_DASHBOARD = false
                     execute_add_water()
+                    randomizeTips()
                     AppUtils.RELOAD_DASHBOARD = true
                 } else {
                     execute_add_water()
+                    randomizeTips()
                 }
             }
         })
@@ -869,6 +871,18 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             })
     }
 
+    private fun randomizeTips() {
+        if(SharedPreferencesManager.setTips){
+            if(binding.tips.visibility == View.INVISIBLE || binding.tips.visibility == GONE){
+                binding.tips.visibility = VISIBLE
+            }
+
+            val randomIndex: Int = Random().nextInt(waters.size)
+            val randomWaters: String = waters[randomIndex]
+            binding.lblTips.text = randomWaters
+        }
+    }
+
     private fun count_today_drink(isRegularAnimation: Boolean) {
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
@@ -890,7 +904,10 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE)
                 + " " + AppUtils.WATER_UNIT_VALUE)
 
+        isAll = drink_water >= AppUtils.DAILY_WATER_VALUE
+
         refresh_bottle(true, isRegularAnimation)
+        randomizeTips()
     }
 
     private fun openChangeContainerPicker() {

@@ -90,19 +90,6 @@
 							android:fontFamily="@font/calibri_bold"
 							tools:ignore="SpUsage" />
 
-						<TextView
-							android:id="@+id/lbl_time"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:includeFontPadding="false"
-							android:layout_gravity="center_vertical"
-							android:layout_marginEnd="10dp"
-							android:text="@string/time"
-							android:textColor="@color/rdo_gender_select"
-							android:textSize="@dimen/dp_12"
-							android:fontFamily="@font/calibri_regular"
-							tools:ignore="SpUsage" />
-
 					</LinearLayout>
 
 					<View

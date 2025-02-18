@@ -345,7 +345,7 @@
     <string name="str_weight">Weight</string>
     <string name="str_skip">Skip</string>
     <string name="str_weight_validation">Please enter weight.</string>
-    <string name="str_daily_goal_reached">Daily goal reached!</string>
+    <string name="str_daily_goal_reached">Daily goal reached</string>
     <string name="str_share_your_achievement_with_your_friends">Share your achievement with your friends!</string>
 
     <!-- home set goal dialog -->
@@ -572,6 +572,7 @@
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
     <string name="str_reached_goal">Reached\nGoal</string>
+    <string name="str_disable_tips">Disable Tips</string>
 
     <!-- Country Code -->
     <string-array name="CountryCodes">

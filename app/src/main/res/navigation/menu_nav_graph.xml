@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav_graph"
+    app:startDestination="@id/MenuFragment">
+
+    <fragment
+        android:id="@+id/MenuFragment"
+        android:name="rpt.tool.mementobibere.ui.menu.MenuFragment"
+        android:label="MenuFragment"
+        tools:layout="@layout/fragment_empty">
+        <action
+            android:id="@+id/action_menuFragment_to_profileFragment"
+            app:destination="@id/ProfileFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_statsFragment"
+            app:destination="@id/StatsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_faqFragment"
+            app:destination="@id/FaqFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_historyFragment"
+            app:destination="@id/HistoryFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_reachedGoalFragment"
+            app:destination="@id/ReachedGoalFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_settingsFragment"
+            app:destination="@id/Settingsfragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="rpt.tool.mementobibere.ui.profile.ProfileFragment"
+        android:label="@string/info_fragment_label"
+        tools:layout="@layout/fragment_profile">
+    </fragment>
+    <fragment
+        android:id="@+id/StatsFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.stats.StatsFragment"
+        android:label="StatFragment"
+        tools:layout="@layout/fragment_stats">
+    </fragment>
+    <fragment
+        android:id="@+id/ReachedGoalFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragment"
+        android:label="ReachedGoalFragment"
+        tools:layout="@layout/fragment_reached_goal">
+    </fragment>
+    <fragment
+        android:id="@+id/FaqFragment"
+        android:name="rpt.tool.mementobibere.ui.faq.FAQFragment"
+        android:label="FAQFragment"
+        tools:layout="@layout/fragment_faq">
+    </fragment>
+    <fragment
+        android:id="@+id/HistoryFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.history.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_history">
+    </fragment>
+    <fragment
+        android:id="@+id/Settingsfragment"
+        android:name="rpt.tool.mementobibere.ui.settings.SettingsFragment"
+        android:label="Settingsfragment"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_profileFragment"
+            app:destination="@id/ProfileFragment" />
+    </fragment>
+</navigation>

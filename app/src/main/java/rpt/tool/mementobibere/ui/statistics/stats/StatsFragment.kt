@@ -1,11 +1,13 @@
 package rpt.tool.mementobibere.ui.statistics.stats
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentStatsBinding
 import rpt.tool.mementobibere.utils.navigation.safeNavController
@@ -68,6 +70,6 @@ class StatsFragment : BaseFragment<FragmentStatsBinding>(FragmentStatsBinding::i
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(StatsFragmentDirections.actionStatsFragmentToDrinkFragment())
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 }

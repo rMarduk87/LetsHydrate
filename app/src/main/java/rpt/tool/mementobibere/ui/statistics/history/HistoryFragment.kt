@@ -2,11 +2,13 @@ package rpt.tool.mementobibere.ui.statistics.history
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentHistoryBinding
 import rpt.tool.mementobibere.utils.AppUtils
@@ -120,7 +122,7 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
     private fun checkIfRemoveReached(drinkDate: String?): Boolean {
         val mes_unit: String = AppUtils.WATER_UNIT_VALUE
         val arr_data2: ArrayList<HashMap<String, String>> =
-            sqliteHelper!!.getdata("tbl_drink_details",
+            sqliteHelper!!.getdata("intake_reached",
                 "date ='$drinkDate'"
             )
 
@@ -149,8 +151,7 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(HistoryFragmentDirections.
-        actionHistoryFragmentToDrinkFragment())
+        startActivity(Intent(requireActivity(),MainActivity::class.java))
     }
 
     @SuppressLint("NotifyDataSetChanged")

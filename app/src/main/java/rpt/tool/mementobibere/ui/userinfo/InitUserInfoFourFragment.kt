@@ -88,7 +88,7 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
 
     @SuppressLint("SetTextI18n")
     fun calculate_goal() {
-        val tmp_weight = "" + SharedPreferencesManager.personHeight
+        val tmp_weight = "" + SharedPreferencesManager.personWeight
 
         val isFemale: Boolean = SharedPreferencesManager.gender==1
         val isActive: Boolean = SharedPreferencesManager.workType==1

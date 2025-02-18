@@ -39,6 +39,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentProfileBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
@@ -70,13 +71,6 @@ class ProfileFragment:
     var height_feet_lst: MutableList<String> = ArrayList()
     var height_feet_elements: MutableList<Double> = ArrayList()
     var mDropdownWeather: PopupWindow? = null
-    val STORAGE_PERMISSION: Int = 3
-    val PICK_Camera_IMAGE: Int = 2
-    val SELECT_FILE1: Int = 1
-    lateinit var imageUri: Uri
-    var selectedImage: Uri? = null
-    private var selectedImagePath: String? = null
-    var bottomSheetDialog: BottomSheetDialog? = null
     var stringHelper: StringHelper? = null
     var alertHelper: AlertHelper? = null
 
@@ -107,10 +101,9 @@ class ProfileFragment:
             requireContext().getString(R.string.str_female) else requireContext().getString(
             R.string.str_male
         )
-        
+
         loadPhoto()
 
-        
         val str: String = SharedPreferencesManager.personHeight + " " +
                 (if (SharedPreferencesManager.personHeightUnit) "cm" else "feet")
 
@@ -125,7 +118,6 @@ class ProfileFragment:
         val str3 = (getData("" + AppUtils.DAILY_WATER_VALUE) + " "
                 + (if (SharedPreferencesManager.personWeightUnit) "ml" else "fl oz"))
         binding.txtGoal.text = str3
-        
 
         header()
         body()
@@ -217,39 +209,14 @@ class ProfileFragment:
         height_feet_elements.add(8.0)
     }
 
-    fun loadPhoto() {
-        if (AppUtils.checkBlankData(SharedPreferencesManager.userPhoto)) {
-            Glide.with(requireActivity()).load(
-                if (SharedPreferencesManager.gender == 1)
-                    R.drawable.female_white
-                else
-                    R.drawable.male_white
-            ).apply(RequestOptions.circleCropTransform())
-                .into(binding.imgUser)
-        } else {
-            var ex = false
-
-            try {
-                val f: File = File(SharedPreferencesManager.userPhoto)
-                if (f.exists()) ex = true
-            } catch (e: Exception) {
-                e.message?.let { e(Throwable(e), it) }
-            }
-
-            if (ex) {
-                Glide.with(requireActivity()).load(SharedPreferencesManager.userPhoto)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(binding.imgUser)
-            } else {
-                Glide.with(requireActivity()).load(
-                    if (SharedPreferencesManager.gender == 1)
-                        R.drawable.female_white
-                    else
-                        R.drawable.male_white
-                ).apply(RequestOptions.circleCropTransform())
-                    .into(binding.imgUser)
-            }
-        }
+    private fun loadPhoto() {
+        Glide.with(requireActivity()).load(
+            if (SharedPreferencesManager.gender == 1)
+                R.drawable.female_white
+            else
+                R.drawable.male_white
+        ).apply(RequestOptions.circleCropTransform())
+            .into(binding.imgUser)
     }
 
     private fun getData(str: String): String {
@@ -269,13 +236,10 @@ class ProfileFragment:
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(ProfileFragmentDirections.actionInfoFragmentToSettingFragment())
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 
     fun body() {
-        binding.changeProfile.setOnClickListener {
-            checkStoragePermissions()
-        }
         
         binding.genderBlock.setOnClickListener { v -> //showGenderMenu(v);
             initiatePopupWindow(v)
@@ -394,59 +358,6 @@ class ProfileFragment:
         }
 
         calculateActiveValue()
-    }
-
-    @SuppressLint("InflateParams")
-    private fun openPicker() {
-        bottomSheetDialog = BottomSheetDialog(requireActivity())
-
-        val layoutInflater = LayoutInflater.from(requireActivity())
-        val view: View = layoutInflater.inflate(R.layout.bottom_sheet_pick_image, null, false)
-
-        val btnGallery = view.findViewById<AppCompatTextView>(R.id.btnGallery)
-        val btnCamera = view.findViewById<AppCompatTextView>(R.id.btnCamera)
-        val btnCancel = view.findViewById<AppCompatTextView>(R.id.btnCancel)
-        val btnRemove = view.findViewById<AppCompatTextView>(R.id.btnRemove)
-
-        val btnRemoveLine = view.findViewById<View>(R.id.btnRemoveLine)
-
-        if (AppUtils.checkBlankData(SharedPreferencesManager.userPhoto)) {
-            btnRemove.visibility = View.GONE
-            btnRemoveLine.visibility = View.GONE
-        } else {
-            btnRemove.visibility = View.VISIBLE
-            btnRemoveLine.visibility = View.VISIBLE
-        }
-
-        btnGallery.setOnClickListener {
-            selectImage()
-        }
-
-        btnCamera.setOnClickListener {
-            captureImage()
-        }
-
-        btnRemove.setOnClickListener {
-            bottomSheetDialog!!.dismiss()
-            val dialog: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-                .setMessage(requireContext().getString(R.string.str_remove_photo_confirmation_message))
-                .setPositiveButton(requireContext().getString(R.string.str_yes)
-                ) { dialog, whichButton ->
-                    dialog.dismiss()
-                    SharedPreferencesManager.userPhoto = ""
-                    loadPhoto()
-                }
-                .setNegativeButton(requireContext().getString(R.string.str_no)
-                ) { dialog, whichButton -> dialog.dismiss() }
-            dialog.show()
-        }
-
-        btnCancel.setOnClickListener { bottomSheetDialog!!.dismiss() }
-        
-
-        bottomSheetDialog!!.setContentView(view)
-
-        bottomSheetDialog!!.show()
     }
 
     private fun setSwitchData(isChecked: Boolean, water: Float) {
@@ -606,8 +517,6 @@ class ProfileFragment:
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-
-
         val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_user_name,
             null, false)
 
@@ -646,7 +555,6 @@ class ProfileFragment:
         dialog.show()
     }
 
-
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun showSetManuallyGoalDialog() {
         val dialog = Dialog(requireActivity())
@@ -655,11 +563,9 @@ class ProfileFragment:
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-
         val view: View =
             LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_set_manually_goal,
                 null, false)
-
 
         val lbl_goal2 = view.findViewById<AppCompatEditText>(R.id.lbl_goal)
         val lbl_unit2 = view.findViewById<AppCompatTextView>(R.id.lbl_unit)
@@ -777,7 +683,6 @@ class ProfileFragment:
 
         dialog.show()
     }
-
 
     @SuppressLint("InflateParams", "SetTextI18n")
     private fun openHeightDialog() {
@@ -942,7 +847,6 @@ class ProfileFragment:
         dialog.show()
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun openWeightDialog() {
         val dialog = Dialog(requireActivity())
@@ -950,7 +854,6 @@ class ProfileFragment:
         dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
         dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
 
         val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_weight, null, false)
 
@@ -1137,7 +1040,6 @@ class ProfileFragment:
         }
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun calculateActiveValue() {
         var pstr = ""
@@ -1192,7 +1094,6 @@ class ProfileFragment:
             else -> AppUtils.WEATHER_SUNNY
         }
 
-
         //====================
         bstr = ""
 
@@ -1206,7 +1107,6 @@ class ProfileFragment:
         convertUpperCase(binding.lblActive)
         binding.lblActive.text = binding.lblActive.getText().toString() + " (+" + bstr + ")"
     }
-
 
     private fun saveData(txt_name: AppCompatEditText) {
         d("saveData", "" + txt_name.text.toString().trim { it <= ' ' })
@@ -1242,7 +1142,6 @@ class ProfileFragment:
         requireActivity().sendBroadcast(intent)
     }
 
-
     //===============
     fun init_WeightKG() {
         weight_kg_lst.clear()
@@ -1270,7 +1169,6 @@ class ProfileFragment:
             st[k] = "" + weight_lb_lst[k]
         }
     }
-
 
     //===============
     fun init_HeightCM() {
@@ -1367,148 +1265,4 @@ class ProfileFragment:
         }
     }
 
-
-    //===============================================
-    private fun selectImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, SELECT_FILE1)
-    }
-
-    private fun captureImage() {
-        getSaveImageUri()
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(
-            MediaStore.EXTRA_OUTPUT,
-            imageUri
-        )
-
-        startActivityForResult(cameraIntent, PICK_Camera_IMAGE)
-    }
-
-    private fun getSaveImageUri() {
-        try {
-            val root: File = File(
-                (((Environment.getExternalStorageDirectory()
-                    .toString() + "/" + AppUtils.APP_DIRECTORY_NAME)
-                        + "/" + AppUtils.APP_PROFILE_DIRECTORY_NAME) + "/")
-            )
-            if (!root.exists()) {
-                root.mkdirs()
-            }
-            val imageName = "profile_image.png"
-
-            val sdImageMainDirectory: File = File(root, imageName)
-
-
-            val isNoget = true
-            if (isNoget) {
-                imageUri = FileProvider.getUriForFile(
-                    requireActivity(),
-                    requireActivity().packageName + ".provider",
-                    sdImageMainDirectory
-                )
-                selectedImagePath = sdImageMainDirectory.absolutePath
-            } else {
-                imageUri = Uri.fromFile(sdImageMainDirectory)
-                selectedImagePath = FileUtils.getPath(requireActivity(), imageUri)
-            }
-        } catch (e: Exception) {
-            d("Incident Photo ", "Error occurred. Please try again later." + e.message)
-        }
-    }
-
-
-    private fun checkStoragePermissions() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED || (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.CAMERA
-            )
-                    != PackageManager.PERMISSION_GRANTED)
-        ) {
-            requestPermissions(
-                arrayOf<String>(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA
-                ), STORAGE_PERMISSION
-            )
-        } else {
-            //selectImage();
-            openPicker()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            STORAGE_PERMISSION -> if (grantResults.isNotEmpty() && grantResults[0]
-                == PackageManager.PERMISSION_GRANTED) {
-                // selectImage();
-                openPicker()
-                return
-            }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            SELECT_FILE1 -> if (resultCode == RESULT_OK) {
-                if (ContextCompat.checkSelfPermission(
-                        requireActivity(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    bottomSheetDialog!!.dismiss()
-                } else {
-                    try {
-                        selectedImage = data!!.data
-
-                        if (selectedImage != null) {
-
-                            bottomSheetDialog!!.dismiss()
-
-                            CropImage.activity(selectedImage).start(requireActivity())
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-
-            PICK_Camera_IMAGE -> if (resultCode == RESULT_OK) {
-                val path = selectedImagePath!!
-
-                bottomSheetDialog!!.dismiss()
-
-                CropImage.activity(imageUri).start(requireActivity())
-            }
-
-            CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {
-                val result = CropImage.getActivityResult(data)
-                if (resultCode == RESULT_OK) {
-                    val resultUri = result.uri
-
-                    val path: String = FileUtils.getPath(requireActivity(), resultUri).toString()
-
-                    SharedPreferencesManager.userPhoto = path
-
-                    Glide.with(requireActivity())
-                        .load(resultUri)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(binding.imgUser)
-                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                    val error = result.error
-                }
-            }
-        }
-    }
 }

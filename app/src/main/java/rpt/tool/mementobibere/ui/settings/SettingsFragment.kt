@@ -1,8 +1,10 @@
 package rpt.tool.mementobibere.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import rpt.tool.mementobibere.BaseFragment
+import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentSettingsBinding
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
@@ -42,10 +44,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
         binding.switchSound.setOnCheckedChangeListener { buttonView, isChecked ->
             SharedPreferencesManager.disableSoundWhenAddWater = isChecked
         }
+
+        binding.switchTips.setChecked(SharedPreferencesManager.setTips)
+
+        binding.switchTips.setOnCheckedChangeListener { buttonView, isChecked ->
+            SharedPreferencesManager.setTips = isChecked
+        }
     }
 
     private fun finish() {
-        safeNavController?.safeNavigate(SettingsFragmentDirections
-            .actionSettingsFragmentToDrinkFragment())
+        startActivity(Intent(requireActivity(), MainActivity::class.java))
     }
 }

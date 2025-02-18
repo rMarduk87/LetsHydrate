@@ -6,8 +6,6 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.media.Ringtone
 import android.net.ParseException
-import android.text.InputFilter
-import android.text.Spanned
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.data.models.MonthChartModel
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
@@ -991,7 +989,7 @@ class AppUtils {
 
 
         val APP_SHARE_URL: String = ""
-        val PRIVACY_POLICY_ULR: String = ""
+        val PRIVACY_POLICY_ULR: String = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
         val PRIVATE_MODE = 0
 
         const val UNIT_KEY: String = "current_unit"
@@ -1032,19 +1030,16 @@ class AppUtils {
         const val SET_CLIMATE_KEY : String = "set_climate"
         const val SEE_TIPS_KEY : String = "see_tips"
         const val START_TUTORIAL_KEY : String = "start_tutorial"
-        const val START_DATE = "31-08-2023"
         const val STAT_IS_MONTH_KEY : String = "isMonth"
         const val INDEX_MONTH_KEY : String = "month"
         const val INDEX_YEAR_KEY : String = "year"
         const val DATE : String = "date"
         var DAILY_WATER_VALUE: Float = 0f
         var WATER_UNIT_VALUE: String = "ML"
-         const val DAILY_WATER: String = "daily_water"
-         const val WATER_UNIT: String = "water_unit"
+         var WATER_UNIT: String = "water_unit"
          const val SELECTED_CONTAINER: String = "selected_container"
          const val HIDE_WELCOME_SCREEN: String = "hide_welcome_screen"
          const val USER_NAME: String = "user_name"
-         const val USER_GENDER: String = "user_gender"
          const val USER_PHOTO: String = "user_photo"
          const val PERSON_HEIGHT: String = "person_height"
          const val PERSON_HEIGHT_UNIT: String = "person_height_unit"
@@ -1053,34 +1048,18 @@ class AppUtils {
          const val SET_MANUALLY_GOAL: String = "set_manually_goal"
          const val SET_MANUALLY_GOAL_VALUE: String = "set_manually_goal_value"
          const val WAKE_UP_TIME: String = "wakeup_time"
-         const val WAKE_UP_TIME_HOUR: String = "wakeup_time_hour"
-         const val WAKE_UP_TIME_MINUTE: String = "wakeup_time_minute"
          const val BED_TIME: String = "bed_time"
-         const val BED_TIME_HOUR: String = "bed_time_hour"
-         const val BED_TIME_MINUTE: String = "bed_time_minute"
-         const val INTERVAL: String = "interval"
-         const val REMINDER_OPTION: String = "reminder_option" // o for auto, 1 for off, 2 for silent
-         const val REMINDER_VIBRATE: String = "reminder_vibrate"
-         const val REMINDER_SOUND: String = "reminder_sound"
-         const val DISABLE_NOTIFICATION: String = "disable_notification"
-         const val IS_MANUAL_REMINDER: String = "manual_reminder_active"
          const val DISABLE_SOUND_WHEN_ADD_WATER: String = "disable_sound_when_add_water"
          const val IGNORE_NEXT_STEP: String = "ignore_next_step"
          var decimalFormat: DecimalFormat = DecimalFormat("#0.00")
          var decimalFormat2: DecimalFormat = DecimalFormat("#0.0")
-         var notification_ringtone: Ringtone? = null
          var RELOAD_DASHBOARD: Boolean = true
-         const val LOAD_VIDEO_ADS: Boolean = false
          const val APP_DIRECTORY_NAME: String = "Water Let\'s hydrate"
          const val APP_PROFILE_DIRECTORY_NAME: String = "profile"
-         const val AUTO_BACK_UP: String = "auto_backup"
-         const val AUTO_BACK_UP_TYPE: String = "auto_backup_type"
-         const val AUTO_BACK_UP_ID: String = "auto_backup_id"
-         const val IS_ACTIVE: String = "is_active"
          const val IS_PREGNANT: String = "is_pregnant"
          const val IS_BREASTFEEDING: String = "is_breastfeeding"
-         const val WEATHER_CONSITIONS: String = "weather_conditions"
          const val IS_MIGRATION: String = "is_migration"
+         const val MENU: String = "navigation_menu"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f
@@ -1109,138 +1088,6 @@ class AppUtils {
             "watch\\?.*v=([^&]*)",
             "(?:embed|vi?)/([^/?]*)",
             "^([A-Za-z0-9\\-]*)"
-        )
-        
-        enum class TypeMessage {
-            NOTHING, SAVE, MAN,WOMAN,WORKTYPE,CLIMATE
-        }
-
-        val listIds = arrayOf(
-            R.id.icon_bell,
-            R.id.icon_info,
-            R.id.icon_trophy,
-            R.id.icon_stats
-        )
-
-        val listIconNotify = arrayOf(
-            R.drawable.ic_bell,
-            R.drawable.ic_info,
-            R.drawable.ic_trophy,
-            R.drawable.ic_stats
-        )
-
-        val listStringNotify = arrayOf(
-            R.string.notific,
-            R.string.info,
-            R.string.trophy,
-            R.string.stats
-        )
-
-        val listIconNotNotify = arrayOf(
-            R.drawable.ic_bell_disabled,
-            R.drawable.ic_info,
-            R.drawable.ic_trophy,
-            R.drawable.ic_stats
-        )
-
-        val listStringNotNotify = arrayOf(
-            R.string.notificNo,
-            R.string.edit,
-            R.string.info,
-            R.string.stats
-        )
-
-        val listIdsInfoTheme = arrayOf(
-            R.id.icon_light,
-            R.id.icon_dark
-        )
-
-        val listInfoTheme = arrayOf(
-            R.drawable.ic_light,
-            R.drawable.ic_dark
-
-        )
-
-        val listStringInfoTheme= arrayOf(
-            R.string.light,
-            R.string.dark
-        )
-
-        val listIdsInfoSystem = arrayOf(
-            R.id.icon_ml,
-            R.id.icon_oz_uk,
-            R.id.icon_oz_us
-
-        )
-
-        val listInfoSystem = arrayOf(
-            R.drawable.ic_ml,
-            R.drawable.ic_oz_uk,
-            R.drawable.ic_oz_us
-
-        )
-
-        val listStringInfoSystem= arrayOf(
-            R.string.ml,
-            R.string.oz_uk,
-            R.string.oz_us
-        )
-
-        val listIdsFreq = arrayOf(
-            R.id.icon_30,
-            R.id.icon_45,
-            R.id.icon_60
-
-        )
-
-        val listFreq = arrayOf(
-            R.drawable.ic_30,
-            R.drawable.ic_45,
-            R.drawable.ic_60
-
-        )
-
-        val listStringFreq= arrayOf(
-            R.string._30_mins,
-            R.string._45_mins,
-            R.string._60_mins
-        )
-
-        val listIdsWeightSystem = arrayOf(
-            R.id.icon_kg,
-            R.id.icon_lbl
-        )
-
-        val listWeightSystem = arrayOf(
-            R.drawable.ic_kg,
-            R.drawable.ic_lbl
-        )
-
-        val listStringWeightSystem= arrayOf(
-            R.string.kg,
-            R.string.lbl
-        )
-
-        val listIdsStats = arrayOf(
-            R.id.icon_all,
-            R.id.icon_daily,
-            R.id.icon_intook,
-            R.id.icon_reach
-        )
-
-        val listIdsTips = arrayOf(
-            R.id.tips_on,
-            R.id.tips_off
-        )
-
-        val listIconTips = arrayOf(
-            R.drawable.ic_on,
-            R.drawable.ic_off
-        )
-
-        val listStringTips = arrayOf(
-            R.string.on,
-            R.string.off
         )
     }
 }
