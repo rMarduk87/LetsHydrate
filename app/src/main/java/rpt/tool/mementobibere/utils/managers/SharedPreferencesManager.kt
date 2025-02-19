@@ -60,10 +60,6 @@ object SharedPreferencesManager {
     var notificationMsg: String
         get() = sharedPreferences.getString(AppUtils.NOTIFICATION_MSG_KEY,ctx.getString(R.string.hey_lets_drink_some_water))!!
         set(value) = sharedPreferences.edit().putString(AppUtils.NOTIFICATION_MSG_KEY, value).apply()
-    var notificationTone: String
-        get() = sharedPreferences.getString(AppUtils.NOTIFICATION_TONE_URI_KEY, RingtoneManager.getDefaultUri(
-            RingtoneManager.TYPE_NOTIFICATION).toString())!!
-        set(value) = sharedPreferences.edit().putString(AppUtils.NOTIFICATION_TONE_URI_KEY, value).apply()
     var date: String
         get() = sharedPreferences.getString(AppUtils.DATE,AppUtils.getCurrentDate()!!)!!
         set(value) = sharedPreferences.edit().putString(AppUtils.DATE, value).apply()
@@ -82,12 +78,6 @@ object SharedPreferencesManager {
     var personHeight: String
         get() = sharedPreferences.getString(AppUtils.PERSON_HEIGHT, "").toString()
         set(value) = sharedPreferences.edit().putString(AppUtils.PERSON_HEIGHT, value).apply()
-    var wakeUpTimeNew: String
-        get() = sharedPreferences.getString(AppUtils.WAKE_UP_TIME, "").toString()
-        set(value) = sharedPreferences.edit().putString(AppUtils.WAKE_UP_TIME, value).apply()
-    var bedTime: String
-        get() = sharedPreferences.getString(AppUtils.BED_TIME, "").toString()
-        set(value) = sharedPreferences.edit().putString(AppUtils.BED_TIME, value).apply()
     var ignoreNextStep: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.IGNORE_NEXT_STEP,false)
         set(value) = sharedPreferences.edit().putBoolean(AppUtils.IGNORE_NEXT_STEP, value).apply()
@@ -118,8 +108,8 @@ object SharedPreferencesManager {
     var menu: Int
         get() = sharedPreferences.getInt(AppUtils.MENU,0)
         set(value) = sharedPreferences.edit().putInt(AppUtils.MENU, value).apply()
-    var setTips : Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.SEE_TIPS_KEY,true)
-        set(value) = sharedPreferences.edit().putBoolean(AppUtils.SEE_TIPS_KEY, value).apply()
+    var reminderSound: Int
+        get() = sharedPreferences.getInt(AppUtils.REMINDER_SOUND,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.REMINDER_SOUND, value).apply()
 
 }

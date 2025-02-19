@@ -30,7 +30,6 @@ class HTMLTextView : WebView {
     var textColorHash: String = "#000000"
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     constructor(
         context: Context,
         attrs: AttributeSet?,

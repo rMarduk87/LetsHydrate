@@ -124,10 +124,8 @@ class InitUserInfoFragment:
             }
 
             if (current_page_idx == 5) {
-                if (AppUtils.checkBlankData(SharedPreferencesManager.wakeUpTimeNew) || AppUtils.checkBlankData(
-                        SharedPreferencesManager.bedTime
-                    )
-                ) {
+                if (SharedPreferencesManager.wakeUpTime == 0L ||
+                    SharedPreferencesManager.sleepingTime == 0L) {
                     alertHelper!!.customAlert(requireActivity()
                         .getString(R.string.str_from_to_invalid_validation))
                     return@OnClickListener

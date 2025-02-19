@@ -26,8 +26,8 @@ import java.util.Locale
 
 
 class IntentHelper(mContext: Context, act: Activity) {
-    var mContext: Context? = null
-    var act: Activity? = null
+    var mContext: Context? = mContext
+    var act: Activity? = act
 
     //share list
     var email: Intent = Intent(Intent.ACTION_SEND)

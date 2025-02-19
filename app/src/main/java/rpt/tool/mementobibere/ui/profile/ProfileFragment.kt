@@ -1,19 +1,12 @@
 package rpt.tool.mementobibere.ui.profile
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.app.Dialog
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
@@ -32,12 +25,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.theartofdev.edmodo.cropper.CropImage
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
@@ -45,17 +34,13 @@ import rpt.tool.mementobibere.databinding.FragmentProfileBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
-import rpt.tool.mementobibere.utils.helpers.FileUtils
 import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
-import rpt.tool.mementobibere.utils.navigation.safeNavController
-import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.inputfilter.DigitsInputFilter
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterRange
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
-import java.io.File
 import java.util.Locale
 
 

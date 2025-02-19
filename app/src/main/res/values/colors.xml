@@ -65,5 +65,8 @@
     <color name="error_background">#F7F7F7</color>
     <color name="error_button">#F2F2F2</color>
     <color name="error_button_stroke">#737373</color>
-
+    <color name="red">#D80101</color>
+    <color name="white_87">#ddffffff</color>
+    <color name="overlay">#BF000000</color>
+    <color name="colorSkyBlue">#03BBFF</color>
 </resources>

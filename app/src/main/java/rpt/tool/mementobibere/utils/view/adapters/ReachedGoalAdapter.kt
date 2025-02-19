@@ -92,7 +92,7 @@ class ReachedGoalAdapter(
     }
 
     private fun getImage(pos: Int): Int {
-        val drawable: Int = R.drawable.ic_reached_trophy
+        val drawable: Int = R.drawable.ic_dashboard_reached
 
         return drawable
     }

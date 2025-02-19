@@ -8,19 +8,16 @@ class MigrationManager {
             val weight = SharedPreferencesManager.weight.toString()
             val climate = SharedPreferencesManager.climate
             val workType = SharedPreferencesManager.workType
-            val wake = SharedPreferencesManager.wakeUpTime
-            val bed = SharedPreferencesManager.sleepingTime
             val totalIntake = SharedPreferencesManager.totalIntake
 
             SharedPreferencesManager.personWeight = weight
             SharedPreferencesManager.personWeightUnit = SharedPreferencesManager.weightUnit==0
-            SharedPreferencesManager.unitString = if (SharedPreferencesManager.personWeightUnit) "ml" else "fl oz"
+            SharedPreferencesManager.unitString = if (SharedPreferencesManager.personWeightUnit)
+                "ml" else "fl oz"
             SharedPreferencesManager.climate = convertClimate(climate)
             SharedPreferencesManager.workType = convertWorkType(workType)
             AppUtils.DAILY_WATER_VALUE = totalIntake
             AppUtils.WATER_UNIT = SharedPreferencesManager.unitString
-            SharedPreferencesManager.wakeUpTimeNew = convertTime(wake)
-            SharedPreferencesManager.bedTime = convertTime(bed)
             SharedPreferencesManager.hideWelcomeScreen = true
             removeShared()
             SharedPreferencesManager.isMigration = false
@@ -52,12 +49,8 @@ class MigrationManager {
         SharedPreferencesManager.removeShared(AppUtils.STAT_IS_MONTH_KEY)
         SharedPreferencesManager.removeShared(AppUtils.INDEX_MONTH_KEY)
         SharedPreferencesManager.removeShared(AppUtils.INDEX_YEAR_KEY)
-        SharedPreferencesManager.removeShared(AppUtils.WAKEUP_TIME_KEY)
-        SharedPreferencesManager.removeShared(AppUtils.SLEEPING_TIME_KEY)
-    }
-
-    private fun convertTime(date: Long): String {
-        return AppUtils.getDate(date,AppUtils.DATE_FORMAT)
+        SharedPreferencesManager.removeShared(AppUtils.SEE_TIPS_KEY)
+        SharedPreferencesManager.removeShared(AppUtils.NOTIFICATION_TONE_URI_KEY)
     }
 
     private fun convertWorkType(workType: Int): Int {

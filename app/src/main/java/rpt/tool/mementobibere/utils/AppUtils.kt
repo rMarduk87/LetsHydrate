@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.media.Ringtone
 import android.net.ParseException
+import android.net.Uri
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.data.models.MonthChartModel
 import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
 import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
+import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -23,7 +24,7 @@ import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 import kotlin.math.pow
-
+import android.provider.Settings
 
 class AppUtils {
 
@@ -212,7 +213,7 @@ class AppUtils {
             }
         }
 
-        fun calculateOption(inTook: Float, totalIntake: Float): Float? {
+        fun calculateOption(inTook: Float, totalIntake: Float): Float {
             return totalIntake - inTook
         }
 
@@ -246,7 +247,7 @@ class AppUtils {
 
         @SuppressLint("SimpleDateFormat")
         fun getDateListForYear(strStartDate: String?, strEndDate: String?, formatOutput: String):
-                List<String>? {
+                List<String> {
 
             val dateList: MutableList<String> = ArrayList()
             val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
@@ -799,9 +800,7 @@ class AppUtils {
 
             val difference = Time!!.time - CurrentTime!!.time
 
-            if (difference >= 0) return true
-
-            return false
+            return difference >= 0
         }
 
         @SuppressLint("SimpleDateFormat")
@@ -819,9 +818,7 @@ class AppUtils {
 
             val difference = Time!!.time - CurrentTime!!.time
 
-            if (difference >= 0) return true
-
-            return false
+            return difference >= 0
         }
 
         fun get_2_point(no: String): String {
@@ -987,6 +984,33 @@ class AppUtils {
             return classification
         }
 
+        fun getSound(context: Context): Uri {
+            var uri: Uri = Settings.System.DEFAULT_NOTIFICATION_URI
+
+            d("getSound", "" + SharedPreferencesManager.reminderSound)
+
+            if (SharedPreferencesManager.reminderSound == 1) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bell)
+            else if (SharedPreferencesManager.reminderSound == 2) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.blop)
+            else if (SharedPreferencesManager.reminderSound == 3) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bong)
+            else if (SharedPreferencesManager.reminderSound == 4) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.click)
+            else if (SharedPreferencesManager.reminderSound == 5) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.echo_droplet)
+            else if (SharedPreferencesManager.reminderSound == 6) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.mario_droplet)
+            else if (SharedPreferencesManager.reminderSound == 7) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.ship_bell)
+            else if (SharedPreferencesManager.reminderSound == 8) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.simple_droplet)
+            else if (SharedPreferencesManager.reminderSound == 9) uri =
+                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.tiny_droplet)
+
+            return uri
+        }
+
 
         val APP_SHARE_URL: String = ""
         val PRIVACY_POLICY_ULR: String = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
@@ -1040,7 +1064,6 @@ class AppUtils {
          const val SELECTED_CONTAINER: String = "selected_container"
          const val HIDE_WELCOME_SCREEN: String = "hide_welcome_screen"
          const val USER_NAME: String = "user_name"
-         const val USER_PHOTO: String = "user_photo"
          const val PERSON_HEIGHT: String = "person_height"
          const val PERSON_HEIGHT_UNIT: String = "person_height_unit"
          const val PERSON_WEIGHT: String = "person_weight"
@@ -1054,12 +1077,11 @@ class AppUtils {
          var decimalFormat: DecimalFormat = DecimalFormat("#0.00")
          var decimalFormat2: DecimalFormat = DecimalFormat("#0.0")
          var RELOAD_DASHBOARD: Boolean = true
-         const val APP_DIRECTORY_NAME: String = "Water Let\'s hydrate"
-         const val APP_PROFILE_DIRECTORY_NAME: String = "profile"
          const val IS_PREGNANT: String = "is_pregnant"
          const val IS_BREASTFEEDING: String = "is_breastfeeding"
          const val IS_MIGRATION: String = "is_migration"
          const val MENU: String = "navigation_menu"
+         const val REMINDER_SOUND: String = "sound"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f

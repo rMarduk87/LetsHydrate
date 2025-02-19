@@ -55,7 +55,8 @@ class NewAppWidget : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.app_widget)
             views.setTextViewText(R.id.appwidget_text, get_today_report(sqliteHelper!!))
 
-            views.setInt(R.id.circularProgressbar, "setMax", AppUtils.DAILY_WATER_VALUE as Int)
+            views.setInt(R.id.circularProgressbar, "setMax",
+                AppUtils.DAILY_WATER_VALUE.toInt())
             views.setInt(R.id.circularProgressbar, "setProgress", drink_water.toInt())
 
             val launchMain = Intent(context, SplashScreenActivity::class.java)

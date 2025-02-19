@@ -53,7 +53,8 @@
                 android:text="@string/str_daily_goal_reached"
                 android:textSize="@dimen/dp_24"
                 android:textColor="@color/daily_goal_no"
-                android:fontFamily="@font/calibri_regular"/>
+                android:fontFamily="@font/calibri_regular"
+                tools:ignore="SpUsage" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/lbl_desc"

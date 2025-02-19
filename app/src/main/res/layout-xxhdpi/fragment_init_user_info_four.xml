@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_transparant">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="true"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp_40"
+                android:text="@string/str_you_should_drink_at_least"
+                android:textSize="@dimen/dp_20"
+                android:textColor="@color/rdo_gender_select"
+                android:fontFamily="@font/calibri_light"
+                tools:ignore="SpUsage" />
+            
+            <RelativeLayout
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_200"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/water_bowl">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    tools:ignore="UselessParent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lbl_goal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/_4500"
+                        android:textSize="@dimen/dp_35"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_bold"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lbl_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center"
+                        android:text="@string/_ml"
+                        android:textSize="@dimen/dp_25"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_bold"
+                        tools:ignore="SpUsage" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="true"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="@string/str_to_reach_your_daily_goal"
+                android:textSize="@dimen/dp_20"
+                android:textColor="@color/rdo_gender_select"
+                android:fontFamily="@font/calibri_light"
+                tools:ignore="SpUsage" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lbl_set_goal_manually"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="true"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp_20"
+                android:padding="@dimen/dp_10"
+                android:text="@string/str_set_your_goal_manually"
+                android:textSize="@dimen/dp_14"
+                android:textColor="@color/white"
+                android:fontFamily="@font/calibri_bold"
+                tools:ignore="SpUsage" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

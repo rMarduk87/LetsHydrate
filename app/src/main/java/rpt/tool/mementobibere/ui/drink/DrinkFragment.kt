@@ -106,7 +106,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     lateinit var alertHelper: AlertHelper
     var isAll: Boolean = false
     var migrationManager: MigrationManager? = null
-    private var waters: Array<String> = arrayOf()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,8 +116,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         migrationManager = MigrationManager()
         migrationManager!!.migrate()
-
-        waters = requireContext().resources.getStringArray(R.array.water)
 
         if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){
@@ -593,8 +590,31 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE) +
                 " " + AppUtils.WATER_UNIT_VALUE)
 
+        bloodDonorUI(custom_date)
+
         refresh_bottle(false, false)
-        randomizeTips()
+    }
+
+    private fun bloodDonorUI(date: String) {
+        if(SharedPreferencesManager.bloodDonorKey==1 &&
+            !sqliteHelper.getAvisDay(date)){
+            binding.bloodDonorContainer.visibility = VISIBLE
+            binding.imgBloodDonorHelp.visibility = GONE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+        }
+        else if(SharedPreferencesManager.bloodDonorKey==1 &&
+            sqliteHelper.getAvisDay(date)){
+            binding.bloodDonorContainer.visibility = VISIBLE
+            binding.imgBloodDonorHelp.visibility = VISIBLE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.red))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.red))
+        }
+        else{
+            binding.bloodDonorContainer.visibility = GONE
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+        }
     }
 
     private fun getData(str: String): String {
@@ -792,11 +812,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 if (random.nextBoolean()) {
                     AppUtils.RELOAD_DASHBOARD = false
                     execute_add_water()
-                    randomizeTips()
                     AppUtils.RELOAD_DASHBOARD = true
                 } else {
                     execute_add_water()
-                    randomizeTips()
                 }
             }
         })
@@ -871,18 +889,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             })
     }
 
-    private fun randomizeTips() {
-        if(SharedPreferencesManager.setTips){
-            if(binding.tips.visibility == View.INVISIBLE || binding.tips.visibility == GONE){
-                binding.tips.visibility = VISIBLE
-            }
-
-            val randomIndex: Int = Random().nextInt(waters.size)
-            val randomWaters: String = waters[randomIndex]
-            binding.lblTips.text = randomWaters
-        }
-    }
-
     private fun count_today_drink(isRegularAnimation: Boolean) {
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
@@ -907,7 +913,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         isAll = drink_water >= AppUtils.DAILY_WATER_VALUE
 
         refresh_bottle(true, isRegularAnimation)
-        randomizeTips()
     }
 
     private fun openChangeContainerPicker() {

@@ -59,23 +59,8 @@ class FAQFragment : BaseFragment<FragmentFaqBinding>(FragmentFaqBinding::inflate
         lst_faq.add(faqModel)
 
         faqModel = FAQModel()
-        faqModel.question = requireContext().getString(R.string.faq_question_12)
-        faqModel.answer = requireContext().getString(R.string.faq_answer_12)
-        lst_faq.add(faqModel)
-
-        faqModel = FAQModel()
-        faqModel.question = requireContext().getString(R.string.faq_question_13)
-        faqModel.answer = requireContext().getString(R.string.faq_answer_13)
-        lst_faq.add(faqModel)
-
-        faqModel = FAQModel()
         faqModel.question = requireContext().getString(R.string.faq_question_4)
         faqModel.answer = requireContext().getString(R.string.faq_answer_4)
-        lst_faq.add(faqModel)
-
-        faqModel = FAQModel()
-        faqModel.question = requireContext().getString(R.string.faq_question_11)
-        faqModel.answer = requireContext().getString(R.string.faq_answer_11)
         lst_faq.add(faqModel)
 
         faqModel = FAQModel()
@@ -104,9 +89,15 @@ class FAQFragment : BaseFragment<FragmentFaqBinding>(FragmentFaqBinding::inflate
         lst_faq.add(faqModel)
 
         faqModel = FAQModel()
-        faqModel.question = requireContext().getString(R.string.faq_question_14)
-        faqModel.answer = requireContext().getString(R.string.faq_answer_14)
+        faqModel.question = requireContext().getString(R.string.faq_question_10)
+        faqModel.answer = requireContext().getString(R.string.faq_answer_10)
         lst_faq.add(faqModel)
+
+        faqModel = FAQModel()
+        faqModel.question = requireContext().getString(R.string.faq_question_11)
+        faqModel.answer = requireContext().getString(R.string.faq_answer_11)
+        lst_faq.add(faqModel)
+
     }
 
     @SuppressLint("InflateParams")
