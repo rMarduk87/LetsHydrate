@@ -264,6 +264,7 @@
     <string name="str_notification_message">Notification Message</string>
     <string name="select_wakeup_time">Select Wakeup Time</string>
     <string name="select_bed_time">Select Bed Time</string>
+    <string name="migration">Welcome back to Let\'s Hydrate, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>

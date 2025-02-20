@@ -20,7 +20,6 @@ class MigrationManager {
             AppUtils.WATER_UNIT = SharedPreferencesManager.unitString
             SharedPreferencesManager.hideWelcomeScreen = true
             removeShared()
-            SharedPreferencesManager.isMigration = false
         }
     }
 

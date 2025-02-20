@@ -89,6 +89,7 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
     @SuppressLint("SetTextI18n")
     fun calculate_goal() {
         val tmp_weight = "" + SharedPreferencesManager.personWeight
+        val tmp_height = "" + SharedPreferencesManager.personHeight
 
         val isFemale: Boolean = SharedPreferencesManager.gender==1
         val isActive: Boolean = SharedPreferencesManager.workType==1
@@ -105,26 +106,33 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
                 AppUtils.lbToKgConverter(tmp_weight.toDouble())
             }
 
+            var tmp_cm = 0.0
+            tmp_cm = if (SharedPreferencesManager.personHeightUnit) {
+                ("" + tmp_height).toDouble()
+            } else {
+                AppUtils.feetToCmConverter(tmp_height.toDouble())
+            }
+
 
             tot_drink =
-                if (isFemale) (if (isActive) tmp_kg * AppUtils.ACTIVE_FEMALE_WATER else tmp_kg *
-                        AppUtils.FEMALE_WATER).toFloat()
+                if (isFemale) ((if (isActive) tmp_kg * AppUtils.ACTIVE_FEMALE_WATER else tmp_kg *
+                        AppUtils.FEMALE_WATER).toFloat()+(tmp_cm/3f)).toFloat()
                 else (if (isActive) tmp_kg * AppUtils.ACTIVE_MALE_WATER else tmp_kg *
-                        AppUtils.MALE_WATER).toFloat()
+                        AppUtils.MALE_WATER+(tmp_cm/3f)).toFloat()
 
             tot_drink *= when (weatherIdx) {
-                1 -> AppUtils.WEATHER_CLOUDY.toFloat()
-                2 -> AppUtils.WEATHER_RAINY.toFloat()
-                3 -> AppUtils.WEATHER_SNOW.toFloat()
-                else -> AppUtils.WEATHER_SUNNY.toFloat()
+                1 -> AppUtils.WEATHER_CLOUDY
+                2 -> AppUtils.WEATHER_RAINY
+                3 -> AppUtils.WEATHER_SNOW
+                else -> AppUtils.WEATHER_SUNNY
             }
 
             if (isPregnant && isFemale) {
-                tot_drink += AppUtils.PREGNANT_WATER.toFloat()
+                tot_drink += AppUtils.PREGNANT_WATER
             }
 
             if (isBreastfeeding && isFemale) {
-                tot_drink += AppUtils.BREASTFEEDING_WATER.toFloat()
+                tot_drink += AppUtils.BREASTFEEDING_WATER
             }
 
             if (tot_drink < 900) tot_drink = 900.0f
@@ -150,6 +158,7 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
     }
 
 
+    @SuppressLint("InflateParams")
     private fun showSetManuallyGoalDialog() {
         val dialog = Dialog(requireActivity())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -159,7 +168,8 @@ class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(F
 
 
         val view: View =
-            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_set_manually_goal, null, false)
+            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_set_manually_goal,
+                null, false)
 
 
         val lbl_goal2 = view.findViewById<AppCompatEditText>(R.id.lbl_goal)

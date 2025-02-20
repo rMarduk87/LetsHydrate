@@ -105,7 +105,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     var btnclick: Boolean = true
     lateinit var alertHelper: AlertHelper
     var isAll: Boolean = false
-    var migrationManager: MigrationManager? = null
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,9 +113,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         alertHelper = AlertHelper(requireContext())
         dateNow = AppUtils.getCurrentOnlyDate()!!
         super.onViewCreated(view, savedInstanceState)
-
-        migrationManager = MigrationManager()
-        migrationManager!!.migrate()
 
         if(SharedPreferencesManager.bloodDonorKey==1 &&
             !sqliteHelper.getAvisDay(dateNow)){

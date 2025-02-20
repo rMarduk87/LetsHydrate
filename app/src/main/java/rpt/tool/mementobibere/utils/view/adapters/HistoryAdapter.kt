@@ -76,7 +76,7 @@ class HistoryAdapter(
         }
     }
 
-    fun showHeader(position: Int): Boolean {
+    private fun showHeader(position: Int): Boolean {
         return !historyArrayList[position].drinkDate
             .equals(historyArrayList[position - 1].drinkDate)
     }
@@ -104,7 +104,7 @@ class HistoryAdapter(
         fun onClickRemove(history: History?, position: Int)
     }
 
-    fun getImage(pos: Int): Int {
+    private fun getImage(pos: Int): Int {
         var drawable: Int = R.drawable.ic_custom_ml
 
         if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
@@ -122,6 +122,7 @@ class HistoryAdapter(
             else if (`val`.toFloat() == 800f) drawable = R.drawable.ic_800_ml
             else if (`val`.toFloat() == 900f) drawable = R.drawable.ic_900_ml
             else if (`val`.toFloat() == 1000f) drawable = R.drawable.ic_1000_ml
+            else if (`val`.toFloat() > 1000f) drawable = R.drawable.ic_custom_ml
         } else {
             val `val`: String = historyArrayList[pos].containerValueOZ.toString()
 
@@ -137,6 +138,7 @@ class HistoryAdapter(
             else if (`val`.toFloat() == 27.0512f) drawable = R.drawable.ic_800_ml
             else if (`val`.toFloat() == 30.4326f) drawable = R.drawable.ic_900_ml
             else if (`val`.toFloat() == 33.814f) drawable = R.drawable.ic_1000_ml
+            else if (`val`.toFloat() > 33.814f) drawable = R.drawable.ic_custom_ml
         }
 
         return drawable

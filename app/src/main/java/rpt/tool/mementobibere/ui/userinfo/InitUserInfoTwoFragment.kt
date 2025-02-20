@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import com.skydoves.balloon.BalloonAlign
+import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentInitUserInfoTwoBinding
+import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
+import rpt.tool.mementobibere.utils.balloon.migration.MigrationInfoBalloonFactory
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
@@ -15,6 +19,7 @@ class InitUserInfoTwoFragment :
     BaseFragment<FragmentInitUserInfoTwoBinding>(FragmentInitUserInfoTwoBinding::inflate) {
 
     var isMaleGender: Boolean = true
+    private val migrationBalloon by balloon<MigrationInfoBalloonFactory>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,6 +27,14 @@ class InitUserInfoTwoFragment :
     }
 
     private fun body() {
+        if(SharedPreferencesManager.isMigration){
+            SharedPreferencesManager.isMigration = false
+            migrationBalloon.showAlign(
+                align = BalloonAlign.BOTTOM,
+                mainAnchor = binding.txtUserName as View,
+                subAnchorList = listOf(binding.txtUserName),
+            )
+        }
         binding.maleBlock.setOnClickListener { setGender(true) }
 
         binding.femaleBlock.setOnClickListener { setGender(false) }

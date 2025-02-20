@@ -243,6 +243,7 @@ class ProfileFragment:
         binding.switchActive.setOnCheckedChangeListener { buttonView, isChecked ->
             SharedPreferencesManager.workType = if(isChecked) 1 else 0
             val tmp_weight = "" + SharedPreferencesManager.personWeight
+            val tmp_height = "" + SharedPreferencesManager.personHeight
             val isFemale: Boolean = SharedPreferencesManager.gender == 1
             val min = (if (SharedPreferencesManager.personWeightUnit) 900 else 30).toFloat()
             val max = (if (SharedPreferencesManager.personWeightUnit) 8000 else 270).toFloat()
@@ -257,12 +258,19 @@ class ProfileFragment:
                 AppUtils.lbToKgConverter(tmp_weight.toDouble()).toFloat()
             }
 
+            var tmp_cm = 0.0
+            tmp_cm = if (SharedPreferencesManager.personHeightUnit) {
+                ("" + tmp_height).toDouble()
+            } else {
+                AppUtils.feetToCmConverter(tmp_height.toDouble())
+            }
+
             d("maxmaxmaxmax : ", "" + tmp_kg)
 
             var diff = 0.0f
 
-            diff = if (isFemale) (tmp_kg * AppUtils.DEACTIVE_FEMALE_WATER).toFloat()
-            else (tmp_kg * AppUtils.DEACTIVE_MALE_WATER).toFloat()
+            diff = if (isFemale) ((tmp_kg * AppUtils.DEACTIVE_FEMALE_WATER+(tmp_cm/3)).toFloat())
+            else (tmp_kg * AppUtils.DEACTIVE_MALE_WATER+(tmp_cm/3)).toFloat()
 
             d("maxmaxmaxmax DIFF : ", "" + diff)
 
@@ -963,6 +971,7 @@ class ProfileFragment:
     
     private fun calculate_goal() {
         val tmp_weight = "" + SharedPreferencesManager.personWeight
+        val tmp_height = "" + SharedPreferencesManager.personHeight
 
         val isFemale: Boolean = SharedPreferencesManager.gender == 1
         val isActive: Boolean = SharedPreferencesManager.workType == 1
@@ -979,16 +988,26 @@ class ProfileFragment:
                 AppUtils.lbToKgConverter(tmp_weight.toDouble()).toFloat()
             }
 
-            tot_drink =
-                if (isFemale) if (isActive) tmp_kg * AppUtils.ACTIVE_FEMALE_WATER else tmp_kg *
-                        AppUtils.FEMALE_WATER
-                else if (isActive) tmp_kg * AppUtils.ACTIVE_MALE_WATER else tmp_kg *
-                        AppUtils.MALE_WATER
+            var tmp_cm = 0.0
+            tmp_cm = if (SharedPreferencesManager.personHeightUnit) {
+                ("" + tmp_height).toDouble()
+            } else {
+                AppUtils.feetToCmConverter(tmp_height.toDouble())
+            }
 
-            tot_drink *= if (weatherIdx == 1) AppUtils.WEATHER_CLOUDY
-            else if (weatherIdx == 2) AppUtils.WEATHER_RAINY
-            else if (weatherIdx == 3) AppUtils.WEATHER_SNOW
-            else AppUtils.WEATHER_SUNNY
+            tot_drink =
+                if (isFemale) (if (isActive) tmp_kg * AppUtils.ACTIVE_FEMALE_WATER + tmp_cm/3 else tmp_kg *
+                        AppUtils.FEMALE_WATER + tmp_cm/3).toFloat()
+                else (if (isActive) tmp_kg * AppUtils.ACTIVE_MALE_WATER + tmp_cm/3 else tmp_kg *
+                        AppUtils.MALE_WATER + tmp_cm/3).toFloat()
+
+
+            tot_drink *= when (weatherIdx) {
+                1 -> AppUtils.WEATHER_CLOUDY
+                2 -> AppUtils.WEATHER_RAINY
+                3 -> AppUtils.WEATHER_SNOW
+                else -> AppUtils.WEATHER_SUNNY
+            }
 
             if (isPregnant && isFemale) {
                 tot_drink += AppUtils.PREGNANT_WATER
@@ -1054,6 +1073,7 @@ class ProfileFragment:
 
         //====================================
         val tmp_weight = "" + SharedPreferencesManager.personWeight
+        val tmp_height = "" + SharedPreferencesManager.personHeight
         val isFemale: Boolean = SharedPreferencesManager.gender == 1
         val weatherIdx: Int = SharedPreferencesManager.climate
 
@@ -1064,11 +1084,18 @@ class ProfileFragment:
             AppUtils.lbToKgConverter(tmp_weight.toDouble()).toFloat()
         }
 
+        var tmp_cm = 0.0
+        tmp_cm = if (SharedPreferencesManager.personHeightUnit) {
+            ("" + tmp_height).toDouble()
+        } else {
+            AppUtils.feetToCmConverter(tmp_height.toDouble())
+        }
+
         //====================
         var diff = 0.0f
 
-        if (isFemale) diff = tmp_kg * AppUtils.DEACTIVE_FEMALE_WATER
-        else diff = tmp_kg * AppUtils.DEACTIVE_MALE_WATER
+        diff = if (isFemale) (tmp_kg * AppUtils.DEACTIVE_FEMALE_WATER + tmp_cm/3).toFloat()
+        else (tmp_kg * AppUtils.DEACTIVE_MALE_WATER + tmp_cm/3).toFloat()
 
 
         //====================
