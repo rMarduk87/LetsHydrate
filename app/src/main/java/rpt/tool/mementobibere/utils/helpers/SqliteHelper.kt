@@ -28,6 +28,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_CONTAINER = "container"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
+        private const val KEY_N_DATE = "n_date"
         private const val KEY_INTOOK = "intook"
         private const val KEY_UNIT = "unit"
         private const val KEY_INTOOK_COUNT = "intook_count"
@@ -65,7 +66,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
     private fun addFirstTable(db: SQLiteDatabase?) {
         val createStatTable = ("CREATE TABLE " + TABLE_STATS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_N_DATE + " TEXT,"
                 + KEY_TIME + " TEXT,"
                 + KEY_DATE_TIME + " TEXT,"
                 + KEY_N_INTOOK + " FLOAT," + KEY_N_TOTAL_INTAKE + " FLOAT,"
@@ -159,6 +160,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 db!!.execSQL("DROP TABLE IF EXISTS $TABLE_INTOOK_COUNTER")
                 db.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_N_INTOOK_OZ FLOAT")
                 db.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_N_TOTAL_INTAKE_OZ FLOAT")
+                db.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_N_DATE TEXT")
                 db.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_TIME TEXT")
                 db.execSQL("ALTER TABLE $TABLE_STATS ADD COLUMN $KEY_DATE_TIME TEXT")
                 db.execSQL("ALTER TABLE $TABLE_REACHED ADD COLUMN $KEY_QTA_OZ FLOAT")
@@ -204,7 +206,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                     val date = it.getString(1)
                     val intook = it.getString(7)
                     val today = it.getString(8)
-                    val unit = it.getString(3)
+                    val unit = it.getString(4)
                     val id = it.getInt(0)
                     var intookML = 0f
                     var intookOZ = 0f
@@ -234,10 +236,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                     }
                     db.execSQL("UPDATE $TABLE_STATS set $KEY_MONTH = \"\", $KEY_YEAR = \"\"," +
                             " $KEY_UNIT = \"\""+
-                            " $KEY_TIME = \"$time\"" +
-                            " $KEY_DATE_TIME = \"$daytime\"" +" $KEY_N_INTOOK = $intookML" +
-                            " $KEY_N_INTOOK_OZ = $intookOZ" +" $KEY_N_TOTAL_INTAKE = $todayML" +
-                            " $KEY_N_TOTAL_INTAKE_OZ = $todayOZ" +
+                            " ,$KEY_TIME = \"$time\"," + "$KEY_N_DATE = \"$date\"" +
+                            " ,$KEY_DATE_TIME = \"$daytime\"," +" $KEY_N_INTOOK = $intookML" +
+                            " ,$KEY_N_INTOOK_OZ = $intookOZ" +" ,$KEY_N_TOTAL_INTAKE = $todayML" +
+                            " ,$KEY_N_TOTAL_INTAKE_OZ = $todayOZ" +
                             " WHERE $KEY_ID = $id")
                     it.moveToNext()
                 }
@@ -268,9 +270,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                         qtaOZ =AppUtils.ozUSToozUK(qta.toFloat())
                     }
                 }
-                db.execSQL("UPDATE $TABLE_REACHED se $KEY_UNIT = \"\""+
-                        " $KEY_QTA = $qtaML" +
-                        " $KEY_QTA_OZ = $qtaOZ" +
+                db.execSQL("UPDATE $TABLE_REACHED SET $KEY_UNIT = \"\""+
+                        " ,$KEY_QTA = $qtaML" +
+                        " ,$KEY_QTA_OZ = $qtaOZ" +
                         " WHERE $KEY_ID = $id")
                 reached.moveToNext()
             }

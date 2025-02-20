@@ -198,7 +198,7 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
 
         for (i in lst_date.indices) {
             val arr_data: ArrayList<HashMap<String, String>> =
-                sqliteHelper!!.getdata("stats", "date ='" + lst_date[i] + "'")
+                sqliteHelper!!.getdata("stats", "n_date ='" + lst_date[i] + "'")
             var tot = 0f
             var last_goal: String? = "0"
             for (j in arr_data.indices) {
@@ -339,6 +339,7 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
                 try {
                     if (lst_week.size > value.toInt()) return lst_week[value.toInt()]
                 } catch (e: Exception) {
+                    e.message?.let { e(Throwable(e), it) }
                 }
                 return "N/A"
             }
@@ -456,7 +457,7 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
             }
 
             val singleUnit =
-                if (AppUtils.WATER_UNIT_VALUE.equals("ml")) 1000 else 35
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) 1000 else 35
 
             var max_val = if (drink_val < goal_val) goal_val else drink_val
 
@@ -506,7 +507,7 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         txt_consumed.text = "" + lst_date_val[position] + " " + AppUtils.WATER_UNIT_VALUE
 
         val arr_data: ArrayList<HashMap<String, String>> =
-            sqliteHelper!!.getdata("stats", "date ='" + lst_date[position] + "'")
+            sqliteHelper!!.getdata("stats", "n_date ='" + lst_date[position] + "'")
         val str: String =
             if (arr_data.size > 1) requireContext().getString(R.string.times) else requireContext().getString(R.string.time)
         txt_frequency.text = arr_data.size.toString() + " " + str

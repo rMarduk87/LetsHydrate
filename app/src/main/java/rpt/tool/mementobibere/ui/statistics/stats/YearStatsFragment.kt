@@ -182,7 +182,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
 
         for (i in lst_date.indices) {
             val arr_data: ArrayList<HashMap<String, String>> =
-                sqliteHelper!!.getdata("stats", "date like '%" + lst_date2[i] + "%'")
+                sqliteHelper!!.getdata("stats", "n_date like '%" + lst_date2[i] + "%'")
 
             var total_drink = 0f
             var total_goal = 0f
@@ -190,9 +190,9 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
             val lst_unique_date: MutableList<String?> = ArrayList()
 
             for (j in arr_data.indices) {
-                if (lst_unique_date.size == 0) lst_unique_date.add(arr_data[j]["date"])
-                else if (!lst_unique_date.contains(arr_data[j]["date"])) lst_unique_date.add(
-                    arr_data[j]["date"]
+                if (lst_unique_date.size == 0) lst_unique_date.add(arr_data[j]["n_date"])
+                else if (!lst_unique_date.contains(arr_data[j]["n_date"])) lst_unique_date.add(
+                    arr_data[j]["n_date"]
                 )
 
                 if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
@@ -212,7 +212,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
                 val arr_data22: ArrayList<HashMap<String, String>> =
                     sqliteHelper!!.getdata(
                         "stats",
-                        "date='" + lst_unique_date[t] + "'",
+                        "n_date='" + lst_unique_date[t] + "'",
                         "id",
                         1
                     )
@@ -494,7 +494,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     fun showDayDetailsDialog(position: Int) {
         val dialog = Dialog(requireActivity())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -503,7 +503,8 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         dialog.window!!.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
 
         val view: View =
-            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_day_info_chart, null, false)
+            LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_day_info_chart,
+                null, false)
 
         val txt_date: AppCompatTextView = view.findViewById<AppCompatTextView>(R.id.txt_date)
         val txt_goal: AppCompatTextView = view.findViewById<AppCompatTextView>(R.id.txt_goal)
@@ -524,15 +525,15 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
             R.string.day
         )
         val arr_data: ArrayList<HashMap<String, String>> =
-            sqliteHelper!!.getdata("stats", "date like '%" + lst_date2[position] + "%'")
+            sqliteHelper!!.getdata("stats", "n_date like '%" + lst_date2[position] + "%'")
 
         val lst_unique_date: MutableList<String?> = ArrayList()
 
 
         for (j in arr_data.indices) {
-            if (lst_unique_date.size == 0) lst_unique_date.add(arr_data[j]["date"])
-            else if (!lst_unique_date.contains(arr_data[j]["date"])) lst_unique_date.add(
-                arr_data[j]["date"]
+            if (lst_unique_date.size == 0) lst_unique_date.add(arr_data[j]["n_date"])
+            else if (!lst_unique_date.contains(arr_data[j]["n_date"])) lst_unique_date.add(
+                arr_data[j]["n_date"]
             )
         }
 
@@ -540,7 +541,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         for (t in lst_unique_date.indices) {
             val arr_data2: ArrayList<HashMap<String, String>> = sqliteHelper!!.getdata(
                 "stats",
-                "date ='" + lst_unique_date[t] + "'"
+                "n_date ='" + lst_unique_date[t] + "'"
             )
 
             total_drink_cnt += arr_data2.size

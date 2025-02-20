@@ -61,14 +61,12 @@ import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.log.v
-import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.adapters.ContainerAdapterNew
 import rpt.tool.mementobibere.utils.view.adapters.MenuAdapter
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -500,7 +498,14 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         val off_block = view.findViewById<RelativeLayout>(R.id.off_block)
 
         val img_off = view.findViewById<ImageView>(R.id.img_off)
-        
+
+        val advance_settings = view.findViewById<AppCompatTextView>(R.id.advance_settings)
+
+        advance_settings.setOnClickListener {
+            dialog.dismiss()
+            SharedPreferencesManager.menu = 7
+            startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
+        }
 
         if (!SharedPreferencesManager.notificationStatus) {
             off_block.background =
@@ -535,7 +540,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun count_specific_day_drink(custom_date: String) {
         val arr_dataO: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            "date ='$custom_date'"
+            "n_date ='$custom_date'"
         )
         old_drink_water = 0f
         for (k in arr_dataO.indices) {
@@ -547,7 +552,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         val arr_data22: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            "date ='$custom_date'", "id", 1
+            "n_date ='$custom_date'", "id", 1
         )
 
         var total_drink = 0.0
@@ -563,7 +568,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            "date ='$custom_date'"
+            "n_date ='$custom_date'"
         )
 
         drink_water = 0f
@@ -586,6 +591,15 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 AppUtils.WATER_UNIT_VALUE)
         binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE) +
                 " " + AppUtils.WATER_UNIT_VALUE)
+
+        if(drink_water >= AppUtils.DAILY_WATER_VALUE){
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+        }
+        else{
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+        }
 
         bloodDonorUI(custom_date)
 
@@ -762,7 +776,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun body() {
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            ("date ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
+            ("n_date ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
         )
         old_drink_water = 0f
         for (k in arr_data.indices) {
@@ -889,7 +903,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     private fun count_today_drink(isRegularAnimation: Boolean) {
         val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
             "stats",
-            ("date ='" + AppUtils.getDate(
+            ("n_date ='" + AppUtils.getDate(
                 filter_cal!!.timeInMillis,
                 AppUtils.DATE_FORMAT
             )) + "'"
@@ -906,6 +920,15 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 + " " + AppUtils.WATER_UNIT_VALUE)
         binding.lblTotalGoal.text = getData("" + (AppUtils.DAILY_WATER_VALUE)
                 + " " + AppUtils.WATER_UNIT_VALUE)
+
+        if(drink_water >= AppUtils.DAILY_WATER_VALUE){
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+        }
+        else{
+            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+        }
 
         isAll = drink_water >= AppUtils.DAILY_WATER_VALUE
 
@@ -1154,7 +1177,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         )
 
         initialValues.put(
-            "date",
+            "n_date",
             "" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
         )
         initialValues.put("time", "" + AppUtils.getCurrentTime(true))

@@ -321,13 +321,13 @@
 
                                     <RelativeLayout
                                         android:id="@+id/content_frame_test"
-                                        android:layout_width="@dimen/dp_87"
-                                        android:layout_height="@dimen/dp_250"
+                                        android:layout_width="@dimen/dp_43"
+                                        android:layout_height="@dimen/dp_125"
                                         android:background="@color/app_transparant">
 
                                         <com.airbnb.lottie.LottieAnimationView
                                             android:id="@+id/animationView"
-                                            android:layout_width="@dimen/dp_87"
+                                            android:layout_width="@dimen/dp_43"
                                             android:layout_height="10dp"
                                             android:scaleType="fitXY"
                                             android:layout_above="@+id/content_frame"
@@ -352,8 +352,8 @@
                                 </LinearLayout>
 
                                 <ImageView
-                                    android:layout_width="@dimen/dp_87"
-                                    android:layout_height="@dimen/dp_270"
+                                    android:layout_width="@dimen/dp_43"
+                                    android:layout_height="@dimen/dp_135"
                                     android:scaleType="fitXY"
                                     android:layout_centerHorizontal="true"
                                     android:background="@color/app_transparant"
@@ -376,6 +376,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_marginBottom="@dimen/dp_20"
                         android:layout_alignParentBottom="true">
 
                         <LinearLayout

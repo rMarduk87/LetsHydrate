@@ -42,7 +42,7 @@ class InitUserInfoSixFragment :
     }
 
 
-    @SuppressLint("SetTextI18n", "DefaultLocale")
+    @SuppressLint("SetTextI18n")
     private fun body() {
         binding.rdo15.text = "15 " + requireContext().getString(R.string.str_min)
         binding.rdo30.text = "30 " + requireContext().getString(R.string.str_min)
@@ -70,7 +70,7 @@ class InitUserInfoSixFragment :
                     from_minute = selectedMinute
 
                     binding.txtWakeupTime.text =
-                        String.format("%02d:%02d", selectedHour, selectedMinute)
+                        String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
             )
             mTimePicker.setTitle(getString(R.string.select_wakeup_time))
@@ -92,9 +92,8 @@ class InitUserInfoSixFragment :
                     to_hour = selectedHour
                     to_minute = selectedMinute
 
-                    binding.txtBedTime.setText(
-                        String.format("%02d:%02d", selectedHour, selectedMinute)
-                    )
+                    binding.txtBedTime.text =
+                        String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
             )
             mTimePicker.setTitle(getString(R.string.select_bed_time))

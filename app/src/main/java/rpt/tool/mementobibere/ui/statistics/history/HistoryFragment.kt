@@ -62,7 +62,7 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
                         sqliteHelper!!.remove("stats", "id=" + history!!.id)
                         if(checkIfRemoveReached(history.drinkDate)){
                             sqliteHelper!!.remove("intake_reached",
-                                "date=" + history.drinkDate)
+                                "n_date=" + history.drinkDate)
                         }
                         page = 0
                         isLoading = true
@@ -179,14 +179,14 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
             history.containerValue = "" + (arr_data[k]["n_intook"]!!.toFloat())
             history.containerValueOZ = "" + (arr_data[k]["n_intook_OZ"]!!.toFloat())
 
-            history.drinkDate = arr_data[k]["date"]
+            history.drinkDate = arr_data[k]["n_date"]
             history.drinkTime =
                 AppUtils.FormateDateFromString("HH:mm", "hh:mm a",
                     arr_data[k]["time"])
 
             val arr_data2: ArrayList<HashMap<String, String>> =
                 sqliteHelper!!.getdata("stats",
-                    "date ='" + arr_data[k]["date"] + "'")
+                    "n_date ='" + arr_data[k]["n_date"] + "'")
 
             var tot = 0f
 

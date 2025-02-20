@@ -218,7 +218,7 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
 
         for (i in lst_date.indices) {
             val arr_data: ArrayList<HashMap<String, String>> =
-                sqliteHelper!!.getdata("stats", "date ='" + lst_date[i] + "'")
+                sqliteHelper!!.getdata("stats", "n_date ='" + lst_date[i] + "'")
             var tot = 0f
             var last_goal: String? = "0"
             for (j in arr_data.indices) {
@@ -527,7 +527,7 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
         txt_consumed.text = "" + lst_date_val[position] + " " + AppUtils.WATER_UNIT_VALUE
 
         val arr_data: ArrayList<HashMap<String, String>> =
-            sqliteHelper!!.getdata("stats", "date ='" + lst_date[position] + "'")
+            sqliteHelper!!.getdata("stats", "n_date ='" + lst_date[position] + "'")
         val str: String =
             if (arr_data.size > 1) stringHelper!!.get_string(R.string.times) else 
                 stringHelper!!.get_string(R.string.time)
@@ -753,5 +753,4 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
             binding.chartNew.setData(data)
         }
     }
-
 }

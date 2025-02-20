@@ -25,6 +25,8 @@ class MenuFragment:BaseFragment<FragmentEmptyBinding>(FragmentEmptyBinding::infl
             actionMenuFragmentToProfileFragment())
             6-> safeNavController?.safeNavigate(MenuFragmentDirections
                 .actionMenuFragmentToReachedGoalFragment())
+            7-> safeNavController?.safeNavigate(MenuFragmentDirections.
+            actionMenuFragmentToAdvancedReminderFragment())
         }
     }
 }

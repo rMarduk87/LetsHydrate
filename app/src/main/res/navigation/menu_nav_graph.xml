@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_menuFragment_to_settingsFragment"
             app:destination="@id/Settingsfragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_advancedReminderFragment"
+            app:destination="@id/ReminderFragment" />
     </fragment>
     <fragment
         android:id="@+id/ProfileFragment"
@@ -67,5 +70,11 @@
         <action
             android:id="@+id/action_settingsFragment_to_profileFragment"
             app:destination="@id/ProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ReminderFragment"
+        android:name="rpt.tool.mementobibere.ui.reminder.ReminderFragment"
+        android:label="ReminderFragment"
+        tools:layout="@layout/fragment_reminder">
     </fragment>
 </navigation>
