@@ -13,7 +13,7 @@
     <string name="kg">Kg</string>
     <string name="lbl">Pound</string>
     <string name="tomorrow_you_will_donate">Domani donerai il sangue o oggi hai già donato, bere è essenziale!!</string>
-    <string name="avis">Donatore di sangue</string>
+    <string name="avis">Donatore di\nsangue</string>
     <string name="img">img</string>
     <string name="only_digit_character" translatable="false">0123456789abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="only_digit" translatable="false">0123456789</string>
@@ -24,8 +24,8 @@
     <string name="str_get_started">Inizia</string>
     <string name="str_your_name">Il tuo nome</string>
     <string name="str_gender">Genere</string>
-    <string name="str_male">Maschio</string>
-    <string name="str_female">Femmina</string>
+    <string name="str_male">Uomo</string>
+    <string name="str_female">Donna</string>
     <string name="str_height">Altezza</string>
     <string name="str_cm">cm</string>
     <string name="str_feet">piedi</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">Dovresti bere almeno</string>
     <string name="str_to_reach_your_daily_goal">acqua per raggiungere il tuo obiettivo giornaliero</string>
     <string name="str_set_your_goal_manually">IMPOSTA IL TUO OBIETTIVO MANUALMENTE</string>
-    <string name="str_storage_permission">Consenti a Idratiamocie di pubblicare notifiche.</string>
+    <string name="str_storage_permission">Consenti a Idratiamoci di postare notifiche.</string>
     <string name="str_your_name_validation">Inserisci il tuo nome.</string>
     <string name="str_valid_name_validation">Inserisci un nome valido.</string>
     <string name="str_height_validation">Inserisci l\'altezza.</string>
@@ -42,8 +42,8 @@
     <string name="str_set_daily_goal_validation">Imposta obiettivo giornaliero obiettivo.</string>
     <string name="str_save">Salva</string>
     <string name="str_note">Nota: l\'obiettivo giornaliero suggerito è una stima approssimativa basata su diversi fattori e non deve essere utilizzato per scopi medici. Per ottenere le tue specifiche esigenze di idratazione, consulta il tuo medico.</string>
-    <string name="str_wakeup_time">Ora di sveglia</string>
-    <string name="str_bed_time">Ora di andare a letto</string>
+    <string name="str_wakeup_time">Ororio nel quale ti svegli</string>
+    <string name="str_bed_time">Orario nel quale vai a dormire</string>
     <string name="str_goal_consume">Devi consumare $1 per raggiungere il tuo obiettivo di $2.</string>
     <string name="str_min">Minuti</string>
     <string name="str_hour">Ora</string>
@@ -58,9 +58,9 @@
     <string name="breastfeeding">Allattamento al seno</string>
     <string name="str_hello">Ciao,</string>
     <string name="str_drink_water">Bevi acqua</string>
-    <string name="str_drink_history">Cronologia delle bevande</string>
+    <string name="str_drink_history">Storico dell\'assunzione di acqua</string>
     <string name="str_settings">Impostazioni</string>
-    <string name="str_drink_report">Rapporto sulle bevande</string>
+    <string name="str_drink_report">Statische assunzione acqua</string>
     <string name="str_rate_us">Valuta</string>
     <string name="str_share">Condividi</string>
     <string name="str_tell_a_friend">Dillo a un amico</string>
@@ -68,9 +68,9 @@
     <string name="str_home">Home</string>
     <string name="str_faqs">FAQ</string>
     <string name="str_contact">Contatti</string>
-    <string name="str_share_text">Evviva…! Oggi ho bevuto $1 di acqua. Unisciti a me per mantenerti idratato con Idratiamocie $2</string>
+    <string name="str_share_text">Evviva…! Oggi ho bevuto $1 di acqua. Unisciti a me per mantenerti idratato con Idratiamoci $2</string>
     <string name="str_next_reminder">PROSSIMO REMINDER alle $1</string>
-    <string name="str_history">Cronologia</string>
+    <string name="str_history">Storico</string>
     <string name="mon">Lun</string>
     <string name="tue">Mar</string>
     <string name="wed">Mer</string>
@@ -79,7 +79,7 @@
     <string name="sat">Sab</string>
     <string name="sun">Dom</string>
     <string name="str_your_goal">Il tuo obiettivo</string>
-    <string name="str_consumed">Consumato</string>
+    <string name="str_consumed">Acqua bevuta</string>
     <string name="str_container">Contenitore</string>
     <string name="str_welcome">Benvenuto</string>
     <string name="str_input_some_info_b4_we_get_started">Inserisci le informazioni qui sotto e aiutaci a personalizzare il tuo piano di idratazione.</string>
@@ -95,7 +95,7 @@
     <string name="str_total">TOTALE</string>
     <string name="str_set_goal">Imposta obiettivo</string>
     <string name="str_set_goal_validation">Imposta un obiettivo.</string>
-    <string name="str_history_remove_confirm_message">Sei sicuro? Vuoi eliminare il registro cronologico?</string>
+    <string name="str_history_remove_confirm_message">Sei sicuro? Vuoi eliminare questo record?</string>
     <string name="str_edit">Modifica</string>
     <string name="str_delete">Elimina</string>
     <string name="str_automatic">Automatico</string>
@@ -127,7 +127,7 @@
     <string name="str_minutes">Minuti</string>
     <string name="str_every">Ogni</string>
     <string name="str_no_reminders_added_yet">Nessun promemoria aggiunto!</string>
-    <string name="str_no_drink_history_found">Nessuna cronologia delle bevande trovata!</string>
+    <string name="str_no_drink_history_found">Nessuno storico di bevuta acqua trovato!</string>
     <string name="str_no_backup_found">Nessun backup trovato!</string>
     <string name="str_my_profile">Il mio profilo</string>
     <string name="str_personal_data_daily_goal_settings">Dati personali, Impostazioni obiettivo giornaliero</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Scegli dalla fotocamera</string>
     <string name="str_gallery">Scegli dalla galleria</string>
     <string name="str_remove_photo">Rimuovi foto</string>
-    <string name="app_share_txt">Ho usato Idratiamocie e penso che potrebbe piacerti. Provalo sul tuo telefono: #1</string>
+    <string name="app_share_txt">Ho usato Idratiamoci e penso che potrebbe piacerti. Provalo sul tuo telefono: #1</string>
     <string name="str_remove_photo_confirmation_message">Sei sicuro? Vuoi rimuovere la foto del profilo?</string>
     <string name="str_today_completed">Oggi completato:</string>
     <string name="str_have_u_had_any_water_yet">Hai già bevuto un po\' d\'acqua?</string>
@@ -161,7 +161,7 @@
     <string name="str_snooze">Posticipa</string>
     <string name="str_snooze_for">Posticipa per</string>
     <string name="str_add_water">Aggiungi acqua</string>
-    <string name="str_week">SETTIMANA</string>
+    <string name="str_week">SETTIM.</string>
     <string name="str_month">MESE</string>
     <string name="str_year">ANNO</string>
     <string name="average_intake">Media Assunzione</string>
@@ -179,7 +179,7 @@
     <string name="str_clear_all_data_confirmation_messge">Sei sicuro? Vuoi cancellare tutti i dati di backup?</string>
     <string name="str_restore_all_data_confirmation_messge">Sei sicuro? Vuoi ripristinare i dati selezionati?</string>
     <string name="str_customize">Personalizza</string>
-    <string name="str_customize_your_drink">Personalizza il tuo drink</string>
+    <string name="str_customize_your_drink">Personalizza la quantità</string>
     <string name="str_capacity">Capacità ($1)</string>
     <string name="str_enter_value_validation">Inserisci un valore.</string>
     <string name="add_widget">Aggiungi widget</string>
@@ -211,30 +211,30 @@
         <item>Nov</item>
         <item>Dic</item>
     </string-array>
-    <string name="str_battery_desc1">Dopo aver cliccato su \"Impostazioni\", seleziona l\'app \"Idratiamocie\" dal filtro \"Tutte le app\".</string>
+    <string name="str_battery_desc1">Dopo aver cliccato su \"Impostazioni\", seleziona l\'app \"Idratiamoci\" dal filtro \"Tutte le app\".</string>
     <string name="str_battery_desc2">Seleziona \"Non ottimizzare\" dal popup per ricevere promemoria regolari per l\'acqua potabile.</string>
     <string name="faq_q">D:</string>
     <string name="faq_a">R:</string>
     <string name="faq_question_1">Perché il promemoria non funziona?</string>
-    <string name="faq_question_2">Cosa succede se l\'obiettivo di bevanda consigliato non è adatto a me?</string>
+    <string name="faq_question_2">Cosa succede se l\'obiettivo di assunzione acqua consigliato non è adatto a me?</string>
     <string name="faq_question_3">Come modificare altezza e peso?</string>
     <string name="faq_question_4">Come aggiungere acqua da bere?</string>
     <string name="faq_question_5">Come aggiungere tazze personalizzate?</string>
-    <string name="faq_question_6">Come controllare la cronologia delle mie bevande?</string>
-    <string name="faq_question_7">Come controllare il mio report sulle bevande?</string>
-    <string name="faq_question_8">Cosa succede se aggiungo il registro delle bevande per errore?</string>
-    <string name="faq_question_9">Come cambiare il meteo?</string>
+    <string name="faq_question_6">Come controllare lo storico delle mie bevute?</string>
+    <string name="faq_question_7">Come controllare le statistiche delle mie bevute?</string>
+    <string name="faq_question_8">Cosa succede se aggiungo un quantitativo d\'acqua errato?</string>
+    <string name="faq_question_9">Come cambiare la condizione climatica?</string>
     <string name="faq_question_10">Come cambiare lo stato attivo/incinta/in allattamento?</string>
     <string name="faq_question_11">Sono un donatore di sangue, ci sono delle precauzioni importanti da prendere?</string>
-    <string name="faq_answer_1">Ci sono diversi motivi. Puoi controllare le impostazioni come segue:\n1. Hai impostato correttamente l\'ora di inizio e fine del promemoria?\n2. Hai abilitato Idratiamocie per l\'avvio automatico sul tuo telefono?\n3. Hai installato app di terze parti come CleanMaster che potrebbero impedire a Idratiamocie di funzionare in background e inviare notifiche?\n4. Hai disattivato il promemoria?\n5. Hai impostato Idratiamocie su \"Non ottimizzare\" nelle impostazioni di ottimizzazione della batteria del tuo telefono?</string>
-    <string name="faq_answer_2">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare l\'obiettivo della bevanda cliccando su \"Il mio profilo\".</string>
+    <string name="faq_answer_1">Ci sono diversi motivi. Puoi controllare le impostazioni come segue:\n1. Hai impostato correttamente l\'ora di inizio e fine del promemoria?\n2. Hai abilitato Idratiamoci per l\'avvio automatico sul tuo telefono?\n3. Hai installato app di terze parti come CleanMaster che potrebbero impedire a Idratiamoci di funzionare in background e inviare notifiche?\n4. Hai disattivato il promemoria?\n5. Hai impostato Idratiamoci su \"Non ottimizzare\" nelle impostazioni di ottimizzazione della batteria del tuo telefono?</string>
+    <string name="faq_answer_2">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare l\'obiettivo giornaliero di assunzione acqua cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_3">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare altezza e peso cliccando su \"Il mio profilo\".</string>
-    <string name="faq_answer_4">Ci sono 2 modi:\n1. Puoi cliccare sull\'icona più per aggiungere al registro delle bevande.\n2. Puoi anche aggiungere il registro delle bevande cliccando sul widget dell\'applicazione dalla schermata iniziale di Android o sul widget di oggi da iPhone.</string>
-    <string name="faq_answer_5">Puoi cliccare sull\'icona di modifica contenitore in alto a sinistra della schermata iniziale, quindi toccare il contenitore che preferisci. Puoi anche aggiungere la tua bevanda personalizzata.</string>
-    <string name="faq_answer_6">Puoi cliccare sul menu e selezionare Cronologia bevande, quindi visualizzare la cronologia delle tue bevande.</string>
-    <string name="faq_answer_7">Puoi cliccare sul menu e selezionare l\'opzione Rapporto bevande, quindi visualizzare utilizzando le seguenti 3 opzioni:\n1. Rapporto settimanale\n2. Rapporto mensile\n3. Rapporto annuale</string>
-    <string name="faq_answer_8">Devi toccare il menu e selezionare \"Cronologia bevande\" dall\'elenco delle opzioni del menu. All\'interno di Drink History puoi toccare l\'icona di eliminazione in caso di inserimento errato nel registro delle bevande.</string>
-    <string name="faq_answer_9">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno di Impostazioni, puoi modificare il meteo cliccando su \"Il mio profilo\".</string>
+    <string name="faq_answer_4">Ci sono 2 modi:\n1. Puoi cliccare sull\'icona \"+\" per aggiungere un quantitativo bevuto.\n2. Puoi anche aggiungere la quantità anche cliccando sul widget dell\'applicazione dalla schermata iniziale di Android.</string>
+    <string name="faq_answer_5">Puoi cliccare sull\'icona di modifica contenitore in alto a sinistra della schermata iniziale, quindi toccare il contenitore che preferisci. Puoi anche aggiungere la quantità personalizzata.</string>
+    <string name="faq_answer_6">Puoi cliccare sul menu e selezionare Storico, quindi visualizzare lo storico delle quantità bevute.</string>
+    <string name="faq_answer_7">Puoi cliccare sul menu e selezionare l\'opzione Statistiche, quindi visualizzare utilizzando le seguenti 3 opzioni:\n1. Report settimanale\n2. Report mensile\n3. Report annuale</string>
+    <string name="faq_answer_8">Devi toccare il menu e selezionare \"Storico\" dall\'elenco delle opzioni del menu. All\'interno della schermata puoi toccare l\'icona di eliminazione in caso di inserimento errato nelo storico.</string>
+    <string name="faq_answer_9">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno di Impostazioni, puoi modificare la condizione climatica cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_10">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. Nelle Impostazioni, puoi modificare lo stato attivo/incinta/in allattamento cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_11">Sì, il giorno prima della donazione la quantità di acqua da bere deve essere di almeno 3000 ml/101,44 fl oz, la frequenza delle notifiche raddoppierà.</string>
     <string name="str_read_less">Leggi di meno</string>
@@ -248,7 +248,7 @@
     <string name="_10_00_pm">22:00</string>
     <string name="_15_mins">15 minuti</string>
     <string name="_1_hour">1 ora</string>
-    <string name="male">Maschio</string>
+    <string name="male">Uomo</string>
     <string name="name">Nome</string>
     <string name="str_no_reached_found">Nessun record di obiettivo raggiunto trovato</string>
     <string name="_0_ml">0 ml</string>

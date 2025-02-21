@@ -13,7 +13,7 @@
     <string name="kg">Kg</string>
     <string name="lbl">Livre</string>
     <string name="tomorrow_you_will_donate">Demain vous donnerez du sang ou aujourd\'hui vous avez déjà donné, boire est essentiel !!</string>
-    <string name="avis">Donneur de sang</string>
+    <string name="avis">Donneur de\nsang</string>
     <string name="img">img</string>
     <string name="only_digit_character" translatable="false">0123456789abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="only_digit" translatable="false">0123456789</string>
@@ -229,7 +229,7 @@
     <string name="faq_answer_1">Il y a plusieurs raisons. Vous pouvez vérifier les paramètres comme suit:\n1. Avez-vous défini correctement l\'heure de début et de fin du rappel?\n2. Avez-vous activé le démarrage automatique de Hydratons-nous sur votre téléphone?\n3. Avez-vous installé des applications tierces comme CleanMaster qui peuvent interdire à Hydratons-nous de s\'exécuter en arrière-plan et d\'envoyer des notifications?\n4. Avez-vous désactivé le rappel?\n5. Avez-vous défini Hydratons-nouse sur «Ne pas optimiser» dans les paramètres d\'optimisation de la batterie de votre téléphone?</string>
     <string name="faq_answer_2">Vous devez appuyer sur le menu et sélectionner «Paramètres» dans la liste des options du menu. Dans les paramètres, vous pouvez modifier l\'objectif de boisson en cliquant sur « Mon profil ».</string>
     <string name="faq_answer_3">Vous devez appuyer sur le menu et sélectionner « Paramètres » dans la liste des options du menu. Dans les paramètres, vous pouvez modifier la taille et le poids en cliquant sur « Mon profil ».</string>
-    <string name="faq_answer_4">Il existe 2 façons:\n1. Vous pouvez cliquer sur l\'icône plus pour ajouter le journal de consommation.\n2. Vous pouvez également ajouter un journal de consommation en cliquant sur le widget d\'application depuis l\'écran d\'accueil d\'Android ou sur le widget du jour depuis l\'iPhone.</string>
+    <string name="faq_answer_4">Il existe 2 façons:\n1. Vous pouvez cliquer sur l\'icône plus pour ajouter le journal de consommation.\n2. Vous pouvez également ajouter un journal de consommation en cliquant sur le widget d\'application depuis l\'écran d\'accueil d\'Android.</string>
     <string name="faq_answer_5">Vous pouvez cliquer sur l\'icône de changement de conteneur en haut à gauche de l\'écran d\'accueil, puis appuyer sur le conteneur de votre choix. Vous pouvez également ajouter votre boisson personnalisée.</string>
     <string name="faq_answer_6">Vous pouvez cliquer sur le menu et sélectionner Historique des boissons, puis afficher votre historique de consommation.</string>
     <string name="faq_answer_7">Vous pouvez cliquer sur le menu et sélectionner l\'option Rapport de consommation, puis afficher les 3 options suivantes:\n1. Rapport hebdomadaire\n2. Rapport mensuel\n3. Rapport annuel</string>

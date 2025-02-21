@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Vamos a hidratarnos</string>
     <string name="btn_notific">Notificación</string>
-    <string name="hey_lets_drink_some_water">Oye… Vamos a beber un poco de agua...</string>
+    <string name="hey_lets_drink_some_water">Oye… Vamos a beber un poco de agua…</string>
     <string name="_30_mins">30 minutos</string>
     <string name="_45_mins">45 minutos</string>
     <string name="_60_mins">60 minutos</string>
@@ -13,7 +13,7 @@
     <string name="kg">Kg</string>
     <string name="lbl">Libra</string>
     <string name="tomorrow_you_will_donate">Mañana donarás sangre o hoy ya has donado, ¡¡¡beber es fundamental!!!</string>
-    <string name="avis">Donante de sangre</string>
+    <string name="avis">Donante de\nsangre</string>
     <string name="img">img</string>
     <string name="only_digit_character" translatable="false">0123456789abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="only_digit" translatable="false">0123456789</string>
@@ -229,7 +229,7 @@
     <string name="faq_answer_1">Hay varias razones. Puede verificar la configuración de la siguiente manera:\n1. ¿Configuró la hora de inicio y finalización del recordatorio de manera adecuada?\n2. ¿Ha habilitado Vamos a hidratarnos para que se inicie automáticamente en su teléfono?\n3. ¿Ha instalado aplicaciones de terceros como CleanMaster que pueden prohibir que Vamos a hidratarnos se ejecute en segundo plano y envíe notificaciones?\n4. ¿Ha desactivado el recordatorio?\n5. ¿Ha configurado Vamos a hidratarnos en \"No optimizar\" en la configuración de optimización de batería de su teléfono?</string>
     <string name="faq_answer_2">Debe tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar el objetivo de bebida haciendo clic en \"Mi perfil\".</string>
     <string name="faq_answer_3">Debes tocar el menú y seleccionar \"Ajustes\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar la altura y el peso haciendo clic en \"Mi perfil\".</string>
-    <string name="faq_answer_4">Hay 2 formas:\n1. Puedes hacer clic en el icono más para añadir el registro de bebidas.\n2. También puedes añadir el registro de bebidas haciendo clic en el widget de la aplicación desde la pantalla de inicio de Android o en el widget de hoy desde iPhone.</string>
+    <string name="faq_answer_4">Hay 2 formas:\n1. Puedes hacer clic en el icono más para añadir el registro de bebidas.\n2. También puedes añadir el registro de bebidas haciendo clic en el widget de la aplicación desde la pantalla de inicio de Android.</string>
     <string name="faq_answer_5">Puedes hacer clic en el icono de cambio de contenedor en la parte superior izquierda de la pantalla de inicio y, a continuación, tocar el contenedor de tu elección. También puedes agregar tu bebida personalizada.</string>
     <string name="faq_answer_6">Puedes hacer clic en el menú y seleccionar Historial de bebidas y luego ver tu historial de bebidas.</string>
     <string name="faq_answer_7">Puedes hacer clic en el menú y seleccionar la opción Informe de bebidas y luego ver usando las siguientes 3 opciones:\n1. Informe semanal\n2. Informe mensual\n3. Informe anual</string>

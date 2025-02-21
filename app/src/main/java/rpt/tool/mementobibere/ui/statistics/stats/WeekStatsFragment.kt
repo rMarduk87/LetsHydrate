@@ -76,14 +76,14 @@ class WeekStatsFragment : BaseFragment<FragmentStatsWeekBinding>(FragmentStatsWe
     }
 
     private fun setCurrentWeekInfo() {
-        current_start_calendar = Calendar.getInstance(Locale.getDefault())
+        current_start_calendar = Calendar.getInstance(Locale.US)
         current_start_calendar!!.set(Calendar.DAY_OF_WEEK, 1)
         current_start_calendar!!.set(Calendar.HOUR_OF_DAY, 0)
         current_start_calendar!!.set(Calendar.MINUTE, 0)
         current_start_calendar!!.set(Calendar.SECOND, 0)
         current_start_calendar!!.set(Calendar.MILLISECOND, 0)
 
-        current_end_calendar = Calendar.getInstance(Locale.getDefault())
+        current_end_calendar = Calendar.getInstance(Locale.US)
         current_end_calendar!!.set(Calendar.DAY_OF_WEEK, 7)
         current_end_calendar!!.set(Calendar.HOUR_OF_DAY, 23)
         current_end_calendar!!.set(Calendar.MINUTE, 59)
@@ -103,14 +103,14 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         stringHelper = StringHelper(requireContext(),requireActivity())
         sqliteHelper = SqliteHelper(requireContext())
         
-        start_calendarN = Calendar.getInstance(Locale.getDefault())
+        start_calendarN = Calendar.getInstance(Locale.US)
         start_calendarN!!.set(Calendar.DAY_OF_WEEK, 1)
         start_calendarN!!.set(Calendar.HOUR_OF_DAY, 0)
         start_calendarN!!.set(Calendar.MINUTE, 0)
         start_calendarN!!.set(Calendar.SECOND, 0)
         start_calendarN!!.set(Calendar.MILLISECOND, 0)
 
-        end_calendarN = Calendar.getInstance(Locale.getDefault())
+        end_calendarN = Calendar.getInstance(Locale.US)
         end_calendarN!!.set(Calendar.DAY_OF_WEEK, 7)
         end_calendarN!!.set(Calendar.HOUR_OF_DAY, 23)
         end_calendarN!!.set(Calendar.MINUTE, 59)
@@ -157,9 +157,9 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
     @SuppressLint("SetTextI18n")
     private fun loadData(start_calendar2: Calendar, end_calendar2: Calendar) {
 
-        val start_calendar = Calendar.getInstance(Locale.getDefault())
+        val start_calendar = Calendar.getInstance(Locale.US)
         start_calendar.timeInMillis = start_calendar2.timeInMillis
-        val end_calendar = Calendar.getInstance(Locale.getDefault())
+        val end_calendar = Calendar.getInstance(Locale.US)
         end_calendar.timeInMillis = end_calendar2.timeInMillis
 
         binding.lblTitle.text = (AppUtils.getDate(start_calendar.timeInMillis, 
