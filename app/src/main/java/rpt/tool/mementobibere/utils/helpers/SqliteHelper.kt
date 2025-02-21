@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import rpt.tool.mementobibere.data.models.MaxMinChartModel
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toMonth
 import rpt.tool.mementobibere.utils.extensions.toYear
@@ -166,6 +165,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 db.execSQL("ALTER TABLE $TABLE_REACHED ADD COLUMN $KEY_QTA_OZ FLOAT")
                 addContainerTable(db)
                 addValueToContainer(db)
+                refactoryReached(db)
                 updateIntake(db)
                 updateReached(db)
             }
@@ -180,6 +180,33 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             onCreate(db)
         }
+
+    private fun refactoryReached(db: SQLiteDatabase) {
+        val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"
+        db.rawQuery(selectQuery, null).use{ it ->
+            if (it.moveToFirst()) {
+                for (i in 0 until it.count) {
+                    val date = it.getString(1)
+                    val intook = it.getString(7)
+                    val today = it.getString(8)
+                    val unit = it.getString(4)
+                    if(intook >= today){
+                        val initialValues = ContentValues()
+
+                        initialValues.put(
+                            KEY_DATE,
+                            "" + date
+                        )
+
+                        initialValues.put(KEY_QTA, "" + intook)
+                        initialValues.put(KEY_UNIT, unit)
+                        insert("intake_reached", initialValues,db)
+                    }
+                    it.moveToNext()
+                }
+            }
+        }
+    }
 
     private fun tableExists(db: SQLiteDatabase?, tableName: String?): Boolean {
         if (tableName == null || db == null || !db.isOpen) {
@@ -658,6 +685,19 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     fun update(table_name: String?, fields: ContentValues?, where_con: String?) {
         if (table_name != null) {
             this.writableDatabase.update(table_name, fields, where_con, null)
+        }
+    }
+
+    fun checkReachedAndDelete(dailyWaterValue: Float, date: String, unitString: String) {
+        val reachedGoal = getdata("intake_reached",
+            "date='$date'"
+        )
+        if(reachedGoal.size>0){
+            val goal = if(unitString.equals("ml",true))
+                reachedGoal[0]["qta"]!!.toFloat() else reachedGoal[0]["qta_OZ"]!!.toFloat()
+            if(goal < dailyWaterValue){
+                remove("intake_reached","date='$date'")
+            }
         }
     }
 }

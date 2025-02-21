@@ -107,6 +107,28 @@ class InitUserInfoSixFragment :
         binding.rdo45.setOnClickListener { setCount() }
 
         binding.rdo60.setOnClickListener { setCount() }
+
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = sleepingTime
+        val bedSstr = " " + String.format(
+            Locale.getDefault(),
+            "%02d:%02d",
+            cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE)
+        )
+
+        binding.txtBedTime.text = bedSstr
+
+        cal.timeInMillis = wakeupTime
+        val wakeStr = " " +
+                String.format(Locale.getDefault(),
+                    "%02d:%02d",
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.MINUTE)
+
+                )
+
+        binding.txtWakeupTime.text = wakeStr
     }
 
 

@@ -10,7 +10,6 @@ import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentInitUserInfoTwoBinding
-import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
 import rpt.tool.mementobibere.utils.balloon.migration.MigrationInfoBalloonFactory
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
@@ -28,7 +27,6 @@ class InitUserInfoTwoFragment :
 
     private fun body() {
         if(SharedPreferencesManager.isMigration){
-            SharedPreferencesManager.isMigration = false
             migrationBalloon.showAlign(
                 align = BalloonAlign.BOTTOM,
                 mainAnchor = binding.txtUserName as View,
@@ -88,4 +86,21 @@ class InitUserInfoTwoFragment :
             binding.imgFemale.setImageResource(R.drawable.ic_female_selected)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.txtUserName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                SharedPreferencesManager.userName =
+                    binding.txtUserName.getText().toString().trim { it <= ' ' }
+            }
+        })
+    }
+
 }

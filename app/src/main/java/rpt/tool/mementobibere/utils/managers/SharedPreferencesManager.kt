@@ -82,7 +82,7 @@ object SharedPreferencesManager {
         get() = sharedPreferences.getBoolean(AppUtils.IGNORE_NEXT_STEP,false)
         set(value) = sharedPreferences.edit().putBoolean(AppUtils.IGNORE_NEXT_STEP, value).apply()
     var isMigration: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.IS_MIGRATION,true)
+        get() = sharedPreferences.getBoolean(AppUtils.IS_MIGRATION,false)
         set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_MIGRATION, value).apply()
     var setManuallyGoal: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.SET_MANUALLY_GOAL,false)

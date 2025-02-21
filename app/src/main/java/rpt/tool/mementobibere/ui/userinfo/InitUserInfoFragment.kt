@@ -13,6 +13,7 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentInitUserInfoBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
+import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.view.adapters.InitUserInfoPagerAdapter
@@ -26,6 +27,7 @@ class InitUserInfoFragment:
     var current_page_idx: Int = 0
     var max_page: Int = 7
     var alertHelper: AlertHelper? = null
+    var sqliteHelper: SqliteHelper? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +37,7 @@ class InitUserInfoFragment:
             requireContext().resources.getColor(R.color.water_color)
 
         alertHelper = AlertHelper(requireContext())
+        sqliteHelper = SqliteHelper(requireContext())
 
         body()
     }
@@ -181,7 +184,15 @@ class InitUserInfoFragment:
 
     private fun gotoHomeScreen() {
         SharedPreferencesManager.hideWelcomeScreen = true
-        SharedPreferencesManager.isMigration = false
+        if(SharedPreferencesManager.isMigration){
+            sqliteHelper!!.checkReachedAndDelete(AppUtils.DAILY_WATER_VALUE,
+                AppUtils.getCurrentOnlyDate()!!,AppUtils.WATER_UNIT_VALUE)
+            SharedPreferencesManager.isMigration = false
+        }
+        else{
+            SharedPreferencesManager.isMigration = false
+        }
+
 
         startActivity(Intent(requireActivity(), MainActivity::class.java))
 

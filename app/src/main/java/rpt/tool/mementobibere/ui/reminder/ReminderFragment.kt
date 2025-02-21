@@ -43,6 +43,9 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         requireActivity().window.navigationBarColor =
             requireContext().resources.getColor(R.color.str_green_card)
         is24h = android.text.format.DateFormat.is24HourFormat(requireContext())
+        sleepingTime = SharedPreferencesManager.sleepingTime
+        wakeupTime = SharedPreferencesManager.wakeUpTime
+        interval = SharedPreferencesManager.notificationFreq.toInt()
         body()
 
         var str: String = requireContext().getString(R.string.str_bed_time)
@@ -51,7 +54,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         )
         val cal = Calendar.getInstance()
         cal.timeInMillis = sleepingTime
-        str += " " + String.format(
+        val bedSstr = " " + String.format(
             Locale.getDefault(),
             "%02d:%02d",
             cal.get(Calendar.HOUR_OF_DAY),
@@ -59,6 +62,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         )
 
         binding.lblbt.text = str
+        binding.lblBedTime.text = bedSstr
 
         //=======
         str = requireContext().getString(R.string.str_wakeup_time)
@@ -67,7 +71,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         )
 
         cal.timeInMillis = wakeupTime
-        str += " " +
+        val wakeStr = " " +
             String.format(Locale.getDefault(),
                 "%02d:%02d",
                 cal.get(Calendar.HOUR_OF_DAY),
@@ -76,12 +80,13 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         )
 
         binding.lblwt.text = str
+        binding.lblWakeupTime.text = wakeStr
 
     }
 
     @SuppressLint("SetTextI18n")
     fun body(){
-        binding.lblwt.setOnClickListener {
+        binding.lblWakeupTime.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = wakeupTime
 
@@ -96,7 +101,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
                     from_hour = selectedHour
                     from_minute = selectedMinute
 
-                    binding.lblwt.text =
+                    binding.lblWakeupTime.text =
                         String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
             )
@@ -104,7 +109,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
             mTimePicker.show()
         }
 
-        binding.lblbt.setOnClickListener {
+        binding.lblBedTime.setOnClickListener {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = sleepingTime
 
@@ -119,7 +124,7 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
                     to_hour = selectedHour
                     to_minute = selectedMinute
 
-                    binding.lblbt.text = String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
+                    binding.lblBedTime.text = String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
             )
             mTimePicker.setTitle(getString(R.string.select_bed_time))
@@ -147,6 +152,12 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         else
             binding.lblInterval.text = interval.toString() + " "+
                     requireContext().getString(R.string.str_min)
+
+        binding.saveReminder.setOnClickListener{
+            SharedPreferencesManager.notificationFreq = interval.toFloat()
+            SharedPreferencesManager.wakeUpTime = wakeupTime
+            SharedPreferencesManager.sleepingTime = sleepingTime
+        }
     }
 
     private fun finish() {

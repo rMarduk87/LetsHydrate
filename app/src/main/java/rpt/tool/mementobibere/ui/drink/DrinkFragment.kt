@@ -103,6 +103,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     var btnclick: Boolean = true
     lateinit var alertHelper: AlertHelper
     var isAll: Boolean = false
+    var isAvisDay: Boolean = false
 
 
 
@@ -116,27 +117,28 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             !sqliteHelper.getAvisDay(dateNow)){
             binding.bloodDonorContainer.visibility = VISIBLE
             binding.imgBloodDonorHelp.visibility = GONE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            isAvisDay = false
+            manageLblColor(requireContext().getColor(R.color.black))
         }
         else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(dateNow)){
             binding.bloodDonorContainer.visibility = VISIBLE
             binding.imgBloodDonorHelp.visibility = VISIBLE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.red))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.red))
+            isAvisDay = true
+            manageLblColor(requireContext().getColor(R.color.red))
         }
         else{
             binding.bloodDonorContainer.visibility = GONE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            isAvisDay = false
+            manageLblColor(requireContext().getColor(R.color.black))
         }
 
         totalIntake = SharedPreferencesManager.totalIntake
 
          if (totalIntake <= 0) {
-            startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
-            requireActivity().finish()
+             SharedPreferencesManager.isMigration = false
+             startActivity(Intent(requireContext(), InitUserInfoActivity::class.java))
+             requireActivity().finish()
         }
 
         if (SharedPreferencesManager.totalIntake == 0f) {
@@ -159,6 +161,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                     + "/" + R.raw.fill_water_sound)
         )
         ringtone!!.isLooping = false
+    }
+
+    private fun manageLblColor(color: Int) {
+        binding.lblTotalGoal.setTextColor(color)
+        binding.lblTotalDrunk.setTextColor(color)
     }
 
     private fun animate() {
@@ -220,11 +227,17 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         super.onStart()
 
         if(sqliteHelper.getAvisDay(dateNow)){
-            binding.lblTotalGoal.setTextColor(resources.getColor(R.color.red))
-            binding.lblTotalDrunk.setTextColor(resources.getColor(R.color.red))
+            isAvisDay = true
+            manageLblColor(resources.getColor(R.color.red))
+        }
+        else{
+            isAvisDay = false
+            manageLblColor(requireContext().getColor(R.color.black))
         }
 
-        if(SharedPreferencesManager.userName.isEmpty() || SharedPreferencesManager.personHeight.isEmpty()){
+        if(SharedPreferencesManager.userName.isEmpty() ||
+            SharedPreferencesManager.personHeight.isEmpty()){
+            SharedPreferencesManager.isMigration = true
             startActivity(Intent(requireActivity(),InitUserInfoActivity::class.java))
         }
 
@@ -235,6 +248,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             var freq = SharedPreferencesManager.notificationFreq.toLong()
             if(isAvisDay){
                 freq /= 2
+            }
+            else{
+                freq = SharedPreferencesManager.notificationFreq.toLong()
             }
             alarm.setAlarm(
                 requireContext(),freq
@@ -593,12 +609,13 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 " " + AppUtils.WATER_UNIT_VALUE)
 
         if(drink_water >= AppUtils.DAILY_WATER_VALUE){
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+            isAvisDay = false
+            isAll = true
+            manageLblColor(requireContext().getColor(R.color.fbutton_color_orange))
         }
         else{
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            isAll = false
+            manageLblColor(requireContext().getColor(R.color.black))
         }
 
         bloodDonorUI(custom_date)
@@ -611,20 +628,35 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             !sqliteHelper.getAvisDay(date)){
             binding.bloodDonorContainer.visibility = VISIBLE
             binding.imgBloodDonorHelp.visibility = GONE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            isAvisDay = false
+            if(isAll){
+                manageLblColor(requireContext().getColor(R.color.fbutton_color_orange))
+            }
+            else{
+                manageLblColor(requireContext().getColor(R.color.black))
+            }
         }
         else if(SharedPreferencesManager.bloodDonorKey==1 &&
             sqliteHelper.getAvisDay(date)){
             binding.bloodDonorContainer.visibility = VISIBLE
             binding.imgBloodDonorHelp.visibility = VISIBLE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.red))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.red))
+            isAvisDay = true
+            if(isAll){
+                manageLblColor(requireContext().getColor(R.color.fbutton_color_orange))
+            }
+            else{
+                manageLblColor(requireContext().getColor(R.color.red))
+            }
         }
         else{
             binding.bloodDonorContainer.visibility = GONE
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
+            isAvisDay = false
+            if(isAll){
+                manageLblColor(requireContext().getColor(R.color.fbutton_color_orange))
+            }
+            else{
+                manageLblColor(requireContext().getColor(R.color.black))
+            }
         }
     }
 
@@ -922,12 +954,15 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 + " " + AppUtils.WATER_UNIT_VALUE)
 
         if(drink_water >= AppUtils.DAILY_WATER_VALUE){
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.fbutton_color_orange))
+            manageLblColor(requireContext().getColor(R.color.fbutton_color_orange))
         }
         else{
-            binding.lblTotalDrunk.setTextColor(requireContext().getColor(R.color.black))
-            binding.lblTotalGoal.setTextColor(requireContext().getColor(R.color.black))
+            if(isAvisDay){
+                manageLblColor(requireContext().getColor(R.color.red))
+            }
+            else{
+                manageLblColor(requireContext().getColor(R.color.black))
+            }
         }
 
         isAll = drink_water >= AppUtils.DAILY_WATER_VALUE

@@ -26,9 +26,12 @@
             android:exported="false" />
         <activity
             android:name=".ErrorReportActivity"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:autoRemoveFromRecents="true"
             android:exported="false" />
         <activity
             android:name=".SelectBottleActivity"
+            android:theme="@style/Theme.Transparent"
             android:exported="false" />
         <activity
             android:name=".InitUserInfoActivity"
@@ -41,6 +44,7 @@
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
+            android:theme="@style/AppThemeSplash"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

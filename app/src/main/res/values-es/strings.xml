@@ -1,478 +1,269 @@
 <resources>
-    <string name="app_name">Let\'s Hydrate</string>
-    <string name="btn_notific">Notific</string>
-    <string name="hey_lets_drink_some_water">Hey… Lets drink some water....</string>
-    <string name="_30_mins">30 Mins</string>
-    <string name="_45_mins">45 Mins</string>
-    <string name="_60_mins">60 Mins</string>
+    <string name="app_name">Vamos a hidratarnos</string>
+    <string name="btn_notific">Notificación</string>
+    <string name="hey_lets_drink_some_water">Oye… Vamos a beber un poco de agua...</string>
+    <string name="_30_mins">30 minutos</string>
+    <string name="_45_mins">45 minutos</string>
+    <string name="_60_mins">60 minutos</string>
     <string name="_1100_ml">1100 ml</string>
     <string name="_3100_ml">3100 ml</string>
     <string name="mailto_riccardo_pezzolati_gmail_com">mailto:riccardo.pezzolati@gmail.com</string>
     <string name="ml">ml</string>
-    <string name="drink_fragment_label">DrinkFragment</string>
+    <string name="drink_fragment_label">Fragmento de bebida</string>
     <string name="kg">Kg</string>
-    <string name="lbl">Pound</string>
-    <string name="tomorrow_you_will_donate">Tomorrow you will donate blood or today you have already donated, drinking is essential!!</string>
-    <string name="avis">Blood Donor</string>
+    <string name="lbl">Libra</string>
+    <string name="tomorrow_you_will_donate">Mañana donarás sangre o hoy ya has donado, ¡¡¡beber es fundamental!!!</string>
+    <string name="avis">Donante de sangre</string>
     <string name="img">img</string>
     <string name="only_digit_character" translatable="false">0123456789abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="only_digit" translatable="false">0123456789</string>
     <string name="only_character" translatable="false">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
-    <string name="str_back">Back</string>
-    <string name="str_next">Next</string>
-    <string name="str_allow">Allow</string>
-    <string name="str_get_started">Get Started</string>
-    <string name="str_your_name">Your Name</string>
-    <string name="str_gender">Gender</string>
-    <string name="str_male">Male</string>
-    <string name="str_female">Female</string>
-    <string name="str_height">Height</string>
+    <string name="str_back">Atrás</string>
+    <string name="str_next">Siguiente</string>
+    <string name="str_allow">Permitir</string>
+    <string name="str_get_started">Comenzar</string>
+    <string name="str_your_name">Tu nombre</string>
+    <string name="str_gender">Sexo</string>
+    <string name="str_male">Masculino</string>
+    <string name="str_female">Femenino</string>
+    <string name="str_height">Altura</string>
     <string name="str_cm">cm</string>
-    <string name="str_feet">feet</string>
+    <string name="str_feet">pies</string>
     <string name="str_kg">kg</string>
     <string name="str_lb">lb</string>
-    <string name="str_you_should_drink_at_least">You should drink at least</string>
-    <string name="str_to_reach_your_daily_goal">water to reach your daily goal</string>
-    <string name="str_set_your_goal_manually">SET YOUR GOAL MANUALLY</string>
-    <string name="str_storage_permission">Please allow Let\'s Hydrate to post notifications.</string>
-    <string name="str_your_name_validation">Please enter your name.</string>
-    <string name="str_valid_name_validation">Please enter valid name.</string>
-    <string name="str_height_validation">Please enter height.</string>
-    <string name="str_set_daily_goal">Set daily goal</string>
-    <string name="str_set_daily_goal_validation">Please set daily goal.</string>
-    <string name="str_save">Save</string>
-    <string name="str_note">Note: Your suggested daily goal is a rough estimate based on several factors and should not be used for medical purposes. To obtain your specific hydration needs, please consult your physician.</string>
-    <string name="str_wakeup_time">Wake-up Time</string>
-    <string name="str_bed_time">Bed Time</string>
-    <string name="str_goal_consume">You need to consume $1 to reach your goal of $2.</string>
-    <string name="str_min">Mins</string>
-    <string name="str_hour">Hour</string>
-    <string name="other_factors">Other Factors</string>
-    <string name="weather_conditions">Weather Condition</string>
-    <string name="sunny">Sunny</string>
-    <string name="cloudy">Cloudy</string>
-    <string name="rainy">Rainy</string>
-    <string name="snow">Snow</string>
-    <string name="active">Active</string>
-    <string name="pregnant">Pregnant</string>
-    <string name="breastfeeding">Breastfeeding</string>
-    <string name="str_hello">Hello,</string>
-    <string name="str_drink_water">Drink Water</string>
-    <string name="str_drink_history">Drink History</string>
-    <string name="str_settings">Settings</string>
-    <string name="str_drink_report">Drink Report</string>
-    <string name="str_rate_us">Rate</string>
-    <string name="str_share">Share</string>
-    <string name="str_tell_a_friend">Tell a Friend</string>
-    <string name="str_achievements">Achievements</string>
-    <string name="str_home">Home</string>
-    <string name="str_faqs">FAQs</string>
-    <string name="str_contact">Contact</string>
-    <string name="str_share_text">Hooray…! I drank $1 of water today. Join me to keep hydrated with Let\'s Hydrate $2</string>
-    <string name="str_next_reminder">NEXT REMINDER at $1</string>
-    <string name="str_history">History</string>
-    <string name="mon">Mon</string>
-    <string name="tue">Tue</string>
-    <string name="wed">Wed</string>
-    <string name="thu">Thu</string>
-    <string name="fri">Fri</string>
-    <string name="sat">Sat</string>
-    <string name="sun">Sun</string>
-    <string name="str_your_goal">Your goal</string>
-    <string name="str_consumed">Consumed</string>
-    <string name="str_container">Container</string>
-    <string name="str_welcome">Welcome</string>
-    <string name="str_input_some_info_b4_we_get_started">Enter the information below and help us to customize your hydration plan.</string>
-    <string name="str_choose_unit">Choose Weight Unit</string>
-    <string name="str_choose_capacity_unit">Choose Capacity Unit</string>
-    <string name="str_weight">Weight</string>
-    <string name="str_skip">Skip</string>
-    <string name="str_weight_validation">Please enter weight.</string>
-    <string name="str_daily_goal_reached">Daily goal reached</string>
-    <string name="str_share_your_achievement_with_your_friends">Share your achievement with your friends!</string>
-    <string name="str_ok">OK</string>
-    <string name="str_cancel">Cancel</string>
+    <string name="str_you_should_drink_at_least">Debes beber al menos</string>
+    <string name="str_to_reach_your_daily_goal">agua para alcanzar tu objetivo diario</string>
+    <string name="str_set_your_goal_manually">ESTABLECE TU OBJETIVO MANUALMENTE</string>
+    <string name="str_storage_permission">Permite que Vamos a hidratarnos publique notificaciones.</string>
+    <string name="str_your_name_validation">Ingresa tu nombre.</string>
+    <string name="str_valid_name_validation">Ingresa un nombre válido.</string>
+    <string name="str_height_validation">Ingresa tu altura.</string>
+    <string name="str_set_daily_goal">Establece un objetivo diario</string>
+    <string name="str_set_daily_goal_validation">Establece un objetivo diario.</string>
+    <string name="str_save">Guardar</string>
+    <string name="str_note">Nota: El objetivo diario sugerido es una estimación aproximada basada en varios factores y no debe utilizarse con fines médicos. Para conocer sus necesidades específicas de hidratación, consulte a su médico.</string>
+    <string name="str_wakeup_time">Hora de despertarse</string>
+    <string name="str_bed_time">Hora de acostarse</string>
+    <string name="str_goal_consume">Debe consumir $1 para alcanzar su objetivo de $2.</string>
+    <string name="str_min">Minutos</string>
+    <string name="str_hour">Hora</string>
+    <string name="other_factors">Otros factores</string>
+    <string name="weather_conditions">Condición climática</string>
+    <string name="sunny">Soleado</string>
+    <string name="cloudy">Nublado</string>
+    <string name="rainy">Lluvioso</string>
+    <string name="snow">Nieve</string>
+    <string name="active">Activa</string>
+    <string name="pregnant">Embarazada</string>
+    <string name="breastfeeding">Lactancia materna</string>
+    <string name="str_hello">Hola,</string>
+    <string name="str_drink_water">Beber agua</string>
+    <string name="str_drink_history">Historial de bebidas</string>
+    <string name="str_settings">Configuración</string>
+    <string name="str_drink_report">Informe de bebidas</string>
+    <string name="str_rate_us">Calificación</string>
+    <string name="str_share">Compartir</string>
+    <string name="str_tell_a_friend">Dígaselo a un amigo</string>
+    <string name="str_achievements">Logros</string>
+    <string name="str_home">Inicio</string>
+    <string name="str_faqs">Preguntas frecuentes</string>
+    <string name="str_contact">Contacto</string>
+    <string name="str_share_text">Hurra…! Bebí $1 de agua hoy. Únete a mí para mantenerte hidratado con Vamos a hidratarnos $2</string>
+    <string name="str_next_reminder">SIGUIENTE RECORDATORIO a $1</string>
+    <string name="str_history">Historial</string>
+    <string name="mon">Lun</string>
+    <string name="tue">Mar</string>
+    <string name="wed">Mié</string>
+    <string name="thu">Jue</string>
+    <string name="fri">Vie</string>
+    <string name="sat">Sáb</string>
+    <string name="sun">Dom</string>
+    <string name="str_your_goal">Tu objetivo</string>
+    <string name="str_consumed">Consumido</string>
+    <string name="str_container">Contenedor</string>
+    <string name="str_welcome">Bienvenido</string>
+    <string name="str_input_some_info_b4_we_get_started">Ingresa la información a continuación y ayúdanos a personalizar tu plan de hidratación.</string>
+    <string name="str_choose_unit">Elegir unidad de peso</string>
+    <string name="str_choose_capacity_unit">Elegir unidad de capacidad</string>
+    <string name="str_weight">Peso</string>
+    <string name="str_skip">Omitir</string>
+    <string name="str_weight_validation">Ingrese el peso.</string>
+    <string name="str_daily_goal_reached">Objetivo diario alcanzado</string>
+    <string name="str_share_your_achievement_with_your_friends">¡Comparta su logro con sus amigos!</string>
+    <string name="str_ok">Aceptar</string>
+    <string name="str_cancel">Cancelar</string>
     <string name="str_total">TOTAL</string>
-    <string name="str_set_goal">Set Goal</string>
-    <string name="str_set_goal_validation">Please set a goal.</string>
-    <string name="str_history_remove_confirm_message">Are you sure? Do you want to delete history log?</string>
-    <string name="str_edit">Edit</string>
-    <string name="str_delete">Delete</string>
-    <string name="str_automatic">Automatic</string>
+    <string name="str_set_goal">Establecer objetivo</string>
+    <string name="str_set_goal_validation">Establezca un objetivo.</string>
+    <string name="str_history_remove_confirm_message">¿Estás seguro? ¿Quieres eliminar el registro del historial?</string>
+    <string name="str_edit">Editar</string>
+    <string name="str_delete">Eliminar</string>
+    <string name="str_automatic">Automático</string>
     <string name="str_manual">Manual</string>
-    <string name="str_delete_all_reminder">DELETE ALL REMINDERS</string>
-    <string name="str_off">Off</string>
-    <string name="str_silent">Silent</string>
-    <string name="str_auto">Auto</string>
-    <string name="str_custom_sound">Custom sound</string>
-    <string name="str_vibration">Vibration</string>
-    <string name="str_advance_settings">ADVANCED SETTINGS</string>
-    <string name="str_you_should_not_drink_more_then_target">You should not drink more than $1 water a day.</string>
-    <string name="str_set_reminder">Set Reminder</string>
-    <string name="str_reminder">Reminders</string>
-    <string name="str_set_alarm_validation">You have already added reminder for this time.</string>
-    <string name="str_successfully_set_alarm">You have successfully added this reminder.</string>
-    <string name="str_successfully_cancel_alarm">You have successfully canceled this reminder.</string>
-    <string name="str_reminder_remove_confirm_message">Are you sure? Do you want to delete reminder?</string>
-    <string name="str_reminder_remove_all_confirm_message">Are you sure? Do you want to delete all reminders?</string>
-    <string name="str_yes">Yes</string>
+    <string name="str_delete_all_reminder">ELIMINAR TODOS LOS RECORDATORIOS</string>
+    <string name="str_off">Desactivado</string>
+    <string name="str_silent">Silencioso</string>
+    <string name="str_auto">Automático</string>
+    <string name="str_custom_sound">Sonido personalizado</string>
+    <string name="str_vibration">Vibración</string>
+    <string name="str_advance_settings">CONFIGURACIÓN AVANZADA</string>
+    <string name="str_you_should_not_drink_more_then_target">No debes beber más de $1 de agua al día.</string>
+    <string name="str_set_reminder">Establecer recordatorio</string>
+    <string name="str_reminder">Recordatorios</string>
+    <string name="str_set_alarm_validation">Ya ha añadido un recordatorio para esta hora.</string>
+    <string name="str_successfully_set_alarm">Ha añadido este recordatorio correctamente.</string>
+    <string name="str_successfully_cancel_alarm">Ha cancelado este recordatorio correctamente.</string>
+    <string name="str_reminder_remove_confirm_message">¿Está seguro? ¿Desea eliminar el recordatorio?</string>
+    <string name="str_reminder_remove_all_confirm_message">¿Está seguro? ¿Quieres eliminar todos los recordatorios?</string>
+    <string name="str_yes">Sí</string>
     <string name="str_no">No</string>
-    <string name="str_set_specific_time_reminder">Manually set reminder</string>
-    <string name="str_set_specific_time_duration_reminder">Auto reminder</string>
-    <string name="str_from">From</string>
-    <string name="str_to">To</string>
-    <string name="str_from_to_validation">Please select both from &amp; to time.</string>
-    <string name="str_from_to_invalid_validation">Please select valid wake-up &amp; bed time.</string>
-    <string name="str_interval">Interval</string>
-    <string name="str_minutes">Minutes</string>
-    <string name="str_every">Every</string>
-    <string name="str_no_reminders_added_yet">No reminders added yet!</string>
-    <string name="str_no_drink_history_found">No drink history found!</string>
-    <string name="str_no_backup_found">No backup found!</string>
-    <string name="str_my_profile">My Profile</string>
-    <string name="str_personal_data_daily_goal_settings">Personal data, Daily goal settings</string>
-    <string name="str_disable_notification">Disable Notification</string>
-    <string name="str_if_goal_is_achieved">If goal is achieved</string>
-    <string name="str_goal">Goal</string>
-    <string name="str_disable_sound">Disable Sound</string>
-    <string name="str_while_add_water">When you add water</string>
-    <string name="str_auto_backup">Auto Backup</string>
-    <string name="str_about_us">About Us</string>
-    <string name="str_contact_us">Contact Us</string>
-    <string name="str_feedback">Feedback</string>
-    <string name="str_language">Language</string>
-    <string name="str_privacy_policy">Privacy Policy</string>
-    <string name="str_faq">FAQ</string>
-    <string name="str_backup_and_restore">Backup &amp; Restore</string>
-    <string name="str_backup">Backup</string>
-    <string name="str_restore">Restore</string>
-    <string name="str_change_weight">Change Weight / Capacity</string>
-    <string name="str_clear_all_data">Clear all data</string>
-    <string name="str_camera">Choose from Camera</string>
-    <string name="str_gallery">Choose from Gallery</string>
-    <string name="str_remove_photo">Remove Photo</string>
-    <string name="app_share_txt">I have been using Let\'s Hydrate and I think you might like it. Check it out on your phone: #1</string>
-    <string name="str_remove_photo_confirmation_message">Are you sure? Do you want to remove profile photo?</string>
-    <string name="str_today_completed">Today Completed:</string>
-    <string name="str_have_u_had_any_water_yet">Have you had any water yet?</string>
-    <string name="str_today">Today</string>
-    <string name="str_yesterday">Yesterday</string>
-    <string name="str_custom_date">Custom Date</string>
-    <string name="str_snooze">Snooze</string>
-    <string name="str_snooze_for">Snooze for</string>
-    <string name="str_add_water">Add water</string>
-    <string name="str_week">WEEK</string>
-    <string name="str_month">MONTH</string>
-    <string name="str_year">YEAR</string>
-    <string name="average_intake">Average Intake</string>
-    <string name="drink_frequency">Drink Frequency</string>
-    <string name="average_completion">Average Completion</string>
-    <string name="day">day</string>
-    <string name="times">times</string>
-    <string name="time">time</string>
-    <string name="str_daily">Daily</string>
-    <string name="str_weekly">Weekly</string>
-    <string name="str_monthly">Monthly</string>
-    <string name="str_yearly">Yearly</string>
-    <string name="str_restore_msg">Your data has been restored successfully.</string>
-    <string name="str_backup_msg">Your data has been backed up successfully.</string>
-    <string name="str_clear_all_data_confirmation_messge">Are you sure? Do you want to clear all backup data?</string>
-    <string name="str_restore_all_data_confirmation_messge">Are you sure? Do you want to restore selected data?</string>
-    <string name="str_customize">Customize</string>
-    <string name="str_customize_your_drink">Customize your drink</string>
-    <string name="str_capacity">Capacity ($1)</string>
-    <string name="str_enter_value_validation">Please enter value.</string>
-    <string name="add_widget">Add widget</string>
+    <string name="str_set_specific_time_reminder">Establecer recordatorio manualmente</string>
+    <string name="str_set_specific_time_duration_reminder">Recordatorio automático</string>
+    <string name="str_from">Desde</string>
+    <string name="str_to">Hasta</string>
+    <string name="str_from_to_validation">Seleccione tanto la hora de inicio como la de finalización.</string>
+    <string name="str_from_to_invalid_validation">Seleccione una hora de activación y una hora de finalización válidas. hora de dormir.</string>
+    <string name="str_interval">Intervalo</string>
+    <string name="str_minutes">Minutos</string>
+    <string name="str_every">Cada</string>
+    <string name="str_no_reminders_added_yet">¡Aún no se han añadido recordatorios!</string>
+    <string name="str_no_drink_history_found">¡No se ha encontrado ningún historial de bebidas!</string>
+    <string name="str_no_backup_found">¡No se ha encontrado ninguna copia de seguridad!</string>
+    <string name="str_my_profile">Mi perfil</string>
+    <string name="str_personal_data_daily_goal_settings">Datos personales, configuración de objetivos diarios</string>
+    <string name="str_disable_notification">Deshabilitar notificación</string>
+    <string name="str_if_goal_is_achieved">Si se alcanza el objetivo</string>
+    <string name="str_goal">Objetivo</string>
+    <string name="str_disable_sound">Desactivar sonido</string>
+    <string name="str_while_add_water">Cuando agrega agua</string>
+    <string name="str_auto_backup">Copia de seguridad automática</string>
+    <string name="str_about_us">Acerca de nosotros</string>
+    <string name="str_contact_us">Contáctenos</string>
+    <string name="str_feedback">Comentarios</string>
+    <string name="str_language">Idioma</string>
+    <string name="str_privacy_policy">Política de privacidad</string>
+    <string name="str_faq">Preguntas frecuentes</string>
+    <string name="str_backup_and_restore">Copia de seguridad y restauración Restaurar</string>
+    <string name="str_backup">Copia de seguridad</string>
+    <string name="str_restore">Restaurar</string>
+    <string name="str_change_weight">Cambiar peso/capacidad</string>
+    <string name="str_clear_all_data">Borrar todos los datos</string>
+    <string name="str_camera">Elegir de la cámara</string>
+    <string name="str_gallery">Elegir de la galería</string>
+    <string name="str_remove_photo">Eliminar foto</string>
+    <string name="app_share_txt">He estado usando Vamos a hidratarnos y creo que te puede gustar. Pruébalo en tu teléfono: #1</string>
+    <string name="str_remove_photo_confirmation_message">¿Estás seguro? ¿Quieres eliminar la foto de perfil?</string>
+    <string name="str_today_completed">Hoy completado:</string>
+    <string name="str_have_u_had_any_water_yet">¿Ya has bebido agua?</string>
+    <string name="str_today">Hoy</string>
+    <string name="str_yesterday">Ayer</string>
+    <string name="str_custom_date">Fecha personalizada</string>
+    <string name="str_snooze">Posponer</string>
+    <string name="str_snooze_for">Posponer durante</string>
+    <string name="str_add_water">Añadir agua</string>
+    <string name="str_week">SEMANA</string>
+    <string name="str_month">MES</string>
+    <string name="str_year">AÑO</string>
+    <string name="average_intake">Ingesta media</string>
+    <string name="drink_frequency">Frecuencia de bebida</string>
+    <string name="average_completion">Finalización promedio</string>
+    <string name="day">día</string>
+    <string name="times">veces</string>
+    <string name="time">hora</string>
+    <string name="str_daily">Diariamente</string>
+    <string name="str_weekly">Semanalmente</string>
+    <string name="str_monthly">Mensualmente</string>
+    <string name="str_yearly">Anualmente</string>
+    <string name="str_restore_msg">Sus datos se han restaurado correctamente.</string>
+    <string name="str_backup_msg">Sus datos se han respaldado correctamente.</string>
+    <string name="str_clear_all_data_confirmation_messge">¿Está seguro? ¿Desea borrar todos los datos respaldados?</string>
+    <string name="str_restore_all_data_confirmation_messge">¿Está seguro? ¿Quieres restaurar los datos seleccionados?</string>
+    <string name="str_customize">Personalizar</string>
+    <string name="str_customize_your_drink">Personaliza tu bebida</string>
+    <string name="str_capacity">Capacidad ($1)</string>
+    <string name="str_enter_value_validation">Ingresa el valor.</string>
+    <string name="add_widget">Agregar widget</string>
     <string-array name="month_list2" translatable="false">
-        <item>Jan</item>
+        <item>Ene</item>
         <item>Feb</item>
         <item>Mar</item>
-        <item>Apr</item>
+        <item>Abr</item>
         <item>May</item>
         <item>Jun</item>
         <item>Jul</item>
-        <item>Aug</item>
+        <item>Ago</item>
         <item>Sep</item>
         <item>Oct</item>
         <item>Nov</item>
-        <item>Dec</item>
+        <item>Dic</item>
     </string-array>
     <string-array name="month_list">
-        <item>Jan</item>
+        <item>Ene</item>
         <item>Feb</item>
         <item>Mar</item>
-        <item>Apr</item>
+        <item>Abr</item>
         <item>May</item>
         <item>Jun</item>
         <item>Jul</item>
-        <item>Aug</item>
+        <item>Ago</item>
         <item>Sep</item>
         <item>Oct</item>
         <item>Nov</item>
-        <item>Dec</item>
+        <item>Dic</item>
     </string-array>
-    <string name="str_battery_desc1">After clicking on \"Settings\" select \"Let\'s Hydrate\" app from \'All apps\' filter.</string>
-    <string name="str_battery_desc2">Please select \"Don\'t Optimize\" from popup to receive regular reminder for drinking water.</string>
-    <string name="faq_q">Q:</string>
-    <string name="faq_a">A:</string>
-    <string name="faq_question_1">Why doesn\'t the Reminder work?</string>
-    <string name="faq_question_2">What if the drink target recommended is not suitable for me?</string>
-    <string name="faq_question_3">How to change height and weight?</string>
-    <string name="faq_question_4">How to add drink water?</string>
-    <string name="faq_question_5">How to add customize cups?</string>
-    <string name="faq_question_6">How to check my drink water history?</string>
-    <string name="faq_question_7">How to check my drink water report?</string>
-    <string name="faq_question_8">What if I added drink log by mistake?</string>
-    <string name="faq_question_9">How to change weather?</string>
-    <string name="faq_question_10">How to change active / pregnant / breastfeeding status?</string>
-    <string name="faq_question_11">I am a blood donor, are there any important precautions to take?</string>
-    <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start &amp; end time appropriately?\n2. Have you enabled Let\'s Hydrate to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Water Diary running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Water Diary to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
-    <string name="faq_answer_2">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit the drink target by clicking on \"My Profile\".</string>
-    <string name="faq_answer_3">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit height and weight by clicking on \"My Profile\".</string>
-    <string name="faq_answer_4">There are 2 ways:\n1. You can click on the plus icon to add on the drink log.\n2. You can also add drink log by clicking on the application widget from android\'s home screen or today\'s widget from iPhone.</string>
-    <string name="faq_answer_5">You can click on the change container icon on the top left of the home screen, then tap on your choice of container. You can also add your customized drink.</string>
-    <string name="faq_answer_6">You can click on the menu and select Drink History then view your drink history.</string>
-    <string name="faq_answer_7">You can click on the menu and select Drink Report option then view using following 3 options:\n1. Weekly Report\n2. Monthly Report\n3. Yearly Report</string>
-    <string name="faq_answer_8">You need to tap on menu and select \"Drink History\" from the list of menu options. Inside Drink History you can tap on delete icon against wrong drink log entry.</string>
-    <string name="faq_answer_9">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change weather by clicking on \"My Profile\".</string>
-    <string name="faq_answer_10">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change active / pregnant / breastfeeding status by clicking on \"My Profile\".</string>
-    <string name="faq_answer_11">Yes, the day before donating the amount of water to drink must be at least 3000 ml / 101.44 fl oz, the frequency of notifications will double.</string>
-    <string name="str_read_less">Read Less</string>
-    <string name="str_read_more">Read More</string>
-    <string name="open_gps_dialog">Do you want open GPS setting?</string>
-    <string name="dialog_cancel_button">Cancel</string>
-    <string name="dialog_ok_button">OK</string>
+    <string name="str_battery_desc1">Después de hacer clic en \"Configuración\", seleccione la aplicación \"Vamos a hidratarnos\" del filtro \"Todas las aplicaciones\".</string>
+    <string name="str_battery_desc2">Seleccione Aparece la ventana emergente "No optimizar" para recibir recordatorios periódicos sobre el consumo de agua.</string>
+    <string name="faq_q">P:</string>
+    <string name="faq_a">R:</string>
+    <string name="faq_question_1">¿Por qué no funciona el recordatorio?</string>
+    <string name="faq_question_2">¿Qué pasa si el objetivo de bebida recomendado no es adecuado para mí?</string>
+    <string name="faq_question_3">¿Cómo cambiar la altura y el peso?</string>
+    <string name="faq_question_4">¿Cómo agregar agua potable?</string>
+    <string name="faq_question_5">¿Cómo agregar vasos personalizados?</string>
+    <string name="faq_question_6">¿Cómo consultar mi historial de agua potable?</string>
+    <string name="faq_question_7">¿Cómo consultar mi informe de agua potable?</string>
+    <string name="faq_question_8">¿Qué pasa si agregué un registro de bebidas por error?</string>
+    <string name="faq_question_9">Cómo cambiar ¿Qué tiempo hace?</string>
+    <string name="faq_question_10">¿Cómo cambiar el estado de activa/embarazo/lactancia?</string>
+    <string name="faq_question_11">Soy donante de sangre, ¿hay alguna precaución importante que deba tomar?</string>
+    <string name="faq_answer_1">Hay varias razones. Puede verificar la configuración de la siguiente manera:\n1. ¿Configuró la hora de inicio y finalización del recordatorio de manera adecuada?\n2. ¿Ha habilitado Vamos a hidratarnos para que se inicie automáticamente en su teléfono?\n3. ¿Ha instalado aplicaciones de terceros como CleanMaster que pueden prohibir que Vamos a hidratarnos se ejecute en segundo plano y envíe notificaciones?\n4. ¿Ha desactivado el recordatorio?\n5. ¿Ha configurado Vamos a hidratarnos en \"No optimizar\" en la configuración de optimización de batería de su teléfono?</string>
+    <string name="faq_answer_2">Debe tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar el objetivo de bebida haciendo clic en \"Mi perfil\".</string>
+    <string name="faq_answer_3">Debes tocar el menú y seleccionar \"Ajustes\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar la altura y el peso haciendo clic en \"Mi perfil\".</string>
+    <string name="faq_answer_4">Hay 2 formas:\n1. Puedes hacer clic en el icono más para añadir el registro de bebidas.\n2. También puedes añadir el registro de bebidas haciendo clic en el widget de la aplicación desde la pantalla de inicio de Android o en el widget de hoy desde iPhone.</string>
+    <string name="faq_answer_5">Puedes hacer clic en el icono de cambio de contenedor en la parte superior izquierda de la pantalla de inicio y, a continuación, tocar el contenedor de tu elección. También puedes agregar tu bebida personalizada.</string>
+    <string name="faq_answer_6">Puedes hacer clic en el menú y seleccionar Historial de bebidas y luego ver tu historial de bebidas.</string>
+    <string name="faq_answer_7">Puedes hacer clic en el menú y seleccionar la opción Informe de bebidas y luego ver usando las siguientes 3 opciones:\n1. Informe semanal\n2. Informe mensual\n3. Informe anual</string>
+    <string name="faq_answer_8">Debes tocar el menú y seleccionar \"Historial de bebidas\" de la lista de opciones del menú. Dentro del Historial de bebidas puedes tocar el ícono de eliminar contra la entrada incorrecta del registro de bebidas.</string>
+    <string name="faq_answer_9">Debes tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Configuración, puedes cambiar el clima haciendo clic en \"Mi perfil\".</string>
+    <string name="faq_answer_10">Debes tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes cambiar el estado activo/embarazo/lactancia haciendo clic en \"Mi Perfil\".</string>
+    <string name="faq_answer_11">Sí, el día antes de la donación la cantidad de agua a beber debe ser de al menos 3000 ml/101.44 fl oz, la frecuencia de notificaciones se duplicará.</string>
+    <string name="str_read_less">Leer menos</string>
+    <string name="str_read_more">Leer más</string>
+    <string name="open_gps_dialog">¿Quieres abrir la configuración del GPS?</string>
+    <string name="dialog_cancel_button">Cancelar</string>
+    <string name="dialog_ok_button">Aceptar</string>
     <string name="_4500">4500</string>
     <string name="_ml">ml</string>
     <string name="_08_00_am">08:00 AM</string>
-    <string name="_10_00_pm">10:00 PM</string>
-    <string name="_15_mins">15 Mins</string>
-    <string name="_1_hour">1 Hour</string>
-    <string name="male">Male</string>
-    <string name="name">Name</string>
-    <string name="str_no_reached_found">No reached goal record found</string>
+    <string name="_10_00_pm">22:00</string>
+    <string name="_15_mins">15 Min</string>
+    <string name="_1_hour">1 Hora</string>
+    <string name="male">Masculino</string>
+    <string name="name">Nombre</string>
+    <string name="str_no_reached_found">No se encontró ningún registro de objetivo alcanzado</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Reached\nGoal</string>
-    <string name="str_disable_tips">Disable Tips</string>
+    <string name="str_reached_goal">Objetivo alcanzado</string>
+    <string name="str_disable_tips">Deshabilitar propinas</string>
     <string name="_250_ml">250 ml</string>
-    <string name="notification_enabled">Notification Enabled</string>
-    <string name="notification_disabled">Notification Disabled</string>
-    <string name="str_not_mess_validation">The notification message cannot be empty</string>
-    <string name="str_not_mess">Notification Message</string>
-    <string name="notification">Notification</string>
-    <string name="str_notification_message">Notification Message</string>
-    <string name="select_wakeup_time">Select Wakeup Time</string>
-    <string name="select_bed_time">Select Bed Time</string>
-    <string name="migration">Welcome back to Let\'s Hydrate, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
-
-    <string-array name="CountryCodes">
-        <item>93,AF</item>
-        <item>355,AL</item>
-        <item>213,DZ</item>
-        <item>376,AD</item>
-        <item>244,AO</item>
-        <item>672,AQ</item>
-        <item>54,AR</item>
-        <item>374,AM</item>
-        <item>297,AW</item>
-        <item>61,AU</item>
-        <item>43,AT</item>
-        <item>994,AZ</item>
-        <item>973,BH</item>
-        <item>880,BD</item>
-        <item>375,BY</item>
-        <item>32,BE</item>
-        <item>501,BZ</item>
-        <item>229,BJ</item>
-        <item>975,BT</item>
-        <item>591,BO</item>
-        <item>387,BA</item>
-        <item>267,BW</item>
-        <item>55,BR</item>
-        <item>673,BN</item>
-        <item>359,BG</item>
-        <item>226,BF</item>
-        <item>95,MM</item>
-        <item>257,BI</item>
-        <item>855,KH</item>
-        <item>237,CM</item>
-        <item>1,CA</item>
-        <item>238,CV</item>
-        <item>236,CF</item>
-        <item>235,TD</item>
-        <item>56,CL</item>
-        <item>86,CN</item>
-        <item>61,CX</item>
-        <item>61,CC</item>
-        <item>57,CO</item>
-        <item>269,KM</item>
-        <item>242,CG</item>
-        <item>243,CD</item>
-        <item>682,CK</item>
-        <item>506,CR</item>
-        <item>385,HR</item>
-        <item>53,CU</item>
-        <item>357,CY</item>
-        <item>420,CZ</item>
-        <item>45,DK</item>
-        <item>253,DJ</item>
-        <item>670,TL</item>
-        <item>593,EC</item>
-        <item>20,EG</item>
-        <item>503,SV</item>
-        <item>240,GQ</item>
-        <item>291,ER</item>
-        <item>372,EE</item>
-        <item>251,ET</item>
-        <item>500,FK</item>
-        <item>298,FO</item>
-        <item>679,FJ</item>
-        <item>358,FI</item>
-        <item>33,FR</item>
-        <item>689,PF</item>
-        <item>241,GA</item>
-        <item>220,GM</item>
-        <item>995,GE</item>
-        <item>49,DE</item>
-        <item>233,GH</item>
-        <item>350,GI</item>
-        <item>30,GR</item>
-        <item>299,GL</item>
-        <item>502,GT</item>
-        <item>224,GN</item>
-        <item>245,GW</item>
-        <item>592,GY</item>
-        <item>509,HT</item>
-        <item>504,HN</item>
-        <item>852,HK</item>
-        <item>36,HU</item>
-        <item>91,IN</item>
-        <item>62,ID</item>
-        <item>98,IR</item>
-        <item>964,IQ</item>
-        <item>353,IE</item>
-        <item>44,IM</item>
-        <item>972,IL</item>
-        <item>39,IT</item>
-        <item>225,CI</item>
-        <item>81,JP</item>
-        <item>962,JO</item>
-        <item>7,KZ</item>
-        <item>254,KE</item>
-        <item>686,KI</item>
-        <item>965,KW</item>
-        <item>996,KG</item>
-        <item>856,LA</item>
-        <item>371,LV</item>
-        <item>961,LB</item>
-        <item>266,LS</item>
-        <item>231,LR</item>
-        <item>218,LY</item>
-        <item>423,LI</item>
-        <item>370,LT</item>
-        <item>352,LU</item>
-        <item>853,MO</item>
-        <item>389,MK</item>
-        <item>261,MG</item>
-        <item>265,MW</item>
-        <item>60,MY</item>
-        <item>960,MV</item>
-        <item>223,ML</item>
-        <item>356,MT</item>
-        <item>692,MH</item>
-        <item>222,MR</item>
-        <item>230,MU</item>
-        <item>262,YT</item>
-        <item>52,MX</item>
-        <item>691,FM</item>
-        <item>373,MD</item>
-        <item>377,MC</item>
-        <item>976,MN</item>
-        <item>382,ME</item>
-        <item>212,MA</item>
-        <item>258,MZ</item>
-        <item>264,NA</item>
-        <item>674,NR</item>
-        <item>977,NP</item>
-        <item>31,NL</item>
-        <item>599,AN</item>
-        <item>687,NC</item>
-        <item>64,NZ</item>
-        <item>505,NI</item>
-        <item>227,NE</item>
-        <item>234,NG</item>
-        <item>683,NU</item>
-        <item>850,KP</item>
-        <item>47,NO</item>
-        <item>968,OM</item>
-        <item>92,PK</item>
-        <item>680,PW</item>
-        <item>507,PA</item>
-        <item>675,PG</item>
-        <item>595,PY</item>
-        <item>51,PE</item>
-        <item>63,PH</item>
-        <item>870,PN</item>
-        <item>48,PL</item>
-        <item>351,PT</item>
-        <item>1,PR</item>
-        <item>974,QA</item>
-        <item>40,RO</item>
-        <item>7,RU</item>
-        <item>250,RW</item>
-        <item>590,BL</item>
-        <item>685,WS</item>
-        <item>378,SM</item>
-        <item>239,ST</item>
-        <item>966,SA</item>
-        <item>221,SN</item>
-        <item>381,RS</item>
-        <item>248,SC</item>
-        <item>232,SL</item>
-        <item>65,SG</item>
-        <item>421,SK</item>
-        <item>386,SI</item>
-        <item>677,SB</item>
-        <item>252,SO</item>
-        <item>27,ZA</item>
-        <item>82,KR</item>
-        <item>34,ES</item>
-        <item>94,LK</item>
-        <item>290,SH</item>
-        <item>508,PM</item>
-        <item>249,SD</item>
-        <item>597,SR</item>
-        <item>268,SZ</item>
-        <item>46,SE</item>
-        <item>41,CH</item>
-        <item>963,SY</item>
-        <item>886,TW</item>
-        <item>992,TJ</item>
-        <item>255,TZ</item>
-        <item>66,TH</item>
-        <item>228,TG</item>
-        <item>690,TK</item>
-        <item>676,TO</item>
-        <item>216,TN</item>
-        <item>90,TR</item>
-        <item>993,TM</item>
-        <item>688,TV</item>
-        <item>971,AE</item>
-        <item>256,UG</item>
-        <item>44,GB</item>
-        <item>380,UA</item>
-        <item>598,UY</item>
-        <item>1,US</item>
-        <item>998,UZ</item>
-        <item>678,VU</item>
-        <item>39,VA</item>
-        <item>58,VE</item>
-        <item>84,VN</item>
-        <item>681,WF</item>
-        <item>967,YE</item>
-        <item>260,ZM</item>
-        <item>263,ZW</item>
-    </string-array>
+    <string name="notification_enabled">Notificación habilitada</string>
+    <string name="notification_disabled">Notificación deshabilitada</string>
+    <string name="str_not_mess_validation">El mensaje de notificación no puede estar vacío</string>
+    <string name="str_not_mess">Mensaje de notificación</string>
+    <string name="notification">Notificación</string>
+    <string name="str_notification_message">Mensaje de notificación</string>
+    <string name="select_wakeup_time">Seleccionar hora de despertarse</string>
+    <string name="select_bed_time">Seleccionar hora de acostarse</string>
+    <string name="migration">Bienvenidos nuevamente a Vamos a hidratarnos, en la nueva versión se han agregado algunos datos para mejorar el cálculo de las necesidades de agua, insertarlos en las hojas y si lo deseas actualizar los preexistentes</string>
 
 </resources>
