@@ -20,6 +20,7 @@ import rpt.tool.mementobibere.utils.log.i
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.util.*
 
+
 class NotificationHelper(val ctx: Context) {
     private var notificationManager: NotificationManager? = null
 
@@ -96,6 +97,8 @@ class NotificationHelper(val ctx: Context) {
 
         if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
             return false
+        if(reachedDailyGoal(sqliteHelper) && SharedPreferencesManager.disableNotificationAtGoal)
+            return false
 
         val percent = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / totalIntake
 
@@ -113,11 +116,35 @@ class NotificationHelper(val ctx: Context) {
         val doNotDisturbOff = passedSeconds >= 0 && compareTimes(now, stop) <= 0
 
         val notify = doNotDisturbOff && (percent < currentTarget)
-        i("MementoBibere",
+        i("Let's Hydrate",
             "notify: $notify, dndOff: $doNotDisturbOff, " +
                     "currentTarget: $currentTarget, percent: $percent"
         )
         return notify
+    }
+
+    private fun reachedDailyGoal(sqliteHelper: SqliteHelper): Boolean {
+
+        if (SharedPreferencesManager.totalIntake == 0f) {
+            AppUtils.DAILY_WATER_VALUE = 2500f
+        } else {
+            AppUtils.DAILY_WATER_VALUE = SharedPreferencesManager.totalIntake
+        }
+
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("n_date ='" + AppUtils.getCurrentDate("dd-MM-yyyy")) + "'"
+        )
+
+        var drink_water = 0f
+        for (k in arr_data.indices) {
+            if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                    drink_water += arr_data[k]["n_intook"]!!.toFloat()
+            else drink_water += arr_data[k]["n_intook_OZ"]!!.toFloat()
+        }
+
+        return if (drink_water >= AppUtils.DAILY_WATER_VALUE) true
+        else false
     }
 
     private fun compareTimes(currentTime: Date, timeToRun: Date): Long {

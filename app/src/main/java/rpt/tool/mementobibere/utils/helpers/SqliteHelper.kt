@@ -361,7 +361,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     fun getIntook(date: String): Float {
-        val selectQuery = "SELECT $KEY_N_INTOOK FROM $TABLE_STATS WHERE $KEY_DATE = ?"
+        val selectQuery = "SELECT $KEY_N_INTOOK FROM $TABLE_STATS WHERE $KEY_N_DATE = ?"
         val db = this.readableDatabase
         var intook = 0f
         db.rawQuery(selectQuery, arrayOf(date)).use {

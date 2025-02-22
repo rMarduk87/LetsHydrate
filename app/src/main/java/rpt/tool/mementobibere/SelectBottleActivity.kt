@@ -77,7 +77,7 @@ class SelectBottleActivity : AppCompatActivity() {
 
             val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper!!.getdata(
                 "stats",
-                ("date ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
+                ("n_date ='" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)) + "'"
             )
 
             drink_water = 0f
@@ -149,7 +149,7 @@ class SelectBottleActivity : AppCompatActivity() {
                     "" + containerArrayList[selected_pos].containerValueOZ
                 )
                 initialValues.put("unit", "" + SharedPreferencesManager.unitString)
-                initialValues.put("date", "" + AppUtils.getCurrentDate("dd-MM-yyyy"))
+                initialValues.put("n_date", "" + AppUtils.getCurrentDate("dd-MM-yyyy"))
                 initialValues.put("time", "" + AppUtils.getCurrentTime(true))
                 initialValues.put("dateTime", "" +
                         AppUtils.getCurrentDate("dd-MM-yyyy HH:mm:ss"))

@@ -31,26 +31,6 @@ class AppUtils {
 
 
     companion object {
-        fun calculateIntake(weight: Int, workType: Int, weightUnit: Int, gender: Int, climate: Int,
-                            oldUnit: Int, unit: Int): Float {
-
-            var convertedWeight = weight.toPrincipalUnit(weightUnit)
-            var intake = (convertedWeight * 100 / 3.0)
-            if(gender == 1){
-                intake -= 450
-            }
-            when(workType){
-                1-> intake += 257
-                2-> intake += 515
-                3-> intake += 1030
-            }
-            when(climate){
-                0-> intake += 129
-                2-> intake += 257
-                3-> intake += 515
-            }
-            return intake.toFloat().toCalculatedValue(oldUnit,unit)
-        }
 
         @SuppressLint("SimpleDateFormat")
         fun getCurrentOnlyDate(): String? {
@@ -87,39 +67,7 @@ class AppUtils {
             return (w/2.205).toInt()
         }
 
-        fun kgToLbl(w: Int): Int {
-            return (w*2.205).toInt()
-        }
-
-        fun calculateExtensions(newUnitint: Int): String {
-            when(newUnitint)
-            {
-                0-> return "ml"
-                1-> return "0z UK"
-                2-> return "0z US"
-            }
-            return "ml"
-        }
-
-        fun calculateExtensionsForWeight(unit: Int, context: Context): String {
-            when(unit)
-            {
-                0-> return context.getString(R.string.kg)
-                1-> return context.getString(R.string.lbl)
-            }
-            return context.getString(R.string.kg)
-        }
-
-        fun firstConversion(value: Float, unit: Int): Float {
-            var converted = value
-            when(unit){
-                1-> converted = mlToOzUK(value)
-                2-> converted = mlToOzUS(value)
-            }
-            return converted
-        }
-
-        fun extractIntConversion(value: String?): Int {
+        private fun extractIntConversion(value: String?): Int {
             when(value)
             {
                 "ml" -> return 0
@@ -129,48 +77,6 @@ class AppUtils {
             return 0
         }
 
-        fun isValidDate(wakeupTime: String, sleepingTime: String): Boolean {
-
-            val calendarStringW = wakeupTime.split(":")
-            val calendarStringS = sleepingTime.split(":")
-
-            val calendarWake = Calendar.getInstance()
-            calendarWake.set(2023,9,27,calendarStringW[0].toInt(),calendarStringW[1].toInt())
-
-            val calendarSleep = Calendar.getInstance()
-            calendarSleep.set(2023,9,27,calendarStringS[0].toInt(),calendarStringS[1].toInt())
-
-            return !isSameDateTime(calendarWake,calendarSleep) &&
-                    !isCalendar2MajorOfCalendar(calendarWake,calendarSleep)
-        }
-
-        private fun isSameDateTime(cal1: Calendar, cal2: Calendar): Boolean {
-            // compare if is the same ERA, YEAR, DAY, HOUR, MINUTE and SECOND
-            return cal1[Calendar.HOUR_OF_DAY] == cal2[Calendar.HOUR_OF_DAY] &&
-                    cal1[Calendar.MINUTE] == cal2[Calendar.MINUTE]
-        }
-
-        private fun isCalendar2MajorOfCalendar(cal1: Calendar, cal2: Calendar): Boolean {
-            // compare if is the same ERA, YEAR, DAY, HOUR, MINUTE and SECOND
-            return cal2[Calendar.HOUR_OF_DAY] > cal1[Calendar.HOUR_OF_DAY] &&
-                            cal2[Calendar.MINUTE] > cal1[Calendar.MINUTE]
-        }
-
-        fun getMaxWeight(weightUnit: Int): Int {
-            when(weightUnit){
-                0-> return 200
-                1-> return 441
-            }
-            return 200
-        }
-
-        fun getMinWeight(weightUnit: Int): Int {
-            when(weightUnit){
-                0-> return 20
-                1-> return 44
-            }
-            return 20
-        }
 
         @SuppressLint("SimpleDateFormat")
         fun getCurrentDate(): String? {
@@ -179,146 +85,10 @@ class AppUtils {
             return df.format(c)
         }
 
-        fun getMaxDate(): Long {
-            val calendarTodayMinOne = Calendar.getInstance()
-            calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, -1)
-            return calendarTodayMinOne.timeInMillis
-        }
-
         fun getMinDate(): Long {
             val calendarTodayMinOne = Calendar.getInstance()
             calendarTodayMinOne.add(Calendar.DAY_OF_MONTH, 1)
             return calendarTodayMinOne.timeInMillis
-        }
-
-        fun convertToSelected(selectedOption: Float, unit: String): Float {
-            when(extractIntConversion(unit)){
-                0-> return extractSelection(selectedOption)
-                1-> return extractSelection(ozUKToMl(selectedOption))
-                2-> return extractSelection(ozUSToMl(selectedOption))
-            }
-            return selectedOption
-        }
-
-        private fun extractSelection(selectedOption: Float): Float {
-            return when(selectedOption){
-                50f->0f
-                100f->1f
-                150f->2f
-                200f->3f
-                250f->4f
-                300f->5f
-                350f->6f
-                else->7f
-            }
-        }
-
-        fun calculateOption(inTook: Float, totalIntake: Float): Float {
-            return totalIntake - inTook
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        @Throws(ParseException::class)
-        fun getDateList(strStartDate: String?, strEndDate: String?, formatOutput: String):
-                List<MonthChartModel> {
-
-            val dateList: MutableList<MonthChartModel> = ArrayList()
-            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val outputFormatterIndex = SimpleDateFormat("dd-MM-yyyy")
-            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
-
-            val startDate: Date? = strStartDate?.let { inputFormatter.parse(it) }
-            val endDate: Date? = strEndDate?.let { inputFormatter.parse(it) }
-
-            val startWith = Calendar.getInstance()
-            if (startDate != null) {
-                startWith.time = startDate
-            }
-            startWith[Calendar.DAY_OF_MONTH] = 1
-            while (startWith.time.time <= endDate!!.time) {
-                val dataForOutputIndex = outputFormatterIndex.format(startWith.time)
-                val dataForOutputText = outputFormatter.format(startWith.time)
-                dateList.add(MonthChartModel(dataForOutputIndex,dataForOutputText))
-                startWith
-                    .add(Calendar.MONTH, 1)
-            }
-            return dateList
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        fun getDateListForYear(strStartDate: String?, strEndDate: String?, formatOutput: String):
-                List<String> {
-
-            val dateList: MutableList<String> = ArrayList()
-            val inputFormatter: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val outputFormatter: DateFormat = SimpleDateFormat(formatOutput)
-
-            val startDate: Date? = strStartDate?.let { inputFormatter.parse(it) }
-            val endDate: Date? = strEndDate?.let { inputFormatter.parse(it) }
-
-            val startWith = Calendar.getInstance()
-            if (startDate != null) {
-                startWith.time = startDate
-            }
-            startWith[Calendar.DAY_OF_MONTH] = 1
-            while (startWith.time.time <= endDate!!.time) {
-                val dataForOutput = outputFormatter.format(startWith.time)
-                if(!dateList.contains(dataForOutput)){
-                    dateList.add(dataForOutput)
-                }
-                startWith
-                    .add(Calendar.MONTH, 1)
-            }
-            return dateList
-        }
-
-        @SuppressLint("SimpleDateFormat")
-        fun getWeekList(strStartDate: String): List<String> {
-
-            val now = Calendar.getInstance()
-
-            val format = SimpleDateFormat("dd-MM-yyyy")
-            val startDate: Date? = format.parse(strStartDate)
-
-            if (startDate != null) {
-                now.time = startDate
-            }
-
-            val dateList: MutableList<String> = ArrayList()
-            val delta = -now[Calendar.DAY_OF_WEEK] + 1 //add 2 if your week start on monday
-
-            now.add(Calendar.DAY_OF_MONTH, delta)
-            for (i in 0..6) {
-                dateList.add( format.format(now.time))
-                now.add(Calendar.DAY_OF_MONTH, 1)
-            }
-
-            return dateList
-        }
-
-        fun getTotalDays(currentDate: String, year: String): Int {
-            val cal = GregorianCalendar()
-            val feb = if(cal.isLeapYear(year.toInt())){
-                29
-            }
-            else{
-                28
-            }
-            when(currentDate.toInt()){
-                1-> return 31
-                2-> return feb
-                3-> return 31
-                4-> return 30
-                5-> return 31
-                6-> return 30
-                7-> return 31
-                8-> return 31
-                9-> return 30
-                10-> return 31
-                11-> return 30
-                12-> return 31
-            }
-            return 0
         }
 
         fun checkBlankData(data: String?): Boolean {
@@ -591,8 +361,6 @@ class AppUtils {
             var parsed: Date? = null
             var outputDate = ""
 
-            /*SimpleDateFormat df_input = new SimpleDateFormat(inputFormat, Locale.getDefault());
-        SimpleDateFormat df_output = new SimpleDateFormat(outputFormat, Locale.getDefault());*/
             val df_input = SimpleDateFormat(inputFormat, Locale.getDefault())
             val df_output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
@@ -608,8 +376,7 @@ class AppUtils {
 
         @SuppressLint("SimpleDateFormat")
         fun DayDifferent(str_date1: String?, str_date2: String?): Long {
-            /*String inputString1 = "23 01 1997";
-		String inputString2 = "27 04 1997";*/
+
             var diff: Long = 0
             var days_diff: Long = 0
             val myFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -628,8 +395,6 @@ class AppUtils {
 
         @SuppressLint("SimpleDateFormat")
         fun DayDifferent(str_date1: String?, str_date2: String?, format: String?): Long {
-            /*String inputString1 = "23 01 1997";
-		String inputString2 = "27 04 1997";*/
             var diff: Long = 0
             var days_diff: Long = 0
             val myFormat = SimpleDateFormat(format, Locale.getDefault())
@@ -663,7 +428,6 @@ class AppUtils {
                 e.printStackTrace()
             }
 
-            //long days1 = (convertedDate.getTime() - serverDate.getTime());
             val days1 = (serverDate.time - convertedDate.time)
 
             val seconds = days1 / 1000
@@ -917,36 +681,15 @@ class AppUtils {
             //2.20462262
         }
 
-        /**
-         *
-         * @param cm - centimeters
-         * @return feet rounded to 1 decimal place
-         */
-        /*public static double cmToFeetConverter(double cm) {
-        return format(cm * 0.032808399 );
-    }*/
         fun cmToFeetConverter(cm: Double): Double {
             return format(cm / 30)
         }
 
-        /**
-         *
-         * @param feet - feet
-         * @return centimeters rounded to 1 decimal place
-         */
-        /*public static double feetToCmConverter(double feet) {
-        return format(feet * 30.48 );
-    }*/
+
         fun feetToCmConverter(feet: Double): Double {
             return format(feet * 30)
         }
 
-        /**
-         *
-         * @param height in **cm**
-         * @param weight in **kilograms**
-         * @return BMI index with 1 decimal place
-         */
         fun getBMIKg(height: Double, weight: Double): Double {
             val meters = height / 100
             return format(weight / meters.pow(2.0))
@@ -989,24 +732,26 @@ class AppUtils {
 
             d("getSound", "" + SharedPreferencesManager.reminderSound)
 
-            if (SharedPreferencesManager.reminderSound == 1) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bell)
-            else if (SharedPreferencesManager.reminderSound == 2) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.blop)
-            else if (SharedPreferencesManager.reminderSound == 3) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bong)
-            else if (SharedPreferencesManager.reminderSound == 4) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.click)
-            else if (SharedPreferencesManager.reminderSound == 5) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.echo_droplet)
-            else if (SharedPreferencesManager.reminderSound == 6) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.mario_droplet)
-            else if (SharedPreferencesManager.reminderSound == 7) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.ship_bell)
-            else if (SharedPreferencesManager.reminderSound == 8) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.simple_droplet)
-            else if (SharedPreferencesManager.reminderSound == 9) uri =
-                Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.tiny_droplet)
+            when (SharedPreferencesManager.reminderSound) {
+                1 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bell)
+                2 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.blop)
+                3 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bong)
+                4 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.click)
+                5 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.echo_droplet)
+                6 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.mario_droplet)
+                7 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.ship_bell)
+                8 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.simple_droplet)
+                9 -> uri =
+                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.tiny_droplet)
+            }
 
             return uri
         }
@@ -1024,6 +769,7 @@ class AppUtils {
         const val WORK_TIME_KEY = "worktime"
         const val TOTAL_INTAKE_KEY = "totalintake"
         const val NOTIFICATION_STATUS_KEY = "notificationstatus"
+        const val DISABLE_NOTIFICATION = "disable_notification_at__goal"
         const val NOTIFICATION_FREQUENCY_KEY = "notificationfrequency"
         const val NOTIFICATION_MSG_KEY = "notificationmsg"
         const val SLEEPING_TIME_KEY = "sleepingtime"

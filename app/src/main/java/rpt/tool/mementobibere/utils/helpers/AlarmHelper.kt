@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import rpt.tool.mementobibere.utils.AppUtils.Companion.notificationId
+import rpt.tool.mementobibere.utils.log.i
 import java.util.concurrent.TimeUnit
 import rpt.tool.mementobibere.utils.notifications.NotifierReceiver
 import rpt.tool.mementobibere.utils.notifications.BootReceiver
@@ -26,12 +27,8 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
-        val intFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        val intFlags =
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        }
-        else{
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
 
         val pendingAlarmIntent = PendingIntent.getBroadcast(
             context,
@@ -40,7 +37,7 @@ class AlarmHelper {
             intFlags
         )
 
-        Log.i("AlarmHelper", "Setting Alarm Interval to: $notificationFrequency minutes")
+        i("AlarmHelper", "Setting Alarm Interval to: $notificationFrequency minutes")
 
         alarmManager!!.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -64,12 +61,8 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
-        val intFlags = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        val intFlags =
             0 or PendingIntent.FLAG_IMMUTABLE
-        }
-        else{
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
 
         val pendingAlarmIntent = PendingIntent.getBroadcast(
             context,
@@ -87,7 +80,7 @@ class AlarmHelper {
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP
         )
-        Log.i("AlarmHelper", "Cancelling alarms")
+        i("AlarmHelper", "Cancelling alarms")
     }
 
     fun checkAlarm(context: Context): Boolean {
@@ -95,11 +88,8 @@ class AlarmHelper {
         val alarmIntent = Intent(context, NotifierReceiver::class.java)
         alarmIntent.action = ACTION_BD_NOTIFICATION
 
-        val intFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val intFlags =
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        } else {
-            PendingIntent.FLAG_NO_CREATE
-        }
 
         return PendingIntent.getBroadcast(
             context, notificationId,

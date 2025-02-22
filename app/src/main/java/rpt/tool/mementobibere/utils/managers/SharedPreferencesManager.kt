@@ -111,5 +111,9 @@ object SharedPreferencesManager {
     var reminderSound: Int
         get() = sharedPreferences.getInt(AppUtils.REMINDER_SOUND,0)
         set(value) = sharedPreferences.edit().putInt(AppUtils.REMINDER_SOUND, value).apply()
+    var disableNotificationAtGoal: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.DISABLE_NOTIFICATION,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.DISABLE_NOTIFICATION, value).apply()
+
 
 }

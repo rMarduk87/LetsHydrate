@@ -52,10 +52,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(FragmentSettingsB
                 .actionSettingsFragmentToProfileFragment())
         }
 
-        binding.switchNotification.setChecked(SharedPreferencesManager.notificationStatus)
+        binding.switchNotification.setChecked(SharedPreferencesManager.disableNotificationAtGoal)
 
         binding.switchNotification.setOnCheckedChangeListener { buttonView, isChecked ->
-            SharedPreferencesManager.notificationStatus = isChecked
+            SharedPreferencesManager.disableNotificationAtGoal = isChecked
         }
 
         binding.switchSound.setChecked(SharedPreferencesManager.disableSoundWhenAddWater)
