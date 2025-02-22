@@ -99,7 +99,9 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
         val start_idx = page * perPage
 
         val query =
-            "SELECT * FROM intake_reached ORDER BY datetime(date) DESC limit $start_idx,$perPage"
+            "SELECT * FROM intake_reached ORDER BY datetime(substr(date, 7, 4) || '-' || " +
+                    "substr(date, 4, 2) || '-' || substr(date, 1, 2) || ' ' || " +
+                    "substr(date, 12, 8)) ASC limit $start_idx,$perPage"
 
         val arr_data = sqliteHelper!!.get(query)
 

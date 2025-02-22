@@ -61,6 +61,7 @@ import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.log.v
+import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
@@ -238,6 +239,8 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         if(SharedPreferencesManager.userName.isEmpty() ||
             SharedPreferencesManager.personHeight.isEmpty()){
             SharedPreferencesManager.isMigration = true
+            val migrationManager = MigrationManager()
+            migrationManager.migrate()
             startActivity(Intent(requireActivity(),InitUserInfoActivity::class.java))
         }
 

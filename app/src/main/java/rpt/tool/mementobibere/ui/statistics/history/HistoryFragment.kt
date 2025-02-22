@@ -61,8 +61,11 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
                     ) { dialog, whichButton ->
                         sqliteHelper!!.remove("stats", "id=" + history!!.id)
                         if(checkIfRemoveReached(history.drinkDate)){
-                            sqliteHelper!!.remove("intake_reached",
-                                "n_date=" + history.drinkDate)
+                            history.drinkDate?.let {
+                                sqliteHelper!!.remove("intake_reached",
+                                    "date=?", it
+                                )
+                            }
                         }
                         page = 0
                         isLoading = true
@@ -122,11 +125,16 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
     private fun checkIfRemoveReached(drinkDate: String?): Boolean {
         val mes_unit: String = AppUtils.WATER_UNIT_VALUE
         val arr_data2: ArrayList<HashMap<String, String>> =
-            sqliteHelper!!.getdata("intake_reached",
+            sqliteHelper!!.getdata("stats",
                 "date ='$drinkDate'"
             )
 
         var tot = 0f
+
+        if(arr_data2.size==0){
+            return true
+        }
+
 
         for (j in arr_data2.indices) {
             tot += if (mes_unit.equals(

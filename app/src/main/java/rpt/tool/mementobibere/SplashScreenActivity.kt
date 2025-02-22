@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
     var handler: Handler? = null
     var runnable: Runnable? = null
     var millisecond: Int = 1000
-    var migrationManager: MigrationManager? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +54,6 @@ class SplashScreenActivity : AppCompatActivity() {
     @SuppressLint("UnsafeIntentLaunch")
     override fun onResume() {
         super.onResume()
-
-        migrationManager = MigrationManager()
-        migrationManager!!.migrate()
 
         if (SharedPreferencesManager.totalIntake == 0f) {
             AppUtils.DAILY_WATER_VALUE = 2500f

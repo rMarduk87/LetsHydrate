@@ -191,16 +191,21 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                     val today = it.getString(8)
                     val unit = it.getString(4)
                     if(intook >= today){
-                        val initialValues = ContentValues()
+                        val selectQueryReached = "SELECT * FROM $TABLE_REACHED WHERE $KEY_DATE=?"
+                        db.rawQuery(selectQueryReached, arrayOf(date)).use { it ->
+                            if (!it.moveToFirst()) {
+                                val initialValues = ContentValues()
 
-                        initialValues.put(
-                            KEY_DATE,
-                            "" + date
-                        )
+                                initialValues.put(
+                                    KEY_DATE,
+                                    "" + date
+                                )
 
-                        initialValues.put(KEY_QTA, "" + intook)
-                        initialValues.put(KEY_UNIT, unit)
-                        insert("intake_reached", initialValues,db)
+                                initialValues.put(KEY_QTA, "" + intook)
+                                initialValues.put(KEY_UNIT, unit)
+                                insert("intake_reached", initialValues, db)
+                            }
+                        }
                     }
                     it.moveToNext()
                 }
@@ -397,9 +402,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     private fun getAllReached(orderBy: Boolean = false, db: SQLiteDatabase? = null) : Cursor{
         var selectQuery = "SELECT * FROM $TABLE_REACHED"
         if(orderBy){
-            selectQuery += " ORDER BY datetime(substr(date, 7, 4) || '-' ||" +
-                    " substr(date, 4, 2) || '-' || substr(date, 1, 2) || ' ' || " +
-                    "substr(date, 12, 8)) ASC"
+            selectQuery += " ORDER BY datetime(substr(date, 7, 4) || '-' || substr(date, 4, 2) || '-' || substr(date, 1, 2) || ' ' || substr(date, 12, 8)) ASC"
         }
         val dbToUse = db ?: this.readableDatabase
         return dbToUse.rawQuery(selectQuery, null)
@@ -658,6 +661,12 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     fun remove(tableName:String,where:String) : Int {
         val db = this.writableDatabase
         val response = db.delete(tableName,where,null)
+        db.close()
+        return response
+    }
+    fun remove(tableName:String,where:String,value:String) : Int {
+        val db = this.writableDatabase
+        val response = db.delete(tableName,where, arrayOf(value))
         db.close()
         return response
     }
