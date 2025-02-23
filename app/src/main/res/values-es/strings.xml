@@ -226,6 +226,7 @@
     <string name="faq_question_9">Cómo cambiar ¿Qué tiempo hace?</string>
     <string name="faq_question_10">¿Cómo cambiar el estado de activa/embarazo/lactancia?</string>
     <string name="faq_question_11">Soy donante de sangre, ¿hay alguna precaución importante que deba tomar?</string>
+    <string name="faq_question_12">Bebí todos los requisitos pero no recuerdo todos los pasos individuales, ¿qué puedo hacer?</string>
     <string name="faq_answer_1">Hay varias razones. Puede verificar la configuración de la siguiente manera:\n1. ¿Configuró la hora de inicio y finalización del recordatorio de manera adecuada?\n2. ¿Ha habilitado Vamos a hidratarnos para que se inicie automáticamente en su teléfono?\n3. ¿Ha instalado aplicaciones de terceros como CleanMaster que pueden prohibir que Vamos a hidratarnos se ejecute en segundo plano y envíe notificaciones?\n4. ¿Ha desactivado el recordatorio?\n5. ¿Ha configurado Vamos a hidratarnos en \"No optimizar\" en la configuración de optimización de batería de su teléfono?</string>
     <string name="faq_answer_2">Debe tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar el objetivo de bebida haciendo clic en \"Mi perfil\".</string>
     <string name="faq_answer_3">Debes tocar el menú y seleccionar \"Ajustes\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar la altura y el peso haciendo clic en \"Mi perfil\".</string>
@@ -237,6 +238,7 @@
     <string name="faq_answer_9">Debes tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Configuración, puedes cambiar el clima haciendo clic en \"Mi perfil\".</string>
     <string name="faq_answer_10">Debes tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes cambiar el estado activo/embarazo/lactancia haciendo clic en \"Mi Perfil\".</string>
     <string name="faq_answer_11">Sí, el día antes de la donación la cantidad de agua a beber debe ser de al menos 3000 ml/101.44 fl oz, la frecuencia de notificaciones se duplicará.</string>
+    <string name="faq_answer_12">Puedes hacer clic en la opción \"Beber todo\".</string>
     <string name="str_read_less">Leer menos</string>
     <string name="str_read_more">Leer más</string>
     <string name="open_gps_dialog">¿Quieres abrir la configuración del GPS?</string>
@@ -253,7 +255,7 @@
     <string name="str_no_reached_found">No se encontró ningún registro de objetivo alcanzado</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Objetivo alcanzado</string>
+    <string name="str_reached_goal">Terminación</string>
     <string name="str_disable_tips">Deshabilitar propinas</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notificación habilitada</string>
@@ -265,5 +267,7 @@
     <string name="select_wakeup_time">Seleccionar hora de despertarse</string>
     <string name="select_bed_time">Seleccionar hora de acostarse</string>
     <string name="migration">Bienvenidos nuevamente a Vamos a hidratarnos, en la nueva versión se han agregado algunos datos para mejorar el cálculo de las necesidades de agua, insertarlos en las hojas y si lo deseas actualizar los preexistentes</string>
+    <string name="drink_all">Beber todo</string>
+    <string name="str_clicked">Contenedores</string>
 
 </resources>

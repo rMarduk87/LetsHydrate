@@ -226,6 +226,7 @@
     <string name="faq_question_9">Come cambiare la condizione climatica?</string>
     <string name="faq_question_10">Come cambiare lo stato attivo/incinta/in allattamento?</string>
     <string name="faq_question_11">Sono un donatore di sangue, ci sono delle precauzioni importanti da prendere?</string>
+    <string name="faq_question_12">Ho bevuto tutto il fabbisogno ma non ricordo tutti i singoli passaggi, cosa posso fare?</string>
     <string name="faq_answer_1">Ci sono diversi motivi. Puoi controllare le impostazioni come segue:\n1. Hai impostato correttamente l\'ora di inizio e fine del promemoria?\n2. Hai abilitato Idratiamoci per l\'avvio automatico sul tuo telefono?\n3. Hai installato app di terze parti come CleanMaster che potrebbero impedire a Idratiamoci di funzionare in background e inviare notifiche?\n4. Hai disattivato il promemoria?\n5. Hai impostato Idratiamoci su \"Non ottimizzare\" nelle impostazioni di ottimizzazione della batteria del tuo telefono?</string>
     <string name="faq_answer_2">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare l\'obiettivo giornaliero di assunzione acqua cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_3">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare altezza e peso cliccando su \"Il mio profilo\".</string>
@@ -237,6 +238,7 @@
     <string name="faq_answer_9">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno di Impostazioni, puoi modificare la condizione climatica cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_10">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. Nelle Impostazioni, puoi modificare lo stato attivo/incinta/in allattamento cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_11">Sì, il giorno prima della donazione la quantità di acqua da bere deve essere di almeno 3000 ml/101,44 fl oz, la frequenza delle notifiche raddoppierà.</string>
+    <string name="faq_answer_12">Puoi cliccare sull\'opzione \"Bevi tutto\".</string>
     <string name="str_read_less">Leggi di meno</string>
     <string name="str_read_more">Leggi di più</string>
     <string name="open_gps_dialog">Vuoi aprire le impostazioni GPS?</string>
@@ -253,7 +255,7 @@
     <string name="str_no_reached_found">Nessun record di obiettivo raggiunto trovato</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Obiettivo\nraggiunto</string>
+    <string name="str_reached_goal">Completamento</string>
     <string name="str_disable_tips">Disabilita suggerimenti</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notifica abilitata</string>
@@ -265,6 +267,8 @@
     <string name="select_wakeup_time">Seleziona l\'orario di sveglia</string>
     <string name="select_bed_time">Seleziona l\'orario nel quale vai a dormire</string>
     <string name="migration">Bentornato\a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi puotrai aggiornare i dati preesistenti</string>
+    <string name="drink_all">Bevi tutto</string>
+    <string name="str_clicked">Container</string>
 
 
 </resources>

@@ -67,6 +67,13 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
                                 )
                             }
                         }
+                        if(checkIfRemoveDrinkAll(history.drinkDate)){
+                            history.drinkDate?.let {
+                                sqliteHelper!!.remove("drink_all",
+                                    "date=?", it
+                                )
+                            }
+                        }
                         page = 0
                         isLoading = true
                         histories.clear()
@@ -122,11 +129,13 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
         })
     }
 
+
+
     private fun checkIfRemoveReached(drinkDate: String?): Boolean {
         val mes_unit: String = AppUtils.WATER_UNIT_VALUE
         val arr_data2: ArrayList<HashMap<String, String>> =
             sqliteHelper!!.getdata("stats",
-                "date ='$drinkDate'"
+                "n_date ='$drinkDate'"
             )
 
         var tot = 0f
@@ -156,6 +165,16 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
             arr_data2[0]["n_totalintake_OZ"]!!.toFloat()
 
         return today < tot
+    }
+
+    private fun checkIfRemoveDrinkAll(drinkDate: String?): Boolean {
+        val mes_unit: String = AppUtils.WATER_UNIT_VALUE
+        val arr_data2: ArrayList<HashMap<String, String>> =
+            sqliteHelper!!.getdata("stats",
+                "n_date ='$drinkDate'"
+            )
+
+        return arr_data2.size==0
     }
 
     private fun finish() {

@@ -67,17 +67,6 @@ class AppUtils {
             return (w/2.205).toInt()
         }
 
-        private fun extractIntConversion(value: String?): Int {
-            when(value)
-            {
-                "ml" -> return 0
-                "0z UK" -> return 1
-                "0z US" -> return 2
-            }
-            return 0
-        }
-
-
         @SuppressLint("SimpleDateFormat")
         fun getCurrentDate(): String? {
             val c = Calendar.getInstance().time
@@ -754,6 +743,10 @@ class AppUtils {
             }
 
             return uri
+        }
+
+        fun calculateWaterOption(countDrinkAfterAddCurrentWater: Float, dailyWaterValue: Float): Float {
+            return dailyWaterValue - countDrinkAfterAddCurrentWater
         }
 
 

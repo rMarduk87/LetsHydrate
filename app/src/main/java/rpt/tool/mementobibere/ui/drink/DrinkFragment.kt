@@ -2,6 +2,7 @@ package rpt.tool.mementobibere.ui.drink
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.NotificationManager
@@ -835,6 +836,22 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             SharedPreferencesManager.menu = 6
             startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
+
+        binding.openClickedContainer.setOnClickListener {
+            SharedPreferencesManager.menu = 8
+            val li = LayoutInflater.from(requireContext())
+            val promptsView = li.inflate(R.layout.dialog_coming_soon, null)
+
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setView(promptsView)
+
+            alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+            }
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
         
         binding.addWater.setOnClickListener(View.OnClickListener {
             if (containerArrayList.size > 0) {
@@ -864,6 +881,126 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 }
             }
         })
+
+        binding.drinkAllBlock.setOnClickListener {
+            if(notExistsDrinkAll() && drink_water <= AppUtils.DAILY_WATER_VALUE){
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)
+                    && drink_water > 8000
+                ) {
+                    showDailyMoreThanTargetDialog()
+                    btnclick = true
+                    return@setOnClickListener
+                } else if (!(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                    && drink_water > 270
+                ) {
+                    showDailyMoreThanTargetDialog()
+                    btnclick = true
+                    return@setOnClickListener
+                }
+
+                var count_drink_after_add_current_water = drink_water
+                count_drink_after_add_current_water += AppUtils.calculateWaterOption(
+                    count_drink_after_add_current_water,AppUtils.DAILY_WATER_VALUE)
+
+                val option = count_drink_after_add_current_water-drink_water
+
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)
+                    && count_drink_after_add_current_water > 8000
+                ) {
+                    if (drink_water >= 8000) showDailyMoreThanTargetDialog()
+                    else if (AppUtils.DAILY_WATER_VALUE < (8000 -
+                                ("" + containerArrayList[selected_pos].containerValue).toFloat()))
+                        showDailyMoreThanTargetDialog()
+                } else if (!(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                    && count_drink_after_add_current_water > 270
+                ) {
+                    if (drink_water >= 270) showDailyMoreThanTargetDialog()
+                    else if (AppUtils.DAILY_WATER_VALUE < (270 -
+                                ("" + containerArrayList[selected_pos].containerValueOZ).toFloat()))
+                        showDailyMoreThanTargetDialog()
+                }
+
+                if (drink_water == 8000f && AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+                    btnclick = true
+                    // remove pending notifications
+                    val mNotificationManager : NotificationManager = requireActivity()
+                        .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+                    mNotificationManager.cancelAll()
+                    return@setOnClickListener
+                } else if (drink_water == 270f && !AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+                    btnclick = true
+                    // remove pending notifications
+                    val mNotificationManager : NotificationManager = requireActivity()
+                        .getSystemService(AppCompatActivity.NOTIFICATION_SERVICE) as NotificationManager
+                    mNotificationManager.cancelAll()
+                    return@setOnClickListener
+                }
+
+                if (!SharedPreferencesManager.disableSoundWhenAddWater) {
+                    ringtone!!.stop()
+                    ringtone!!.play()
+                }
+
+                val initialValues = ContentValues()
+
+                initialValues.put("n_intook", "" + if(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                option else AppUtils.ozUSToMl(option))
+                initialValues.put(
+                    "n_intook_OZ",
+                    "" + if(AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                        AppUtils.mlToOzUS(option) else option)
+
+                initialValues.put(
+                    "n_date",
+                    "" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                )
+                initialValues.put("time", "" + AppUtils.getCurrentTime(true))
+                initialValues.put(
+                    "dateTime", (("" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                            ) + " " + AppUtils.getCurrentDate("HH:mm:ss"))
+                )
+
+                if (AppUtils.WATER_UNIT_VALUE.equals("ml",true)) {
+                    initialValues.put("n_totalintake", "" + AppUtils.DAILY_WATER_VALUE)
+                    initialValues.put(
+                        "n_totalintake_OZ",
+                        "" + AppUtils.mlToOzUS(AppUtils.DAILY_WATER_VALUE)
+                    )
+                } else {
+                    initialValues.put(
+                        "n_totalintake",
+                        "" + AppUtils.ozUSToMl(AppUtils.DAILY_WATER_VALUE)
+                    )
+                    initialValues.put("n_totalintake_OZ", "" + AppUtils.DAILY_WATER_VALUE)
+                }
+
+                sqliteHelper.insert("stats", initialValues)
+
+                val initialValuesDrinkAll = ContentValues()
+
+                initialValuesDrinkAll.put(
+                    "date",
+                    "" + AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)
+                )
+
+                sqliteHelper.insert("drink_all", initialValuesDrinkAll)
+
+                addReachedUpdata(containerArrayList[selected_pos])
+
+                count_today_drink(true)
+
+                val intent = Intent(requireActivity(), NewAppWidget::class.java)
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+                val ids = AppWidgetManager.getInstance(requireActivity()).getAppWidgetIds(
+                    ComponentName(
+                        requireActivity(),
+                        NewAppWidget::class.java
+                    )
+                )
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                requireActivity().sendBroadcast(intent)
+            }
+        }
 
         load_all_container()
 
@@ -933,6 +1070,14 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                     }
                 }
             })
+    }
+
+    private fun notExistsDrinkAll(): Boolean {
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "drink_all",
+            "date ='$dateNow'"
+        )
+        return arr_data.size==0
     }
 
     private fun count_today_drink(isRegularAnimation: Boolean) {

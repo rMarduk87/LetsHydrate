@@ -226,6 +226,7 @@
     <string name="faq_question_9">Comment modifier météo?</string>
     <string name="faq_question_10">Comment modifier le statut actif/enceinte/allaitement?</string>
     <string name="faq_question_11">Je suis donneur de sang, y a-t-il des précautions importantes à prendre?</string>
+    <string name="faq_question_12">J\'ai bu tous les ingrédients requis mais je ne me souviens pas de toutes les étapes individuelles, que puis-je faire?</string>
     <string name="faq_answer_1">Il y a plusieurs raisons. Vous pouvez vérifier les paramètres comme suit:\n1. Avez-vous défini correctement l\'heure de début et de fin du rappel?\n2. Avez-vous activé le démarrage automatique de Hydratons-nous sur votre téléphone?\n3. Avez-vous installé des applications tierces comme CleanMaster qui peuvent interdire à Hydratons-nous de s\'exécuter en arrière-plan et d\'envoyer des notifications?\n4. Avez-vous désactivé le rappel?\n5. Avez-vous défini Hydratons-nouse sur «Ne pas optimiser» dans les paramètres d\'optimisation de la batterie de votre téléphone?</string>
     <string name="faq_answer_2">Vous devez appuyer sur le menu et sélectionner «Paramètres» dans la liste des options du menu. Dans les paramètres, vous pouvez modifier l\'objectif de boisson en cliquant sur « Mon profil ».</string>
     <string name="faq_answer_3">Vous devez appuyer sur le menu et sélectionner « Paramètres » dans la liste des options du menu. Dans les paramètres, vous pouvez modifier la taille et le poids en cliquant sur « Mon profil ».</string>
@@ -237,6 +238,7 @@
     <string name="faq_answer_9">Vous devez appuyer sur le menu et sélectionner «Paramètres» dans la liste des options du menu. Dans les paramètres, vous pouvez modifier la météo en cliquant sur «Mon profil».</string>
     <string name="faq_answer_10">Vous devez appuyer sur le menu et sélectionner «Paramètres» dans la liste des options du menu. Dans les paramètres, vous pouvez modifier le statut actif / enceinte / allaitant en cliquant sur « Mon profil ».</string>
     <string name="faq_answer_11">Oui, la veille du don, la quantité d\'eau à boire doit être d\'au moins 3000 ml / 101,44 fl oz, la fréquence des notifications doublera.</string>
+    <string name="faq_answer_12">Vous pouvez cliquer sur l\'option \"Boire tout\".</string>
     <string name="str_read_less">Lire moins</string>
     <string name="str_read_more">Lire plus</string>
     <string name="open_gps_dialog">Voulez-vous ouvrir le paramètre GPS?</string>
@@ -253,7 +255,7 @@
     <string name="str_no_reached_found">Aucun objectif atteint n\'a été enregistré</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Objectif\natteint</string>
+    <string name="str_reached_goal">Achèvement</string>
     <string name="str_disable_tips">Désactiver les pourboires</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notification activée</string>
@@ -265,6 +267,8 @@
     <string name="select_wakeup_time">Sélectionner l\'heure de réveil</string>
     <string name="select_bed_time">Sélectionner l\'heure du coucher</string>
     <string name="migration">Bienvenue à Hydratons-nous, dans la nouvelle version, certaines données ont été ajoutées pour améliorer le calcul des besoins en eau, insérez-les dans les feuilles et si vous le souhaitez, mettez à jour celles préexistantes</string>
+    <string name="drink_all">Boire tout</string>
+    <string name="str_clicked">Conteneurs</string>
 
 
 </resources>

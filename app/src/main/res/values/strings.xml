@@ -226,6 +226,7 @@
     <string name="faq_question_9">How to change weather?</string>
     <string name="faq_question_10">How to change active / pregnant / breastfeeding status?</string>
     <string name="faq_question_11">I am a blood donor, are there any important precautions to take?</string>
+    <string name="faq_question_12">I drank all the requirements but I don\'t remember all the individual steps, what can I do?</string>
     <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start end time appropriately?\n2. Have you enabled Let\'s Hydrate to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Let\'s Hydrate running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Let\'s Hydrate to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
     <string name="faq_answer_2">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit the drink target by clicking on \"My Profile\".</string>
     <string name="faq_answer_3">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit height and weight by clicking on \"My Profile\".</string>
@@ -237,6 +238,7 @@
     <string name="faq_answer_9">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change weather by clicking on \"My Profile\".</string>
     <string name="faq_answer_10">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, you can change active / pregnant / breastfeeding status by clicking on \"My Profile\".</string>
     <string name="faq_answer_11">Yes, the day before donating the amount of water to drink must be at least 3000 ml / 101.44 fl oz, the frequency of notifications will double.</string>
+    <string name="faq_answer_12">You can click on the \"Drink All\" option.</string>
     <string name="str_read_less">Read Less</string>
     <string name="str_read_more">Read More</string>
     <string name="open_gps_dialog">Do you want open GPS setting?</string>
@@ -253,7 +255,7 @@
     <string name="str_no_reached_found">No reached goal record found</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Reached\nGoal</string>
+    <string name="str_reached_goal">Completion</string>
     <string name="str_disable_tips">Disable Tips</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notification Enabled</string>
@@ -265,7 +267,8 @@
     <string name="select_wakeup_time">Select Wakeup Time</string>
     <string name="select_bed_time">Select Bed Time</string>
     <string name="migration">Welcome back to Let\'s Hydrate, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
-
+    <string name="drink_all">Drink all</string>
+    <string name="str_clicked">Container</string>
 
 
 </resources>

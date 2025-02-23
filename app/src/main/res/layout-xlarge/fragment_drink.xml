@@ -182,6 +182,56 @@
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_210"
+                                android:visibility="visible"
+                                android:layout_marginBottom="@dimen/dp_10">
+
+                                <RelativeLayout
+                                    android:id="@+id/drink_all_block"
+                                    android:layout_width="@dimen/dp_50"
+                                    android:layout_height="@dimen/dp_50"
+                                    android:background="@drawable/drawable_circle_unselected_mirror">
+
+                                    <LinearLayout
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dp_7"
+                                        android:layout_marginEnd="@dimen/dp_1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/dp_28"
+                                            android:layout_height="@dimen/dp_28"
+                                            android:src="@drawable/ic_dashboard_calendar"
+                                            android:contentDescription="@string/img"
+                                            android:layout_gravity="center_horizontal"/>
+
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/lbl_drink_all"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:layout_below="@+id/drink_all_block"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:includeFontPadding="false"
+                                    android:text="@string/drink_all"
+                                    android:textSize="@dimen/dp_10"
+                                    android:textColor="@color/rdo_gender_select"
+                                    android:fontFamily="@font/calibri_regular"
+                                    tools:ignore="SpUsage" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="@dimen/dp_10"
                                 android:layout_marginTop="@dimen/dp_5"
@@ -270,6 +320,56 @@
                                     android:layout_centerHorizontal="true"
                                     android:includeFontPadding="true"
                                     android:text="@string/str_reached_goal"
+                                    android:textSize="@dimen/dp_10"
+                                    android:textColor="@color/rdo_gender_select"
+                                    android:fontFamily="@font/calibri_regular"
+                                    tools:ignore="SpUsage" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_210"
+                                android:layout_marginBottom="@dimen/dp_10"
+                                tools:ignore="RelativeOverlap">
+
+                                <RelativeLayout
+                                    android:id="@+id/open_clicked_container"
+                                    android:layout_width="@dimen/dp_50"
+                                    android:layout_height="@dimen/dp_50"
+                                    android:background="@drawable/drawable_circle_unselected_mirror">
+
+                                    <LinearLayout
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/dp_7"
+                                        android:layout_marginEnd="@dimen/dp_1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="@dimen/dp_28"
+                                            android:layout_height="@dimen/dp_28"
+                                            android:src="@drawable/ic_dashboard_reached"
+                                            android:contentDescription="@string/img"
+                                            android:layout_gravity="center_horizontal"/>
+
+
+
+                                    </LinearLayout>
+
+                                </RelativeLayout>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/open_clicked_container"
+                                    android:gravity="center_horizontal"
+                                    android:layout_centerHorizontal="true"
+                                    android:includeFontPadding="true"
+                                    android:text="@string/str_clicked"
                                     android:textSize="@dimen/dp_10"
                                     android:textColor="@color/rdo_gender_select"
                                     android:fontFamily="@font/calibri_regular"

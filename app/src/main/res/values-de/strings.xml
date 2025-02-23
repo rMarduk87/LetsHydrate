@@ -224,19 +224,21 @@
     <string name="faq_question_7">Wie überprüfe ich meinen Trinkwasserbericht?</string>
     <string name="faq_question_8">Was ist, wenn ich versehentlich ein Trinkprotokoll hinzugefügt habe?</string>
     <string name="faq_question_9">Wie ändere ich Wetter?</string>
-    <string name="faq_question_10">Wie ändere ich den Status "aktiv/schwanger/stillend“?</string>
+    <string name="faq_question_10">Wie ändere ich den Status "aktiv/schwanger/stillend"?</string>
     <string name="faq_question_11">Ich bin Blutspender. Gibt es wichtige Vorsichtsmaßnahmen, die ich treffen muss?</string>
-    <string name="faq_answer_1">Es gibt mehrere Gründe. Sie können die Einstellungen wie folgt überprüfen:\n1. Haben Sie die Start- und Endzeit der Erinnerung richtig eingestellt?\n2. Haben Sie den automatischen Start von Let’s Hydrate auf Ihrem Telefon aktiviert?\n3. Haben Sie Apps von Drittanbietern wie CleanMaster installiert, die verhindern könnten, dass Lasst uns hydrierenim Hintergrund läuft und Benachrichtigungen sendet?\n4. Haben Sie die Erinnerung ausgeschaltet?\n5. Haben Sie Lasst uns hydrierenin den Akkuoptimierungseinstellungen Ihres Telefons auf "Nicht optimieren“ eingestellt?</string>
-    <string name="faq_answer_2">Sie müssen auf das Menü tippen und "Einstellungen“ aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie das Trinkziel bearbeiten, indem Sie auf "Mein Profil“ klicken.</string>
-    <string name="faq_answer_3">Sie müssen auf das Menü tippen und "Einstellungen“ aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie Größe und Gewicht bearbeiten, indem Sie auf "Mein Profil“ klicken.</string>
+    <string name="faq_question_12">Ich habe alle Vorgaben eingehalten, kann mich aber nicht mehr an die einzelnen Schritte erinnern, was kann ich tun?</string>
+    <string name="faq_answer_1">Es gibt mehrere Gründe. Sie können die Einstellungen wie folgt überprüfen:\n1. Haben Sie die Start- und Endzeit der Erinnerung richtig eingestellt?\n2. Haben Sie den automatischen Start von Let’s Hydrate auf Ihrem Telefon aktiviert?\n3. Haben Sie Apps von Drittanbietern wie CleanMaster installiert, die verhindern könnten, dass Lasst uns hydrierenim Hintergrund läuft und Benachrichtigungen sendet?\n4. Haben Sie die Erinnerung ausgeschaltet?\n5. Haben Sie Lasst uns hydrierenin den Akkuoptimierungseinstellungen Ihres Telefons auf "Nicht optimieren" eingestellt?</string>
+    <string name="faq_answer_2">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie das Trinkziel bearbeiten, indem Sie auf "Mein Profil" klicken.</string>
+    <string name="faq_answer_3">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie Größe und Gewicht bearbeiten, indem Sie auf "Mein Profil" klicken.</string>
     <string name="faq_answer_4">Es gibt zwei Möglichkeiten:\n1. Sie können auf das Plus-Symbol klicken, um das Trinkprotokoll hinzuzufügen.\n2. Sie können das Trinkprotokoll auch hinzufügen, indem Sie auf dem Startbildschirm von Android auf das Anwendungs-Widget.</string>
-    <string name="faq_answer_5">Sie können oben links auf dem Startbildschirm auf das Symbol "Container ändern“ klicken und dann auf den gewünschten Container tippen. Sie können auch Ihr individuelles Getränk hinzufügen.</string>
-    <string name="faq_answer_6">Sie können auf das Menü klicken und "Getränkeverlauf“ auswählen und dann Ihren Getränkeverlauf anzeigen.</string>
-    <string name="faq_answer_7">Sie können auf das Menü klicken und die Option "Getränkebericht“ auswählen und dann die folgenden 3 Optionen anzeigen:\n1. Wochenbericht\n2. Monatsbericht\n3. Jahresbericht</string>
-    <string name="faq_answer_8">Sie müssen auf das Menü tippen und "Getränkeverlauf“ aus der Liste der Menüoptionen auswählen. Im Getränkeverlauf können Sie bei einem falschen Getränkeprotokolleintrag auf das Löschsymbol tippen.</string>
-    <string name="faq_answer_9">Sie müssen auf das Menü tippen und "Einstellungen“ aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie das Wetter ändern, indem Sie auf "Mein Profil“ klicken.</string>
-    <string name="faq_answer_10">Sie müssen auf das Menü tippen und "Einstellungen“ aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie den Status "aktiv/schwanger/stillend“ ändern, indem Sie auf "Mein Profil“ klicken.</string>
+    <string name="faq_answer_5">Sie können oben links auf dem Startbildschirm auf das Symbol "Container ändern" klicken und dann auf den gewünschten Container tippen. Sie können auch Ihr individuelles Getränk hinzufügen.</string>
+    <string name="faq_answer_6">Sie können auf das Menü klicken und "Getränkeverlauf" auswählen und dann Ihren Getränkeverlauf anzeigen.</string>
+    <string name="faq_answer_7">Sie können auf das Menü klicken und die Option "Getränkebericht" auswählen und dann die folgenden 3 Optionen anzeigen:\n1. Wochenbericht\n2. Monatsbericht\n3. Jahresbericht</string>
+    <string name="faq_answer_8">Sie müssen auf das Menü tippen und "Getränkeverlauf" aus der Liste der Menüoptionen auswählen. Im Getränkeverlauf können Sie bei einem falschen Getränkeprotokolleintrag auf das Löschsymbol tippen.</string>
+    <string name="faq_answer_9">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie das Wetter ändern, indem Sie auf "Mein Profil" klicken.</string>
+    <string name="faq_answer_10">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie den Status "aktiv/schwanger/stillend" ändern, indem Sie auf "Mein Profil" klicken.</string>
     <string name="faq_answer_11">Ja, am Tag vor der Spende muss die zu trinkende Wassermenge mindestens 3000 ml/101,44 fl oz betragen, die Häufigkeit der Benachrichtigungen wird verdoppelt.</string>
+    <string name="faq_answer_12">Sie können auf die Option \"Alles trinken\" klicken.</string>
     <string name="str_read_less">Weniger lesen</string>
     <string name="str_read_more">Mehr lesen</string>
     <string name="open_gps_dialog">Möchten Sie die GPS-Einstellung öffnen?</string>
@@ -253,7 +255,7 @@
     <string name="str_no_reached_found">Kein Datensatz für erreichtes Ziel gefunden</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Ziel erreicht</string>
+    <string name="str_reached_goal">Fertigstellung</string>
     <string name="str_disable_tips">Tipps deaktivieren</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Benachrichtigung aktiviert</string>
@@ -265,5 +267,7 @@
     <string name="select_wakeup_time">Aufwachzeit auswählen</string>
     <string name="select_bed_time">Schlafenszeit auswählen</string>
     <string name="migration">Willkommen zurück bei Lasst uns hydrieren. In der neuen Version wurden einige Daten hinzugefügt, um die Berechnung von Wasserbedarf, fügen Sie ihn in die Tabellen ein und aktualisieren Sie ggf. die bereits vorhandenen</string>
+    <string name="drink_all">Alles trinken</string>
+    <string name="str_clicked">Container</string>
 
 </resources>

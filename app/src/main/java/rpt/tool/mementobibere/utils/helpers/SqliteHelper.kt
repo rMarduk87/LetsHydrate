@@ -24,6 +24,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_INTOOK_COUNTER = "intook_count"
         private const val TABLE_REACHED = "intake_reached"
         private const val TABLE_AVIS = "avis_day"
+        private const val TABLE_DRINK_ALL = "drink_all"
         private const val TABLE_CONTAINER = "container"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
@@ -61,6 +62,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
         addValueToContainer(db)
 
+        addDrinkAllTable(db)
+
     }
 
     private fun addFirstTable(db: SQLiteDatabase?) {
@@ -82,9 +85,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db?.execSQL(createReachedTable)
     }
 
-    private fun addAvisTable(db: SQLiteDatabase?) {
-        val createAvisTable = ("CREATE TABLE " + TABLE_AVIS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT)")
+    private fun addDrinkAllTable(db: SQLiteDatabase?) {
+        val createAvisTable = ("CREATE TABLE " + TABLE_DRINK_ALL + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT UNIQUE)")
         db?.execSQL(createAvisTable)
     }
 
@@ -116,6 +119,12 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
             insert(TABLE_CONTAINER, initialValues,db)
         }
+    }
+
+    private fun addAvisTable(db: SQLiteDatabase?) {
+        val createAvisTable = ("CREATE TABLE " + TABLE_AVIS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT)")
+        db?.execSQL(createAvisTable)
     }
 
 
@@ -168,6 +177,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 refactoryReached(db)
                 updateIntake(db)
                 updateReached(db)
+                addDrinkAllTable(db)
             }
             else {
             }

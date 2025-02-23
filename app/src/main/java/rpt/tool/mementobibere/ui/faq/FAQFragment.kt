@@ -98,6 +98,11 @@ class FAQFragment : BaseFragment<FragmentFaqBinding>(FragmentFaqBinding::inflate
         faqModel.answer = requireContext().getString(R.string.faq_answer_11)
         lst_faq.add(faqModel)
 
+        faqModel = FAQModel()
+        faqModel.question = requireContext().getString(R.string.faq_question_12)
+        faqModel.answer = requireContext().getString(R.string.faq_answer_12)
+        lst_faq.add(faqModel)
+
     }
 
     @SuppressLint("InflateParams")
