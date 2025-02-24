@@ -89,8 +89,8 @@ class NotificationHelper(val ctx: Context) {
     private fun shallNotify(): Boolean {
         val sqliteHelper = SqliteHelper(ctx)
 
-        val startTimestamp = SharedPreferencesManager.wakeUpTime
-        val stopTimestamp = SharedPreferencesManager.sleepingTime
+        val startTimestamp = AppUtils.stringTimeToMillis(SharedPreferencesManager.wakeUpTimeNew)
+        val stopTimestamp = AppUtils.stringTimeToMillis(SharedPreferencesManager.bedTime)
         var totalIntake = 0f
 
         totalIntake = SharedPreferencesManager.totalIntake

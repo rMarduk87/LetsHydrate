@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.View
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.FragmentInitUserInfoSevenBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoStatusBinding
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
-class InitUserInfoSevenFragment : BaseFragment<FragmentInitUserInfoSevenBinding>(FragmentInitUserInfoSevenBinding::inflate) {
+class InitUserInfoStatusFragment :
+    BaseFragment<FragmentInitUserInfoStatusBinding>
+        (FragmentInitUserInfoStatusBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

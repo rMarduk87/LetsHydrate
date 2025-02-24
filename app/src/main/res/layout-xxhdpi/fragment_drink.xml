@@ -204,7 +204,7 @@
                                         <ImageView
                                             android:layout_width="@dimen/dp_28"
                                             android:layout_height="@dimen/dp_28"
-                                            android:src="@drawable/ic_dashboard_calendar"
+                                            android:src="@drawable/ic_dashboard_drink_all"
                                             android:contentDescription="@string/img"
                                             android:layout_gravity="center_horizontal"/>
 
@@ -352,7 +352,7 @@
                                         <ImageView
                                             android:layout_width="@dimen/dp_28"
                                             android:layout_height="@dimen/dp_28"
-                                            android:src="@drawable/ic_dashboard_reached"
+                                            android:src="@drawable/ic_dashboard_clicked"
                                             android:contentDescription="@string/img"
                                             android:layout_gravity="center_horizontal"/>
 

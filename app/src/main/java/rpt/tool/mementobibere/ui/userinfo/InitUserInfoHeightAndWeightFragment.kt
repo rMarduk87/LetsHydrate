@@ -7,7 +7,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
 import rpt.tool.mementobibere.BaseFragment
-import rpt.tool.mementobibere.databinding.FragmentInitUserInfoThreeBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoHeightAndWeightBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.callPrivateFunc
 import rpt.tool.mementobibere.utils.log.d
@@ -18,8 +18,9 @@ import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterRange
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
 
 
-class InitUserInfoThreeFragment : 
-    BaseFragment<FragmentInitUserInfoThreeBinding>(FragmentInitUserInfoThreeBinding::inflate) {
+class InitUserInfoHeightAndWeightFragment :
+    BaseFragment<FragmentInitUserInfoHeightAndWeightBinding>
+        (FragmentInitUserInfoHeightAndWeightBinding::inflate) {
 
     var isExecute: Boolean = true
     var isExecuteSeekbar: Boolean = true

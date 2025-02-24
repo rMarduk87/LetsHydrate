@@ -50,6 +50,8 @@ class MigrationManager {
         SharedPreferencesManager.removeShared(AppUtils.INDEX_YEAR_KEY)
         SharedPreferencesManager.removeShared(AppUtils.SEE_TIPS_KEY)
         SharedPreferencesManager.removeShared(AppUtils.NOTIFICATION_TONE_URI_KEY)
+        SharedPreferencesManager.removeShared(AppUtils.SLEEPING_TIME_KEY)
+        SharedPreferencesManager.removeShared(AppUtils.WAKEUP_TIME_KEY)
     }
 
     private fun convertWorkType(workType: Int): Int {
@@ -64,6 +66,8 @@ class MigrationManager {
         when(climate){
             0->weather = 3 //from cold to snow
             1->weather = 1 //from fresh to cloudy
+            2->weather = 0 //from mild to sunny
+            3->weather = 0 //from torrid to sunny
         }
 
         return weather

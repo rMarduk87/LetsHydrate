@@ -9,13 +9,14 @@ import com.skydoves.balloon.BalloonAlign
 import com.skydoves.balloon.balloon
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.FragmentInitUserInfoTwoBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoNameAndGenderBinding
 import rpt.tool.mementobibere.utils.balloon.migration.MigrationInfoBalloonFactory
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
-class InitUserInfoTwoFragment :
-    BaseFragment<FragmentInitUserInfoTwoBinding>(FragmentInitUserInfoTwoBinding::inflate) {
+class InitUserInfoNameAndGenderFragment :
+    BaseFragment<FragmentInitUserInfoNameAndGenderBinding>
+        (FragmentInitUserInfoNameAndGenderBinding::inflate) {
 
     var isMaleGender: Boolean = true
     private val migrationBalloon by balloon<MigrationInfoBalloonFactory>()

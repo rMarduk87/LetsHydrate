@@ -188,6 +188,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_REACHED")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_DRINK_ALL")
             onCreate(db)
         }
 

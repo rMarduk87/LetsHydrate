@@ -4,30 +4,30 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoEightFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoFiveFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoFourFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoSevenFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoSixFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoThreeFragment
-import rpt.tool.mementobibere.ui.userinfo.InitUserInfoTwoFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoClimateFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoFinalFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoGoalCalculationFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoStatusFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoNotificationSettingsFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoHeightAndWeightFragment
+import rpt.tool.mementobibere.ui.userinfo.InitUserInfoNameAndGenderFragment
 
 class InitUserInfoPagerAdapter(fm: FragmentManager, context: Context) :
     FragmentStatePagerAdapter(fm) {
-    var tab2Fragment: InitUserInfoTwoFragment =
-        InitUserInfoTwoFragment()
-    var tab3Fragment: InitUserInfoThreeFragment =
-        InitUserInfoThreeFragment()
-    var tab4Fragment: InitUserInfoFourFragment =
-        InitUserInfoFourFragment()
-    var tab5Fragment: InitUserInfoFiveFragment =
-        InitUserInfoFiveFragment()
-    var tab6Fragment: InitUserInfoSixFragment =
-        InitUserInfoSixFragment()
-    var tab7Fragment: InitUserInfoSevenFragment =
-        InitUserInfoSevenFragment()
-    var tab8Fragment: InitUserInfoEightFragment =
-        InitUserInfoEightFragment()
+    var tab2Fragment: InitUserInfoNameAndGenderFragment =
+        InitUserInfoNameAndGenderFragment()
+    var tab3Fragment: InitUserInfoHeightAndWeightFragment =
+        InitUserInfoHeightAndWeightFragment()
+    var tab4Fragment: InitUserInfoGoalCalculationFragment =
+        InitUserInfoGoalCalculationFragment()
+    var tab5Fragment: InitUserInfoFinalFragment =
+        InitUserInfoFinalFragment()
+    var tab6Fragment: InitUserInfoNotificationSettingsFragment =
+        InitUserInfoNotificationSettingsFragment()
+    var tab7Fragment: InitUserInfoStatusFragment =
+        InitUserInfoStatusFragment()
+    var tab8Fragment: InitUserInfoClimateFragment =
+        InitUserInfoClimateFragment()
 
     var mContext: Context = context
 

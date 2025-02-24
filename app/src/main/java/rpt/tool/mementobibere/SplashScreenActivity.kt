@@ -71,10 +71,16 @@ class SplashScreenActivity : AppCompatActivity() {
             if (SharedPreferencesManager.hideWelcomeScreen) {
                 intent = Intent(this, MainActivity::class.java)
             } else {
-                SharedPreferencesManager.personWeightUnit = true
-                SharedPreferencesManager.personWeight = "80"
-                SharedPreferencesManager.userName = ""
-                intent = Intent(this, InitUserInfoActivity::class.java)
+                if(SharedPreferencesManager.weight==0){
+                    SharedPreferencesManager.personWeightUnit = true
+                    SharedPreferencesManager.personWeight = "80"
+                    SharedPreferencesManager.userName = ""
+                    intent = Intent(this, InitUserInfoActivity::class.java)
+                }
+                else{
+                    intent = Intent(this, MainActivity::class.java)
+                }
+
             }
             startActivity(intent)
             finish()

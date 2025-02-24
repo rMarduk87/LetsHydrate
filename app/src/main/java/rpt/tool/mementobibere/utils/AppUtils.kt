@@ -6,10 +6,8 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.ParseException
 import android.net.Uri
+import android.provider.Settings
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.data.models.MonthChartModel
-import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
-import rpt.tool.mementobibere.utils.extensions.toPrincipalUnit
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
@@ -18,13 +16,12 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 import kotlin.math.pow
-import android.provider.Settings
+
 
 class AppUtils {
 
@@ -749,6 +746,25 @@ class AppUtils {
             return dailyWaterValue - countDrinkAfterAddCurrentWater
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun stringTimeToMillis(time: String?): Long {
+            if (time != null) {
+                if(time.isNotEmpty()){
+                    val simpleDateFormat = SimpleDateFormat("HH:mm")
+                    try {
+                        val date = simpleDateFormat.parse(time)
+                        if (date != null) {
+                            return date.time
+                        }
+
+                    } catch (ex: ParseException) {
+                        ex.message?.let { e(Throwable(ex), it) }
+                    }
+                }
+            }
+            return 0
+        }
+
 
         val APP_SHARE_URL: String = ""
         val PRIVACY_POLICY_ULR: String = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
@@ -810,7 +826,11 @@ class AppUtils {
          const val SET_MANUALLY_GOAL: String = "set_manually_goal"
          const val SET_MANUALLY_GOAL_VALUE: String = "set_manually_goal_value"
          const val WAKE_UP_TIME: String = "wakeup_time"
+         const val WAKE_UP_TIME_HOUR: String = "wakeup_time_hour"
+         const val WAKE_UP_TIME_MINUTE: String = "wakeup_time_minute"
          const val BED_TIME: String = "bed_time"
+         const val BED_TIME_HOUR: String = "bed_time_hour"
+         const val BED_TIME_MINUTE: String = "bed_time_minute"
          const val DISABLE_SOUND_WHEN_ADD_WATER: String = "disable_sound_when_add_water"
          const val IGNORE_NEXT_STEP: String = "ignore_next_step"
          var decimalFormat: DecimalFormat = DecimalFormat("#0.00")

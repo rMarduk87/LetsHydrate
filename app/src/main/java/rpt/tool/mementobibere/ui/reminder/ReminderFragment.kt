@@ -5,34 +5,39 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.wdullaer.materialdatetimepicker.time.Timepoint
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentReminderBinding
+import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.data.appmodel.IntervalModel
+import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.view.adapters.IntervalAdapter
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
 class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderBinding::inflate) {
 
-    private var is24h: Boolean = false
     var from_hour: Int = 0
     var from_minute: Int = 0
     var to_hour:Int = 0
     var to_minute:Int = 0
     var interval: Int = 30
-    private var wakeupTime: Long = 0
-    private var sleepingTime: Long = 0
     var lst_interval: MutableList<String> = ArrayList()
     var lst_intervals: MutableList<IntervalModel> = ArrayList()
     var intervalAdapter: IntervalAdapter? = null
@@ -42,9 +47,6 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
 
         requireActivity().window.navigationBarColor =
             requireContext().resources.getColor(R.color.str_green_card)
-        is24h = android.text.format.DateFormat.is24HourFormat(requireContext())
-        sleepingTime = SharedPreferencesManager.sleepingTime
-        wakeupTime = SharedPreferencesManager.wakeUpTime
         interval = SharedPreferencesManager.notificationFreq.toInt()
         body()
 
@@ -52,17 +54,9 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
         str = str.substring(0, 1).uppercase(Locale.getDefault()) + "" + str.substring(1).lowercase(
             Locale.getDefault()
         )
-        val cal = Calendar.getInstance()
-        cal.timeInMillis = sleepingTime
-        val bedSstr = " " + String.format(
-            Locale.getDefault(),
-            "%02d:%02d",
-            cal.get(Calendar.HOUR_OF_DAY),
-            cal.get(Calendar.MINUTE)
-        )
 
         binding.lblbt.text = str
-        binding.lblBedTime.text = bedSstr
+        binding.lblBedTime.text = SharedPreferencesManager.bedTime
 
         //=======
         str = requireContext().getString(R.string.str_wakeup_time)
@@ -70,65 +64,20 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
             Locale.getDefault()
         )
 
-        cal.timeInMillis = wakeupTime
-        val wakeStr = " " +
-            String.format(Locale.getDefault(),
-                "%02d:%02d",
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE)
-
-        )
 
         binding.lblwt.text = str
-        binding.lblWakeupTime.text = wakeStr
+        binding.lblWakeupTime.text = SharedPreferencesManager.wakeUpTimeNew
 
     }
 
     @SuppressLint("SetTextI18n")
     fun body(){
         binding.lblWakeupTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = wakeupTime
-
-            val mTimePicker = TimePickerDialog(
-                requireContext(),
-                { _, selectedHour, selectedMinute ->
-
-                    val time = Calendar.getInstance()
-                    time.set(Calendar.HOUR_OF_DAY, selectedHour)
-                    time.set(Calendar.MINUTE, selectedMinute)
-                    wakeupTime = time.timeInMillis
-                    from_hour = selectedHour
-                    from_minute = selectedMinute
-
-                    binding.lblWakeupTime.text =
-                        String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
-                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
-            )
-            mTimePicker.setTitle(getString(R.string.select_wakeup_time))
-            mTimePicker.show()
+            openAutoTimePicker(binding.lblWakeupTime, true)
         }
 
         binding.lblBedTime.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = sleepingTime
-
-            val mTimePicker = TimePickerDialog(
-                requireContext(),
-                { _, selectedHour, selectedMinute ->
-
-                    val time = Calendar.getInstance()
-                    time.set(Calendar.HOUR_OF_DAY, selectedHour)
-                    time.set(Calendar.MINUTE, selectedMinute)
-                    sleepingTime = time.timeInMillis
-                    to_hour = selectedHour
-                    to_minute = selectedMinute
-
-                    binding.lblBedTime.text = String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute)
-                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24h
-            )
-            mTimePicker.setTitle(getString(R.string.select_bed_time))
-            mTimePicker.show()
+            openAutoTimePicker(binding.lblBedTime, false)
         }
 
         binding.lblInterval.setOnClickListener { openIntervalPicker() }
@@ -155,9 +104,140 @@ class ReminderFragment : BaseFragment<FragmentReminderBinding>(FragmentReminderB
 
         binding.saveReminder.setOnClickListener{
             SharedPreferencesManager.notificationFreq = interval.toFloat()
-            SharedPreferencesManager.wakeUpTime = wakeupTime
-            SharedPreferencesManager.sleepingTime = sleepingTime
+            setHour()
         }
+    }
+
+    private fun setHour() {
+        val startTime = Calendar.getInstance(Locale.getDefault())
+        startTime[Calendar.HOUR_OF_DAY] = from_hour
+        startTime[Calendar.MINUTE] = from_minute
+        startTime[Calendar.SECOND] = 0
+
+        val endTime = Calendar.getInstance(Locale.getDefault())
+        endTime[Calendar.HOUR_OF_DAY] = to_hour
+        endTime[Calendar.MINUTE] = to_minute
+        endTime[Calendar.SECOND] = 0
+
+        // @@@@@
+        if (isNextDayEnd) endTime.add(Calendar.DATE, 1)
+
+        SharedPreferencesManager.wakeUpTimeNew = binding.lblWakeupTime.getText().toString().trim()
+        SharedPreferencesManager.wakeUpTimeHour = from_hour
+        SharedPreferencesManager.wakeUpTimeMinute = from_minute
+
+        SharedPreferencesManager.bedTime = binding.lblBedTime.getText().toString().trim()
+        SharedPreferencesManager.bedTimeHour = to_hour
+        SharedPreferencesManager.bedTimeMinute = to_minute
+
+    }
+
+    private val isNextDayEnd: Boolean
+        get() {
+            val simpleDateFormat =
+                SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+            var date1: Date? = null
+            var date2: Date? = null
+            try {
+                date1 =
+                    simpleDateFormat.parse(binding.lblWakeupTime.getText().toString().trim { it <= ' ' })
+                date2 = simpleDateFormat.parse(binding.lblBedTime.getText().toString().trim { it <= ' ' })
+
+                return date1.time > date2.time
+            } catch (e: Exception) {
+                e.message?.let { e(Throwable(e), it) }
+            }
+
+            return false
+        }
+
+    @SuppressLint("SetTextI18n")
+    fun openAutoTimePicker(appCompatTextView: AppCompatTextView, isFrom: Boolean) {
+        val onTimeSetListener: com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener =
+            com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute, second ->
+                var formatedDate = ""
+                val sdf = SimpleDateFormat("HH:mm:ss", Locale.US)
+                val sdfs = SimpleDateFormat("hh:mm a", Locale.US)
+                val dt: Date
+                var time = ""
+
+                try {
+                    if (isFrom) {
+                        from_hour = hourOfDay
+                        from_minute = minute
+                    } else {
+                        to_hour = hourOfDay
+                        to_minute = minute
+                    }
+
+                    time = "$hourOfDay:$minute:00"
+                    dt = sdf.parse(time)!!
+                    formatedDate = sdfs.format(dt)
+                    appCompatTextView.text = "" + formatedDate
+
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+            }
+
+        val now = Calendar.getInstance(Locale.US)
+
+        if (isFrom) {
+            now[Calendar.HOUR_OF_DAY] = from_hour
+            now[Calendar.MINUTE] = from_minute
+        } else {
+            now[Calendar.HOUR_OF_DAY] = to_hour
+            now[Calendar.MINUTE] = to_minute
+        }
+        val tpd: com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+        if (!DateFormat.is24HourFormat(requireActivity())) {
+            //12 hrs format
+            tpd = com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                onTimeSetListener,
+                now[Calendar.HOUR_OF_DAY],
+                now[Calendar.MINUTE], false
+            )
+
+            tpd.setSelectableTimes(generateTimepoints(23.50, 30))
+
+            tpd.setMaxTime(23, 30, 0)
+        } else {
+            //24 hrs format
+            tpd = com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                onTimeSetListener,
+                now[Calendar.HOUR_OF_DAY],
+                now[Calendar.MINUTE], true
+            )
+
+            tpd.setSelectableTimes(generateTimepoints(23.50, 30))
+
+            tpd.setMaxTime(23, 30, 0)
+        }
+
+
+        tpd.accentColor = getThemeColor(requireContext())
+        tpd.show(requireActivity().fragmentManager, "Datepickerdialog")
+        tpd.accentColor = getThemeColor(requireContext())
+    }
+
+    private fun generateTimepoints(maxHour: Double, minutesInterval: Int): Array<Timepoint> {
+        val lastValue = (maxHour * 60).toInt()
+
+        val timepoints: MutableList<Timepoint> = ArrayList()
+
+        var minute = 0
+        while (minute <= lastValue) {
+            val currentHour = minute / 60
+            val currentMinute = minute - (if (currentHour > 0) (currentHour * 60) else 0)
+            if (currentHour == 24) {
+                minute += minutesInterval
+                continue
+            }
+            timepoints.add(Timepoint(currentHour, currentMinute))
+            minute += minutesInterval
+        }
+        return timepoints.toTypedArray<Timepoint>()
     }
 
     private fun finish() {

@@ -2,7 +2,6 @@ package rpt.tool.mementobibere.utils.managers
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.media.RingtoneManager
 import rpt.tool.mementobibere.Application
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
@@ -114,6 +113,23 @@ object SharedPreferencesManager {
     var disableNotificationAtGoal: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.DISABLE_NOTIFICATION,false)
         set(value) = sharedPreferences.edit().putBoolean(AppUtils.DISABLE_NOTIFICATION, value).apply()
-
+    var wakeUpTimeNew: String
+        get() = sharedPreferences.getString(AppUtils.WAKE_UP_TIME, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.WAKE_UP_TIME, value).apply()
+    var wakeUpTimeHour: Int
+        get() = sharedPreferences.getInt(AppUtils.WAKE_UP_TIME_HOUR,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.WAKE_UP_TIME_HOUR, value).apply()
+    var wakeUpTimeMinute: Int
+        get() = sharedPreferences.getInt(AppUtils.WAKE_UP_TIME_MINUTE,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.WAKE_UP_TIME_MINUTE, value).apply()
+    var bedTime: String
+        get() = sharedPreferences.getString(AppUtils.BED_TIME, "").toString()
+        set(value) = sharedPreferences.edit().putString(AppUtils.BED_TIME, value).apply()
+    var bedTimeHour: Int
+        get() = sharedPreferences.getInt(AppUtils.BED_TIME_HOUR,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.BED_TIME_HOUR, value).apply()
+    var bedTimeMinute: Int
+        get() = sharedPreferences.getInt(AppUtils.BED_TIME_MINUTE,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.BED_TIME_MINUTE, value).apply()
 
 }

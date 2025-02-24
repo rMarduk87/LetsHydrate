@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.View
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.FragmentInitUserInfoEightBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoClimateBinding
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
-class InitUserInfoEightFragment : BaseFragment<FragmentInitUserInfoEightBinding>(FragmentInitUserInfoEightBinding::inflate) {
+class InitUserInfoClimateFragment :
+    BaseFragment<FragmentInitUserInfoClimateBinding>(FragmentInitUserInfoClimateBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

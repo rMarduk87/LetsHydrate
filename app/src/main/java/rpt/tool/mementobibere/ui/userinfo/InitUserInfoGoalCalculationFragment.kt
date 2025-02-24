@@ -19,7 +19,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.databinding.FragmentInitUserInfoFourBinding
+import rpt.tool.mementobibere.databinding.FragmentInitUserInfoGoalCalculationBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.log.e
@@ -27,7 +27,9 @@ import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
 
 
-class InitUserInfoFourFragment : BaseFragment<FragmentInitUserInfoFourBinding>(FragmentInitUserInfoFourBinding::inflate) {
+class InitUserInfoGoalCalculationFragment :
+    BaseFragment<FragmentInitUserInfoGoalCalculationBinding>
+        (FragmentInitUserInfoGoalCalculationBinding::inflate) {
 
     var isExecute: Boolean = true
     var isExecuteSeekbar: Boolean = true
