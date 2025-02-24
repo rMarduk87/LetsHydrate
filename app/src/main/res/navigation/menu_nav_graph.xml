@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/MenuFragment"
-        android:name="rpt.tool.letshydrate.ui.menu.MenuFragment"
+        android:name="rpt.tool.mementobibere.ui.menu.MenuFragment"
         android:label="MenuFragment"
         tools:layout="@layout/fragment_empty">
         <action
@@ -34,37 +34,37 @@
     </fragment>
     <fragment
         android:id="@+id/ProfileFragment"
-        android:name="rpt.tool.letshydrate.ui.profile.ProfileFragment"
+        android:name="rpt.tool.mementobibere.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
     </fragment>
     <fragment
         android:id="@+id/StatsFragment"
-        android:name="rpt.tool.letshydrate.ui.statistics.stats.StatsFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.stats.StatsFragment"
         android:label="StatFragment"
         tools:layout="@layout/fragment_stats">
     </fragment>
     <fragment
         android:id="@+id/ReachedGoalFragment"
-        android:name="rpt.tool.letshydrate.ui.statistics.reachedGoal.ReachedGoalFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.reachedGoal.ReachedGoalFragment"
         android:label="ReachedGoalFragment"
         tools:layout="@layout/fragment_reached_goal">
     </fragment>
     <fragment
         android:id="@+id/FaqFragment"
-        android:name="rpt.tool.letshydrate.ui.faq.FAQFragment"
+        android:name="rpt.tool.mementobibere.ui.faq.FAQFragment"
         android:label="FAQFragment"
         tools:layout="@layout/fragment_faq">
     </fragment>
     <fragment
         android:id="@+id/HistoryFragment"
-        android:name="rpt.tool.letshydrate.ui.statistics.history.HistoryFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.history.HistoryFragment"
         android:label="HistoryFragment"
         tools:layout="@layout/fragment_history">
     </fragment>
     <fragment
         android:id="@+id/Settingsfragment"
-        android:name="rpt.tool.letshydrate.ui.settings.SettingsFragment"
+        android:name="rpt.tool.mementobibere.ui.settings.SettingsFragment"
         android:label="Settingsfragment"
         tools:layout="@layout/fragment_settings">
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/ReminderFragment"
-        android:name="rpt.tool.letshydrate.ui.reminder.ReminderFragment"
+        android:name="rpt.tool.mementobibere.ui.reminder.ReminderFragment"
         android:label="ReminderFragment"
         tools:layout="@layout/fragment_reminder">
     </fragment>

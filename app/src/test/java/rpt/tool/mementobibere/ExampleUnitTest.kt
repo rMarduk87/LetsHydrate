@@ -1,4 +1,4 @@
-package rpt.tool.letshydrate
+package rpt.tool.mementobibere
 
 import org.junit.Test
 
