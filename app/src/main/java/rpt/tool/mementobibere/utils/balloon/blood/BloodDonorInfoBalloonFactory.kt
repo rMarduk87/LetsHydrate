@@ -16,7 +16,7 @@ class BloodDonorInfoBalloonFactory : Balloon.Factory() {
 
     override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
         return Balloon.Builder(context)
-            .setText(context.getText(R.string.avis_info))
+            .setText(context.getText(R.string.tomorrow_you_will_donate))
             .setArrowSize(10)
             .setWidthRatio(1.0f)
             .setHeight(BalloonSizeSpec.WRAP)

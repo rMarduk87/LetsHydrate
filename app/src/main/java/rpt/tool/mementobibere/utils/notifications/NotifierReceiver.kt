@@ -14,7 +14,7 @@ class NotifierReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        val notificationsTone = SharedPreferencesManager.notificationTone
+        val notificationsTone = AppUtils.getSound(context)
 
         val title = context.resources.getString(R.string.app_name)
         val messageToShow = SharedPreferencesManager.notificationMsg
@@ -22,7 +22,7 @@ class NotifierReceiver : BroadcastReceiver() {
 
         /* Notify */
         val nHelper = NotificationHelper(context)
-        @SuppressLint("ResourceType") val nBuilder = messageToShow?.let {
+        @SuppressLint("ResourceType") val nBuilder = messageToShow.let {
             nHelper
                 .getNotification(title, it, notificationsTone)
         }

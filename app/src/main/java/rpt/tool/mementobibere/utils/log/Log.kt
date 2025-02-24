@@ -18,5 +18,13 @@ internal class Log {
             Timber.tag("$logPrefix$className").e(throwable, message)
             throwable.printStackTrace()
         }
+
+        internal fun logInfo(message: String?, className: String) {
+            Timber.tag("$logPrefix$className").i(message)
+        }
+
+        internal fun logVerbose(message: String?, className: String) {
+            Timber.tag("$logPrefix$className").v(message)
+        }
     }
 }

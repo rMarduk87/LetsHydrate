@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/today_item"
+        android:title="@string/str_today" />
+    <item android:id="@+id/specific_date_item"
+        android:title="@string/str_custom_date" />
+</menu>
