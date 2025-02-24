@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace 'rpt.tool.mementobibere'
+    namespace 'rpt.tool.letshydrate'
     compileSdk 35
 
     defaultConfig {
-        applicationId "rpt.tool.mementobibere"
+        applicationId "rpt.tool.letshydrate"
         minSdk 34
         targetSdk 35
         versionCode 30
@@ -56,7 +56,7 @@ android {
 dependencies {
 
     //AndroidX
-    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.core:core-ktx:1.15.0'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'androidx.preference:preference-ktx:1.2.1'
