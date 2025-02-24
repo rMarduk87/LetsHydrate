@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/super_item_block"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white">
+
+	<LinearLayout
+		android:id="@+id/item_block"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/drawable_rounded_screen_background"
+		android:backgroundTint="@color/str_green_card"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:id="@+id/item_header_block"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:padding="@dimen/dp_10"
+			android:layout_marginTop="@dimen/dp_5"
+			android:layout_marginBottom="@dimen/dp_5"
+			android:layout_marginStart="@dimen/dp_10"
+			android:layout_marginEnd="@dimen/dp_10"
+			android:background="@color/app_transparant">
+
+			<TextView
+				android:id="@+id/lbl_date"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:includeFontPadding="true"
+				android:layout_gravity="center_vertical"
+				android:gravity="start"
+				android:text=""
+				android:textColor="@color/white"
+				android:textSize="@dimen/dp_16"
+				android:fontFamily="@font/calibri_bold"
+				tools:ignore="SpUsage" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/white"
+			android:padding="@dimen/dp_10"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:layout_marginEnd="@dimen/dp_10"
+				android:orientation="horizontal">
+
+				<ImageView
+					android:id="@+id/container_img"
+					android:layout_width="@dimen/dp_35"
+					android:layout_height="@dimen/dp_35"
+					android:layout_marginEnd="10dp"
+					android:layout_gravity="center_vertical"
+					android:contentDescription="@string/img"
+					android:src="@drawable/ic_launcher_background" />
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_weight="1"
+					android:layout_gravity="bottom">
+
+					<LinearLayout
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal">
+
+						<TextView
+							android:id="@+id/container_name"
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:includeFontPadding="false"
+							android:layout_gravity="center_vertical"
+							android:text="@string/name"
+							android:textColor="@color/rdo_gender_select"
+							android:textSize="@dimen/dp_14"
+							android:fontFamily="@font/calibri_bold"
+							tools:ignore="SpUsage" />
+
+					</LinearLayout>
+
+					<View
+						android:id="@+id/divider"
+						android:layout_width="fill_parent"
+						android:layout_height="0.5dp"
+						android:layout_marginTop="3dp"
+						android:background="@color/item_line" />
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</RelativeLayout>

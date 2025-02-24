@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <include
+        android:id="@+id/include1"
+        layout="@layout/header_with_back" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@drawable/drawable_rounded_screen_background"
+        android:backgroundTint="@color/str_green_card">
+
+
+        <RelativeLayout
+            android:id="@+id/auto_reminder_block"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/drawable_rounded_shadow_goal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:contentDescription="@string/img"
+                            android:src="@drawable/ic_wake_up" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lblwt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/str_wakeup_time"
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lbl_wakeup_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:includeFontPadding="true"
+                        android:gravity="end"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:text=""
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/ic_list_arrow"
+                        android:contentDescription="@string/img"
+                        android:layout_gravity="center_vertical"
+                        app:tint="@color/rdo_gender_select" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/drawable_rounded_shadow_goal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:contentDescription="@string/img"
+                            android:src="@drawable/ic_bed_time"/>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lblbt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/str_bed_time"
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lbl_bed_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:includeFontPadding="true"
+                        android:gravity="end"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:text=""
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/ic_list_arrow"
+                        android:contentDescription="@string/img"
+                        android:layout_gravity="center_vertical"
+                        app:tint="@color/rdo_gender_select" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/drawable_rounded_shadow_goal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_25"
+                            android:layout_height="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            android:layout_marginEnd="@dimen/dp_10"
+                            android:contentDescription="@string/img"
+                            android:src="@drawable/ic_interval"/>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="true"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/str_interval"
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/lbl_interval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:includeFontPadding="true"
+                        android:gravity="end"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_marginBottom="4dp"
+                        android:text=""
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="@color/rdo_gender_select"
+                        android:fontFamily="@font/calibri_regular"
+                        tools:ignore="SpUsage" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_15"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/ic_list_arrow"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/img"
+                        app:tint="@color/rdo_gender_select" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/save_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:minWidth="@dimen/dp_120"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/drawable_button">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="true"
+                    android:layout_centerInParent="true"
+                    android:text="@string/str_save"
+                    android:textSize="@dimen/dp_15"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/calibri_light"
+                    tools:ignore="SpUsage" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/manual_reminder_block"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_above="@+id/add_reminder">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/alarmRecyclerView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/lbl_no_record_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:text="@string/str_no_reminders_added_yet"
+                android:textSize="@dimen/dp_15"
+                android:textColor="@color/rdo_gender_select"
+                tools:ignore="SpUsage" />
+
+            <RelativeLayout
+                android:id="@+id/add_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:padding="@dimen/dp_15"
+                android:background="@drawable/drawable_circle">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_add"
+                    android:contentDescription="@string/img"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,18 +10,16 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
-import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.extensions.toCalculatedValue
+import rpt.tool.mementobibere.utils.log.i
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import java.util.*
+
 
 class NotificationHelper(val ctx: Context) {
     private var notificationManager: NotificationManager? = null
@@ -31,37 +29,33 @@ class NotificationHelper(val ctx: Context) {
 
 
     private fun createChannels() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationsNewMessageRingtone = SharedPreferencesManager.notificationTone
-            val notificationChannel = NotificationChannel(
-                CHANNEL_ONE_ID,
-                CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH
-            )
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.BLUE
-            notificationChannel.setShowBadge(true)
-            notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+        val notificationsNewMessageRingtone = AppUtils.getSound(ctx)
+        val notificationChannel = NotificationChannel(
+            CHANNEL_ONE_ID,
+            CHANNEL_ONE_NAME, NotificationManager.IMPORTANCE_HIGH
+        )
+        notificationChannel.enableLights(true)
+        notificationChannel.lightColor = Color.BLUE
+        notificationChannel.setShowBadge(true)
+        notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
 
-            if (notificationsNewMessageRingtone!!.isNotEmpty()) {
-                val audioAttributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                    .build()
-                notificationChannel.setSound(Uri.parse(notificationsNewMessageRingtone), audioAttributes)
-            }
+        val audioAttributes = AudioAttributes.Builder()
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .build()
+        notificationChannel.setSound(notificationsNewMessageRingtone, audioAttributes)
 
-            getManager()!!.createNotificationChannel(notificationChannel)
-        }
+        getManager()!!.createNotificationChannel(notificationChannel)
     }
 
     @SuppressLint("RemoteViewLayout")
     fun getNotification(
         title: String,
         body: String,
-        notificationsTone: String?
-    ): NotificationCompat.Builder? {
+        notificationsTone: Uri?
+    ): NotificationCompat.Builder{
         createChannels()
-        val view = RemoteViews(ctx.packageName,R.layout.memento_bibere_notification_layout)
+        val view = RemoteViews(ctx.packageName,R.layout.notification)
         view.setTextViewText(R.id.title,title)
         view.setTextViewText(R.id.text, body)
         val notification = NotificationCompat.Builder(ctx.applicationContext, CHANNEL_ONE_ID)
@@ -78,13 +72,14 @@ class NotificationHelper(val ctx: Context) {
 
         notification.setShowWhen(true)
 
-        notification.setSound(Uri.parse(notificationsTone))
+        notification.setSound(notificationsTone)
 
         val notificationIntent = Intent(ctx, MainActivity::class.java)
 
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         val contentIntent =
-            PendingIntent.getActivity(ctx, 99, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(ctx, 99, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         notification.setContentIntent(contentIntent)
 
@@ -94,13 +89,15 @@ class NotificationHelper(val ctx: Context) {
     private fun shallNotify(): Boolean {
         val sqliteHelper = SqliteHelper(ctx)
 
-        val startTimestamp = SharedPreferencesManager.wakeUpTime
-        val stopTimestamp = SharedPreferencesManager.sleepingTime
+        val startTimestamp = AppUtils.stringTimeToMillis(SharedPreferencesManager.wakeUpTimeNew)
+        val stopTimestamp = AppUtils.stringTimeToMillis(SharedPreferencesManager.bedTime)
         var totalIntake = 0f
 
         totalIntake = SharedPreferencesManager.totalIntake
 
         if (startTimestamp == 0L || stopTimestamp == 0L || totalIntake == 0f)
+            return false
+        if(reachedDailyGoal(sqliteHelper) && SharedPreferencesManager.disableNotificationAtGoal)
             return false
 
         val percent = sqliteHelper.getIntook(AppUtils.getCurrentDate()!!) * 100 / totalIntake
@@ -119,11 +116,35 @@ class NotificationHelper(val ctx: Context) {
         val doNotDisturbOff = passedSeconds >= 0 && compareTimes(now, stop) <= 0
 
         val notify = doNotDisturbOff && (percent < currentTarget)
-        Log.i("MementoBibere",
+        i("Let's Hydrate",
             "notify: $notify, dndOff: $doNotDisturbOff, " +
                     "currentTarget: $currentTarget, percent: $percent"
         )
         return notify
+    }
+
+    private fun reachedDailyGoal(sqliteHelper: SqliteHelper): Boolean {
+
+        if (SharedPreferencesManager.totalIntake == 0f) {
+            AppUtils.DAILY_WATER_VALUE = 2500f
+        } else {
+            AppUtils.DAILY_WATER_VALUE = SharedPreferencesManager.totalIntake
+        }
+
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("n_date ='" + AppUtils.getCurrentDate("dd-MM-yyyy")) + "'"
+        )
+
+        var drink_water = 0f
+        for (k in arr_data.indices) {
+            if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                    drink_water += arr_data[k]["n_intook"]!!.toFloat()
+            else drink_water += arr_data[k]["n_intook_OZ"]!!.toFloat()
+        }
+
+        return if (drink_water >= AppUtils.DAILY_WATER_VALUE) true
+        else false
     }
 
     private fun compareTimes(currentTime: Date, timeToRun: Date): Long {

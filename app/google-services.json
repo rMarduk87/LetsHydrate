@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "32991625624",
-    "project_id": "let-s-hydrate",
-    "storage_bucket": "let-s-hydrate.appspot.com"
+    "project_number": "966195766110",
+    "project_id": "let-s-hydrate-f85c1",
+    "storage_bucket": "let-s-hydrate-f85c1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:32991625624:android:2887b66d7294bfd0506bed",
+        "mobilesdk_app_id": "1:966195766110:android:924b3b37a3fe8bed2325cf",
+        "android_client_info": {
+          "package_name": "ppt.tool.mementobibere"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK95FaMdVqVflEQyV6aeh9yrwBg8vn2v0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966195766110:android:1c5fe0d4977a58a82325cf",
         "android_client_info": {
           "package_name": "rpt.tool.mementobibere"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDKPqYffDyTmNOabL5FX6D96q_4ExTSG_c"
+          "current_key": "AIzaSyBK95FaMdVqVflEQyV6aeh9yrwBg8vn2v0"
         }
       ],
       "services": {

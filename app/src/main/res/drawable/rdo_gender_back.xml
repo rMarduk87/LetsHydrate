@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!--<item
+        android:drawable="@drawable/rdo_regular"
+        android:state_checked="true"
+        android:state_pressed="true"
+        android:color="@color/black"/>
+    <item
+        android:drawable="@drawable/rdo_regular"
+        android:state_pressed="true"
+        android:color="@color/white"/>-->
+    <item
+        android:drawable="@drawable/rdo_gender_select"
+        android:state_checked="true"
+        android:color="@color/white"/>
+
+    <item
+        android:drawable="@drawable/rdo_gender_regular"
+        android:color="@color/rdo_gender_regular_icon_color"/>
+</selector>
