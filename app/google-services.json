@@ -7,28 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:966195766110:android:924b3b37a3fe8bed2325cf",
+        "mobilesdk_app_id": "1:966195766110:android:0b2513bbb65ca0962325cf",
         "android_client_info": {
-          "package_name": "ppt.tool.mementobibere"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBK95FaMdVqVflEQyV6aeh9yrwBg8vn2v0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:966195766110:android:1c5fe0d4977a58a82325cf",
-        "android_client_info": {
-          "package_name": "rpt.tool.mementobibere"
+          "package_name": "rpt.tool.letshydrate"
         }
       },
       "oauth_client": [],

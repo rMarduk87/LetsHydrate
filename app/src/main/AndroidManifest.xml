@@ -61,7 +61,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="rpt.tool.mementobibere.ui.widget.NewAppWidget"
+        <receiver android:name="rpt.tool.letshydrate.ui.widget.NewAppWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

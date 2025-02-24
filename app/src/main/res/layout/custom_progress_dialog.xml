@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         tools:ignore="UselessParent">
 
-	<rpt.tool.mementobibere.utils.view.custom.MaterialProgressBar
+	<rpt.tool.letshydrate.utils.view.custom.MaterialProgressBar
         android:id="@+id/progress_wheel"
         android:layout_width="80dp"
         android:layout_height="80dp"

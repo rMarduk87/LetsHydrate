@@ -43,13 +43,13 @@
 
     </LinearLayout>
 
-    <rpt.tool.mementobibere.utils.view.custom.NonSwipeableViewPager
+    <rpt.tool.letshydrate.utils.view.custom.NonSwipeableViewPager
         android:id="@+id/viewPager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/bottom_block">
 
-    </rpt.tool.mementobibere.utils.view.custom.NonSwipeableViewPager>
+    </rpt.tool.letshydrate.utils.view.custom.NonSwipeableViewPager>
 
     <LinearLayout
         android:id="@+id/bottom_block"
