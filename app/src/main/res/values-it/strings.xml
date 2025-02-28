@@ -45,7 +45,7 @@
     <string name="str_wakeup_time">Ororio nel quale ti svegli</string>
     <string name="str_bed_time">Orario nel quale vai a dormire</string>
     <string name="str_goal_consume">Devi consumare $1 per raggiungere il tuo obiettivo di $2.</string>
-    <string name="str_min">Minuti</string>
+    <string name="str_min">Min</string>
     <string name="str_hour">Ora</string>
     <string name="other_factors">Altri fattori</string>
     <string name="weather_conditions">Condizioni meteo</string>
@@ -55,7 +55,7 @@
     <string name="snow">Neve</string>
     <string name="active">Attivo</string>
     <string name="pregnant">Incinta</string>
-    <string name="breastfeeding">Allattamento al seno</string>
+    <string name="breastfeeding">Allattamento\nal seno</string>
     <string name="str_hello">Ciao,</string>
     <string name="str_drink_water">Bevi acqua</string>
     <string name="str_drink_history">Storico dell\'assunzione di acqua</string>
@@ -255,7 +255,7 @@
     <string name="str_no_reached_found">Nessun record di obiettivo raggiunto trovato</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Completamento</string>
+    <string name="str_reached_goal">Goal</string>
     <string name="str_disable_tips">Disabilita suggerimenti</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notifica abilitata</string>
@@ -266,9 +266,12 @@
     <string name="str_notification_message">Messaggio di notifica</string>
     <string name="select_wakeup_time">Seleziona l\'orario di sveglia</string>
     <string name="select_bed_time">Seleziona l\'orario nel quale vai a dormire</string>
-    <string name="migration">Bentornato\a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi puotrai aggiornare i dati preesistenti</string>
-    <string name="drink_all">Bevi tutto</string>
+    <string name="migration">Bentornato/a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi potrai aggiornare i dati preesistenti</string>    <string name="drink_all">Bevi tutto</string>
     <string name="str_clicked">Container</string>
-
+    <string name="opt_max">Most clicked container</string>
+    <string name="opt_min">Container click less</string>
+    <string name="str_counter">Daily Report</string>
+    <string name="none">Nothing</string>
+    <string name="str_multi">Multi opt.</string>
 
 </resources>

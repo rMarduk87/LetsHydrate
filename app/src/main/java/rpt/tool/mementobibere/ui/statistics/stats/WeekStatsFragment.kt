@@ -149,8 +149,6 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
             generateBarDataNew()
         })
 
-        generateDataNew()
-
         generateBarDataNew()
     }
 
@@ -310,16 +308,10 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         binding.chart1.setDrawValueAboveBar(false)
         binding.chart1.isHighlightFullBarEnabled = false
 
-        //binding.chart1.setHighlightPerTapEnabled(false);
-
-        // change the position of the y-labels
         val leftAxis: YAxis = binding.chart1.axisLeft
         leftAxis.textColor = requireContext().resources.getColor(R.color.rdo_gender_select)
 
-        //leftAxis.setDrawGridLines(false);
-        //leftAxis.setGranularityEnabled(false);
 
-        //binding.chart1.setViewPortOffsets(0f,0f,0f,0f);
         leftAxis.setAxisMaximum(maxBarGraphVal)
 
         leftAxis.setAxisMinimum(0f) // this replaces setStartAtZero(true)
@@ -328,11 +320,11 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         binding.chart1.extraBottomOffset = 20f
 
         val xLabels: XAxis = binding.chart1.xAxis
-        //xLabels.setDrawAxisLine(false);
         xLabels.setDrawGridLines(false)
         xLabels.isGranularityEnabled = false
         xLabels.position = XAxis.XAxisPosition.BOTTOM
         xLabels.textColor = requireContext().resources.getColor(R.color.rdo_gender_select)
+
 
         val xAxisFormatter: ValueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -346,7 +338,6 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         }
 
         xLabels.valueFormatter = xAxisFormatter
-
         
         val l: Legend = binding.chart1.legend
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
@@ -519,204 +510,5 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         dialog.setContentView(view)
 
         dialog.show()
-    }
-
-
-    private fun generateDataNew() {
-        run {
-            // background color
-            binding.chartNew.setBackgroundColor(Color.WHITE)
-
-            binding.chartNew.clear()
-
-            // disable description text
-            binding.chartNew.description.isEnabled = false
-
-            // enable touch gestures
-            binding.chartNew.setTouchEnabled(true)
-
-            // set listeners
-            binding.chartNew.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
-                override fun onValueSelected(e: Entry, h: Highlight) {
-
-                }
-
-                override fun onNothingSelected() {
-                }
-            })
-            binding.chartNew.setDrawGridBackground(false)
-
-            // enable scaling and dragging
-            binding.chartNew.setDragEnabled(true)
-            binding.chartNew.setScaleEnabled(true)
-
-            // force pinch zoom along both axis
-            binding.chartNew.setPinchZoom(true)
-        }
-
-        var xAxis: XAxis
-        run {
-            // // X-Axis Style // //
-            xAxis = binding.chartNew.xAxis
-
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-            xAxis.labelRotationAngle = -90f
-
-            xAxis.setLabelCount(lst_date.size, true)
-
-            xAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-                    try {
-                        if (lst_date.size > value.toInt()) return lst_date[value.toInt()]
-                    } catch (e: Exception) {
-                        e.message?.let { e(Throwable(e), it) }
-                    }
-                    return "N/A"
-                }
-            }
-
-            // vertical grid lines
-            xAxis.enableGridDashedLine(10f, 0f, 0f)
-        }
-
-        var yAxis: YAxis
-        run {
-            // // Y-Axis Style // //
-            yAxis = binding.chartNew.axisLeft
-
-            // disable dual axis (only use LEFT axis)
-            binding.chartNew.axisRight.isEnabled = false
-
-            // horizontal grid lines
-            yAxis.enableGridDashedLine(10f, 0f, 0f)
-
-            // axis range
-            yAxis.setAxisMaximum(maxGraphVal)
-            yAxis.setAxisMinimum(-50f)
-        }
-
-
-        // add data
-        setData(lst_date.size)
-
-        // draw points over time
-        binding.chartNew.animateY(1500)
-
-        // get the legend (only possible after setting data)
-        val l: Legend = binding.chartNew.legend
-
-        // draw legend entries as lines
-        l.form = Legend.LegendForm.LINE
-
-        binding.chartNew.isHorizontalScrollBarEnabled = true
-    }
-
-    private val maxGraphVal: Float
-        get() {
-            //return 120;
-            var `val` = 1f
-
-            for (k in lst_date_val.indices) {
-                if (k == 0) {
-                    `val` = ("" + lst_date_val[k]).toFloat()
-                    continue
-                }
-
-                if (`val` < ("" + lst_date_val[k]).toFloat()) `val` =
-                    ("" + lst_date_val[k]).toFloat()
-            }
-
-            return `val` + 100
-        }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setData(count: Int) {
-        val values = ArrayList<Entry>()
-
-        for (i in 0 until count) {
-            val r = Random()
-            var i1 = r.nextInt(100 - 10) + 10
-
-            i1 = lst_date_val[i]
-
-            val `val` = ("" + i1).toFloat()
-            values.add(Entry(i.toFloat(), `val`, resources.getDrawable(R.drawable.ic_add)))
-        }
-
-        val set1: LineDataSet
-
-        if (binding.chartNew.data != null &&
-            binding.chartNew.data.getDataSetCount() > 0
-        ) {
-            set1 = binding.chartNew.data.getDataSetByIndex(0) as LineDataSet
-            set1.setValues(values)
-            set1.notifyDataSetChanged()
-            set1.mode = LineDataSet.Mode.CUBIC_BEZIER
-            binding.chartNew.data.notifyDataChanged()
-            binding.chartNew.notifyDataSetChanged()
-        } else {
-            // create a dataset and give it a type
-            set1 = LineDataSet(values, "")
-
-            set1.mode = LineDataSet.Mode.CUBIC_BEZIER
-
-            set1.setDrawIcons(false)
-
-            // draw dashed line
-            set1.enableDashedLine(10f, 0f, 0f)
-
-            // black lines and points
-            set1.setColor(getThemeColor(requireContext()))
-            set1.setCircleColor(getThemeColor(requireContext()))
-
-            // line thickness and point size
-            set1.setLineWidth(2f)
-            set1.circleRadius = 5f
-
-            // draw points as solid circles
-            set1.setDrawCircleHole(false)
-
-            // customize legend entry
-            set1.formLineWidth = 0f
-            set1.formLineDashEffect = DashPathEffect(floatArrayOf(10f, 0f), 0f)
-            set1.formSize = 15f
-
-            // text size of values
-            set1.valueTextSize = 9f
-
-            // draw selection line as dashed
-            set1.enableDashedHighlightLine(10f, 5f, 0f)
-
-            // set the filled area
-            set1.setDrawFilled(true)
-            set1.setFillFormatter { dataSet, dataProvider -> binding.chartNew.axisLeft.axisMinimum }
-
-            // set color of filled area
-            if (Utils.getSDKInt() >= 18) {
-                // drawables only supported on api level 18 and above
-                val drawable: Drawable? =
-                    ContextCompat.getDrawable(requireActivity(), R.drawable.line_chart_fade_back)
-
-                //create a new gradient color
-                val gd: GradientDrawable = GradientDrawable(
-                    GradientDrawable.Orientation.BOTTOM_TOP,
-                    getThemeColorArray(requireActivity())
-                )
-
-                set1.fillDrawable = gd
-            } else {
-                set1.setFillColor(Color.BLACK)
-            }
-
-            val dataSets: ArrayList<ILineDataSet> = ArrayList<ILineDataSet>()
-            dataSets.add(set1) // add the data sets
-
-            // create a data object with the data sets
-            val data: LineData = LineData(dataSets)
-
-            // set data
-            binding.chartNew.setData(data)
-        }
     }
 }

@@ -13,6 +13,7 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentHistoryBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.data.appmodel.History
+import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.i
 import rpt.tool.mementobibere.utils.navigation.safeNavController
@@ -59,6 +60,7 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
                     .setPositiveButton(requireContext()
             .getString(R.string.str_yes)
                     ) { dialog, whichButton ->
+                        removeForCounter(history)
                         sqliteHelper!!.remove("stats", "id=" + history!!.id)
                         if(checkIfRemoveReached(history.drinkDate)){
                             history.drinkDate?.let {
@@ -129,6 +131,11 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
         })
     }
 
+    private fun removeForCounter(history: History?) {
+        history!!.drinkDate?.let { sqliteHelper!!.addOrUpdateIntookCounter(it,
+            if(!AppUtils.checkIsCustom(history.containerValue!!.toFloat()))
+            history.containerValue!!.toFloat().toId() else (-2f).toId(),-1,null) }
+    }
 
 
     private fun checkIfRemoveReached(drinkDate: String?): Boolean {
@@ -168,7 +175,6 @@ class HistoryFragment:BaseFragment<FragmentHistoryBinding>(FragmentHistoryBindin
     }
 
     private fun checkIfRemoveDrinkAll(drinkDate: String?): Boolean {
-        val mes_unit: String = AppUtils.WATER_UNIT_VALUE
         val arr_data2: ArrayList<HashMap<String, String>> =
             sqliteHelper!!.getdata("stats",
                 "n_date ='$drinkDate'"

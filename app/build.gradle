@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 34
         targetSdk 35
-        versionCode 30
+        versionCode 31
         versionName "1.0.5"
         useLibrary "org.apache.http.legacy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -67,10 +67,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.wdullaer:materialdatetimepicker:2.2.0'
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
-    implementation 'androidx.compose.ui:ui-text-android:1.7.8'
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     implementation 'androidx.activity:activity-ktx:1.10.0'
-    implementation 'androidx.activity:activity:1.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.21"
@@ -84,8 +82,6 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
     implementation 'com.google.code.gson:gson:2.10.1'
-    // for image crop
-    implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"

@@ -2,7 +2,6 @@ package rpt.tool.mementobibere.ui.drink
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.NotificationManager
@@ -55,6 +54,7 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
 import rpt.tool.mementobibere.utils.data.appmodel.Container
 import rpt.tool.mementobibere.utils.data.appmodel.Menu
+import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.IntentHelper
@@ -839,18 +839,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         binding.openClickedContainer.setOnClickListener {
             SharedPreferencesManager.menu = 8
-            val li = LayoutInflater.from(requireContext())
-            val promptsView = li.inflate(R.layout.dialog_coming_soon, null)
-
-            val alertDialogBuilder = AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setView(promptsView)
-
-            alertDialogBuilder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
+            startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
         
         binding.addWater.setOnClickListener(View.OnClickListener {
@@ -985,7 +974,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
                 sqliteHelper.insert("drink_all", initialValuesDrinkAll)
 
-                addReachedUpdata(containerArrayList[selected_pos])
+                addReachedUpdate(containerArrayList[selected_pos])
+
+                addClicked("-2",AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT))
 
                 count_today_drink(true)
 
@@ -1385,7 +1376,10 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         sqliteHelper.insert("stats", initialValues)
 
-        addReachedUpdata(containerArrayList[selected_pos])
+        addClicked(containerArrayList[selected_pos].containerValue,
+            AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT))
+
+        addReachedUpdate(containerArrayList[selected_pos])
 
         count_today_drink(true)
 
@@ -1401,7 +1395,12 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         requireActivity().sendBroadcast(intent)
     }
 
-    private fun addReachedUpdata(container: Container) {
+    private fun addClicked(containerValue: String?, date: String) {
+
+        sqliteHelper.addOrUpdateIntookCounter(date,containerValue!!.toFloat().toId(),1,null)
+    }
+
+    private fun addReachedUpdate(container: Container) {
 
         val reachedGoal = sqliteHelper.getdata("intake_reached",
             "date='"+AppUtils.getDate(filter_cal!!.timeInMillis, AppUtils.DATE_FORMAT)+"'")

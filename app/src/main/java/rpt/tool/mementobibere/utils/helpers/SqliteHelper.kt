@@ -6,7 +6,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import rpt.tool.mementobibere.data.models.MaxMinChartModel
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.extensions.toMonth
 import rpt.tool.mementobibere.utils.extensions.toYear
 
@@ -18,7 +20,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private const val DATABASE_VERSION = 8
+        private const val DATABASE_VERSION = 9
         private const val DATABASE_NAME = "RptBibere"
         private const val TABLE_STATS = "stats"
         private const val TABLE_INTOOK_COUNTER = "intook_count"
@@ -26,6 +28,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_AVIS = "avis_day"
         private const val TABLE_DRINK_ALL = "drink_all"
         private const val TABLE_CONTAINER = "container"
+        private const val TABLE_ALARM = "alarm"
+        private const val TABLE_SUB_ALARM = "sub_alarm"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
         private const val KEY_N_DATE = "n_date"
@@ -47,7 +51,26 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val KEY_N_TOTAL_INTAKE_OZ = "n_totalintake_OZ"
         private const val KEY_TIME = "time"
         private const val KEY_DATE_TIME = "dateTime"
-
+        private const val KEY_ALARM_ID = "alarm_id"
+        private const val KEY_ALARM_TIME = "alarm_time"
+        private const val KEY_ALARM_TYPE = "alarm_type"
+        private const val KEY_ALARM_INTERVAL = "alarm_interval"
+        private const val KEY_IS_OFF = "is_off"
+        private const val KEY_SUN = "sunday"
+        private const val KEY_MON = "monday"
+        private const val KEY_TUE = "tuesday"
+        private const val KEY_WED = "wednesday"
+        private const val KEY_THU = "thursday"
+        private const val KEY_FRI = "friday"
+        private const val KEY_SAT = "saturday"
+        private const val KEY_SUN_ID = "sunday_alarm_id"
+        private const val KEY_MON_ID = "monday_alarm_id"
+        private const val KEY_TUE_ID = "tuesday_alarm_id"
+        private const val KEY_WED_ID = "wednesday_alarm_id"
+        private const val KEY_THU_ID = "thursday_alarm_id"
+        private const val KEY_FRI_ID = "friday_alarm_id"
+        private const val KEY_SAT_ID = "saturday_alarm_id"
+        private const val KEY_SUPER_ID = "super_id"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -63,6 +86,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         addValueToContainer(db)
 
         addDrinkAllTable(db)
+
+        addCounterTable(db)
+
+        addAlarmTable(db)
 
     }
 
@@ -92,13 +119,45 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     }
 
     private fun addContainerTable(db: SQLiteDatabase?) {
-        val createAvisTable = ("CREATE TABLE " + TABLE_CONTAINER + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_CONTAINER_ID + " INTEGER DEfAULT 0," +
+        val createCounterTable = ("CREATE TABLE " + TABLE_CONTAINER + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_CONTAINER_ID + " INTEGER DEFAULT 0," +
                 KEY_CONTAINER_VALUE + " TEXT," +
                 KEY_CONTAINER_VALUE_OZ + " TEXT," +
                 KEY_IS_OPEN + " TEXT," +
                 KEY_IS_CUSTOM + " INTEGER DEFAULT 0)" )
-        db?.execSQL(createAvisTable)
+        db?.execSQL(createCounterTable)
+    }
+
+    private fun addAlarmTable(db:SQLiteDatabase?){
+        val createAlarmTable = ("CREATE TABLE " + TABLE_ALARM + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
+                KEY_ALARM_ID + " TEXT," +
+                KEY_ALARM_TYPE + " TEXT," +
+                KEY_ALARM_INTERVAL + " TEXT," +
+                KEY_IS_OFF + " INTEGER DEFAULT 0," +
+                KEY_SUN + " INTEGER DEFAULT 1,"+
+                KEY_MON + " INTEGER DEFAULT 1,"+
+                KEY_TUE + " INTEGER DEFAULT 1,"+
+                KEY_WED + " INTEGER DEFAULT 1,"+
+                KEY_THU + " INTEGER DEFAULT 1,"+
+                KEY_FRI + " INTEGER DEFAULT 1,"+
+                KEY_SAT + " INTEGER DEFAULT 1,"+
+                KEY_SUN_ID + " TEXT,"+
+                KEY_MON_ID + " TEXT,"+
+                KEY_TUE_ID + " TEXT,"+
+                KEY_WED_ID + " TEXT,"+
+                KEY_THU_ID + " TEXT,"+
+                KEY_FRI_ID + " TEXT,"+
+                KEY_SAT_ID + " TEXT)"
+                )
+        db?.execSQL(createAlarmTable)
+
+        val createSubAlarm = ("CREATE TABLE " + TABLE_SUB_ALARM + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
+                KEY_ALARM_ID + " TEXT," +
+                KEY_ALARM_TYPE + " TEXT," +
+                KEY_SUPER_ID + " TEXT)")
+        db?.execSQL(createSubAlarm)
     }
 
     private fun addValueToContainer(db: SQLiteDatabase?) {
@@ -127,6 +186,13 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db?.execSQL(createAvisTable)
     }
 
+    private fun addCounterTable(db: SQLiteDatabase?) {
+        val createIntookCounterTable = ("CREATE TABLE " + TABLE_INTOOK_COUNTER + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"
+                + KEY_INTOOK + " INT," + KEY_INTOOK_COUNT + " INT)")
+        db?.execSQL(createIntookCounterTable)
+    }
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion){
@@ -147,7 +213,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             if(counter<5){
                 counter += 1
                 if(tableExists(db,TABLE_INTOOK_COUNTER)){
-                    db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 7 WHERE $KEY_INTOOK_COUNT = 5")
+                    db!!.execSQL("UPDATE $TABLE_INTOOK_COUNTER set $KEY_INTOOK_COUNT = 7" +
+                            " WHERE $KEY_INTOOK_COUNT = 5")
                 }
             }
             if (counter<6){
@@ -174,10 +241,16 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 db.execSQL("ALTER TABLE $TABLE_REACHED ADD COLUMN $KEY_QTA_OZ FLOAT")
                 addContainerTable(db)
                 addValueToContainer(db)
-                refactoryReached(db)
+                correctErrorOfOldReached(db)
                 updateIntake(db)
                 updateReached(db)
                 addDrinkAllTable(db)
+            }
+            if (counter<9){
+                counter += 1
+                addCounterTable(db)
+                addAlarmTable(db)
+                addDataToCounter(db)
             }
             else {
             }
@@ -189,10 +262,65 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_DRINK_ALL")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_ALARM")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_SUB_ALARM")
             onCreate(db)
         }
 
-    private fun refactoryReached(db: SQLiteDatabase) {
+    private fun addDataToCounter(db: SQLiteDatabase?) {
+        val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_N_DATE DESC"
+        db!!.rawQuery(selectQuery, null).use{ it ->
+            if (it.moveToFirst()) {
+                for (i in 0 until it.count) {
+                    val date = if(it.getColumnName(1).equals(KEY_N_DATE)) it.getString(1) else
+                        it.getString(11)
+                    var intook = (if(it.getColumnName(4).equals(KEY_N_INTOOK)) it.getString(4) else
+                        it.getString(7)).toFloat()
+
+                    if(AppUtils.checkIsCustom(intook)){
+                        intook = -2f
+                    }
+
+                    addOrUpdateIntookCounter(date,intook.toId(),1,db)
+
+                    it.moveToNext()
+                }
+            }
+        }
+    }
+
+    fun addOrUpdateIntookCounter(date: String, selectedOption: Float,value:Int,db: SQLiteDatabase?): Int {
+        var dbToUse: SQLiteDatabase? = null
+        dbToUse = db ?: this.writableDatabase
+        val intook = getIntookCounter(date,selectedOption,dbToUse)
+        if(intook==-1){
+            val values = ContentValues()
+            values.put(KEY_DATE, date)
+            values.put(KEY_INTOOK, selectedOption)
+            values.put(KEY_INTOOK_COUNT, value)
+            val response = dbToUse!!.insert(TABLE_INTOOK_COUNTER, null, values)
+            return response.toInt()
+        }
+        else{
+            val countNow = "SELECT $KEY_INTOOK_COUNT FROM $TABLE_INTOOK_COUNTER " +
+                    "WHERE $KEY_DATE = ? AND $KEY_INTOOK = ?"
+            var counter = 0
+            dbToUse!!.rawQuery(countNow, arrayOf(date,selectedOption.toString())).use {
+                if (it.moveToFirst()) {
+                    counter = it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK_COUNT))
+                }
+            }
+            val contentValues = ContentValues()
+            contentValues.put(KEY_INTOOK_COUNT,  counter + value)
+
+            return dbToUse.update(TABLE_INTOOK_COUNTER, contentValues,
+                "$KEY_DATE = ? AND $KEY_INTOOK = ?",
+                arrayOf(date,selectedOption.toString()))
+        }
+        return -1
+    }
+
+    private fun correctErrorOfOldReached(db: SQLiteDatabase) {
         val selectQuery = "SELECT * FROM $TABLE_STATS ORDER BY $KEY_DATE DESC"
         db.rawQuery(selectQuery, null).use{ it ->
             if (it.moveToFirst()) {
@@ -398,11 +526,11 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return 0
     }
 
-    private fun getIntookCounter(date: String, selectedOption: Float): Int {
-        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ? AND $KEY_INTOOK = ?"
-        val db = this.readableDatabase
+    private fun getIntookCounter(date: String, selectedOption: Float, db: SQLiteDatabase?): Int {
+        val selectQuery = "SELECT $KEY_INTOOK FROM $TABLE_INTOOK_COUNTER WHERE $KEY_DATE = ?" +
+                " AND $KEY_INTOOK = ?"
         var intook = -1
-        db.rawQuery(selectQuery, arrayOf(date,selectedOption.toString())).use {
+        db!!.rawQuery(selectQuery, arrayOf(date,selectedOption.toString())).use {
             if (it.moveToFirst()) {
                 intook = it.getInt(it.getColumnIndexOrThrow(KEY_INTOOK))
             }
@@ -413,7 +541,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
     private fun getAllReached(orderBy: Boolean = false, db: SQLiteDatabase? = null) : Cursor{
         var selectQuery = "SELECT * FROM $TABLE_REACHED"
         if(orderBy){
-            selectQuery += " ORDER BY datetime(substr(date, 7, 4) || '-' || substr(date, 4, 2) || '-' || substr(date, 1, 2) || ' ' || substr(date, 12, 8)) ASC"
+            selectQuery += " ORDER BY datetime(substr(date, 7, 4) || '-' || substr(date, 4, 2) ||" +
+                    " '-' || substr(date, 1, 2) || ' ' || substr(date, 12, 8)) ASC"
         }
         val dbToUse = db ?: this.readableDatabase
         return dbToUse.rawQuery(selectQuery, null)
@@ -719,5 +848,34 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 remove("intake_reached","date='$date'")
             }
         }
+    }
+
+    fun getMaxTodayIntookStats(date: String): List<MaxMinChartModel> {
+        val selectQuery = "SELECT $KEY_INTOOK, $KEY_INTOOK_COUNT FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT DESC"
+        val db = this.readableDatabase
+        val list : ArrayList<MaxMinChartModel> = arrayListOf<MaxMinChartModel>()
+        db.rawQuery(selectQuery, arrayOf(date)).use {
+            if (it.moveToFirst()) {
+                for(i in 0 until it.count){
+                    list.add(MaxMinChartModel(it.getInt(0),it.getFloat(1)))
+                    it.moveToNext()
+                }
+            }
+        }
+        return list
+    }
+    fun getMinTodayIntookStats(date: String): List<MaxMinChartModel> {
+        val selectQuery = "SELECT $KEY_INTOOK ,$KEY_INTOOK_COUNT FROM $TABLE_INTOOK_COUNTER  WHERE $KEY_DATE = ? ORDER BY $KEY_INTOOK_COUNT ASC"
+        val db = this.readableDatabase
+        val list : ArrayList<MaxMinChartModel> = arrayListOf<MaxMinChartModel>()
+        db.rawQuery(selectQuery, arrayOf(date)).use {
+            if (it.moveToFirst()) {
+                for(i in 0 until it.count){
+                    list.add(MaxMinChartModel(it.getInt(0),it.getFloat(1)))
+                    it.moveToNext()
+                }
+            }
+        }
+        return list
     }
 }
