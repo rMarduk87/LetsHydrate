@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import rpt.tool.mementobibere.databinding.ActivitySplashScreenBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 

@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.utils.data.appmodel.IntervalModel
+import rpt.tool.mementobibere.data.appmodel.IntervalModel
 
 @SuppressLint("NewApi")
 class IntervalAdapter(

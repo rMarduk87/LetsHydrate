@@ -10,7 +10,7 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentReachedGoalBinding
-import rpt.tool.mementobibere.utils.data.appmodel.ReachedGoal
+import rpt.tool.mementobibere.data.appmodel.ReachedGoal
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.i
 import rpt.tool.mementobibere.utils.view.adapters.ReachedGoalAdapter

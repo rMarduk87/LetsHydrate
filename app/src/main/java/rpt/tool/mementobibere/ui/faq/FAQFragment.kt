@@ -12,7 +12,7 @@ import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentFaqBinding
-import rpt.tool.mementobibere.utils.data.appmodel.FAQModel
+import rpt.tool.mementobibere.data.appmodel.FAQModel
 import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.custom.AnimationUtils

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.media.Ringtone
 import android.net.ParseException
 import android.net.Uri
 import android.provider.Settings
@@ -846,6 +847,10 @@ class AppUtils {
          const val IS_MIGRATION: String = "is_migration"
          const val MENU: String = "navigation_menu"
          const val REMINDER_SOUND: String = "sound"
+         const val REMINDER_VIBRATE: String = "reminder_vibrate"
+         const val REMINDER_OPTION: String = "reminder_option"
+         const val IS_MANUAL_REMINDER: String = "is_manual_reminder"
+         const val IS_NEW_ALARM: String = "is_new_alarm"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f
@@ -875,6 +880,8 @@ class AppUtils {
             "(?:embed|vi?)/([^/?]*)",
             "^([A-Za-z0-9\\-]*)"
         )
+        var notification_ringtone: Ringtone? = null
+
     }
 }
 

@@ -274,5 +274,20 @@
     <string name="str_counter">Daily Report</string>
     <string name="none">Nothing</string>
     <string name="str_multi">Multi opt.</string>
+    <string name="auto">Auto</string>
+    <string name="off">Off</string>
+    <string name="silent">Silent</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="custom_sound">Custom Sound</string>
+    <string name="sund">S</string>
+    <string name="mond">M</string>
+    <string name="thue">T</string>
+    <string name="wedn">W</string>
+    <string name="thus">T</string>
+    <string name="frid">F</string>
+    <string name="satu">S</string>
+    <string name="_5_minutes">5 Minutes</string>
+    <string name="_10_minutes">10 Minutes</string>
+    <string name="_15_minutes">15 Minutes</string>
 
 </resources>
