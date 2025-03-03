@@ -16,7 +16,9 @@ import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
+import rpt.tool.mementobibere.utils.managers.UpdateVersionManager
 import rpt.tool.mementobibere.utils.view.adapters.InitUserInfoPagerAdapter
+
 
 @Suppress("DEPRECATION")
 class InitUserInfoFragment:
@@ -28,6 +30,7 @@ class InitUserInfoFragment:
     var max_page: Int = 7
     var alertHelper: AlertHelper? = null
     var sqliteHelper: SqliteHelper? = null
+    var updateVersionManager: UpdateVersionManager? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +41,8 @@ class InitUserInfoFragment:
 
         alertHelper = AlertHelper(requireContext())
         sqliteHelper = SqliteHelper(requireContext())
+
+        updateVersionManager = UpdateVersionManager()
 
         body()
     }
@@ -193,9 +198,13 @@ class InitUserInfoFragment:
             SharedPreferencesManager.isMigration = false
         }
 
+        updateVersionManager!!.setAlarm(requireContext())
+
+        SharedPreferencesManager.isNewAlarm = false
 
         startActivity(Intent(requireActivity(), MainActivity::class.java))
 
     }
+
 
 }

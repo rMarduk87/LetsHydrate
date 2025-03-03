@@ -28,7 +28,7 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.data.models.BarChartModel
 import rpt.tool.mementobibere.databinding.FragmentContainerCountBinding
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.data.appmodel.History
+import rpt.tool.mementobibere.data.appmodel.History
 import rpt.tool.mementobibere.utils.extensions.toCalendar
 import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper

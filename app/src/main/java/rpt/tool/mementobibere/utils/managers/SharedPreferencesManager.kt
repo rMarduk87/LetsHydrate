@@ -131,5 +131,17 @@ object SharedPreferencesManager {
     var bedTimeMinute: Int
         get() = sharedPreferences.getInt(AppUtils.BED_TIME_MINUTE,0)
         set(value) = sharedPreferences.edit().putInt(AppUtils.BED_TIME_MINUTE, value).apply()
+    var reminderVibrate: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.REMINDER_VIBRATE,true)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.REMINDER_VIBRATE, value).apply()
+    var reminderOption: Int
+        get() = sharedPreferences.getInt(AppUtils.REMINDER_OPTION,0)
+        set(value) = sharedPreferences.edit().putInt(AppUtils.REMINDER_OPTION, value).apply()
+    var isManualReminder: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_MANUAL_REMINDER,false)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_MANUAL_REMINDER, value).apply()
+    var isNewAlarm: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_NEW_ALARM,true)
+        set(value) = sharedPreferences.edit().putBoolean(AppUtils.IS_NEW_ALARM, value).apply()
 
 }

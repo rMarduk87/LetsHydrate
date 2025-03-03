@@ -12,7 +12,7 @@ import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentHistoryBinding
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.utils.data.appmodel.History
+import rpt.tool.mementobibere.data.appmodel.History
 import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.i

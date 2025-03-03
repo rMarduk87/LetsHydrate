@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.utils.data.appmodel
+package rpt.tool.mementobibere.data.appmodel
 
 class History {
     var id: String? = null
