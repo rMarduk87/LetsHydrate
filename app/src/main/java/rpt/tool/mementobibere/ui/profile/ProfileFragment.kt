@@ -705,7 +705,7 @@ class ProfileFragment:
                 try {
                     val tmp_height = getData(txt_name.text.toString().trim { it <= ' ' })
 
-                    val d = (txt_name.text.toString().trim { it <= ' ' }.toFloat()).toInt()
+                    val d = (txt_name.text.toString().trim { it <= ' ' }.toFloat()) as Int
 
                     d("after_decimal", "" + tmp_height.indexOf("."))
 
@@ -734,11 +734,9 @@ class ProfileFragment:
 
                 rdo_feet.isClickable = true
                 rdo_cm.isClickable = false
-                txt_name.filters = arrayOf<InputFilter>(DigitsInputFilter(3,
-                    0, 240.0))
+                txt_name.filters = arrayOf<InputFilter>(DigitsInputFilter(3, 0, 240.0))
                 txt_name.setText(getData("" + final_height_cm))
                 txt_name.setSelection(txt_name.length())
-                SharedPreferencesManager.personHeightUnit = true
                 
             } else {
                 rdo_feet.isChecked = true
@@ -751,7 +749,7 @@ class ProfileFragment:
                 var final_height_feet = "5.0"
 
                 try {
-                    val d = (txt_name.text.toString().trim { it <= ' ' }.toFloat()).toInt()
+                    val d = (txt_name.text.toString().trim { it <= ' ' }.toFloat()) as Int
 
                     val tmp_height_inch = Math.round(d / 2.54).toInt()
 
@@ -769,7 +767,6 @@ class ProfileFragment:
                     arrayOf<InputFilter>(InputFilterRange(0.00, height_feet_elements))
                 txt_name.setText(getData(final_height_feet))
                 txt_name.setSelection(txt_name.length())
-                SharedPreferencesManager.personHeightUnit = false
                 
             } else {
                 rdo_feet.isChecked = false
@@ -879,7 +876,6 @@ class ProfileFragment:
                 txt_name.setText(getData("" + AppUtils.decimalFormat2.format(tmp)))
                 rdo_kg.isClickable = false
                 rdo_lb.isClickable = true
-                SharedPreferencesManager.personWeightUnit = true
             }
         }
 
@@ -901,7 +897,6 @@ class ProfileFragment:
                 txt_name.setText(getData("" + tmp))
                 rdo_kg.isClickable = true
                 rdo_lb.isClickable = false
-                SharedPreferencesManager.personWeightUnit = false
             }
         }
 

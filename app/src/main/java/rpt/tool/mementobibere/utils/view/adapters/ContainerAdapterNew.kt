@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.data.appmodel.Container
+import rpt.tool.mementobibere.utils.data.appmodel.Container
 import rpt.tool.mementobibere.utils.log.e
 
 @SuppressLint("NewApi")

@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import rpt.tool.mementobibere.R
-import rpt.tool.mementobibere.data.appmodel.Menu
+import rpt.tool.mementobibere.utils.data.appmodel.Menu
 
 
 @SuppressLint("NewApi")

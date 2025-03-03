@@ -777,28 +777,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return maplist
     }
 
-    @SuppressLint("Recycle")
-    fun getdata(table_name: String): ArrayList<HashMap<String, String>> {
-        val maplist = ArrayList<HashMap<String, String>>()
-
-        val query = "SELECT * FROM $table_name"
-
-        val c: Cursor = this.readableDatabase.rawQuery(query, null)
-
-        if (c.moveToFirst()) {
-            do {
-                val map = HashMap<String, String>()
-                for (i in 0 until c.columnCount) {
-                    map[c.getColumnName(i)] = c.getString(i)
-                }
-
-                maplist.add(map)
-            } while (c.moveToNext())
-        }
-
-        return maplist
-    }
-
     fun insert(tableName: String, initialValues: ContentValues) {
         this.writableDatabase.insert(tableName, null, initialValues)
     }
@@ -899,36 +877,5 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return list
-    }
-
-    @SuppressLint("Recycle")
-    fun isExists(table_name: String, where_con: String): Boolean {
-        var query = "SELECT * FROM $table_name"
-
-        if (!AppUtils.checkBlankData(where_con)) query += " WHERE $where_con"
-
-        val c: Cursor = this.readableDatabase.rawQuery(query, null)
-
-        return c.count > 0
-    }
-
-    @SuppressLint("Recycle")
-    fun getLastId(table_name: String): String {
-        val query = "SELECT id FROM $table_name"
-
-        val c: Cursor = this.readableDatabase.rawQuery(query, null)
-
-        if (c.moveToLast()) return "" + c.getString(0)
-
-        return "0"
-    }
-
-    fun remove(table_name: String) {
-        val query = "DELETE FROM $table_name"
-        fire(query)
-    }
-
-    private fun fire(query: String) {
-        this.writableDatabase.execSQL(query);
     }
 }
