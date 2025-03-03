@@ -12,107 +12,6 @@
         android:id="@+id/include1"
         layout="@layout/header_with_back" />
 
-
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_marginBottom="@dimen/dp_20">
-
-        <RadioButton
-            android:id="@+id/rdo_auto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/auto"
-            android:textColor="@color/blue_color" />
-
-        <RadioButton
-            android:id="@+id/rdo_off"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/off"
-            android:textColor="@color/blue_color" />
-
-        <RadioButton
-            android:id="@+id/rdo_silent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/silent"
-            android:textColor="@color/blue_color" />
-
-    </RadioGroup>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_weight="1"
-            android:text="@string/vibrate" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/switch_vibrate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sound_block"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/drawable_edittext"
-        android:padding="@dimen/dp_10"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="@string/custom_sound"
-                android:textSize="@dimen/dp_14"
-                android:textColor="@color/line"
-                tools:ignore="SpUsage" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/lbl_sound_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text=""
-            android:textSize="@dimen/dp_14"
-            android:textColor="@color/line"
-            tools:ignore="SpUsage" />
-
-    </LinearLayout>
-
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -120,51 +19,6 @@
         android:background="@drawable/drawable_rounded_screen_background"
         android:backgroundTint="@color/str_green_card">
 
-        <RadioGroup
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginStart="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_5">
-
-            <RadioButton
-                android:id="@+id/rdo_auto_alarm"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:checked="true"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:background="@drawable/rdo_back_reminder"
-                android:text="@string/str_automatic"
-                android:textSize="@dimen/dp_15"
-                android:textColor="@drawable/rdo_back_reminder"
-                android:fontFamily="@font/calibri_regular"
-                tools:ignore="SpUsage" />
-
-            <RadioButton
-                android:id="@+id/rdo_manual_alarm"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:checked="false"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:button="@null"
-                android:background="@drawable/rdo_back_reminder"
-                android:text="@string/str_manual"
-                android:textSize="@dimen/dp_15"
-                android:textColor="@drawable/rdo_back_reminder"
-                android:fontFamily="@font/calibri_regular"
-                tools:ignore="SpUsage" />
-
-        </RadioGroup>
 
         <RelativeLayout
             android:id="@+id/auto_reminder_block"
@@ -374,8 +228,8 @@
                         android:layout_height="@dimen/dp_15"
                         android:layout_marginBottom="4dp"
                         android:src="@drawable/ic_list_arrow"
-                        android:contentDescription="@string/img"
                         android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/img"
                         app:tint="@color/rdo_gender_select" />
 
                 </LinearLayout>

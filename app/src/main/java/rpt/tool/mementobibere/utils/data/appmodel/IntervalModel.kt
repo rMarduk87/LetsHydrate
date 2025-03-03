@@ -1,6 +1,6 @@
-package rpt.tool.mementobibere.data.appmodel
+package rpt.tool.mementobibere.utils.data.appmodel
 
-class SoundModel {
+class IntervalModel {
     var id: Int = 0
     var name: String? = null
     var isSelected: Boolean = false

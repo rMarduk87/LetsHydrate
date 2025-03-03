@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import rpt.tool.mementobibere.databinding.ActivitySelectBottleBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.data.appmodel.Container
+import rpt.tool.mementobibere.utils.data.appmodel.Container
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager

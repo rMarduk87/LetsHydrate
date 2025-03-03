@@ -20,7 +20,7 @@ import rpt.tool.mementobibere.MainActivity
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentSettingsBinding
 import rpt.tool.mementobibere.utils.AppUtils
-import rpt.tool.mementobibere.data.appmodel.SoundModel
+import rpt.tool.mementobibere.utils.data.appmodel.SoundModel
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.navigation.safeNavController
