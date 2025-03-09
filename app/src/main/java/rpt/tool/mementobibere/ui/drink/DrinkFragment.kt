@@ -73,6 +73,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.Random
+import androidx.core.net.toUri
 
 
 class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::inflate) {
@@ -109,6 +110,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
 
 
+    @SuppressLint("UseKtx")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         sqliteHelper = SqliteHelper(requireContext())
         alertHelper = AlertHelper(requireContext())
@@ -159,8 +161,8 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         ringtone = RingtoneManager.getRingtone(
             requireContext(),
-            Uri.parse(("android.resource://" + requireContext().packageName)
-                    + "/" + R.raw.fill_water_sound)
+            (("android.resource://" + requireContext().packageName)
+                    + "/" + R.raw.fill_water_sound).toUri()
         )
         ringtone!!.isLooping = false
     }
@@ -369,7 +371,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                     }
                     5 -> {
                         val i = Intent(Intent.ACTION_VIEW)
-                        i.setData(Uri.parse(AppUtils.PRIVACY_POLICY_ULR))
+                        i.setData(AppUtils.PRIVACY_POLICY_ULR.toUri())
                         startActivity(i)
                     }
                     6 -> {
@@ -390,7 +392,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$appPackageName")
+                        "market://details?id=$appPackageName".toUri()
                     )
                 )
             } catch (anfe: ActivityNotFoundException) {

@@ -28,8 +28,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_AVIS = "avis_day"
         private const val TABLE_DRINK_ALL = "drink_all"
         private const val TABLE_CONTAINER = "container"
-        private const val TABLE_ALARM = "alarm"
-        private const val TABLE_SUB_ALARM = "sub_alarm"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
         private const val KEY_N_DATE = "n_date"
@@ -89,8 +87,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
         addCounterTable(db)
 
-        addAlarmTable(db)
-
     }
 
     private fun addFirstTable(db: SQLiteDatabase?) {
@@ -126,38 +122,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 KEY_IS_OPEN + " TEXT," +
                 KEY_IS_CUSTOM + " INTEGER DEFAULT 0)" )
         db?.execSQL(createCounterTable)
-    }
-
-    private fun addAlarmTable(db:SQLiteDatabase?){
-        val createAlarmTable = ("CREATE TABLE " + TABLE_ALARM + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
-                KEY_ALARM_ID + " TEXT," +
-                KEY_ALARM_TYPE + " TEXT," +
-                KEY_ALARM_INTERVAL + " TEXT," +
-                KEY_IS_OFF + " INTEGER DEFAULT 0," +
-                KEY_SUN + " INTEGER DEFAULT 1,"+
-                KEY_MON + " INTEGER DEFAULT 1,"+
-                KEY_TUE + " INTEGER DEFAULT 1,"+
-                KEY_WED + " INTEGER DEFAULT 1,"+
-                KEY_THU + " INTEGER DEFAULT 1,"+
-                KEY_FRI + " INTEGER DEFAULT 1,"+
-                KEY_SAT + " INTEGER DEFAULT 1,"+
-                KEY_SUN_ID + " TEXT,"+
-                KEY_MON_ID + " TEXT,"+
-                KEY_TUE_ID + " TEXT,"+
-                KEY_WED_ID + " TEXT,"+
-                KEY_THU_ID + " TEXT,"+
-                KEY_FRI_ID + " TEXT,"+
-                KEY_SAT_ID + " TEXT)"
-                )
-        db?.execSQL(createAlarmTable)
-
-        val createSubAlarm = ("CREATE TABLE " + TABLE_SUB_ALARM + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
-                KEY_ALARM_ID + " TEXT," +
-                KEY_ALARM_TYPE + " TEXT," +
-                KEY_SUPER_ID + " TEXT)")
-        db?.execSQL(createSubAlarm)
     }
 
     private fun addValueToContainer(db: SQLiteDatabase?) {
@@ -249,7 +213,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             if (counter<9){
                 counter += 1
                 addCounterTable(db)
-                addAlarmTable(db)
                 addDataToCounter(db)
             }
             else {
@@ -262,8 +225,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_DRINK_ALL")
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_ALARM")
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_SUB_ALARM")
             onCreate(db)
         }
 

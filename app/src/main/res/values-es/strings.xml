@@ -274,5 +274,12 @@
     <string name="str_counter">Daily Report</string>
     <string name="none">Nothing</string>
     <string name="str_multi">Multi opt.</string>
+    <string name="str_add_new_reached">Add Old Reached Goal</string>
+    <string name="str_new_reached">Add New Reached Goal</string>
+    <string name="str_reached_day">Reached Day</string>
+    <string name="fl_oz">fl oz</string>
+    <string name="str_reached_ml_error">The quantity drunk cannot be less than 2500 ml</string>
+    <string name="str_reached_floz_error">The quantity drunk cannot be less than 84.54 fl oz</string>
+    <string name="str_just_reached">A record already exists on the selected date</string>
 
 </resources>
