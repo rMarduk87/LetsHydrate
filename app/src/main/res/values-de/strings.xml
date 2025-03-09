@@ -45,7 +45,7 @@
     <string name="str_wakeup_time">Aufstehzeit</string>
     <string name="str_bed_time">Schlafenszeit</string>
     <string name="str_goal_consume">Sie müssen $1 zu sich nehmen, um Ihr Ziel von $2 zu erreichen.</string>
-    <string name="str_min">Min.</string>
+    <string name="str_min">Min</string>
     <string name="str_hour">Stunde</string>
     <string name="other_factors">Andere Faktoren</string>
     <string name="weather_conditions">Wetterbedingungen</string>
@@ -255,7 +255,7 @@
     <string name="str_no_reached_found">Kein Datensatz für erreichtes Ziel gefunden</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Fertigstellung</string>
+    <string name="str_reached_goal">Goal</string>
     <string name="str_disable_tips">Tipps deaktivieren</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Benachrichtigung aktiviert</string>
@@ -269,5 +269,17 @@
     <string name="migration">Willkommen zurück bei Lasst uns hydrieren. In der neuen Version wurden einige Daten hinzugefügt, um die Berechnung von Wasserbedarf, fügen Sie ihn in die Tabellen ein und aktualisieren Sie ggf. die bereits vorhandenen</string>
     <string name="drink_all">Alles trinken</string>
     <string name="str_clicked">Container</string>
+    <string name="opt_max">Meistgeklickter Container</string>
+    <string name="opt_min">Container weniger angeklickt</string>
+    <string name="str_counter">Tagesbericht</string>
+    <string name="none">Nichts</string>
+    <string name="str_multi">Mehrere Optionen</string>
+    <string name="str_add_new_reached">Altes erreichtes Ziel hinzufügen</string>
+    <string name="str_new_reached">Neues erreichtes Ziel hinzufügen</string>
+    <string name="str_reached_day">Erreichter Tag</string>
+    <string name="fl_oz">fl oz</string>
+    <string name="str_reached_ml_error">Die getrunkene Menge muss zwischen 2500 ml und 8000 ml liegen</string>
+    <string name="str_reached_floz_error">Die getrunkene Menge muss zwischen 84,54 fl oz und 270 fl oz liegen</string>
+    <string name="str_just_reached">Zum ausgewählten Datum existiert bereits ein Datensatz</string>
 
 </resources>

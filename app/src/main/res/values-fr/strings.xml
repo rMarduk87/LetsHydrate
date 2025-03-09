@@ -255,7 +255,7 @@
     <string name="str_no_reached_found">Aucun objectif atteint n\'a été enregistré</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Achèvement</string>
+    <string name="str_reached_goal">Goal</string>
     <string name="str_disable_tips">Désactiver les pourboires</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notification activée</string>
@@ -269,6 +269,18 @@
     <string name="migration">Bienvenue à Hydratons-nous, dans la nouvelle version, certaines données ont été ajoutées pour améliorer le calcul des besoins en eau, insérez-les dans les feuilles et si vous le souhaitez, mettez à jour celles préexistantes</string>
     <string name="drink_all">Boire tout</string>
     <string name="str_clicked">Conteneurs</string>
+    <string name="opt_max">Contenant le plus cliqué</string>
+    <string name="opt_min">Contenant le moins cliqué</string>
+    <string name="str_counter">Rapport quotidien</string>
+    <string name="none">Rien</string>
+    <string name="str_multi">Options multiples</string>
+    <string name="str_add_new_reached">Ajouter un ancien objectif atteint</string>
+    <string name="str_new_reached">Ajouter un nouvel objectif atteint</string>
+    <string name="str_reached_day">Jour atteint</string>
+    <string name="fl_oz">fl oz</string>
+    <string name="str_reached_ml_error">La quantité bue doit être comprise entre 2500 ml et 8000 ml</string>
+    <string name="str_reached_floz_error">La quantité bue doit être comprise entre 84,54 fl oz et 270 fl oz</string>
+    <string name="str_just_reached">Un enregistrement existe déjà à la date sélectionnée</string>
 
 
 </resources>

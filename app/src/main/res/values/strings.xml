@@ -45,7 +45,7 @@
     <string name="str_wakeup_time">Wake-up Time</string>
     <string name="str_bed_time">Bed Time</string>
     <string name="str_goal_consume">You need to consume $1 to reach your goal of $2.</string>
-    <string name="str_min">Mins</string>
+    <string name="str_min">Min</string>
     <string name="str_hour">Hour</string>
     <string name="other_factors">Other Factors</string>
     <string name="weather_conditions">Weather Condition</string>
@@ -255,7 +255,7 @@
     <string name="str_no_reached_found">No reached goal record found</string>
     <string name="_0_ml">0 ml</string>
     <string name="_4500_ml">4500 ml</string>
-    <string name="str_reached_goal">Completion</string>
+    <string name="str_reached_goal">Goal</string>
     <string name="str_disable_tips">Disable Tips</string>
     <string name="_250_ml">250 ml</string>
     <string name="notification_enabled">Notification Enabled</string>
@@ -269,6 +269,18 @@
     <string name="migration">Welcome back to Let\'s Hydrate, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
     <string name="drink_all">Drink all</string>
     <string name="str_clicked">Container</string>
+    <string name="opt_max">Most clicked container</string>
+    <string name="opt_min">Container click less</string>
+    <string name="str_counter">Daily Report</string>
+    <string name="none">Nothing</string>
+    <string name="str_multi">Multi opt.</string>
+    <string name="str_add_new_reached">Add Old Reached Goal</string>
+    <string name="str_new_reached">Add New Reached Goal</string>
+    <string name="str_reached_day">Reached Day</string>
+    <string name="fl_oz">fl oz</string>
+    <string name="str_reached_ml_error">The quantity drunk must be between 2500 ml and 8000 ml</string>
+    <string name="str_reached_floz_error">The amount drunk must be between 84.54 fl oz and 270 fl oz</string>
+    <string name="str_just_reached">A record already exists on the selected date</string>
 
 
 </resources>

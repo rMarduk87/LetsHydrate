@@ -1,41 +1,14 @@
 package rpt.tool.mementobibere.utils.extensions
 
+import android.annotation.SuppressLint
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 import rpt.tool.mementobibere.utils.AppUtils
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import kotlin.reflect.full.declaredMemberFunctions
 import kotlin.reflect.jvm.isAccessible
-
-fun Float.toCalculatedValue(current: Int, newValue: Int) : Float{
-    if(current == 0 && newValue == 1) {
-        return AppUtils.mlToOzUK(this)
-    }
-    if(current == 0 && newValue == 2){
-        return AppUtils.mlToOzUS(this)
-    }
-    if(current == 1 && newValue == 0) {
-        return AppUtils.ozUKToMl(this)
-    }
-    if(current == 1 && newValue == 2) {
-        return AppUtils.ozUKToOzUS(this)
-    }
-    if(current == 2 && newValue == 1) {
-        return AppUtils.ozUSToozUK(this)
-    }
-    if(current == 2 && newValue == 0) {
-        return AppUtils.ozUSToMl(this)
-    }
-    return this
-}
-
-fun Int.toPrincipalUnit(weightUnit: Int): Int {
-    if(weightUnit == 1) {
-        return AppUtils.lblToKg(this)
-    }
-    return this
-}
 
 
 fun Float.length(): Int {
@@ -63,3 +36,75 @@ inline fun <reified T> T.callPrivateFunc(name: String, vararg args: Any?): Any? 
         .firstOrNull { it.name == name }
         ?.apply { isAccessible = true }
         ?.call(this, *args)
+
+
+@SuppressLint("SimpleDateFormat")
+fun String.toCalendar(): Calendar {
+    val df: DateFormat = SimpleDateFormat(AppUtils.DATE_FORMAT)
+    val cal: Calendar = Calendar.getInstance()
+    cal.time = df.parse(this)!!
+    return  cal
+}
+
+fun Float.toId():Float{
+    var result=0f
+    when(this){
+        100f->result=1f
+        150f->result=2f
+        200f->result=3f
+        250f->result=4f
+        300f->result=5f
+        500f->result=6f
+        600f->result=7f
+        700f->result=8f
+        800f->result=9f
+        900f->result=10f
+        1000f->result=11f
+        -2f->result=12f
+    }
+    return result
+}
+
+fun Int.toExtractIntookOption(unit: String): String {
+    var result = ""
+    when(unit){
+        "ml"-> result = when(this){
+            0-> "50"
+            1-> "100"
+            2-> "150"
+            3-> "200"
+            4-> "250"
+            5-> "300"
+            6-> "500"
+            7-> "600"
+            8-> "700"
+            9-> "800"
+            10-> "900"
+            11-> "1000"
+            12-> "Custom"
+            else->"Multi opt."
+        }
+        "fl oz"-> result = when(this){
+            0-> "1.69"
+            1-> "3.38"
+            2-> "5.07"
+            3-> "6.76"
+            4-> "8.45"
+            5-> "10.14"
+            6-> "16.91"
+            7-> "20.89"
+            8-> "23.67"
+            9-> "27.05"
+            10-> "30.43"
+            11-> "33.81"
+            12-> "Custom"
+            else->"Multi opt."
+        }
+    }
+
+    return result;
+}
+
+fun Float?.toDefaultFloatIfNull(): Float {
+    return this ?: 0F
+}
