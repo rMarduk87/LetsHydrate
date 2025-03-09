@@ -281,5 +281,6 @@
     <string name="str_reached_ml_error">La cantidad consumida debe estar entre 2500 ml y 8000 ml</string>
     <string name="str_reached_floz_error">La cantidad consumida debe estar entre 84,54 fl oz y 270 fl oz</string>
     <string name="str_just_reached">Ya existe un registro en la fecha seleccionada</string>
+    <string name="str_just_drink_all">Esta opción solo se puede hacer clic una vez al día y si aún no ha alcanzado el récord diario</string>
 
 </resources>

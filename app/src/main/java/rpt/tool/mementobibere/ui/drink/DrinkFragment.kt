@@ -993,6 +993,9 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
                 requireActivity().sendBroadcast(intent)
             }
+            else{
+                alertHelper.Show_Error_Dialog(requireContext().getString(R.string.str_just_drink_all))
+            }
         }
 
         load_all_container()

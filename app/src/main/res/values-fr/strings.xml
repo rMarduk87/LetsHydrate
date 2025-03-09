@@ -281,6 +281,7 @@
     <string name="str_reached_ml_error">La quantité bue doit être comprise entre 2500 ml et 8000 ml</string>
     <string name="str_reached_floz_error">La quantité bue doit être comprise entre 84,54 fl oz et 270 fl oz</string>
     <string name="str_just_reached">Un enregistrement existe déjà à la date sélectionnée</string>
+    <string name="str_just_drink_all">Cette option ne peut être cliquée qu\'une fois par jour et si vous n\'avez pas déjà atteint le record quotidien</string>
 
 
 </resources>
