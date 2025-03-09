@@ -131,5 +131,4 @@ object SharedPreferencesManager {
     var bedTimeMinute: Int
         get() = sharedPreferences.getInt(AppUtils.BED_TIME_MINUTE,0)
         set(value) = sharedPreferences.edit().putInt(AppUtils.BED_TIME_MINUTE, value).apply()
-
 }

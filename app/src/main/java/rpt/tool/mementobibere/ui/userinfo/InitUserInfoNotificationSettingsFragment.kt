@@ -50,7 +50,7 @@ class InitUserInfoNotificationSettingsFragment :
         binding.rdo15.text = "15 " + requireContext().getString(R.string.str_min)
         binding.rdo30.text = "30 " + requireContext().getString(R.string.str_min)
         binding.rdo45.text = "45 " + requireContext().getString(R.string.str_min)
-        binding.rdo60.text = "1 " + requireContext().getString(R.string.str_hour)
+        binding.rdo60.text = "60 " + requireContext().getString(R.string.str_min)
 
         binding.txtWakeupTime.setOnClickListener {
             openAutoTimePicker(binding.txtWakeupTime, true)

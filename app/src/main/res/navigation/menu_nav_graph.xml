@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_menuFragment_to_advancedReminderFragment"
             app:destination="@id/ReminderFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_containerCounterFragment"
+            app:destination="@id/ContainerCountFragment" />
     </fragment>
     <fragment
         android:id="@+id/ProfileFragment"
@@ -76,5 +79,11 @@
         android:name="rpt.tool.mementobibere.ui.reminder.ReminderFragment"
         android:label="ReminderFragment"
         tools:layout="@layout/fragment_reminder">
+    </fragment>
+    <fragment
+        android:id="@+id/ContainerCountFragment"
+        android:name="rpt.tool.mementobibere.ui.statistics.counter.ContainerCounterFragment"
+        android:label="ContainerCounterFragment"
+        tools:layout="@layout/fragment_container_count">
     </fragment>
 </navigation>

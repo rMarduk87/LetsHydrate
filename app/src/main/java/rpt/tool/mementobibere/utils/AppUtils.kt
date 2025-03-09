@@ -765,6 +765,11 @@ class AppUtils {
             return 0
         }
 
+        fun checkIsCustom(intook: Float): Boolean {
+            val list = arrayOf(50f, 100f, 150f, 200f, 250f, 300f, 500f, 600f, 700f, 800f, 900f, 1000f)
+            return  !list.contains(intook)
+        }
+
 
         val APP_SHARE_URL: String = ""
         val PRIVACY_POLICY_ULR: String = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
