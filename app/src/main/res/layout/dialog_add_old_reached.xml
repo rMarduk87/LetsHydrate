@@ -72,29 +72,13 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/lblreached"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="true"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/str_reached_day"
-                    android:textSize="@dimen/dp_16"
-                    android:textColor="@color/rdo_gender_select"
-                    android:fontFamily="@font/calibri_regular"
-                    tools:ignore="SpUsage" />
-
-                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/lbl_reached_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:includeFontPadding="true"
                     android:gravity="end"
-                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_35"
                     android:layout_marginEnd="@dimen/dp_10"
                     android:layout_marginBottom="4dp"
                     android:text=""

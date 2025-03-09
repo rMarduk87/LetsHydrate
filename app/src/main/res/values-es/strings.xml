@@ -269,17 +269,17 @@
     <string name="migration">Bienvenidos nuevamente a Vamos a hidratarnos, en la nueva versión se han agregado algunos datos para mejorar el cálculo de las necesidades de agua, insertarlos en las hojas y si lo deseas actualizar los preexistentes</string>
     <string name="drink_all">Beber todo</string>
     <string name="str_clicked">Contenedores</string>
-    <string name="opt_max">Most clicked container</string>
-    <string name="opt_min">Container click less</string>
-    <string name="str_counter">Daily Report</string>
-    <string name="none">Nothing</string>
-    <string name="str_multi">Multi opt.</string>
-    <string name="str_add_new_reached">Add Old Reached Goal</string>
-    <string name="str_new_reached">Add New Reached Goal</string>
-    <string name="str_reached_day">Reached Day</string>
+    <string name="opt_max">Contenedor con más clics</string>
+    <string name="opt_min">Contenedor con menos clics</string>
+    <string name="str_counter">Informe diario</string>
+    <string name="none">Nada</string>
+    <string name="str_multi">Multiopt.</string>
+    <string name="str_add_new_reached">Añadir objetivo alcanzado anterior</string>
+    <string name="str_new_reached">Añadir objetivo alcanzado nuevo</string>
+    <string name="str_reached_day">Día alcanzado</string>
     <string name="fl_oz">fl oz</string>
-    <string name="str_reached_ml_error">The quantity drunk cannot be less than 2500 ml</string>
-    <string name="str_reached_floz_error">The quantity drunk cannot be less than 84.54 fl oz</string>
-    <string name="str_just_reached">A record already exists on the selected date</string>
+    <string name="str_reached_ml_error">La cantidad consumida debe estar entre 2500 ml y 8000 ml</string>
+    <string name="str_reached_floz_error">La cantidad consumida debe estar entre 84,54 fl oz y 270 fl oz</string>
+    <string name="str_just_reached">Ya existe un registro en la fecha seleccionada</string>
 
 </resources>

@@ -131,7 +131,7 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
         popup.show()
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint("InflateParams", "NotifyDataSetChanged")
     private fun showAddOldReachedDialog() {
         val dialog = Dialog(requireActivity())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -186,7 +186,7 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
         btn_add.setOnClickListener {
             val quantity = txt_quantity.text.toString().toFloat()
             if(isMl){
-                if(quantity < 2500f){
+                if(quantity < 2500f || quantity > 8000f){
                     alertHelper!!.Show_Error_Dialog(requireContext().
                     getString(R.string.str_reached_ml_error))
                     return@setOnClickListener
@@ -206,6 +206,12 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
                 return@setOnClickListener
             }
             addNewReached(quantity,lbl_reached_day.text.toString(),isMl)
+            addNewDrinkStats(quantity,lbl_reached_day.text.toString(),isMl)
+            reachedGoals.clear()
+            adapter!!.notifyDataSetChanged()
+            load_reached_goal(false)
+            txt_quantity.text!!.clear()
+
         }
 
         img_cancel.setOnClickListener { dialog.dismiss() }
@@ -213,6 +219,41 @@ class ReachedGoalFragment  : BaseFragment<FragmentReachedGoalBinding>(
         dialog.setContentView(view)
 
         dialog.show()
+    }
+
+    private fun addNewDrinkStats(quantity: Float, date: String, ml: Boolean) {
+        val initialValues = ContentValues()
+
+        initialValues.put("n_intook", "" + if(ml)
+            quantity else AppUtils.ozUSToMl(quantity))
+        initialValues.put(
+            "n_intook_OZ",
+            "" + if(ml)
+                AppUtils.mlToOzUS(quantity) else quantity)
+
+        initialValues.put(
+            "n_date", date
+        )
+        initialValues.put("time", "" + AppUtils.getCurrentTime(true))
+        initialValues.put(
+            "dateTime", date + " " + AppUtils.getCurrentDate("HH:mm:ss")
+        )
+
+        if (ml) {
+            initialValues.put("n_totalintake", "" + quantity)
+            initialValues.put(
+                "n_totalintake_OZ",
+                "" + AppUtils.mlToOzUS(quantity)
+            )
+        } else {
+            initialValues.put(
+                "n_totalintake",
+                "" + AppUtils.ozUSToMl(quantity)
+            )
+            initialValues.put("n_totalintake_OZ", "" + quantity)
+        }
+
+        sqliteHelper!!.insert("stats", initialValues)
     }
 
     private fun checkIfReachedGoalExists(date: String): Boolean{

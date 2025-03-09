@@ -268,17 +268,17 @@
     <string name="select_bed_time">Seleziona l\'orario nel quale vai a dormire</string>
     <string name="migration">Bentornato/a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi potrai aggiornare i dati preesistenti</string>    <string name="drink_all">Bevi tutto</string>
     <string name="str_clicked">Container</string>
-    <string name="opt_max">Most clicked container</string>
-    <string name="opt_min">Container click less</string>
-    <string name="str_counter">Daily Report</string>
-    <string name="none">Nothing</string>
+    <string name="opt_max">Contenitore più cliccato</string>
+    <string name="opt_min">Contenitore con meno clic</string>
+    <string name="str_counter">Report giornaliero</string>
+    <string name="none">Nessuno</string>
     <string name="str_multi">Multi opt.</string>
-    <string name="str_add_new_reached">Add Old Reached Goal</string>
-    <string name="str_new_reached">Add New Reached Goal</string>
-    <string name="str_reached_day">Reached Day</string>
+    <string name="str_add_new_reached">Aggiungi un obiettivo raggiunto precedentemente raggiunto</string>
+    <string name="str_new_reached">Aggiungi nuovo obiettivo raggiunto</string>
+    <string name="str_reached_day">Obiettivo raggiunto</string>
     <string name="fl_oz">fl oz</string>
-    <string name="str_reached_ml_error">The quantity drunk cannot be less than 2500 ml</string>
-    <string name="str_reached_floz_error">The quantity drunk cannot be less than 84.54 fl oz</string>
-    <string name="str_just_reached">A record already exists on the selected date</string>
+    <string name="str_reached_ml_error">La quantità bevuta deve essere compresa tra 2500 ml e 8000 ml</string>
+    <string name="str_reached_floz_error">La quantità bevuta deve essere compresa tra 84,54 fl oz e 270 fl oz</string>
+    <string name="str_just_reached">Esiste già un record nella data selezionata</string>
 
 </resources>

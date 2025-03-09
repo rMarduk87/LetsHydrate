@@ -269,18 +269,18 @@
     <string name="migration">Bienvenue à Hydratons-nous, dans la nouvelle version, certaines données ont été ajoutées pour améliorer le calcul des besoins en eau, insérez-les dans les feuilles et si vous le souhaitez, mettez à jour celles préexistantes</string>
     <string name="drink_all">Boire tout</string>
     <string name="str_clicked">Conteneurs</string>
-    <string name="opt_max">Most clicked container</string>
-    <string name="opt_min">Container click less</string>
-    <string name="str_counter">Daily Report</string>
-    <string name="none">Nothing</string>
-    <string name="str_multi">Multi opt.</string>
-    <string name="str_add_new_reached">Add Old Reached Goal</string>
-    <string name="str_new_reached">Add New Reached Goal</string>
-    <string name="str_reached_day">Reached Day</string>
+    <string name="opt_max">Contenant le plus cliqué</string>
+    <string name="opt_min">Contenant le moins cliqué</string>
+    <string name="str_counter">Rapport quotidien</string>
+    <string name="none">Rien</string>
+    <string name="str_multi">Options multiples</string>
+    <string name="str_add_new_reached">Ajouter un ancien objectif atteint</string>
+    <string name="str_new_reached">Ajouter un nouvel objectif atteint</string>
+    <string name="str_reached_day">Jour atteint</string>
     <string name="fl_oz">fl oz</string>
-    <string name="str_reached_ml_error">The quantity drunk cannot be less than 2500 ml</string>
-    <string name="str_reached_floz_error">The quantity drunk cannot be less than 84.54 fl oz</string>
-    <string name="str_just_reached">A record already exists on the selected date</string>
+    <string name="str_reached_ml_error">La quantité bue doit être comprise entre 2500 ml et 8000 ml</string>
+    <string name="str_reached_floz_error">La quantité bue doit être comprise entre 84,54 fl oz et 270 fl oz</string>
+    <string name="str_just_reached">Un enregistrement existe déjà à la date sélectionnée</string>
 
 
 </resources>
