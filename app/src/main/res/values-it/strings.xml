@@ -281,5 +281,6 @@
     <string name="str_reached_floz_error">La quantità bevuta deve essere compresa tra 84,54 fl oz e 270 fl oz</string>
     <string name="str_just_reached">Esiste già un record nella data selezionata</string>
     <string name="str_just_drink_all">Quest\' opzione può essere cliccata solo una volta al giorno e se non hai ancora raggiunto il record giornaliero</string>
+    <string name="drink">Drink</string>
 
 </resources>

@@ -16,7 +16,7 @@ android {
         applicationId "rpt.tool.mementobibere"
         minSdk 34
         targetSdk 35
-        versionCode 31
+        versionCode 32
         versionName "1.0.5"
         useLibrary "org.apache.http.legacy"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

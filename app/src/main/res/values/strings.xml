@@ -282,6 +282,7 @@
     <string name="str_reached_floz_error">The amount drunk must be between 84.54 fl oz and 270 fl oz</string>
     <string name="str_just_reached">A record already exists on the selected date</string>
     <string name="str_just_drink_all">This option can be clicked only once per day and if you have not already reached the daily record</string>
+    <string name="drink">Drink</string>
 
 
 </resources>

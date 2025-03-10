@@ -74,6 +74,8 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.Random
 import androidx.core.net.toUri
+import androidx.core.view.isInvisible
+import androidx.core.view.isGone
 
 
 class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::inflate) {
@@ -107,7 +109,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     lateinit var alertHelper: AlertHelper
     var isAll: Boolean = false
     var isAvisDay: Boolean = false
-
+    private var waters: Array<String> = arrayOf()
 
 
     @SuppressLint("UseKtx")
@@ -165,6 +167,8 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                     + "/" + R.raw.fill_water_sound).toUri()
         )
         ringtone!!.isLooping = false
+
+        waters = requireContext().resources.getStringArray(R.array.water)
     }
 
     private fun manageLblColor(color: Int) {
@@ -308,7 +312,23 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             mDatePicker.show()
         }
     }
-    
+
+    private fun getDrink(date: String): Float {
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("n_date ='" + date) + "'"
+        )
+
+        var drink_water = 0f
+        for (k in arr_data.indices) {
+            drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                ("" + arr_data[k]["n_intook"]).toFloat()
+            else ("" + arr_data[k]["n_intook_OZ"]).toFloat()
+        }
+
+        return drink_water
+    }
+
     override fun onResume() {
         super.onResume()
         refreshAlarm(SharedPreferencesManager.notificationStatus)
@@ -825,6 +845,10 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         }
 
+        val randomIndex: Int = Random().nextInt(waters.size)
+        val randomWaters: String = waters[randomIndex]
+        binding.se.text = randomWaters
+
         count_today_drink(false)
 
         binding.selectedContainerBlock.setOnClickListener { openChangeContainerPicker() }
@@ -866,9 +890,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 if (random.nextBoolean()) {
                     AppUtils.RELOAD_DASHBOARD = false
                     execute_add_water()
+                    randomizeBalloon()
                     AppUtils.RELOAD_DASHBOARD = true
                 } else {
                     execute_add_water()
+                    randomizeBalloon()
                 }
             }
         })
@@ -1597,5 +1623,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 activity.initPermissions()
             }
         }
+    }
+
+    private fun randomizeBalloon() {
+        val randomIndex: Int = Random().nextInt(waters.size)
+        val randomWaters: String = waters[randomIndex]
+        binding.se.text = randomWaters
     }
 }

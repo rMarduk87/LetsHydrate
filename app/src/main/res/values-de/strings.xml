@@ -282,5 +282,6 @@
     <string name="str_reached_floz_error">Die getrunkene Menge muss zwischen 84,54 fl oz und 270 fl oz liegen</string>
     <string name="str_just_reached">Zum ausgewählten Datum existiert bereits ein Datensatz</string>
     <string name="str_just_drink_all">Diese Option kann nur einmal pro Tag angeklickt werden und wenn Sie den Tagesrekord noch nicht erreicht haben</string>
+    <string name="drink">Drink</string>
 
 </resources>
