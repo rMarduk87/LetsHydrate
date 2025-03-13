@@ -11,9 +11,9 @@ import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
-class NotifierReceiver : BroadcastReceiver() {
+class NotifierReceiver /*: BroadcastReceiver()*/ {
 
-    override fun onReceive(context: Context, intent: Intent) {
+    /*override fun onReceive(context: Context, intent: Intent) {
 
         val notificationsTone = AppUtils.getSound(context)
 
@@ -60,5 +60,5 @@ class NotifierReceiver : BroadcastReceiver() {
         }
 
         return context.resources.getString(R.string.str_have_u_had_any_water_yet)
-    }
+    }*/
 }

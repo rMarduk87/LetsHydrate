@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_transparant">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:ignore="UselessParent">
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:background="@drawable/drawable_cardview_2"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/str_snooze_for"
+                android:textSize="@dimen/dp_20"
+                android:padding="@dimen/dp_5"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimaryDark"
+                tools:ignore="SpUsage" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/one"
+                style="@style/my_value"
+                android:layout_gravity="center"
+                android:text="@string/_5_minutes"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/two"
+                style="@style/my_value"
+                android:layout_gravity="center"
+                android:text="@string/_10_minutes"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/three"
+                style="@style/my_value"
+                android:layout_gravity="center"
+                android:text="@string/_15_minutes"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

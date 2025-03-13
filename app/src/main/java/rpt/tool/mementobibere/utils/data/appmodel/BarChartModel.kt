@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.data.models
+package rpt.tool.mementobibere.utils.data.appmodel
 
 data class BarChartModel(
     var type: String,

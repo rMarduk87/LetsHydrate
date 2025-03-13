@@ -15,7 +15,7 @@ import rpt.tool.mementobibere.utils.notifications.NotifierReceiver
 import rpt.tool.mementobibere.utils.notifications.BootReceiver
 
 class AlarmHelper {
-    private var alarmManager: AlarmManager? = null
+    /*private var alarmManager: AlarmManager? = null
 
     private val ACTION_BD_NOTIFICATION = "rpt.tool.mementobibere.NOTIFICATION"
 
@@ -96,5 +96,5 @@ class AlarmHelper {
             alarmIntent,
             intFlags
         ) != null
-    }
+    }*/
 }

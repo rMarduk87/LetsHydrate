@@ -41,7 +41,48 @@
 
                         <!-- ============================ -->
 
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
 
+                            <LinearLayout
+                                android:id="@+id/next_reminder_block"
+                                android:layout_centerHorizontal="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center_horizontal"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:layout_marginBottom="@dimen/dp_10"
+                                android:background="@drawable/drawable_button_background">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_alarm"
+                                    android:layout_marginStart="@dimen/dp_10"
+                                    android:contentDescription="@string/img" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/lbl_next_reminder"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="@dimen/dp_5"
+                                    android:layout_marginEnd="@dimen/dp_14"
+                                    android:paddingBottom="2dp"
+                                    android:includeFontPadding="true"
+                                    android:text="@string/str_next_reminder"
+                                    android:textSize="@dimen/dp_14"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/calibri_regular"
+                                    tools:ignore="SpUsage" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="fill_parent"
@@ -728,7 +769,7 @@
                             android:visibility="gone"
                             android:textColor="@color/white"
                             android:fontFamily="@font/calibri_light"
-                            tools:ignore="SpUsage" />
+                            tools:ignore="SpUsage,TooManyViews" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/lbl_user_name"

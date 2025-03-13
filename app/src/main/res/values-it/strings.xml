@@ -80,7 +80,7 @@
     <string name="sun">Dom</string>
     <string name="str_your_goal">Il tuo obiettivo</string>
     <string name="str_consumed">Acqua bevuta</string>
-    <string name="str_container">Contenitore</string>
+    <string name="str_ContainerModel">Contenitore</string>
     <string name="str_welcome">Benvenuto</string>
     <string name="str_input_some_info_b4_we_get_started">Inserisci le informazioni qui sotto e aiutaci a personalizzare il tuo piano di idratazione.</string>
     <string name="str_choose_unit">Scegli l\'unità di peso</string>
@@ -267,7 +267,7 @@
     <string name="select_wakeup_time">Seleziona l\'orario di sveglia</string>
     <string name="select_bed_time">Seleziona l\'orario nel quale vai a dormire</string>
     <string name="migration">Bentornato/a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi potrai aggiornare i dati preesistenti</string>    <string name="drink_all">Bevi tutto</string>
-    <string name="str_clicked">Container</string>
+    <string name="str_clicked">ContainerModel</string>
     <string name="opt_max">Contenitore più cliccato</string>
     <string name="opt_min">Contenitore con meno clic</string>
     <string name="str_counter">Report giornaliero</string>
@@ -282,5 +282,20 @@
     <string name="str_just_reached">Esiste già un record nella data selezionata</string>
     <string name="str_just_drink_all">Quest\' opzione può essere cliccata solo una volta al giorno e se non hai ancora raggiunto il record giornaliero</string>
     <string name="drink">Drink</string>
+    <string name="_5_minutes">5 minutes</string>
+    <string name="_10_minutes">10 minutes</string>
+    <string name="_15_minutes">15 minutes</string>
+    <string name="auto">Auto</string>
+    <string name="off">Off</string>
+    <string name="silent">Silent</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="custom_sound">Custom Sound</string>
+    <string name="sund">S</string>
+    <string name="mond">M</string>
+    <string name="thue">T</string>
+    <string name="wedn">W</string>
+    <string name="thus">T</string>
+    <string name="frid">F</string>
+    <string name="satu">S</string>
 
 </resources>

@@ -6,7 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import rpt.tool.mementobibere.data.models.MaxMinChartModel
+import rpt.tool.mementobibere.utils.data.appmodel.MaxMinChartModel
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.extensions.toMonth
@@ -20,7 +20,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private const val DATABASE_VERSION = 9
+        private const val DATABASE_VERSION = 10
         private const val DATABASE_NAME = "RptBibere"
         private const val TABLE_STATS = "stats"
         private const val TABLE_INTOOK_COUNTER = "intook_count"
@@ -28,6 +28,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_AVIS = "avis_day"
         private const val TABLE_DRINK_ALL = "drink_all"
         private const val TABLE_CONTAINER = "container"
+        private const val TABLE_ALARM = "alarm"
+        private const val TABLE_SUB_ALARM = "sub_alarm"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
         private const val KEY_N_DATE = "n_date"
@@ -86,6 +88,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         addDrinkAllTable(db)
 
         addCounterTable(db)
+
+        addAlarmTable(db)
 
     }
 
@@ -157,6 +161,38 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db?.execSQL(createIntookCounterTable)
     }
 
+    private fun addAlarmTable(db:SQLiteDatabase?){
+        val createAlarmTable = ("CREATE TABLE " + TABLE_ALARM + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
+                KEY_ALARM_ID + " TEXT," +
+                KEY_ALARM_TYPE + " TEXT," +
+                KEY_ALARM_INTERVAL + " TEXT," +
+                KEY_IS_OFF + " INTEGER DEFAULT 0," +
+                KEY_SUN + " INTEGER DEFAULT 1,"+
+                KEY_MON + " INTEGER DEFAULT 1,"+
+                KEY_TUE + " INTEGER DEFAULT 1,"+
+                KEY_WED + " INTEGER DEFAULT 1,"+
+                KEY_THU + " INTEGER DEFAULT 1,"+
+                KEY_FRI + " INTEGER DEFAULT 1,"+
+                KEY_SAT + " INTEGER DEFAULT 1,"+
+                KEY_SUN_ID + " TEXT,"+
+                KEY_MON_ID + " TEXT,"+
+                KEY_TUE_ID + " TEXT,"+
+                KEY_WED_ID + " TEXT,"+
+                KEY_THU_ID + " TEXT,"+
+                KEY_FRI_ID + " TEXT,"+
+                KEY_SAT_ID + " TEXT)"
+                )
+        db?.execSQL(createAlarmTable)
+
+        val createSubAlarm = ("CREATE TABLE " + TABLE_SUB_ALARM + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_ALARM_TIME + " TEXT," +
+                KEY_ALARM_ID + " TEXT," +
+                KEY_ALARM_TYPE + " TEXT," +
+                KEY_SUPER_ID + " TEXT)")
+        db?.execSQL(createSubAlarm)
+    }
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion){
@@ -215,6 +251,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 addCounterTable(db)
                 addDataToCounter(db)
             }
+            if (counter<10){
+                counter += 1
+                addAlarmTable(db)
+            }
             else {
             }
         }
@@ -225,6 +265,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_DRINK_ALL")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_ALARM")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_SUB_ALARM")
             onCreate(db)
         }
 
@@ -776,6 +818,28 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         return this.readableDatabase.rawQuery(query,null)
     }
 
+    @SuppressLint("Recycle")
+    fun getdata(table_name: String): ArrayList<HashMap<String, String>> {
+        val maplist = ArrayList<HashMap<String, String>>()
+
+        val query = "SELECT * FROM $table_name"
+
+        val c: Cursor = this.readableDatabase.rawQuery(query, null)
+
+        if (c.moveToFirst()) {
+            do {
+                val map = HashMap<String, String>()
+                for (i in 0 until c.columnCount) {
+                    map[c.getColumnName(i)] = c.getString(i)
+                }
+
+                maplist.add(map)
+            } while (c.moveToNext())
+        }
+
+        return maplist
+    }
+
     fun update(table_name: String?, fields: HashMap<String?, String?>, where_con: String?) {
 
         val initialValues = ContentValues()
@@ -838,5 +902,36 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return list
+    }
+
+    @SuppressLint("Recycle")
+    fun getLastId(table_name: String): String {
+        val query = "SELECT id FROM $table_name"
+
+        val c: Cursor = this.readableDatabase.rawQuery(query, null)
+
+        if (c.moveToLast()) return "" + c.getString(0)
+
+        return "0"
+    }
+
+    @SuppressLint("Recycle")
+    fun isExists(table_name: String, where_con: String): Boolean {
+        var query = "SELECT * FROM $table_name"
+
+        if (!AppUtils.checkBlankData(where_con)) query += " WHERE $where_con"
+
+        val c: Cursor = this.readableDatabase.rawQuery(query, null)
+
+        return c.count > 0
+    }
+
+    fun remove(table_name: String) {
+        val query = "DELETE FROM $table_name"
+        fire(query)
+    }
+
+    private fun fire(query: String) {
+        this.writableDatabase.execSQL(query);
     }
 }
