@@ -8,11 +8,11 @@ import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 
 
-class BootReceiver/* : BroadcastReceiver()*/ {
-    /*private val alarm = AlarmHelper()
+class BootReceiver : BroadcastReceiver() {
+    private val alarm = AlarmHelper()
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        f (intent != null && intent.action != null) {
+        if (intent != null && intent.action != null) {
             if (intent.action == "android.intent.action.BOOT_COMPLETED") {
                 val notificationFrequency = SharedPreferencesManager.notificationFreq
                 val notificationsNewMessage = true
@@ -22,5 +22,5 @@ class BootReceiver/* : BroadcastReceiver()*/ {
                 }
             }
         }
-    }*/
+    }
 }

@@ -132,25 +132,4 @@ object SharedPreferencesManager {
     var bedTimeMinute: Int
         get() = sharedPreferences.getInt(AppUtils.BED_TIME_MINUTE,0)
         set(value) = sharedPreferences.edit() {putInt(AppUtils.BED_TIME_MINUTE, value) }
-    var reminderOpt: Int
-        get() = sharedPreferences.getInt(AppUtils.REMINDER_OPTION,0)
-        set(value) = sharedPreferences.edit() {putInt(AppUtils.REMINDER_OPTION, value) }
-    var reminderVibrate: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.REMINDER_VIBRATE,true)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.REMINDER_VIBRATE, value) }
-    var isManualReminder: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.IS_MANUAL_REMINDER,false)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_MANUAL_REMINDER, value) }
-    var isNewAlarmSystem: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.IS_NEW_ALARM_SYSTEM,true)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_NEW_ALARM_SYSTEM, value) }
-    var autoBackUp: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.AUTO_BACK_UP,true)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.AUTO_BACK_UP, value) }
-    var autoBackUpType: Int
-        get() = sharedPreferences.getInt(AppUtils.AUTO_BACK_UP_TYPE,0)
-        set(value) = sharedPreferences.edit() {putInt(AppUtils.AUTO_BACK_UP_TYPE, value) }
-    var autoBackUpId: Int
-        get() = sharedPreferences.getInt(AppUtils.AUTO_BACK_UP_ID,0)
-        set(value) = sharedPreferences.edit() {putInt(AppUtils.AUTO_BACK_UP_ID, value) }
 }

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
 
     <application
         android:name=".Application"
@@ -23,9 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SelectSnoozeActivity"
-            android:exported="false" />
-        <activity
             android:name=".MenuNavigationActivity"
             android:exported="false" />
         <activity
@@ -33,29 +26,26 @@
             android:exported="false" />
         <activity
             android:name=".ErrorReportActivity"
+            android:theme="@android:style/Theme.NoDisplay"
             android:autoRemoveFromRecents="true"
-            android:exported="false"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:exported="false" />
         <activity
             android:name=".SelectBottleActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Transparent" />
+            android:theme="@style/Theme.Transparent"
+            android:exported="false" />
         <activity
             android:name=".InitUserInfoActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"
-            tools:ignore="DiscouragedApi" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:screenOrientation="fullSensor"
-            tools:ignore="DiscouragedApi" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
             android:theme="@style/AppThemeSplash"
-            tools:ignore="DiscouragedApi">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,24 +53,15 @@
             </intent-filter>
         </activity>
 
-        <!--<receiver android:name=".utils.notifications.NotifierReceiver" />
+        <receiver android:name=".utils.notifications.NotifierReceiver" />
         <receiver
             android:name=".utils.notifications.BootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>-->
-        <receiver android:name=".utils.newnotifications.NewAlarmReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="com.test.intent.action.ALARM" />
-            </intent-filter>
         </receiver>
-        <receiver
-            android:name=".ui.widget.NewAppWidget"
+        <receiver android:name="rpt.tool.mementobibere.ui.widget.NewAppWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

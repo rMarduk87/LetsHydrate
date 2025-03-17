@@ -80,7 +80,7 @@
     <string name="sun">Dim</string>
     <string name="str_your_goal">Votre objectif</string>
     <string name="str_consumed">Consommé</string>
-    <string name="str_ContainerModel">Conteneur</string>
+    <string name="str_container">Conteneur</string>
     <string name="str_welcome">Bienvenue</string>
     <string name="str_input_some_info_b4_we_get_started">Entrez les informations ci-dessous et nous aider à personnaliser votre plan d\'hydratation.</string>
     <string name="str_choose_unit">Choisir l\'unité de poids</string>
@@ -283,21 +283,6 @@
     <string name="str_just_reached">Un enregistrement existe déjà à la date sélectionnée</string>
     <string name="str_just_drink_all">Cette option ne peut être cliquée qu\'une fois par jour et si vous n\'avez pas déjà atteint le record quotidien</string>
     <string name="drink">Drink</string>
-    <string name="_5_minutes">5 minutes</string>
-    <string name="_10_minutes">10 minutes</string>
-    <string name="_15_minutes">15 minutes</string>
-    <string name="auto">Auto</string>
-    <string name="off">Off</string>
-    <string name="silent">Silent</string>
-    <string name="vibrate">Vibrate</string>
-    <string name="custom_sound">Custom Sound</string>
-    <string name="sund">S</string>
-    <string name="mond">M</string>
-    <string name="thue">T</string>
-    <string name="wedn">W</string>
-    <string name="thus">T</string>
-    <string name="frid">F</string>
-    <string name="satu">S</string>
 
 
 </resources>

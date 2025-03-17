@@ -283,20 +283,6 @@
     <string name="str_just_reached">A record already exists on the selected date</string>
     <string name="str_just_drink_all">This option can be clicked only once per day and if you have not already reached the daily record</string>
     <string name="drink">Drink</string>
-    <string name="_5_minutes">5 minutes</string>
-    <string name="_10_minutes">10 minutes</string>
-    <string name="_15_minutes">15 minutes</string>
-    <string name="auto">Auto</string>
-    <string name="off">Off</string>
-    <string name="silent">Silent</string>
-    <string name="vibrate">Vibrate</string>
-    <string name="custom_sound">Custom Sound</string>
-    <string name="sund">S</string>
-    <string name="mond">M</string>
-    <string name="thue">T</string>
-    <string name="wedn">W</string>
-    <string name="thus">T</string>
-    <string name="frid">F</string>
-    <string name="satu">S</string>
+
 
 </resources>

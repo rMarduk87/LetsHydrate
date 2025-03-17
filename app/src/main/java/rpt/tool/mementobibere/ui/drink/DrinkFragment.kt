@@ -14,13 +14,11 @@ import android.content.DialogInterface.OnShowListener
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.media.MediaPlayer
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.text.InputFilter
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -31,13 +29,10 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.SwitchCompat
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,8 +54,6 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.balloon.blood.BloodDonorInfoBalloonFactory
 import rpt.tool.mementobibere.utils.data.appmodel.Container
 import rpt.tool.mementobibere.utils.data.appmodel.Menu
-import rpt.tool.mementobibere.utils.data.appmodel.NextReminderModel
-import rpt.tool.mementobibere.utils.data.appmodel.SoundModel
 import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.helpers.AlarmHelper
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
@@ -75,24 +68,24 @@ import rpt.tool.mementobibere.utils.navigation.safeNavController
 import rpt.tool.mementobibere.utils.navigation.safeNavigate
 import rpt.tool.mementobibere.utils.view.adapters.ContainerAdapterNew
 import rpt.tool.mementobibere.utils.view.adapters.MenuAdapter
-import rpt.tool.mementobibere.utils.view.adapters.SoundAdapter
 import rpt.tool.mementobibere.utils.view.inputfilter.InputFilterWeightRange
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 import java.util.Random
+import androidx.core.net.toUri
+import androidx.core.view.isInvisible
+import androidx.core.view.isGone
 
 
 class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::inflate) {
 
-    private lateinit var soundAdapter: SoundAdapter
     private var enabled: Boolean = true
     private lateinit var viewWindow: View
     private var totalIntake: Float = 0f
     private lateinit var sqliteHelper: SqliteHelper
     private lateinit var dateNow: String
+    private var notificStatus: Boolean = false
     private val avisBalloon by balloon<BloodDonorInfoBalloonFactory>()
     var menu_name: MutableList<Menu> = ArrayList<Menu>()
     var menuAdapter: MenuAdapter? = null
@@ -117,9 +110,6 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     var isAll: Boolean = false
     var isAvisDay: Boolean = false
     private var waters: Array<String> = arrayOf()
-    var lst_sounds: MutableList<SoundModel> = ArrayList()
-    var handlerReminder: Handler? = null
-    var runnableReminder: Runnable? = null
 
 
     @SuppressLint("UseKtx")
@@ -223,6 +213,23 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             .into(binding.imgUser)
     }
 
+    private fun manageNotification() {
+        val alarm = AlarmHelper()
+        if(enabled){
+            notificStatus = !notificStatus
+            SharedPreferencesManager.notificationStatus =  notificStatus
+            if (notificStatus) {
+                Snackbar.make(viewWindow, getString(R.string.notification_enabled), Snackbar.LENGTH_SHORT).show()
+                alarm.setAlarm(
+                    requireContext(),
+                    SharedPreferencesManager.notificationFreq.toLong())
+            } else {
+                Snackbar.make(viewWindow, getString(R.string.notification_disabled), Snackbar.LENGTH_SHORT).show()
+                alarm.cancelAlarm(requireContext())
+            }
+        }
+    }
+
     @SuppressLint("SimpleDateFormat")
     override fun onStart() {
         super.onStart()
@@ -244,13 +251,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             startActivity(Intent(requireActivity(),InitUserInfoActivity::class.java))
         }
 
-        if(SharedPreferencesManager.isNewAlarmSystem){
-            SharedPreferencesManager.isNewAlarmSystem = false
-            val migrationManager = MigrationManager()
-            migrationManager.setAlarm(requireContext())
-        }
-
-        /*notificStatus = SharedPreferencesManager.notificationStatus
+        notificStatus = SharedPreferencesManager.notificationStatus
         val alarm = AlarmHelper()
         if (!alarm.checkAlarm(requireContext()) && notificStatus) {
             val isAvisDay = sqliteHelper.getAvisDay(dateNow)
@@ -264,7 +265,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             alarm.setAlarm(
                 requireContext(),freq
             )
-        }*/
+        }
 
         binding.imgBloodDonorHelp.setOnClickListener {
             avisBalloon.showAlign(
@@ -312,9 +313,25 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         }
     }
 
+    private fun getDrink(date: String): Float {
+        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
+            "stats",
+            ("n_date ='" + date) + "'"
+        )
+
+        var drink_water = 0f
+        for (k in arr_data.indices) {
+            drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
+                ("" + arr_data[k]["n_intook"]).toFloat()
+            else ("" + arr_data[k]["n_intook_OZ"]).toFloat()
+        }
+
+        return drink_water
+    }
+
     override fun onResume() {
         super.onResume()
-        //refreshAlarm(SharedPreferencesManager.notificationStatus)
+        refreshAlarm(SharedPreferencesManager.notificationStatus)
         if (AppUtils.RELOAD_DASHBOARD) {
             init()
         } else {
@@ -326,17 +343,15 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
 
         initMenuScreen()
         body()
-        getAllReminderData()
-        fetchNextReminder()
     }
 
     @SuppressLint("RtlHardcoded")
     private fun initMenuScreen() {
 
-        filter_cal = Calendar.getInstance(Locale.getDefault())
-        today_cal = Calendar.getInstance(Locale.getDefault())
-        yesterday_cal = Calendar.getInstance(Locale.getDefault())
-        yesterday_cal!!.add(Calendar.DATE, -1)
+        filter_cal = Calendar.getInstance(Locale.getDefault());
+        today_cal = Calendar.getInstance(Locale.getDefault());
+        yesterday_cal = Calendar.getInstance(Locale.getDefault());
+        yesterday_cal!!.add(Calendar.DATE, -1);
 
         loadPhoto()
 
@@ -520,17 +535,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_reminder,
             null, false)
 
-
         val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
-        val btn_save = view.findViewById<RelativeLayout>(R.id.btn_save)
 
         val off_block = view.findViewById<RelativeLayout>(R.id.off_block)
-        val silent_block = view.findViewById<RelativeLayout>(R.id.silent_block)
-        val auto_block = view.findViewById<RelativeLayout>(R.id.auto_block)
 
         val img_off = view.findViewById<ImageView>(R.id.img_off)
-        val img_silent = view.findViewById<ImageView>(R.id.img_silent)
-        val img_auto = view.findViewById<ImageView>(R.id.img_auto)
 
         val advance_settings = view.findViewById<AppCompatTextView>(R.id.advance_settings)
 
@@ -540,208 +549,30 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             startActivity(Intent(requireActivity(), MenuNavigationActivity::class.java))
         }
 
-        val custom_sound_block = view.findViewById<LinearLayout>(R.id.custom_sound_block)
-
-        custom_sound_block.setOnClickListener { openSoundMenuPicker() }
-
-
-        val switch_vibrate = view.findViewById<SwitchCompat>(R.id.switch_vibrate)
-
-        switch_vibrate.isChecked = !SharedPreferencesManager.reminderVibrate
-
-        switch_vibrate.setOnCheckedChangeListener { buttonView, isChecked ->
-            SharedPreferencesManager.reminderVibrate = !isChecked
-        }
-
-        if (SharedPreferencesManager.reminderOpt == 1) {
+        if (!SharedPreferencesManager.notificationStatus) {
             off_block.background =
                 requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
             img_off.setImageResource(R.drawable.ic_off_selected)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_silent.setImageResource(R.drawable.ic_silent_normal)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_auto.setImageResource(R.drawable.ic_auto_normal)
-        } else if (SharedPreferencesManager.reminderOpt == 2) {
-            off_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_off.setImageResource(R.drawable.ic_off_normal)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
-            img_silent.setImageResource(R.drawable.ic_silent_selected)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_auto.setImageResource(R.drawable.ic_auto_normal)
         } else {
             off_block.background =
                 requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
             img_off.setImageResource(R.drawable.ic_off_normal)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_silent.setImageResource(R.drawable.ic_silent_normal)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
-            img_auto.setImageResource(R.drawable.ic_auto_selected)
         }
 
         off_block.setOnClickListener {
             off_block.background =
                 requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
             img_off.setImageResource(R.drawable.ic_off_selected)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_silent.setImageResource(R.drawable.ic_silent_normal)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_auto.setImageResource(R.drawable.ic_auto_normal)
-            SharedPreferencesManager.reminderOpt = 1
-        }
-
-        silent_block.setOnClickListener {
-            off_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_off.setImageResource(R.drawable.ic_off_normal)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
-            img_silent.setImageResource(R.drawable.ic_silent_selected)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_auto.setImageResource(R.drawable.ic_auto_normal)
-            SharedPreferencesManager.reminderOpt = 2
-        }
-
-        auto_block.setOnClickListener {
-            off_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_off.setImageResource(R.drawable.ic_off_normal)
-
-            silent_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_unselected)
-            img_silent.setImageResource(R.drawable.ic_silent_normal)
-
-            auto_block.background =
-                requireContext().resources.getDrawable(R.drawable.drawable_circle_selected)
-            img_auto.setImageResource(R.drawable.ic_auto_selected)
-            SharedPreferencesManager.reminderOpt = 0
+            SharedPreferencesManager.notificationStatus =
+                !SharedPreferencesManager.notificationStatus
+            manageNotification()
         }
 
         img_cancel.setOnClickListener { dialog.dismiss() }
 
-        btn_save.setOnClickListener { dialog.dismiss() }
-
         dialog.setContentView(view)
 
         dialog.show()
-    }
-
-    private fun openSoundMenuPicker() {
-        loadSounds()
-
-        val dialog = Dialog(requireActivity())
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-
-        val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_sound_pick, null, false)
-
-
-        val btn_cancel = view.findViewById<RelativeLayout>(R.id.btn_cancel)
-        val btn_save = view.findViewById<RelativeLayout>(R.id.btn_save)
-
-
-        btn_cancel.setOnClickListener { dialog.dismiss() }
-
-        btn_save.setOnClickListener {
-            for (k in 0..<lst_sounds.size) {
-                if (lst_sounds.get(k).isSelected) {
-                    SharedPreferencesManager.reminderSound = k
-                    break
-                }
-            }
-            dialog.dismiss()
-        }
-
-
-        val soundRecyclerView = view.findViewById<RecyclerView>(R.id.soundRecyclerView)
-
-        soundAdapter = SoundAdapter(requireActivity(), lst_sounds, object : SoundAdapter.CallBack {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onClickSelect(time: SoundModel?, position: Int) {
-                for (k in 0..<lst_sounds.size) {
-                    lst_sounds[k].isSelected(false)
-                }
-
-                lst_sounds[position].isSelected(true)
-                soundAdapter.notifyDataSetChanged()
-                
-                playSound(position)
-            }
-        })
-
-        soundRecyclerView.layoutManager =
-            LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-
-        soundRecyclerView.adapter = soundAdapter
-
-        dialog.setContentView(view)
-
-        dialog.show()
-    }
-
-    private fun loadSounds() {
-        lst_sounds.clear()
-
-        lst_sounds.add(getSoundModel(0, "Default"))
-        lst_sounds.add(getSoundModel(1, "Bell"))
-        lst_sounds.add(getSoundModel(2, "Blop"))
-        lst_sounds.add(getSoundModel(3, "Bong"))
-        lst_sounds.add(getSoundModel(4, "Click"))
-        lst_sounds.add(getSoundModel(5, "Echo droplet"))
-        lst_sounds.add(getSoundModel(6, "Mario droplet"))
-        lst_sounds.add(getSoundModel(7, "Ship bell"))
-        lst_sounds.add(getSoundModel(8, "Simple droplet"))
-        lst_sounds.add(getSoundModel(9, "Tiny droplet"))
-    }
-
-    private fun getSoundModel(index: Int, name: String?): SoundModel {
-        val soundModel = SoundModel()
-        soundModel.id = index
-        soundModel.name = name
-        soundModel.isSelected(SharedPreferencesManager.reminderSound == index)
-
-        return soundModel
-    }
-
-    fun playSound(idx: Int) {
-        var mp: MediaPlayer? = null
-
-        when (idx) {
-            0 -> mp = MediaPlayer.create(requireContext(), Settings.System.DEFAULT_NOTIFICATION_URI)
-            1 -> mp = MediaPlayer.create(requireContext(), R.raw.bell)
-            2 -> mp = MediaPlayer.create(requireContext(), R.raw.blop)
-            3 -> mp = MediaPlayer.create(requireContext(), R.raw.bong)
-            4 -> mp = MediaPlayer.create(requireContext(), R.raw.click)
-            5 -> mp = MediaPlayer.create(requireContext(), R.raw.echo_droplet)
-            6 -> mp = MediaPlayer.create(requireContext(), R.raw.mario_droplet)
-            7 -> mp = MediaPlayer.create(requireContext(), R.raw.ship_bell)
-            8 -> mp = MediaPlayer.create(requireContext(), R.raw.simple_droplet)
-            9 -> mp = MediaPlayer.create(requireContext(), R.raw.tiny_droplet)
-        }
-
-        mp!!.start()
     }
 
     private fun setCustomDate(date: String) {
@@ -1752,7 +1583,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     }
 
 
-    /*@Deprecated("Deprecated in Java")
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -1792,99 +1623,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                 activity.initPermissions()
             }
         }
-    }*/
+    }
 
     private fun randomizeBalloon() {
         val randomIndex: Int = Random().nextInt(waters.size)
         val randomWaters: String = waters[randomIndex]
         binding.se.text = randomWaters
-    }
-
-    private fun getAllReminderData() {
-        val reminder_data: MutableList<NextReminderModel> = ArrayList()
-
-        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata("alarm")
-
-        for (k in arr_data.indices) {
-            if (arr_data[k]["alarm_type"].equals("R", ignoreCase = true)) {
-                if (!SharedPreferencesManager.isManualReminder) {
-                    val arr_data2: ArrayList<HashMap<String, String>> =
-                        sqliteHelper.getdata("sub_alarm", "super_id='" + arr_data[k]["id"] + "'")
-                    for (j in arr_data2.indices) {
-                        arr_data2[j]["alarm_time"]?.let { getMillisecond(it) }?.let {
-                            NextReminderModel(
-                                it,
-                                arr_data2[j]["alarm_time"]!!
-                            )
-                        }?.let {
-                            reminder_data.add(
-                                it
-                            )
-                        }
-                    }
-                }
-            } else {
-                if (SharedPreferencesManager.isManualReminder) {
-                    if (arr_data[k]["is_off"].equals("0", ignoreCase = true)) {
-                        arr_data[k]["alarm_time"]?.let { getMillisecond(it) }?.let {
-                            NextReminderModel(
-                                it,
-                                arr_data[k]["alarm_time"]!!
-                            )
-                        }?.let {
-                            reminder_data.add(
-                                it
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        val mDate: Date = Date()
-        reminder_data.sort()
-        var tmp_pos = 0
-        for (k in reminder_data.indices) {
-            if (reminder_data[k].millesecond > mDate.time) {
-                tmp_pos = k
-                break
-            }
-        }
-
-        binding.nextReminderBlock.visibility = VISIBLE
-
-        if (reminder_data.size > 0) {
-
-            binding.lblNextReminder.text =
-                requireContext().getString(R.string.str_next_reminder)
-                    .replace("$1", reminder_data[tmp_pos].time)
-        } else binding.nextReminderBlock.visibility = View.INVISIBLE
-    }
-
-    private fun getMillisecond(givenDateString: String): Long {
-        var _givenDateString = givenDateString
-        var timeInMilliseconds: Long = 0
-
-        _givenDateString = AppUtils.getFormatDate("yyyy-MM-dd") + " " + _givenDateString
-
-        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.US)
-        try {
-            val mDate: Date? = sdf.parse(_givenDateString)
-            timeInMilliseconds = mDate!!.time
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            alertHelper.Show_Alert_Dialog(e.message)
-        }
-
-        return timeInMilliseconds
-    }
-
-    private fun fetchNextReminder() {
-        runnableReminder = Runnable {
-            getAllReminderData()
-            handlerReminder!!.postDelayed(runnableReminder!!, 1000)
-        }
-        handlerReminder = Handler()
-        handlerReminder!!.postDelayed(runnableReminder!!, 1000)
     }
 }

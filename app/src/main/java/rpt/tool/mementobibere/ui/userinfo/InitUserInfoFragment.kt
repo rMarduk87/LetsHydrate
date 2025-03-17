@@ -15,7 +15,6 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.e
-import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.view.adapters.InitUserInfoPagerAdapter
 
@@ -29,7 +28,6 @@ class InitUserInfoFragment:
     var max_page: Int = 7
     var alertHelper: AlertHelper? = null
     var sqliteHelper: SqliteHelper? = null
-    var migrationManager : MigrationManager? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +38,6 @@ class InitUserInfoFragment:
 
         alertHelper = AlertHelper(requireContext())
         sqliteHelper = SqliteHelper(requireContext())
-        migrationManager = MigrationManager()
 
         body()
     }
@@ -196,16 +193,9 @@ class InitUserInfoFragment:
             SharedPreferencesManager.isMigration = false
         }
 
-        setAlarm()
-
 
         startActivity(Intent(requireActivity(), MainActivity::class.java))
 
-    }
-
-    private fun setAlarm() {
-        SharedPreferencesManager.isNewAlarmSystem = false
-        migrationManager!!.setAlarm(requireContext())
     }
 
 }

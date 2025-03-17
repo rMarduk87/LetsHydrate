@@ -1,4 +1,4 @@
-package rpt.tool.mementobibere.utils.data.appmodel
+package rpt.tool.mementobibere.data.models
 
 data class MaxMinChartModel(
     val intook: Int,

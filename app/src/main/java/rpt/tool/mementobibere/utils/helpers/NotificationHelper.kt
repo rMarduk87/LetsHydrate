@@ -22,7 +22,7 @@ import java.util.*
 
 
 class NotificationHelper(val ctx: Context) {
-    /*private var notificationManager: NotificationManager? = null
+    private var notificationManager: NotificationManager? = null
 
     private val CHANNEL_ONE_ID = "Default"
     private val CHANNEL_ONE_NAME = "Default"
@@ -171,5 +171,5 @@ class NotificationHelper(val ctx: Context) {
             notificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }
         return notificationManager
-    }*/
+    }
 }
