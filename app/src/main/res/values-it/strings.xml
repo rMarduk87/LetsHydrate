@@ -197,20 +197,6 @@
         <item>Nov</item>
         <item>Dic</item>
     </string-array>
-    <string-array name="month_list">
-        <item>Gen</item>
-        <item>Feb</item>
-        <item>Mar</item>
-        <item>Apr</item>
-        <item>Mag</item>
-        <item>Giu</item>
-        <item>Lug</item>
-        <item>Ago</item>
-        <item>Set</item>
-        <item>Ott</item>
-        <item>Nov</item>
-        <item>Dic</item>
-    </string-array>
     <string name="str_battery_desc1">Dopo aver cliccato su \"Impostazioni\", seleziona l\'app \"Idratiamoci\" dal filtro \"Tutte le app\".</string>
     <string name="str_battery_desc2">Seleziona \"Non ottimizzare\" dal popup per ricevere promemoria regolari per l\'acqua potabile.</string>
     <string name="faq_q">D:</string>

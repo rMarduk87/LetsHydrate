@@ -197,20 +197,6 @@
         <item>Nov</item>
         <item>Dic</item>
     </string-array>
-    <string-array name="month_list">
-        <item>Ene</item>
-        <item>Feb</item>
-        <item>Mar</item>
-        <item>Abr</item>
-        <item>May</item>
-        <item>Jun</item>
-        <item>Jul</item>
-        <item>Ago</item>
-        <item>Sep</item>
-        <item>Oct</item>
-        <item>Nov</item>
-        <item>Dic</item>
-    </string-array>
     <string name="str_battery_desc1">Después de hacer clic en \"Configuración\", seleccione la aplicación \"Vamos a hidratarnos\" del filtro \"Todas las aplicaciones\".</string>
     <string name="str_battery_desc2">Seleccione Aparece la ventana emergente "No optimizar" para recibir recordatorios periódicos sobre el consumo de agua.</string>
     <string name="faq_q">P:</string>

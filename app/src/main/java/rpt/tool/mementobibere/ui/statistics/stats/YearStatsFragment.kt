@@ -108,7 +108,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         end_calendarN!!.set(Calendar.MILLISECOND, 999)
 
         lst_month = stringHelper!!.get_arraylist(R.array.month_list2)
-        lst_month_display = stringHelper!!.get_arraylist(R.array.month_list)
+        lst_month_display = stringHelper!!.get_arraylist(R.array.month_list2)
 
         loadData(start_calendarN!!, end_calendarN!!)
 

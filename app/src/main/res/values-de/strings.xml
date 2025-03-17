@@ -197,20 +197,6 @@
         <item>Nov</item>
         <item>Dez</item>
     </string-array>
-    <string-array name="month_list">
-        <item>Jan</item>
-        <item>Feb</item>
-        <item>Mär</item>
-        <item>Apr</item>
-        <item>Mai</item>
-        <item>Jun</item>
-        <item>Jul</item>
-        <item>Aug</item>
-        <item>Sep</item>
-        <item>Okt</item>
-        <item>Nov</item>
-        <item>Dez</item>
-    </string-array>
     <string name="str_battery_desc1">Nachdem Sie auf \"Einstellungen\" geklickt haben, wählen Sie die App \"Lasst uns hydrieren\" aus dem Filter \"Alle Apps\".</string>
     <string name="str_battery_desc2">Bitte wählen Sie im Popup \"Nicht optimieren\" aus, um regelmäßig daran erinnert zu werden, Wasser zu trinken.</string>
     <string name="faq_q">F:</string>
