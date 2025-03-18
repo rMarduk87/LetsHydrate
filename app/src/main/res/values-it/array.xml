@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="water">
-        <item>Tieni l\'acqua in bocca per un pò prima di deglutire</item>
+        <item>Tieni l\'acqua in bocca per un po prima di deglutire</item>
         <item>Non bere acqua subito dopo aver mangiato</item>
         <item>Non bere acqua fredda o ghiacciata</item>
         <item>Bere acqua stando seduti è meglio che stando in piedi o in movimento</item>
@@ -10,5 +10,8 @@
         <item>Se non hai voglia di bere acqua trova alternative(attenzione però agli zuccheri)</item>
         <item>Se fai sport cerca di bere tanta acqua</item>
         <item>Frutta e verduta sono importanti,Idratiamoci non ne tiene conto nel calcolo</item>
+        <item>Consente alle cellule del corpo di crescere, riprodursi e sopravvivere</item>
+        <item>Bere l\'acqua è necessaria al cervello per produrre ormoni e neurotrasmettitori</item>
+        <item>Bere acqua aiuta a distribuire ossigeno in tutto il corpo</item>
     </string-array>
 </resources>
