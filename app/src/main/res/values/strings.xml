@@ -197,20 +197,6 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
-    <string-array name="month_list">
-        <item>Jan</item>
-        <item>Feb</item>
-        <item>Mar</item>
-        <item>Apr</item>
-        <item>May</item>
-        <item>Jun</item>
-        <item>Jul</item>
-        <item>Aug</item>
-        <item>Sep</item>
-        <item>Oct</item>
-        <item>Nov</item>
-        <item>Dec</item>
-    </string-array>
     <string name="str_battery_desc1">After clicking on \"Settings\" select \"Let\'s Hydrate\" app from \'All apps\' filter.</string>
     <string name="str_battery_desc2">Please select \"Don\'t Optimize\" from popup to receive regular reminder for drinking water.</string>
     <string name="faq_q">Q:</string>
@@ -282,6 +268,7 @@
     <string name="str_reached_floz_error">The amount drunk must be between 84.54 fl oz and 270 fl oz</string>
     <string name="str_just_reached">A record already exists on the selected date</string>
     <string name="str_just_drink_all">This option can be clicked only once per day and if you have not already reached the daily record</string>
+    <string name="drink">Drink</string>
 
 
 </resources>

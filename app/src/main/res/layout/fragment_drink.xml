@@ -581,24 +581,46 @@
 
                         </LinearLayout>
 
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/top"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/bubble"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/ic_bubbles"
+                                android:layout_marginStart="32dp"
+                                android:layout_marginTop="48dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/se"
+                                android:layout_width="@dimen/dp_215"
+                                android:layout_height="@dimen/dp_55"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="3"
+                                android:paddingStart="22dp"
+                                android:paddingTop="5dp"
+                                android:paddingEnd="14dp"
+                                android:paddingBottom="7dp"
+                                android:text="@string/drink"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp"
+                                app:layout_constrainedWidth="true"
+                                app:layout_constraintLeft_toRightOf="@+id/bubble"
+                                app:layout_constraintTop_toTopOf="@+id/bubble" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </LinearLayout>
 
                 </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 <RelativeLayout
                     android:layout_width="@dimen/dp_87"
@@ -742,7 +764,7 @@
                     android:id="@+id/left_drawer"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    />
+                    tools:ignore="TooManyViews" />
 
             </LinearLayout>
 
@@ -780,7 +802,7 @@
                     android:textSize="@dimen/dp_15"
                     android:textColor="@color/white"
                     android:fontFamily="@font/calibri_light"
-                    tools:ignore="SpUsage" />
+                    tools:ignore="SpUsage,TooManyViews" />
 
             </LinearLayout>
 
