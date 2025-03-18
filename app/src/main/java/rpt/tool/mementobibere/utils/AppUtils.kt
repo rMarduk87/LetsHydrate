@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.media.Ringtone
 import android.net.ParseException
 import android.net.Uri
 import android.provider.Settings
+import androidx.core.net.toUri
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
@@ -720,23 +722,23 @@ class AppUtils {
 
             when (SharedPreferencesManager.reminderSound) {
                 1 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bell)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.bell).toUri()
                 2 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.blop)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.blop).toUri()
                 3 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.bong)
+                    ((("android.resource://" + context.packageName) + "/" + R.raw.bong)).toUri()
                 4 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.click)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.click).toUri()
                 5 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.echo_droplet)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.echo_droplet).toUri()
                 6 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.mario_droplet)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.mario_droplet).toUri()
                 7 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.ship_bell)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.ship_bell).toUri()
                 8 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.simple_droplet)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.simple_droplet).toUri()
                 9 -> uri =
-                    Uri.parse(("android.resource://" + context.packageName) + "/" + R.raw.tiny_droplet)
+                    (("android.resource://" + context.packageName) + "/" + R.raw.tiny_droplet).toUri()
             }
 
             return uri
@@ -771,6 +773,7 @@ class AppUtils {
         }
 
 
+        var notification_ringtone: Ringtone? = null
         val APP_SHARE_URL: String = ""
         val PRIVACY_POLICY_ULR: String = "https://www.termsfeed.com/live/d1615b20-2bc9-4048-8b73-b674c2aeb1c5"
         val PRIVATE_MODE = 0
@@ -846,6 +849,10 @@ class AppUtils {
          const val IS_MIGRATION: String = "is_migration"
          const val MENU: String = "navigation_menu"
          const val REMINDER_SOUND: String = "sound"
+         const val REMINDER_OPTION: String = "reminder_option"
+         const val REMINDER_VIBRATE: String = "reminder_vibrate"
+         const val IS_MANUAL_REMINDER: String = "is_manual_reminder"
+         const val IS_NEW_ALARM_SYSTEM: String = "is_new_alarm_system"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f
@@ -866,15 +873,7 @@ class AppUtils {
         var launchables_sel: List<ResolveInfo>? = null
         const val general_share_title: String = "Share"
         const val PICK_CONTACT: Int = 1000
-        const val no_internet_message: String = "No Internet Connection!!!"
-        const val youTubeUrlRegEx: String =
-            "^(https?)?(://)?(www.)?(m.)?((youtube.com)|(youtu.be))/"
-        val videoIdRegex: Array<String> = arrayOf(
-            "\\?vi?=([^&]*)",
-            "watch\\?.*v=([^&]*)",
-            "(?:embed|vi?)/([^/?]*)",
-            "^([A-Za-z0-9\\-]*)"
-        )
+
     }
 }
 

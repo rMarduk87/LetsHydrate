@@ -69,6 +69,7 @@ dependencies {
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     implementation 'androidx.activity:activity-ktx:1.10.1'
+    implementation 'androidx.activity:activity:1.10.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.bfrachia:android-image-cropper:2.7.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.1.0"

@@ -6,8 +6,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import rpt.tool.mementobibere.data.models.MaxMinChartModel
 import rpt.tool.mementobibere.utils.AppUtils
+import rpt.tool.mementobibere.utils.data.appmodel.MaxMinChartModel
 import rpt.tool.mementobibere.utils.extensions.toId
 import rpt.tool.mementobibere.utils.extensions.toMonth
 import rpt.tool.mementobibere.utils.extensions.toYear
