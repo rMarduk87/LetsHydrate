@@ -269,20 +269,5 @@
     <string name="str_just_reached">Zum ausgewählten Datum existiert bereits ein Datensatz</string>
     <string name="str_just_drink_all">Diese Option kann nur einmal pro Tag angeklickt werden und wenn Sie den Tagesrekord noch nicht erreicht haben</string>
     <string name="drink">Drink</string>
-    <string name="_5_minutes">5 Minuten</string>
-    <string name="_10_minutes">10 Minuten</string>
-    <string name="_15_minutes">15 Minuten</string>
-    <string name="auto">Auto</string>
-    <string name="off">Aus</string>
-    <string name="silent">Lautlos</string>
-    <string name="vibrate">Vibrieren</string>
-    <string name="custom_sound">Benutzerdefinierter Ton</string>
-    <string name="sund">S</string>
-    <string name="mond">M</string>
-    <string name="thue">D</string>
-    <string name="wedn">M</string>
-    <string name="thus">D</string>
-    <string name="frid">F</string>
-    <string name="satu">S</string>
 
 </resources>

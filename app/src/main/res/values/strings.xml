@@ -269,6 +269,4 @@
     <string name="str_just_reached">A record already exists on the selected date</string>
     <string name="str_just_drink_all">This option can be clicked only once per day and if you have not already reached the daily record</string>
     <string name="drink">Drink</string>
-
-
 </resources>
