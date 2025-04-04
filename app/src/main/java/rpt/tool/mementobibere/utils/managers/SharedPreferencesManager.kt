@@ -21,6 +21,10 @@ object SharedPreferencesManager {
         sharedPreferences.edit() { remove(key) }
     }
 
+    fun keyExists(key:String):Boolean{
+        return  sharedPreferences.contains(key)
+    }
+
     var bloodDonorKey: Int
         get() = sharedPreferences.getInt(AppUtils.BLOOD_DONOR_KEY,0)
         set(value) = sharedPreferences.edit() { putInt(AppUtils.BLOOD_DONOR_KEY, value) }
@@ -132,16 +136,8 @@ object SharedPreferencesManager {
     var bedTimeMinute: Int
         get() = sharedPreferences.getInt(AppUtils.BED_TIME_MINUTE,0)
         set(value) = sharedPreferences.edit() {putInt(AppUtils.BED_TIME_MINUTE, value) }
-    var reminderOpt: Int
-        get() = sharedPreferences.getInt(AppUtils.REMINDER_OPTION,0)
-        set(value) = sharedPreferences.edit() {putInt(AppUtils.REMINDER_OPTION, value) }
-    var reminderVibrate: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.REMINDER_VIBRATE,true)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.REMINDER_VIBRATE, value) }
-    var isManualReminder: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.IS_MANUAL_REMINDER,false)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_MANUAL_REMINDER, value) }
-    var isNewAlarmSystem: Boolean
-        get() = sharedPreferences.getBoolean(AppUtils.IS_NEW_ALARM_SYSTEM,true)
-        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_NEW_ALARM_SYSTEM, value) }
+    var isCheckBMI: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_CHECK_BMI,false)
+        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_CHECK_BMI, value) }
+
 }

@@ -74,8 +74,6 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.Random
 import androidx.core.net.toUri
-import androidx.core.view.isInvisible
-import androidx.core.view.isGone
 
 
 class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::inflate) {
@@ -247,7 +245,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
             SharedPreferencesManager.personHeight.isEmpty()){
             SharedPreferencesManager.isMigration = true
             val migrationManager = MigrationManager()
-            migrationManager.migrate()
+            migrationManager.migrateFromPrevious()
             startActivity(Intent(requireActivity(),InitUserInfoActivity::class.java))
         }
 

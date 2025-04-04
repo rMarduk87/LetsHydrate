@@ -268,5 +268,20 @@
     <string name="str_just_reached">Esiste già un record nella data selezionata</string>
     <string name="str_just_drink_all">Quest\' opzione può essere cliccata solo una volta al giorno e se non hai ancora raggiunto il record giornaliero</string>
     <string name="drink">Drink</string>
+    <string name="str_type">What will you use Let\'s Hydrate for?</string>
+    <string name="str_type_info">If you choose to monitor your weight (drinking water is important in the diet), you will activate the mode to monitor your BMI, otherwise if you just want a reminder to hydrate yourself choose the drinking mode</string>
+    <string name="str_water">Drink</string>
+    <string name="str_bmi">BMI</string>
+    <string name="bmi_cat_1">Very severely underweight</string>
+    <string name="bmi_cat_2">Severely underweight</string>
+    <string name="bmi_cat_3">Underweight</string>
+    <string name="bmi_cat_4">Normal (healthy weight)</string>
+    <string name="bmi_cat_5">Overweight</string>
+    <string name="bmi_cat_6">Obese Class I (Moderately obese)</string>
+    <string name="bmi_cat_7">Obese Class II (Severely obese)</string>
+    <string name="bmi_cat_8">Obese Class III (Very severely obese)</string>
+    <string name="bmi_cat_9">Obese Class IV (Morbidly Obese)</string>
+    <string name="bmi_cat_10">Obese Class V (Super Obese)</string>
+    <string name="bmi_cat_11">Obese Class VI (Hyper Obese)</string>
 
 </resources>

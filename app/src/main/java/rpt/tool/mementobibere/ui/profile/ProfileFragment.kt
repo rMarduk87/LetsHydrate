@@ -34,6 +34,7 @@ import rpt.tool.mementobibere.databinding.FragmentProfileBinding
 import rpt.tool.mementobibere.ui.widget.NewAppWidget
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
+import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
@@ -58,6 +59,7 @@ class ProfileFragment:
     var mDropdownWeather: PopupWindow? = null
     var stringHelper: StringHelper? = null
     var alertHelper: AlertHelper? = null
+    var sqliteHelper: SqliteHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -67,6 +69,7 @@ class ProfileFragment:
         AppUtils.DAILY_WATER_VALUE=SharedPreferencesManager.totalIntake
 
         alertHelper = AlertHelper(requireContext())
+        sqliteHelper = SqliteHelper(requireContext())
 
         convertUpperCase(binding.lblGender)
         convertUpperCase(binding.lblWeight)
@@ -78,6 +81,7 @@ class ProfileFragment:
         convertUpperCase(binding.lblBreastfeeding)
         convertUpperCase(binding.lblWeather)
         convertUpperCase(binding.lblOtherFactor)
+        convertUpperCase(binding.lblBmi)
 
         stringHelper = StringHelper(requireContext(),requireActivity())
 
@@ -94,10 +98,11 @@ class ProfileFragment:
 
         binding.txtHeight.text = str
 
-        val str2: String =
+        val str2: String = if(!SharedPreferencesManager.isCheckBMI)
             (if (SharedPreferencesManager.personWeightUnit) AppUtils.decimalFormat2.format(
                 SharedPreferencesManager.personWeight.toDouble()
-            ) + " kg" else SharedPreferencesManager.personWeight + " lb")
+            ) + " kg" else SharedPreferencesManager.personWeight + " lb") else
+                getWeightFromDBAmdString()
         binding.txtWeight.text = str2
 
         val str3 = (getData("" + AppUtils.DAILY_WATER_VALUE) + " "
@@ -114,6 +119,18 @@ class ProfileFragment:
 
         loadHeightData()
 
+    }
+
+    private fun getWeightFromDBAmdString(): String {
+        val data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
+                AppUtils.getCurrentDate(AppUtils.DATE_FORMAT) + "'")
+        return if(data.size>0){
+            if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"] + " kg"
+            else data[0]["weight_lb"] + " lb"
+        } else{
+            if(SharedPreferencesManager.personWeightUnit)data[data.size-1]["weight_kg"] + " kg"
+            else data[data.size-1]["weight_lb"] + " lb"
+        }
     }
 
     private fun loadHeightData() {
@@ -242,7 +259,9 @@ class ProfileFragment:
         
         binding.switchActive.setOnCheckedChangeListener { buttonView, isChecked ->
             SharedPreferencesManager.workType = if(isChecked) 1 else 0
-            val tmp_weight = "" + SharedPreferencesManager.personWeight
+            val tmp_weight = if(!SharedPreferencesManager.isCheckBMI)"" +
+                    SharedPreferencesManager.personWeight else
+                        getBMIData()
             val tmp_height = "" + SharedPreferencesManager.personHeight
             val isFemale: Boolean = SharedPreferencesManager.gender == 1
             val min = (if (SharedPreferencesManager.personWeightUnit) 900 else 30).toFloat()
@@ -351,6 +370,18 @@ class ProfileFragment:
         }
 
         calculateActiveValue()
+    }
+
+    private fun getBMIData(): String {
+        val data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
+                AppUtils.getCurrentDate(AppUtils.DATE_FORMAT) + "'")
+        return if(data.size>0){
+            if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"].toString()
+            else data[0]["weight_lb"].toString()
+        } else{
+            if(SharedPreferencesManager.personWeightUnit)data[data.size-1]["weight_kg"].toString()
+            else data[data.size-1]["weight_lb"].toString()
+        }
     }
 
     private fun setSwitchData(isChecked: Boolean, water: Float) {
@@ -914,11 +945,15 @@ class ProfileFragment:
             if (rdo_kg.isChecked) {
 
                 txt_name.filters = arrayOf<InputFilter>(InputFilterWeightRange(0.0, 130.0))
-                txt_name.setText(getData(SharedPreferencesManager.personWeight))
+                if(!SharedPreferencesManager.isCheckBMI){
+                    txt_name.setText(getData(SharedPreferencesManager.personWeight))
+                }
             } else {
                 txt_name.filters = arrayOf<InputFilter>(DigitsInputFilter(3, 
                     0, 287.0))
-                txt_name.setText(getData(SharedPreferencesManager.personWeight))
+                if(!SharedPreferencesManager.isCheckBMI){
+                    txt_name.setText(getData(SharedPreferencesManager.personWeight))
+                }
             }
         } else {
             if (rdo_kg.isChecked) {
@@ -1131,8 +1166,10 @@ class ProfileFragment:
 
     private fun saveWeightData(txt_name: AppCompatEditText) {
 
-        SharedPreferencesManager.personWeight =
-            "" + txt_name.text.toString().trim { it <= ' ' }
+        if(!SharedPreferencesManager.isCheckBMI){
+            SharedPreferencesManager.personWeight =
+                "" + txt_name.text.toString().trim { it <= ' ' }
+        }
 
         SharedPreferencesManager.setManuallyGoal = false
 
