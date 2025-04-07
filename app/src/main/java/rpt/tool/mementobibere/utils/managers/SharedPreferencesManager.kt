@@ -139,5 +139,8 @@ object SharedPreferencesManager {
     var isCheckBMI: Boolean
         get() = sharedPreferences.getBoolean(AppUtils.IS_CHECK_BMI,false)
         set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_CHECK_BMI, value) }
+    var isNewWeightSystem: Boolean
+        get() = sharedPreferences.getBoolean(AppUtils.IS_NEW_WEIGHT_SYSTEM,true)
+        set(value) = sharedPreferences.edit() {putBoolean(AppUtils.IS_NEW_WEIGHT_SYSTEM, value) }
 
 }

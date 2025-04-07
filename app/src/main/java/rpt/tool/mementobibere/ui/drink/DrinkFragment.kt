@@ -2,6 +2,7 @@ package rpt.tool.mementobibere.ui.drink
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.NotificationManager
@@ -232,6 +233,11 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
     override fun onStart() {
         super.onStart()
 
+        if(SharedPreferencesManager.isNewWeightSystem){
+            showBMIDialog()
+            SharedPreferencesManager.isNewWeightSystem = false
+        }
+
         if(sqliteHelper.getAvisDay(dateNow)){
             isAvisDay = true
             manageLblColor(resources.getColor(R.color.red))
@@ -311,20 +317,93 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
         }
     }
 
-    private fun getDrink(date: String): Float {
-        val arr_data: ArrayList<HashMap<String, String>> = sqliteHelper.getdata(
-            "stats",
-            ("n_date ='" + date) + "'"
+    private fun showBMIDialog() {
+        val dialog: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+            .setMessage(requireContext()
+                .getString(R.string.str_activate_bmi_system))
+            .setPositiveButton(requireContext()
+                .getString(R.string.str_yes)
+            ) { dialog, whichButton ->
+                addBMIData()
+                val migrationManager = MigrationManager()
+                migrationManager.migrateFromPrevious()
+                SharedPreferencesManager.isCheckBMI = true
+                dialog.dismiss()
+            }
+            .setNegativeButton(requireContext()
+                .getString(R.string.str_no)
+            ) { dialog, whichButton ->
+                SharedPreferencesManager.isCheckBMI = false
+                dialog.dismiss() }
+
+        dialog.show()
+    }
+
+    private fun addBMIData() {
+        val initialValues = ContentValues()
+
+        initialValues.put(
+            "date",
+            "" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)
         )
 
-        var drink_water = 0f
-        for (k in arr_data.indices) {
-            drink_water += if (AppUtils.WATER_UNIT_VALUE.equals("ml",true))
-                ("" + arr_data[k]["n_intook"]).toFloat()
-            else ("" + arr_data[k]["n_intook_OZ"]).toFloat()
+        if (SharedPreferencesManager.personWeightUnit) {
+            initialValues.put("weight_kg", "" + SharedPreferencesManager.personWeight)
+            initialValues.put(
+                "weight_lb",
+                "" + AppUtils.kgToLbConverter(SharedPreferencesManager.personWeight.toDouble())
+            )
+        } else {
+            initialValues.put(
+                "weight_kg",
+                "" + AppUtils.lblToKg(SharedPreferencesManager.personWeight.toInt())
+            )
+            initialValues.put("weight_lb", "" + SharedPreferencesManager.personWeight)
         }
 
-        return drink_water
+        val kg = (if (SharedPreferencesManager.personWeightUnit)
+            SharedPreferencesManager.personWeight.toDouble() else
+            AppUtils.lblToKg(SharedPreferencesManager.personWeight.toInt())).toDouble()
+
+        val bmi = AppUtils.getBMIKg(SharedPreferencesManager.personHeight.toDouble(),kg)
+
+        initialValues.put("bmi_index", "" + bmi)
+
+        sqliteHelper.insert("bmi", initialValues)
+
+        showBMIDialog(bmi)
+
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showBMIDialog(bmi: Double) {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val view: View = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.dialog_bmi, null, false)
+
+
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+
+        val lbl_bmi = view.findViewById<AppCompatTextView>(R.id.lbl_bmi)
+
+        lbl_bmi.text = AppUtils.getBMICategory(requireContext(),bmi)
+
+        img_cancel.setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        }
+
+
+        dialog.setOnDismissListener { }
+
+        dialog.setContentView(view)
+
+        dialog.show()
     }
 
     override fun onResume() {

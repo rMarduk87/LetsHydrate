@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Let\'s Hydrate</string>
+    <string name="app_name">Water Diary</string>
     <string name="btn_notific">Notific</string>
     <string name="hey_lets_drink_some_water">Hey… Lets drink some water....</string>
     <string name="_30_mins">30 Mins</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">You should drink at least</string>
     <string name="str_to_reach_your_daily_goal">water to reach your daily goal</string>
     <string name="str_set_your_goal_manually">SET YOUR GOAL MANUALLY</string>
-    <string name="str_storage_permission">Please allow Let\'s Hydrate to post notifications.</string>
+    <string name="str_storage_permission">Please allow Water Diary to post notifications.</string>
     <string name="str_your_name_validation">Please enter your name.</string>
     <string name="str_valid_name_validation">Please enter valid name.</string>
     <string name="str_height_validation">Please enter height.</string>
@@ -68,7 +68,7 @@
     <string name="str_home">Home</string>
     <string name="str_faqs">FAQs</string>
     <string name="str_contact">Contact</string>
-    <string name="str_share_text">Hooray…! I drank $1 of water today. Join me to keep hydrated with Let\'s Hydrate $2</string>
+    <string name="str_share_text">Hooray…! I drank $1 of water today. Join me to keep hydrated with Water Diary $2</string>
     <string name="str_next_reminder">NEXT REMINDER at $1</string>
     <string name="str_history">History</string>
     <string name="mon">Mon</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Choose from Camera</string>
     <string name="str_gallery">Choose from Gallery</string>
     <string name="str_remove_photo">Remove Photo</string>
-    <string name="app_share_txt">I have been using Let\'s Hydrate and I think you might like it. Check it out on your phone: #1</string>
+    <string name="app_share_txt">I have been using Water Diary and I think you might like it. Check it out on your phone: #1</string>
     <string name="str_remove_photo_confirmation_message">Are you sure? Do you want to remove profile photo?</string>
     <string name="str_today_completed">Today Completed:</string>
     <string name="str_have_u_had_any_water_yet">Have you had any water yet?</string>
@@ -197,7 +197,7 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
-    <string name="str_battery_desc1">After clicking on \"Settings\" select \"Let\'s Hydrate\" app from \'All apps\' filter.</string>
+    <string name="str_battery_desc1">After clicking on \"Settings\" select \"Water Diary\" app from \'All apps\' filter.</string>
     <string name="str_battery_desc2">Please select \"Don\'t Optimize\" from popup to receive regular reminder for drinking water.</string>
     <string name="faq_q">Q:</string>
     <string name="faq_a">A:</string>
@@ -213,7 +213,7 @@
     <string name="faq_question_10">How to change active / pregnant / breastfeeding status?</string>
     <string name="faq_question_11">I am a blood donor, are there any important precautions to take?</string>
     <string name="faq_question_12">I drank all the requirements but I don\'t remember all the individual steps, what can I do?</string>
-    <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start end time appropriately?\n2. Have you enabled Let\'s Hydrate to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Let\'s Hydrate running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Let\'s Hydrate to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
+    <string name="faq_answer_1">There are several reasons. You may check settings as follows:\n1. Did you set reminder start end time appropriately?\n2. Have you enabled Water Diary to auto-start on your phone?\n3. Have you installed third-party apps like CleanMaster which may prohibit Water Diary running in the background and send notifications?\n4. Have you turned off the reminder?\n5. Have you set Water Diary to \"Don\'t optimize\" on your phone\'s Battery optimization settings?</string>
     <string name="faq_answer_2">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit the drink target by clicking on \"My Profile\".</string>
     <string name="faq_answer_3">You need to tap on menu and select \"Settings\" from the list of menu options. Inside Settings, You can edit height and weight by clicking on \"My Profile\".</string>
     <string name="faq_answer_4">There are 2 ways:\n1. You can click on the plus icon to add on the drink log.\n2. You can also add drink log by clicking on the application widget from android\'s home screen.</string>
@@ -252,7 +252,7 @@
     <string name="str_notification_message">Notification Message</string>
     <string name="select_wakeup_time">Select Wakeup Time</string>
     <string name="select_bed_time">Select Bed Time</string>
-    <string name="migration">Welcome back to Let\'s Hydrate, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
+    <string name="migration">Welcome back to Water Diary, in the new version some data has been added to improve the calculation of water needs, insert them in the sheets and if you want update the pre-existing ones</string>
     <string name="drink_all">Drink all</string>
     <string name="str_clicked">Container</string>
     <string name="opt_max">Most clicked container</string>
@@ -269,7 +269,7 @@
     <string name="str_just_reached">A record already exists on the selected date</string>
     <string name="str_just_drink_all">This option can be clicked only once per day and if you have not already reached the daily record</string>
     <string name="drink">Drink</string>
-    <string name="str_type">What will you use Let\'s Hydrate for?</string>
+    <string name="str_type">What will you use Water Diary for?</string>
     <string name="str_type_info">If you choose to monitor your weight (drinking water is important in the diet), you will activate the mode to monitor your BMI, otherwise if you just want a reminder to hydrate yourself choose the drinking mode</string>
     <string name="str_water">Drink</string>
     <string name="str_bmi">BMI</string>
@@ -284,4 +284,5 @@
     <string name="bmi_cat_9">Obese Class IV (Morbidly Obese)</string>
     <string name="bmi_cat_10">Obese Class V (Super Obese)</string>
     <string name="bmi_cat_11">Obese Class VI (Hyper Obese)</string>
+    <string name="str_activate_bmi_system">Drinking is important to feel fit or lose weight, do you want to activate the recording and monitoring of your B.M.I.?</string>
 </resources>

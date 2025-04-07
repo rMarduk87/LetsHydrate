@@ -276,7 +276,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 "$KEY_DATE = ? AND $KEY_INTOOK = ?",
                 arrayOf(date,selectedOption.toString()))
         }
-        return -1
     }
 
     private fun correctErrorOfOldReached(db: SQLiteDatabase) {
@@ -836,5 +835,42 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return list
+    }
+
+    fun addOrUpdateWeight(date: String, weight: String,weight_lb: String,bmi:String,db: SQLiteDatabase?): Int {
+        var dbToUse: SQLiteDatabase? = null
+        dbToUse = db ?: this.writableDatabase
+        val bmiToFind = getBmi(date,dbToUse)
+        if(bmiToFind==-1){
+            val values = ContentValues()
+            values.put(KEY_DATE, date)
+            values.put(KEY_WEIGHT_KG, weight)
+            values.put(KEY_WEIGHT_LB, weight_lb)
+            values.put(KEY_BMI, bmi)
+            val response = dbToUse!!.insert(TABLE_BMI, null, values)
+            return response.toInt()
+        }
+        else{
+            val contentValues = ContentValues()
+            contentValues.put(KEY_WEIGHT_KG, weight)
+            contentValues.put(KEY_WEIGHT_LB, weight_lb)
+            contentValues.put(KEY_BMI, bmi)
+
+            return dbToUse!!.update(
+                TABLE_BMI, contentValues,
+                "$KEY_DATE = ?",
+                arrayOf(date))
+        }
+    }
+
+    private fun getBmi(date: String, db: SQLiteDatabase?): Int {
+        val selectQuery = "SELECT $KEY_WEIGHT_KG FROM $TABLE_BMI WHERE $KEY_DATE = ?"
+        var intook = -1
+        db!!.rawQuery(selectQuery, arrayOf(date)).use {
+            if (it.moveToFirst()) {
+                intook = it.getString(it.getColumnIndexOrThrow(KEY_WEIGHT_KG)).toFloat().toInt()
+            }
+        }
+        return intook
     }
 }

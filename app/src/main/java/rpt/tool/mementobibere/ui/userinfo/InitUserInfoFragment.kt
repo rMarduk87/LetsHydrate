@@ -254,6 +254,7 @@ class InitUserInfoFragment:
 
     private fun gotoHomeScreen() {
         SharedPreferencesManager.hideWelcomeScreen = true
+        SharedPreferencesManager.isNewWeightSystem = false
         if(SharedPreferencesManager.isMigration){
             sqliteHelper!!.checkReachedAndDelete(AppUtils.DAILY_WATER_VALUE,
                 AppUtils.getCurrentOnlyDate()!!,AppUtils.WATER_UNIT_VALUE)

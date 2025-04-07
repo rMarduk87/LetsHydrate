@@ -122,14 +122,15 @@ class ProfileFragment:
     }
 
     private fun getWeightFromDBAmdString(): String {
-        val data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
+        var data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
                 AppUtils.getCurrentDate(AppUtils.DATE_FORMAT) + "'")
-        return if(data.size>0){
+        return if(data.size==1){
             if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"] + " kg"
             else data[0]["weight_lb"] + " lb"
         } else{
-            if(SharedPreferencesManager.personWeightUnit)data[data.size-1]["weight_kg"] + " kg"
-            else data[data.size-1]["weight_lb"] + " lb"
+            data = sqliteHelper!!.get("SELECT * FROM bmi ORDER BY date DESC")
+            if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"] + " kg"
+            else data[0]["weight_lb"] + " lb"
         }
     }
 
@@ -370,17 +371,25 @@ class ProfileFragment:
         }
 
         calculateActiveValue()
+
+        binding.bmi.visibility = if(SharedPreferencesManager.isCheckBMI)View.VISIBLE else View.GONE
+        if(SharedPreferencesManager.isCheckBMI){
+            binding.txtBmi.text = AppUtils.getBMICategory(requireContext(),
+                AppUtils.getBMIKg(SharedPreferencesManager.personHeight.toDouble(),
+                    getBMIData().toDouble()))
+        }
     }
 
     private fun getBMIData(): String {
-        val data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
+        var data = sqliteHelper!!.get("SELECT * FROM bmi where date='" +
                 AppUtils.getCurrentDate(AppUtils.DATE_FORMAT) + "'")
         return if(data.size>0){
             if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"].toString()
             else data[0]["weight_lb"].toString()
         } else{
-            if(SharedPreferencesManager.personWeightUnit)data[data.size-1]["weight_kg"].toString()
-            else data[data.size-1]["weight_lb"].toString()
+            data = sqliteHelper!!.get("SELECT * FROM bmi ORDER BY date DESC")
+            if(SharedPreferencesManager.personWeightUnit)data[0]["weight_kg"].toString()
+            else data[0]["weight_lb"].toString()
         }
     }
 
@@ -941,12 +950,17 @@ class ProfileFragment:
             rdo_lb.isClickable = false
         }
 
-        if (!AppUtils.checkBlankData(SharedPreferencesManager.personWeight)) {
+        if (if(!SharedPreferencesManager.isCheckBMI)
+            !AppUtils.checkBlankData(SharedPreferencesManager.personWeight) else
+            !AppUtils.checkBlankData(getBMIData())) {
             if (rdo_kg.isChecked) {
 
                 txt_name.filters = arrayOf<InputFilter>(InputFilterWeightRange(0.0, 130.0))
                 if(!SharedPreferencesManager.isCheckBMI){
                     txt_name.setText(getData(SharedPreferencesManager.personWeight))
+                }
+                else{
+                    txt_name.setText(getBMIData())
                 }
             } else {
                 txt_name.filters = arrayOf<InputFilter>(DigitsInputFilter(3, 
@@ -1107,7 +1121,8 @@ class ProfileFragment:
         binding.lblBreastfeeding.text = binding.lblBreastfeeding.getText().toString() + " (+" + bstr + ")"
 
         //====================================
-        val tmp_weight = "" + SharedPreferencesManager.personWeight
+        val tmp_weight = if(!SharedPreferencesManager.isCheckBMI)"" +
+                SharedPreferencesManager.personWeight else getBMIData()
         val tmp_height = "" + SharedPreferencesManager.personHeight
         val isFemale: Boolean = SharedPreferencesManager.gender == 1
         val weatherIdx: Int = SharedPreferencesManager.climate
@@ -1164,11 +1179,34 @@ class ProfileFragment:
         SharedPreferencesManager.setManuallyGoal = false
     }
 
-    private fun saveWeightData(txt_name: AppCompatEditText) {
+    private fun saveWeightData(weight: AppCompatEditText) {
 
         if(!SharedPreferencesManager.isCheckBMI){
             SharedPreferencesManager.personWeight =
-                "" + txt_name.text.toString().trim { it <= ' ' }
+                "" + weight.text.toString().trim { it <= ' ' }
+        }
+        else{
+            val kg = if(SharedPreferencesManager.personWeightUnit){
+                weight.text.toString().trim { it <= ' ' }.toDouble()
+            }
+            else{
+                AppUtils.lbToKgConverter(weight.text.toString().trim { it <= ' ' }.toDouble())
+            }
+
+            val lb = if(SharedPreferencesManager.personWeightUnit){
+                AppUtils.kgToLbConverter(weight.text.toString().trim { it <= ' ' }.toDouble())
+            }
+            else{
+                weight.text.toString().trim { it <= ' ' }.toDouble()
+            }
+
+            val bmi = AppUtils.getBMIKg(
+                SharedPreferencesManager.personHeight.toDouble(),kg)
+
+            sqliteHelper!!.addOrUpdateWeight(AppUtils.getCurrentDate(AppUtils.DATE_FORMAT),
+                kg.toString(),lb.toString(),bmi.toString(),null)
+
+            binding.txtBmi.text = AppUtils.getBMICategory(requireContext(),bmi)
         }
 
         SharedPreferencesManager.setManuallyGoal = false

@@ -861,6 +861,7 @@ class AppUtils {
          const val MENU: String = "navigation_menu"
          const val REMINDER_SOUND: String = "sound"
          const val IS_CHECK_BMI: String = "is_check_bmi"
+         const val IS_NEW_WEIGHT_SYSTEM: String = "is_new_weight_system"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f
