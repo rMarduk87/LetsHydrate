@@ -278,11 +278,11 @@
     <string name="bmi_cat_4">Normale (peso sano)</string>
     <string name="bmi_cat_5">Sovrappeso</string>
     <string name="bmi_cat_6">Obesi di classe I (moderatamente obesi)</string>
-    <string name="bmi_cat_7">Obesi di classe II (gravemente obesi)</string>
-    <string name="bmi_cat_8">Obesi di classe III (molto gravemente obesi)</string>
-    <string name="bmi_cat_9">Obesi di classe IV (obesi gravi)</string>
-    <string name="bmi_cat_10">Obesi di classe V (super obesi)</string>
-    <string name="bmi_cat_11">Obesi di classe VI (iper obesi)</string>
+    <string name="bmi_cat_7">Obesità di classe II (gravemente obesi)</string>
+    <string name="bmi_cat_8">Obesità di classe III (molto gravemente obesi)</string>
+    <string name="bmi_cat_9">Obesità di classe IV (obesi gravi)</string>
+    <string name="bmi_cat_10">Obesità di classe V (super obesi)</string>
+    <string name="bmi_cat_11">Obesità di classe VI (iper obesi)</string>
     <string name="str_activate_bmi_system">Bere è importante per sentirsi in forma o perdere peso, vuoi attivare la registrazione e il monitoraggio del tuo BMI?</string>
 
 </resources>
