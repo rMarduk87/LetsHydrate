@@ -1,5 +1,6 @@
 package rpt.tool.mementobibere.utils
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
@@ -8,6 +9,7 @@ import android.media.Ringtone
 import android.net.ParseException
 import android.net.Uri
 import android.provider.Settings
+import androidx.core.content.ContextCompat.getString
 import androidx.core.net.toUri
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.log.d
@@ -56,10 +58,6 @@ class AppUtils {
 
         fun ozUKToMl(oz: Float) : Float{
             return ceil(oz * 28.413f)
-        }
-
-        fun ozUKToOzUS(oz: Float): Float{
-            return oz / 1.041f
         }
 
         fun lblToKg(w: Int): Int {
@@ -694,25 +692,38 @@ class AppUtils {
             return format((weight * 703) / inch.pow(2.0f))
         }
 
-        /**
-         *
-         * @param bmi (Body Mass Index)
-         * @return BMI classification based on the bmi number
-         */
-        fun getBMIClassification(bmi: Double): String {
-            if (bmi <= 0) return "unknown"
-
-            val classification = if (bmi < 18.5) {
-                "underweight"
-            } else if (bmi < 25) {
-                "normal"
-            } else if (bmi < 30) {
-                "overweight"
-            } else {
-                "obese"
+        fun getBMICategory(context: Context,bmi: Double): String {
+            if (bmi < 15) {
+                return getString(context,R.string.bmi_cat_1)
             }
-
-            return classification
+            if (bmi < 16) {
+                return getString(context,R.string.bmi_cat_2)
+            }
+            if (bmi < 18.5) {
+                return getString(context,R.string.bmi_cat_3)
+            }
+            if (bmi < 25) {
+                return getString(context,R.string.bmi_cat_4)
+            }
+            if (bmi < 30) {
+                return getString(context,R.string.bmi_cat_5)
+            }
+            if (bmi < 35) {
+                return getString(context,R.string.bmi_cat_6)
+            }
+            if (bmi < 40) {
+                return getString(context,R.string.bmi_cat_7)
+            }
+            if (bmi < 45) {
+                return getString(context,R.string.bmi_cat_8)
+            }
+            if (bmi < 50) {
+                return getString(context,R.string.bmi_cat_9)
+            }
+            if (bmi < 60) {
+                return getString(context,R.string.bmi_cat_10)
+            }
+            return getString(context,R.string.bmi_cat_11)
         }
 
         fun getSound(context: Context): Uri {
@@ -849,10 +860,8 @@ class AppUtils {
          const val IS_MIGRATION: String = "is_migration"
          const val MENU: String = "navigation_menu"
          const val REMINDER_SOUND: String = "sound"
-         const val REMINDER_OPTION: String = "reminder_option"
-         const val REMINDER_VIBRATE: String = "reminder_vibrate"
-         const val IS_MANUAL_REMINDER: String = "is_manual_reminder"
-         const val IS_NEW_ALARM_SYSTEM: String = "is_new_alarm_system"
+         const val IS_CHECK_BMI: String = "is_check_bmi"
+         const val IS_NEW_WEIGHT_SYSTEM: String = "is_new_weight_system"
          const val MALE_WATER: Float = 35.71f
          const val ACTIVE_MALE_WATER: Float = 50.0f
          const val DEACTIVE_MALE_WATER: Float = 14.29f

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hydratons-nous</string>
+    <string name="app_name">Water Diary</string>
     <string name="btn_notific">Notific</string>
     <string name="hey_lets_drink_some_water">Hé… Buvons de l\'eau....</string>
     <string name="_30_mins">30 minutes</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">Vous devriez boire au moins</string>
     <string name="str_to_reach_your_daily_goal">eau pour atteindre votre objectif quotidien</string>
     <string name="str_set_your_goal_manually">DÉFINISSEZ VOTRE OBJECTIF MANUELLEMENT</string>
-    <string name="str_storage_permission">Veuillez autoriser Hydratons-nous à publier des notifications.</string>
+    <string name="str_storage_permission">Veuillez autoriser Water Diary à publier des notifications.</string>
     <string name="str_your_name_validation">Veuillez saisir votre nom.</string>
     <string name="str_valid_name_validation">Veuillez saisir un nom valide.</string>
     <string name="str_height_validation">Veuillez saisir votre taille.</string>
@@ -68,7 +68,7 @@
     <string name="str_home">Accueil</string>
     <string name="str_faqs">QFP</string>
     <string name="str_contact">Contact</string>
-    <string name="str_share_text">Hourra…! J\'ai bu  $1 d\'eau aujourd\'hui. Rejoignez-moi pour rester hydraté avec Hydratons-nouse $2</string>
+    <string name="str_share_text">Hourra…! J\'ai bu  $1 d\'eau aujourd\'hui. Rejoignez-moi pour rester hydraté avec Water Diarye $2</string>
     <string name="str_next_reminder">PROCHAIN RAPPEL à $1</string>
     <string name="str_history">Historique</string>
     <string name="mon">Lun</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Choisir dans l\'appareil photo</string>
     <string name="str_gallery">Choisir dans la galerie</string>
     <string name="str_remove_photo">Supprimer la photo</string>
-    <string name="app_share_txt">J\'utilise Hydratons-nous et je pense que vous pourriez l\'apprécier. Vérifiez-le sur votre téléphone:#1</string>
+    <string name="app_share_txt">J\'utilise Water Diary et je pense que vous pourriez l\'apprécier. Vérifiez-le sur votre téléphone:#1</string>
     <string name="str_remove_photo_confirmation_message">Êtes-vous sûr? Voulez-vous supprimer la photo de profil?</string>
     <string name="str_today_completed">Terminé aujourd\'hui:</string>
     <string name="str_have_u_had_any_water_yet">Avez-vous déjà bu de l\'eau?</string>
@@ -197,7 +197,7 @@
         <item>Nov</item>
         <item>Déc</item>
     </string-array>
-    <string name="str_battery_desc1">Après avoir cliqué sur \"Paramètres\", sélectionnez l\'application \"Hydratons-nous\" dans le filtre \"Toutes les applications\".</string>
+    <string name="str_battery_desc1">Après avoir cliqué sur \"Paramètres\", sélectionnez l\'application \"Water Diary\" dans le filtre \"Toutes les applications\".</string>
     <string name="str_battery_desc2">Veuillez sélectionner \"Ne pas optimiser\" dans la fenêtre contextuelle pour recevoir un rappel régulier concernant l\'eau potable.</string>
     <string name="faq_q">Q:</string>
     <string name="faq_a">R:</string>
@@ -213,7 +213,7 @@
     <string name="faq_question_10">Comment modifier le statut actif/enceinte/allaitement?</string>
     <string name="faq_question_11">Je suis donneur de sang, y a-t-il des précautions importantes à prendre?</string>
     <string name="faq_question_12">J\'ai bu tous les ingrédients requis mais je ne me souviens pas de toutes les étapes individuelles, que puis-je faire?</string>
-    <string name="faq_answer_1">Il y a plusieurs raisons. Vous pouvez vérifier les paramètres comme suit:\n1. Avez-vous défini correctement l\'heure de début et de fin du rappel?\n2. Avez-vous activé le démarrage automatique de Hydratons-nous sur votre téléphone?\n3. Avez-vous installé des applications tierces comme CleanMaster qui peuvent interdire à Hydratons-nous de s\'exécuter en arrière-plan et d\'envoyer des notifications?\n4. Avez-vous désactivé le rappel?\n5. Avez-vous défini Hydratons-nouse sur «Ne pas optimiser» dans les paramètres d\'optimisation de la batterie de votre téléphone?</string>
+    <string name="faq_answer_1">Il y a plusieurs raisons. Vous pouvez vérifier les paramètres comme suit:\n1. Avez-vous défini correctement l\'heure de début et de fin du rappel?\n2. Avez-vous activé le démarrage automatique de Water Diary sur votre téléphone?\n3. Avez-vous installé des applications tierces comme CleanMaster qui peuvent interdire à Water Diary de s\'exécuter en arrière-plan et d\'envoyer des notifications?\n4. Avez-vous désactivé le rappel?\n5. Avez-vous défini Water Diarye sur «Ne pas optimiser» dans les paramètres d\'optimisation de la batterie de votre téléphone?</string>
     <string name="faq_answer_2">Vous devez appuyer sur le menu et sélectionner «Paramètres» dans la liste des options du menu. Dans les paramètres, vous pouvez modifier l\'objectif de boisson en cliquant sur « Mon profil ».</string>
     <string name="faq_answer_3">Vous devez appuyer sur le menu et sélectionner « Paramètres » dans la liste des options du menu. Dans les paramètres, vous pouvez modifier la taille et le poids en cliquant sur « Mon profil ».</string>
     <string name="faq_answer_4">Il existe 2 façons:\n1. Vous pouvez cliquer sur l\'icône plus pour ajouter le journal de consommation.\n2. Vous pouvez également ajouter un journal de consommation en cliquant sur le widget d\'application depuis l\'écran d\'accueil d\'Android.</string>
@@ -252,7 +252,7 @@
     <string name="str_notification_message">Message de notification</string>
     <string name="select_wakeup_time">Sélectionner l\'heure de réveil</string>
     <string name="select_bed_time">Sélectionner l\'heure du coucher</string>
-    <string name="migration">Bienvenue à Hydratons-nous, dans la nouvelle version, certaines données ont été ajoutées pour améliorer le calcul des besoins en eau, insérez-les dans les feuilles et si vous le souhaitez, mettez à jour celles préexistantes</string>
+    <string name="migration">Bienvenue à Water Diary, dans la nouvelle version, certaines données ont été ajoutées pour améliorer le calcul des besoins en eau, insérez-les dans les feuilles et si vous le souhaitez, mettez à jour celles préexistantes</string>
     <string name="drink_all">Boire tout</string>
     <string name="str_clicked">Conteneurs</string>
     <string name="opt_max">Contenant le plus cliqué</string>
@@ -268,6 +268,22 @@
     <string name="str_reached_floz_error">La quantité bue doit être comprise entre 84,54 fl oz et 270 fl oz</string>
     <string name="str_just_reached">Un enregistrement existe déjà à la date sélectionnée</string>
     <string name="str_just_drink_all">Cette option ne peut être cliquée qu\'une fois par jour et si vous n\'avez pas déjà atteint le record quotidien</string>
-    <string name="drink">Drink</string>
+    <string name="drink">Boire</string>
+    <string name="str_type">À quoi vas-tu utiliser Water Diary?</string>
+    <string name="str_type_info">Si tu choisis de surveiller ton poids (boire de l\'eau est important dans ton alimentation), tu activeras le mode suivi de ton IMC. Sinon, si tu souhaites juste un rappel pour t\'hydrater, choisis le mode boisson.</string>
+    <string name="str_water">Boire</string>
+    <string name="str_bmi">IMC</string>
+    <string name="bmi_cat_1">Insuffisance pondérale très sévère</string>
+    <string name="bmi_cat_2">Insuffisance pondérale sévère</string>
+    <string name="bmi_cat_3">Insuffisance pondérale</string>
+    <string name="bmi_cat_4">Normal (poids santé)</string>
+    <string name="bmi_cat_5">Surpoids</string>
+    <string name="bmi_cat_6">Obèse de classe I (modérément) Obèse)</string>
+    <string name="bmi_cat_7">Obèse de classe II (Obésité sévère)</string>
+    <string name="bmi_cat_8">Obésité de classe III (Obésité très sévère)</string>
+    <string name="bmi_cat_9">Obésité de classe IV (Obésité morbide)</string>
+    <string name="bmi_cat_10">Obésité de classe V (Super Obésité)</string>
+    <string name="bmi_cat_11">Obésité de classe VI (Hyper Obésité)</string>
+    <string name="str_activate_bmi_system">Boire est important pour se sentir en forme ou perdre du poids. Souhaitez-vous activer l\'enregistrement et le suivi de votre IMC?</string>
 
 </resources>

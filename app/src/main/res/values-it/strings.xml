@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Idratiamoci</string>
+    <string name="app_name">Water Diary</string>
     <string name="btn_notific">Notific</string>
     <string name="hey_lets_drink_some_water">Ehi… beviamo un po\' d\'acqua…</string>
     <string name="_30_mins">30 minuti</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">Dovresti bere almeno</string>
     <string name="str_to_reach_your_daily_goal">acqua per raggiungere il tuo obiettivo giornaliero</string>
     <string name="str_set_your_goal_manually">IMPOSTA IL TUO OBIETTIVO MANUALMENTE</string>
-    <string name="str_storage_permission">Consenti a Idratiamoci di postare notifiche.</string>
+    <string name="str_storage_permission">Consenti a Water Diary di postare notifiche.</string>
     <string name="str_your_name_validation">Inserisci il tuo nome.</string>
     <string name="str_valid_name_validation">Inserisci un nome valido.</string>
     <string name="str_height_validation">Inserisci l\'altezza.</string>
@@ -68,7 +68,7 @@
     <string name="str_home">Home</string>
     <string name="str_faqs">FAQ</string>
     <string name="str_contact">Contatti</string>
-    <string name="str_share_text">Evviva…! Oggi ho bevuto $1 di acqua. Unisciti a me per mantenerti idratato con Idratiamoci $2</string>
+    <string name="str_share_text">Evviva…! Oggi ho bevuto $1 di acqua. Unisciti a me per mantenerti idratato con Water Diary $2</string>
     <string name="str_next_reminder">PROSSIMO REMINDER alle $1</string>
     <string name="str_history">Storico</string>
     <string name="mon">Lun</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Scegli dalla fotocamera</string>
     <string name="str_gallery">Scegli dalla galleria</string>
     <string name="str_remove_photo">Rimuovi foto</string>
-    <string name="app_share_txt">Ho usato Idratiamoci e penso che potrebbe piacerti. Provalo sul tuo telefono: #1</string>
+    <string name="app_share_txt">Ho usato Water Diary e penso che potrebbe piacerti. Provalo sul tuo telefono: #1</string>
     <string name="str_remove_photo_confirmation_message">Sei sicuro? Vuoi rimuovere la foto del profilo?</string>
     <string name="str_today_completed">Oggi completato:</string>
     <string name="str_have_u_had_any_water_yet">Hai già bevuto un po\' d\'acqua?</string>
@@ -197,7 +197,7 @@
         <item>Nov</item>
         <item>Dic</item>
     </string-array>
-    <string name="str_battery_desc1">Dopo aver cliccato su \"Impostazioni\", seleziona l\'app \"Idratiamoci\" dal filtro \"Tutte le app\".</string>
+    <string name="str_battery_desc1">Dopo aver cliccato su \"Impostazioni\", seleziona l\'app \"Water Diary\" dal filtro \"Tutte le app\".</string>
     <string name="str_battery_desc2">Seleziona \"Non ottimizzare\" dal popup per ricevere promemoria regolari per l\'acqua potabile.</string>
     <string name="faq_q">D:</string>
     <string name="faq_a">R:</string>
@@ -213,7 +213,7 @@
     <string name="faq_question_10">Come cambiare lo stato attivo/incinta/in allattamento?</string>
     <string name="faq_question_11">Sono un donatore di sangue, ci sono delle precauzioni importanti da prendere?</string>
     <string name="faq_question_12">Ho bevuto tutto il fabbisogno ma non ricordo tutti i singoli passaggi, cosa posso fare?</string>
-    <string name="faq_answer_1">Ci sono diversi motivi. Puoi controllare le impostazioni come segue:\n1. Hai impostato correttamente l\'ora di inizio e fine del promemoria?\n2. Hai abilitato Idratiamoci per l\'avvio automatico sul tuo telefono?\n3. Hai installato app di terze parti come CleanMaster che potrebbero impedire a Idratiamoci di funzionare in background e inviare notifiche?\n4. Hai disattivato il promemoria?\n5. Hai impostato Idratiamoci su \"Non ottimizzare\" nelle impostazioni di ottimizzazione della batteria del tuo telefono?</string>
+    <string name="faq_answer_1">Ci sono diversi motivi. Puoi controllare le impostazioni come segue:\n1. Hai impostato correttamente l\'ora di inizio e fine del promemoria?\n2. Hai abilitato Water Diary per l\'avvio automatico sul tuo telefono?\n3. Hai installato app di terze parti come CleanMaster che potrebbero impedire a Water Diary di funzionare in background e inviare notifiche?\n4. Hai disattivato il promemoria?\n5. Hai impostato Water Diary su \"Non ottimizzare\" nelle impostazioni di ottimizzazione della batteria del tuo telefono?</string>
     <string name="faq_answer_2">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare l\'obiettivo giornaliero di assunzione acqua cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_3">Devi toccare il menu e selezionare \"Impostazioni\" dall\'elenco delle opzioni del menu. All\'interno delle Impostazioni, puoi modificare altezza e peso cliccando su \"Il mio profilo\".</string>
     <string name="faq_answer_4">Ci sono 2 modi:\n1. Puoi cliccare sull\'icona \"+\" per aggiungere un quantitativo bevuto.\n2. Puoi anche aggiungere la quantità anche cliccando sul widget dell\'applicazione dalla schermata iniziale di Android.</string>
@@ -252,7 +252,7 @@
     <string name="str_notification_message">Messaggio di notifica</string>
     <string name="select_wakeup_time">Seleziona l\'orario di sveglia</string>
     <string name="select_bed_time">Seleziona l\'orario nel quale vai a dormire</string>
-    <string name="migration">Bentornato/a su Idratiamoci, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi potrai aggiornare i dati preesistenti</string>    <string name="drink_all">Bevi tutto</string>
+    <string name="migration">Bentornato/a su Water Diary, nella nuova versione sono stati aggiunti alcuni dati per migliorare il calcolo del fabbisogno idrico, inseriscili nelle schede e se vuoi potrai aggiornare i dati preesistenti</string>    <string name="drink_all">Bevi tutto</string>
     <string name="str_clicked">Container</string>
     <string name="opt_max">Contenitore più cliccato</string>
     <string name="opt_min">Contenitore con meno clic</string>
@@ -267,6 +267,22 @@
     <string name="str_reached_floz_error">La quantità bevuta deve essere compresa tra 84,54 fl oz e 270 fl oz</string>
     <string name="str_just_reached">Esiste già un record nella data selezionata</string>
     <string name="str_just_drink_all">Quest\' opzione può essere cliccata solo una volta al giorno e se non hai ancora raggiunto il record giornaliero</string>
-    <string name="drink">Drink</string>
+    <string name="drink">Bevi</string>
+    <string name="str_type">Per cosa utilizzerai Water Diary?</string>
+    <string name="str_type_info">Se scegli di monitorare il tuo peso (bere acqua è importante nella dieta), attiverai la modalità per monitorare il tuo BMI, altrimenti se vuoi solo un promemoria per idratarti scegli la modalità bere</string>
+    <string name="str_water">Bevi</string>
+    <string name="str_bmi">BMI</string>
+    <string name="bmi_cat_1">Molto gravemente sottopeso</string>
+    <string name="bmi_cat_2">Gravemente sottopeso</string>
+    <string name="bmi_cat_3">Sottopeso</string>
+    <string name="bmi_cat_4">Normale (peso sano)</string>
+    <string name="bmi_cat_5">Sovrappeso</string>
+    <string name="bmi_cat_6">Obesi di classe I (moderatamente obesi)</string>
+    <string name="bmi_cat_7">Obesi di classe II (gravemente obesi)</string>
+    <string name="bmi_cat_8">Obesi di classe III (molto gravemente obesi)</string>
+    <string name="bmi_cat_9">Obesi di classe IV (obesi gravi)</string>
+    <string name="bmi_cat_10">Obesi di classe V (super obesi)</string>
+    <string name="bmi_cat_11">Obesi di classe VI (iper obesi)</string>
+    <string name="str_activate_bmi_system">Bere è importante per sentirsi in forma o perdere peso, vuoi attivare la registrazione e il monitoraggio del tuo BMI?</string>
 
 </resources>

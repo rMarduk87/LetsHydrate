@@ -269,5 +269,21 @@
     <string name="str_just_reached">चयनित तिथि पर एक रिकॉर्ड पहले से मौजूद है</string>
     <string name="str_just_drink_all">इस विकल्प पर दिन में केवल एक बार ही क्लिक किया जा सकता है और यदि आप अभी तक अपने दैनिक रिकॉर्ड तक नहीं पहुंचे हैं</string>
     <string name="drink">पीएं</string>
+    <string name="str_type">आप आइये हाइड्रेट करें का उपयोग किस लिए करेंगे?</string>
+    <string name="str_type_info">यदि आप अपने वजन की निगरानी करना चुनते हैं (आहार में पानी पीना महत्वपूर्ण है), तो आप अपने बीएमआई की निगरानी करने के लिए मोड को सक्रिय करेंगे, अन्यथा यदि आप केवल खुद को हाइड्रेट करने के लिए एक अनुस्मारक चाहते हैं तो पीने का मोड चुनें</string>
+    <string name="str_water">पीएं</string>
+    <string name="str_bmi">बीएमआई</string>
+    <string name="bmi_cat_1">बहुत गंभीर रूप से कम वजन</string>
+    <string name="bmi_cat_2">गंभीर रूप से कम वजन</string>
+    <string name="bmi_cat_3">कम वजन</string>
+    <string name="bmi_cat_4">सामान्य (स्वस्थ वजन)</string>
+    <string name="bmi_cat_5">अधिक वजन</string>
+    <string name="bmi_cat_6">मोटापा वर्ग I (मध्यम रूप से मोटा)</string>
+    <string name="bmi_cat_7">मोटापा वर्ग II (गंभीर रूप से मोटा)</string>
+    <string name="bmi_cat_8">मोटापा वर्ग III (बहुत गंभीर रूप से मोटा)</string>
+    <string name="bmi_cat_9">मोटापा वर्ग IV (अत्यधिक मोटा)</string>
+    <string name="bmi_cat_10">मोटापा वर्ग V (अत्यधिक मोटा)</string>
+    <string name="bmi_cat_11">मोटापा वर्ग VI (अत्यधिक मोटा)</string>
+    <string name="str_activate_bmi_system">फिट महसूस करने या वजन कम करने के लिए शराब पीना महत्वपूर्ण है, क्या आप अपने वजन की रिकॉर्डिंग और निगरानी को सक्रिय करना चाहते हैं बी.एम.आई.?</string>
 
 </resources>

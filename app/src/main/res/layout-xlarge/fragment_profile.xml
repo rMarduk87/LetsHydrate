@@ -324,6 +324,65 @@
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_marginBottom="@dimen/dp_5"/>
 
+                    <LinearLayout
+                        android:id="@+id/bmi"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/lbl_bmi"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/str_bmi"
+                            android:textColor="@color/app_70"
+                            android:textSize="@dimen/dp_16"
+                            android:fontFamily="@font/calibri_regular"
+                            tools:ignore="SpUsage" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txt_bmi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_gravity="center_vertical"
+                                android:text=""
+                                android:textColor="@color/rdo_gender_select"
+                                android:textSize="@dimen/dp_14"
+                                android:fontFamily="@font/calibri_bold"
+                                tools:ignore="SpUsage" />
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_12"
+                                android:layout_height="@dimen/dp_12"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/img"
+                                android:src="@drawable/small_arrow"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/bmi_view"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/app_30"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:visibility="gone"
+                        android:layout_marginBottom="@dimen/dp_5"/>
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/lbl_other_factor"
                         android:layout_width="wrap_content"

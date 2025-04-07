@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vamos a hidratarnos</string>
+    <string name="app_name">Water Diary</string>
     <string name="btn_notific">Notificación</string>
     <string name="hey_lets_drink_some_water">Oye… Vamos a beber un poco de agua…</string>
     <string name="_30_mins">30 minutos</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">Debes beber al menos</string>
     <string name="str_to_reach_your_daily_goal">agua para alcanzar tu objetivo diario</string>
     <string name="str_set_your_goal_manually">ESTABLECE TU OBJETIVO MANUALMENTE</string>
-    <string name="str_storage_permission">Permite que Vamos a hidratarnos publique notificaciones.</string>
+    <string name="str_storage_permission">Permite que Water Diary publique notificaciones.</string>
     <string name="str_your_name_validation">Ingresa tu nombre.</string>
     <string name="str_valid_name_validation">Ingresa un nombre válido.</string>
     <string name="str_height_validation">Ingresa tu altura.</string>
@@ -68,7 +68,7 @@
     <string name="str_home">Inicio</string>
     <string name="str_faqs">Preguntas frecuentes</string>
     <string name="str_contact">Contacto</string>
-    <string name="str_share_text">Hurra…! Bebí $1 de agua hoy. Únete a mí para mantenerte hidratado con Vamos a hidratarnos $2</string>
+    <string name="str_share_text">Hurra…! Bebí $1 de agua hoy. Únete a mí para mantenerte hidratado con Water Diary $2</string>
     <string name="str_next_reminder">SIGUIENTE RECORDATORIO a $1</string>
     <string name="str_history">Historial</string>
     <string name="mon">Lun</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Elegir de la cámara</string>
     <string name="str_gallery">Elegir de la galería</string>
     <string name="str_remove_photo">Eliminar foto</string>
-    <string name="app_share_txt">He estado usando Vamos a hidratarnos y creo que te puede gustar. Pruébalo en tu teléfono: #1</string>
+    <string name="app_share_txt">He estado usando Water Diary y creo que te puede gustar. Pruébalo en tu teléfono: #1</string>
     <string name="str_remove_photo_confirmation_message">¿Estás seguro? ¿Quieres eliminar la foto de perfil?</string>
     <string name="str_today_completed">Hoy completado:</string>
     <string name="str_have_u_had_any_water_yet">¿Ya has bebido agua?</string>
@@ -197,7 +197,7 @@
         <item>Nov</item>
         <item>Dic</item>
     </string-array>
-    <string name="str_battery_desc1">Después de hacer clic en \"Configuración\", seleccione la aplicación \"Vamos a hidratarnos\" del filtro \"Todas las aplicaciones\".</string>
+    <string name="str_battery_desc1">Después de hacer clic en \"Configuración\", seleccione la aplicación \"Water Diary\" del filtro \"Todas las aplicaciones\".</string>
     <string name="str_battery_desc2">Seleccione Aparece la ventana emergente "No optimizar" para recibir recordatorios periódicos sobre el consumo de agua.</string>
     <string name="faq_q">P:</string>
     <string name="faq_a">R:</string>
@@ -213,7 +213,7 @@
     <string name="faq_question_10">¿Cómo cambiar el estado de activa/embarazo/lactancia?</string>
     <string name="faq_question_11">Soy donante de sangre, ¿hay alguna precaución importante que deba tomar?</string>
     <string name="faq_question_12">Bebí todos los requisitos pero no recuerdo todos los pasos individuales, ¿qué puedo hacer?</string>
-    <string name="faq_answer_1">Hay varias razones. Puede verificar la configuración de la siguiente manera:\n1. ¿Configuró la hora de inicio y finalización del recordatorio de manera adecuada?\n2. ¿Ha habilitado Vamos a hidratarnos para que se inicie automáticamente en su teléfono?\n3. ¿Ha instalado aplicaciones de terceros como CleanMaster que pueden prohibir que Vamos a hidratarnos se ejecute en segundo plano y envíe notificaciones?\n4. ¿Ha desactivado el recordatorio?\n5. ¿Ha configurado Vamos a hidratarnos en \"No optimizar\" en la configuración de optimización de batería de su teléfono?</string>
+    <string name="faq_answer_1">Hay varias razones. Puede verificar la configuración de la siguiente manera:\n1. ¿Configuró la hora de inicio y finalización del recordatorio de manera adecuada?\n2. ¿Ha habilitado Water Diary para que se inicie automáticamente en su teléfono?\n3. ¿Ha instalado aplicaciones de terceros como CleanMaster que pueden prohibir que Water Diary se ejecute en segundo plano y envíe notificaciones?\n4. ¿Ha desactivado el recordatorio?\n5. ¿Ha configurado Water Diary en \"No optimizar\" en la configuración de optimización de batería de su teléfono?</string>
     <string name="faq_answer_2">Debe tocar el menú y seleccionar \"Configuración\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar el objetivo de bebida haciendo clic en \"Mi perfil\".</string>
     <string name="faq_answer_3">Debes tocar el menú y seleccionar \"Ajustes\" de la lista de opciones del menú. Dentro de Ajustes, puedes editar la altura y el peso haciendo clic en \"Mi perfil\".</string>
     <string name="faq_answer_4">Hay 2 formas:\n1. Puedes hacer clic en el icono más para añadir el registro de bebidas.\n2. También puedes añadir el registro de bebidas haciendo clic en el widget de la aplicación desde la pantalla de inicio de Android.</string>
@@ -252,7 +252,7 @@
     <string name="str_notification_message">Mensaje de notificación</string>
     <string name="select_wakeup_time">Seleccionar hora de despertarse</string>
     <string name="select_bed_time">Seleccionar hora de acostarse</string>
-    <string name="migration">Bienvenidos nuevamente a Vamos a hidratarnos, en la nueva versión se han agregado algunos datos para mejorar el cálculo de las necesidades de agua, insertarlos en las hojas y si lo deseas actualizar los preexistentes</string>
+    <string name="migration">Bienvenidos nuevamente a Water Diary, en la nueva versión se han agregado algunos datos para mejorar el cálculo de las necesidades de agua, insertarlos en las hojas y si lo deseas actualizar los preexistentes</string>
     <string name="drink_all">Beber todo</string>
     <string name="str_clicked">Contenedores</string>
     <string name="opt_max">Contenedor con más clics</string>
@@ -268,6 +268,22 @@
     <string name="str_reached_floz_error">La cantidad consumida debe estar entre 84,54 fl oz y 270 fl oz</string>
     <string name="str_just_reached">Ya existe un registro en la fecha seleccionada</string>
     <string name="str_just_drink_all">Esta opción solo se puede hacer clic una vez al día y si aún no ha alcanzado el récord diario</string>
-    <string name="drink">Drink</string>
+    <string name="drink">Beber</string>
+    <string name="str_type">¿Para qué usarás Water Diary</string>
+    <string name="str_type_info">Si decides controlar tu peso (beber agua es importante en la dieta), activa el modo para controlar tu IMC. De lo contrario, si solo quieres un recordatorio para hidratarte, elige el modo beber.</string>
+    <string name="str_water">Beber</string>
+    <string name="str_bmi">IMC</string>
+    <string name="bmi_cat_1">Peso muy bajo</string>
+    <string name="bmi_cat_2">Peso muy bajo</string>
+    <string name="bmi_cat_3">Peso bajo</string>
+    <string name="bmi_cat_4">Peso normal (saludable)</string>
+    <string name="bmi_cat_5">Sobrepeso</string>
+    <string name="bmi_cat_6">Obesidad clase I (Obesidad moderada)</string>
+    <string name="bmi_cat_7">Obesidad clase II (Obesidad severa)</string>
+    <string name="bmi_cat_8">Obesidad clase III (Obesidad muy severa)</string>
+    <string name="bmi_cat_9">Obesidad clase IV (Obesidad mórbida)</string>
+    <string name="bmi_cat_10">Obesidad clase V (Superobesidad)</string>
+    <string name="bmi_cat_11">Obesidad clase VI (Hiperobesidad)</string>
+    <string name="str_activate_bmi_system">Beber es importante para sentirse en forma o perder peso. ¿Quieres activar el registro y la monitorización de tu IMC?</string>
 
 </resources>

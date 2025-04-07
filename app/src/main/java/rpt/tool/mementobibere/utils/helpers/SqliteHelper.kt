@@ -20,7 +20,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 ) {
 
     companion object {
-        private const val DATABASE_VERSION = 9
+        private const val DATABASE_VERSION = 10
         private const val DATABASE_NAME = "RptBibere"
         private const val TABLE_STATS = "stats"
         private const val TABLE_INTOOK_COUNTER = "intook_count"
@@ -28,6 +28,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val TABLE_AVIS = "avis_day"
         private const val TABLE_DRINK_ALL = "drink_all"
         private const val TABLE_CONTAINER = "container"
+        private const val TABLE_BMI = "bmi"
         private const val KEY_ID = "id"
         private const val KEY_DATE = "date"
         private const val KEY_N_DATE = "n_date"
@@ -49,26 +50,9 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         private const val KEY_N_TOTAL_INTAKE_OZ = "n_totalintake_OZ"
         private const val KEY_TIME = "time"
         private const val KEY_DATE_TIME = "dateTime"
-        private const val KEY_ALARM_ID = "alarm_id"
-        private const val KEY_ALARM_TIME = "alarm_time"
-        private const val KEY_ALARM_TYPE = "alarm_type"
-        private const val KEY_ALARM_INTERVAL = "alarm_interval"
-        private const val KEY_IS_OFF = "is_off"
-        private const val KEY_SUN = "sunday"
-        private const val KEY_MON = "monday"
-        private const val KEY_TUE = "tuesday"
-        private const val KEY_WED = "wednesday"
-        private const val KEY_THU = "thursday"
-        private const val KEY_FRI = "friday"
-        private const val KEY_SAT = "saturday"
-        private const val KEY_SUN_ID = "sunday_alarm_id"
-        private const val KEY_MON_ID = "monday_alarm_id"
-        private const val KEY_TUE_ID = "tuesday_alarm_id"
-        private const val KEY_WED_ID = "wednesday_alarm_id"
-        private const val KEY_THU_ID = "thursday_alarm_id"
-        private const val KEY_FRI_ID = "friday_alarm_id"
-        private const val KEY_SAT_ID = "saturday_alarm_id"
-        private const val KEY_SUPER_ID = "super_id"
+        private const val KEY_WEIGHT_KG = "weight_kg"
+        private const val KEY_WEIGHT_LB = "weight_lb"
+        private const val KEY_BMI = "bmi_index"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -86,6 +70,8 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         addDrinkAllTable(db)
 
         addCounterTable(db)
+
+        addBMITable(db)
 
     }
 
@@ -157,6 +143,13 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         db?.execSQL(createIntookCounterTable)
     }
 
+    private fun addBMITable(db: SQLiteDatabase?) {
+        val createBMITable = ("CREATE TABLE " + TABLE_BMI + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"
+                + KEY_WEIGHT_KG + " TEXT," + KEY_WEIGHT_LB + " TEXT," + KEY_BMI + " TEXT)")
+        db?.execSQL(createBMITable)
+    }
+
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) =
         if(newVersion > oldVersion){
@@ -215,6 +208,10 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 addCounterTable(db)
                 addDataToCounter(db)
             }
+            if (counter<10){
+                counter += 1
+                addBMITable(db)
+            }
             else {
             }
         }
@@ -225,6 +222,7 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             db.execSQL("DROP TABLE IF EXISTS $TABLE_AVIS")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_CONTAINER")
             db.execSQL("DROP TABLE IF EXISTS $TABLE_DRINK_ALL")
+            db.execSQL("DROP TABLE IF EXISTS $TABLE_BMI")
             onCreate(db)
         }
 
@@ -278,7 +276,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
                 "$KEY_DATE = ? AND $KEY_INTOOK = ?",
                 arrayOf(date,selectedOption.toString()))
         }
-        return -1
     }
 
     private fun correctErrorOfOldReached(db: SQLiteDatabase) {
@@ -838,5 +835,42 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
             }
         }
         return list
+    }
+
+    fun addOrUpdateWeight(date: String, weight: String,weight_lb: String,bmi:String,db: SQLiteDatabase?): Int {
+        var dbToUse: SQLiteDatabase? = null
+        dbToUse = db ?: this.writableDatabase
+        val bmiToFind = getBmi(date,dbToUse)
+        if(bmiToFind==-1){
+            val values = ContentValues()
+            values.put(KEY_DATE, date)
+            values.put(KEY_WEIGHT_KG, weight)
+            values.put(KEY_WEIGHT_LB, weight_lb)
+            values.put(KEY_BMI, bmi)
+            val response = dbToUse!!.insert(TABLE_BMI, null, values)
+            return response.toInt()
+        }
+        else{
+            val contentValues = ContentValues()
+            contentValues.put(KEY_WEIGHT_KG, weight)
+            contentValues.put(KEY_WEIGHT_LB, weight_lb)
+            contentValues.put(KEY_BMI, bmi)
+
+            return dbToUse!!.update(
+                TABLE_BMI, contentValues,
+                "$KEY_DATE = ?",
+                arrayOf(date))
+        }
+    }
+
+    private fun getBmi(date: String, db: SQLiteDatabase?): Int {
+        val selectQuery = "SELECT $KEY_WEIGHT_KG FROM $TABLE_BMI WHERE $KEY_DATE = ?"
+        var intook = -1
+        db!!.rawQuery(selectQuery, arrayOf(date)).use {
+            if (it.moveToFirst()) {
+                intook = it.getString(it.getColumnIndexOrThrow(KEY_WEIGHT_KG)).toFloat().toInt()
+            }
+        }
+        return intook
     }
 }
