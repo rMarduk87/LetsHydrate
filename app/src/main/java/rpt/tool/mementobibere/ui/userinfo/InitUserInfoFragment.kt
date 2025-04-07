@@ -1,10 +1,20 @@
 package rpt.tool.mementobibere.ui.userinfo
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import rpt.tool.mementobibere.BaseFragment
@@ -15,6 +25,7 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.AlertHelper
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
 import rpt.tool.mementobibere.utils.log.e
+import rpt.tool.mementobibere.utils.managers.MigrationManager
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
 import rpt.tool.mementobibere.utils.view.adapters.InitUserInfoPagerAdapter
 
@@ -43,6 +54,7 @@ class InitUserInfoFragment:
     }
 
     fun body() {
+        showTypeDialog()
         initUserInfoPagerAdapter = InitUserInfoPagerAdapter(
             requireActivity().supportFragmentManager, requireContext())
         binding.viewPager.setAdapter(initUserInfoPagerAdapter)
@@ -146,7 +158,65 @@ class InitUserInfoFragment:
             }
         })
     }
-    
+
+    @SuppressLint("InflateParams")
+    private fun showTypeDialog() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+
+        val view: View = LayoutInflater.from(requireActivity()).inflate(R.layout.dialog_type,
+            null, false)
+
+
+        val btn_cancel = view.findViewById<RelativeLayout>(R.id.btn_cancel)
+        val btn_add = view.findViewById<RelativeLayout>(R.id.btn_add)
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+
+
+        val rdo_water = view.findViewById<RadioButton>(R.id.rdo_water)
+        val rdo_bmi = view.findViewById<RadioButton>(R.id.rdo_bmi)
+
+        rdo_water.setOnClickListener {
+            SharedPreferencesManager.isCheckBMI = false
+            rdo_water.isClickable = false
+            rdo_bmi.isClickable = true
+        }
+
+        rdo_bmi.setOnClickListener {
+            SharedPreferencesManager.isCheckBMI = true
+            rdo_water.isClickable = true
+            rdo_bmi.isClickable = false
+        }
+
+        if (SharedPreferencesManager.isCheckBMI) {
+            rdo_water.isChecked = false
+            rdo_water.isClickable = true
+            rdo_bmi.isClickable = false
+        } else {
+            rdo_bmi.isChecked = true
+            rdo_water.isClickable = true
+            rdo_bmi.isClickable = false
+        }
+
+
+        btn_cancel.setOnClickListener { dialog.cancel() }
+
+        img_cancel.setOnClickListener { dialog.cancel() }
+
+
+        btn_add.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(view)
+
+        dialog.show()
+    }
+
 
     private fun checkStoragePermissions() {
         if (ContextCompat.checkSelfPermission(
@@ -184,6 +254,7 @@ class InitUserInfoFragment:
 
     private fun gotoHomeScreen() {
         SharedPreferencesManager.hideWelcomeScreen = true
+        SharedPreferencesManager.isNewWeightSystem = false
         if(SharedPreferencesManager.isMigration){
             sqliteHelper!!.checkReachedAndDelete(AppUtils.DAILY_WATER_VALUE,
                 AppUtils.getCurrentOnlyDate()!!,AppUtils.WATER_UNIT_VALUE)
@@ -193,9 +264,82 @@ class InitUserInfoFragment:
             SharedPreferencesManager.isMigration = false
         }
 
+        if(SharedPreferencesManager.isCheckBMI){
+            addBMIData()
+            val migrationManager = MigrationManager()
+            migrationManager.migrateFromPrevious()
+        }
+        else{
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        }
 
-        startActivity(Intent(requireActivity(), MainActivity::class.java))
+    }
 
+    private fun addBMIData() {
+        val initialValues = ContentValues()
+
+        initialValues.put(
+            "date",
+            "" + AppUtils.getCurrentDate(AppUtils.DATE_FORMAT)
+        )
+
+        if (SharedPreferencesManager.personWeightUnit) {
+            initialValues.put("weight_kg", "" + SharedPreferencesManager.personWeight)
+            initialValues.put(
+                "weight_lb",
+                "" + AppUtils.kgToLbConverter(SharedPreferencesManager.personWeight.toDouble())
+            )
+        } else {
+            initialValues.put(
+                "weight_kg",
+                "" + AppUtils.lblToKg(SharedPreferencesManager.personWeight.toInt())
+            )
+            initialValues.put("weight_lb", "" + SharedPreferencesManager.personWeight)
+        }
+
+        val kg = (if (SharedPreferencesManager.personWeightUnit)
+            SharedPreferencesManager.personWeight.toDouble() else
+            AppUtils.lblToKg(SharedPreferencesManager.personWeight.toInt())).toDouble()
+
+        val bmi = AppUtils.getBMIKg(SharedPreferencesManager.personHeight.toDouble(),kg)
+
+        initialValues.put("bmi_index", "" + bmi)
+
+        sqliteHelper!!.insert("bmi", initialValues)
+
+        showBMIDialog(bmi)
+
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showBMIDialog(bmi: Double) {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawableResource(R.drawable.drawable_background_tra)
+        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
+        val view: View = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.dialog_bmi, null, false)
+
+
+        val img_cancel = view.findViewById<ImageView>(R.id.img_cancel)
+
+        val lbl_bmi = view.findViewById<AppCompatTextView>(R.id.lbl_bmi)
+
+        lbl_bmi.text = AppUtils.getBMICategory(requireContext(),bmi)
+
+        img_cancel.setOnClickListener {
+            dialog.dismiss()
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        }
+
+
+        dialog.setOnDismissListener { }
+
+        dialog.setContentView(view)
+
+        dialog.show()
     }
 
 }

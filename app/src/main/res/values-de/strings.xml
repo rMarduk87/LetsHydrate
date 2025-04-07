@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lasst uns hydrieren</string>
+    <string name="app_name">Water Diary</string>
     <string name="btn_notific">Benachrichtigung</string>
     <string name="hey_lets_drink_some_water">Hey… Lass uns etwas Wasser trinken…</string>
     <string name="_30_mins">30 Min.</string>
@@ -34,7 +34,7 @@
     <string name="str_you_should_drink_at_least">Sie sollten mindestens</string>
     <string name="str_to_reach_your_daily_goal">Wasser trinken, um Ihr Tagesziel zu erreichen</string>
     <string name="str_set_your_goal_manually">SETZEN SIE IHR ZIEL MANUELL EIN</string>
-    <string name="str_storage_permission">Bitte erlauben Sie Lasst uns hydrieren, Benachrichtigungen zu posten.</string>
+    <string name="str_storage_permission">Bitte erlauben Sie Water Diary, Benachrichtigungen zu posten.</string>
     <string name="str_your_name_validation">Bitte geben Sie Ihren Namen ein.</string>
     <string name="str_valid_name_validation">Bitte geben Sie einen gültigen Namen ein.</string>
     <string name="str_height_validation">Bitte geben Sie Ihre Körpergröße ein.</string>
@@ -68,7 +68,7 @@
     <string name="str_home">Startseite</string>
     <string name="str_faqs">FAQs</string>
     <string name="str_contact">Kontakt</string>
-    <string name="str_share_text">Hurra…! Ich habe heute Wasser im Wert von $1 getrunken. Begleiten Sie mich, um mit Lasst uns hydrieren $2 hydriert zu bleiben</string>
+    <string name="str_share_text">Hurra…! Ich habe heute Wasser im Wert von $1 getrunken. Begleiten Sie mich, um mit Water Diary $2 hydriert zu bleiben</string>
     <string name="str_next_reminder">NÄCHSTE ERINNERUNG für $1</string>
     <string name="str_history">Verlauf</string>
     <string name="mon">Mo</string>
@@ -151,7 +151,7 @@
     <string name="str_camera">Aus Kamera auswählen</string>
     <string name="str_gallery">Aus Galerie auswählen</string>
     <string name="str_remove_photo">Foto entfernen</string>
-    <string name="app_share_txt">Ich verwende Lasst uns hydrieren und ich denke, es könnte Ihnen gefallen. Probieren Sie es auf Ihrem Telefon aus: #1</string>
+    <string name="app_share_txt">Ich verwende Water Diary und ich denke, es könnte Ihnen gefallen. Probieren Sie es auf Ihrem Telefon aus: #1</string>
     <string name="str_remove_photo_confirmation_message">Sind Sie sicher? Möchten Sie das Profilfoto entfernen?</string>
     <string name="str_today_completed">Heute abgeschlossen:</string>
     <string name="str_have_u_had_any_water_yet">Haben Sie schon Wasser getrunken?</string>
@@ -197,7 +197,7 @@
         <item>Nov</item>
         <item>Dez</item>
     </string-array>
-    <string name="str_battery_desc1">Nachdem Sie auf \"Einstellungen\" geklickt haben, wählen Sie die App \"Lasst uns hydrieren\" aus dem Filter \"Alle Apps\".</string>
+    <string name="str_battery_desc1">Nachdem Sie auf \"Einstellungen\" geklickt haben, wählen Sie die App \"Water Diary\" aus dem Filter \"Alle Apps\".</string>
     <string name="str_battery_desc2">Bitte wählen Sie im Popup \"Nicht optimieren\" aus, um regelmäßig daran erinnert zu werden, Wasser zu trinken.</string>
     <string name="faq_q">F:</string>
     <string name="faq_a">A:</string>
@@ -213,7 +213,7 @@
     <string name="faq_question_10">Wie ändere ich den Status "aktiv/schwanger/stillend"?</string>
     <string name="faq_question_11">Ich bin Blutspender. Gibt es wichtige Vorsichtsmaßnahmen, die ich treffen muss?</string>
     <string name="faq_question_12">Ich habe alle Vorgaben eingehalten, kann mich aber nicht mehr an die einzelnen Schritte erinnern, was kann ich tun?</string>
-    <string name="faq_answer_1">Es gibt mehrere Gründe. Sie können die Einstellungen wie folgt überprüfen:\n1. Haben Sie die Start- und Endzeit der Erinnerung richtig eingestellt?\n2. Haben Sie den automatischen Start von Let’s Hydrate auf Ihrem Telefon aktiviert?\n3. Haben Sie Apps von Drittanbietern wie CleanMaster installiert, die verhindern könnten, dass Lasst uns hydrierenim Hintergrund läuft und Benachrichtigungen sendet?\n4. Haben Sie die Erinnerung ausgeschaltet?\n5. Haben Sie Lasst uns hydrierenin den Akkuoptimierungseinstellungen Ihres Telefons auf "Nicht optimieren" eingestellt?</string>
+    <string name="faq_answer_1">Es gibt mehrere Gründe. Sie können die Einstellungen wie folgt überprüfen:\n1. Haben Sie die Start- und Endzeit der Erinnerung richtig eingestellt?\n2. Haben Sie den automatischen Start von Let’s Hydrate auf Ihrem Telefon aktiviert?\n3. Haben Sie Apps von Drittanbietern wie CleanMaster installiert, die verhindern könnten, dass Water Diary Hintergrund läuft und Benachrichtigungen sendet?\n4. Haben Sie die Erinnerung ausgeschaltet?\n5. Haben Sie Water Diary den Akkuoptimierungseinstellungen Ihres Telefons auf "Nicht optimieren" eingestellt?</string>
     <string name="faq_answer_2">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie das Trinkziel bearbeiten, indem Sie auf "Mein Profil" klicken.</string>
     <string name="faq_answer_3">Sie müssen auf das Menü tippen und "Einstellungen" aus der Liste der Menüoptionen auswählen. In den Einstellungen können Sie Größe und Gewicht bearbeiten, indem Sie auf "Mein Profil" klicken.</string>
     <string name="faq_answer_4">Es gibt zwei Möglichkeiten:\n1. Sie können auf das Plus-Symbol klicken, um das Trinkprotokoll hinzuzufügen.\n2. Sie können das Trinkprotokoll auch hinzufügen, indem Sie auf dem Startbildschirm von Android auf das Anwendungs-Widget.</string>
@@ -252,7 +252,7 @@
     <string name="str_notification_message">Benachrichtigungsnachricht</string>
     <string name="select_wakeup_time">Aufwachzeit auswählen</string>
     <string name="select_bed_time">Schlafenszeit auswählen</string>
-    <string name="migration">Willkommen zurück bei Lasst uns hydrieren. In der neuen Version wurden einige Daten hinzugefügt, um die Berechnung von Wasserbedarf, fügen Sie ihn in die Tabellen ein und aktualisieren Sie ggf. die bereits vorhandenen</string>
+    <string name="migration">Willkommen zurück bei Water Diary. In der neuen Version wurden einige Daten hinzugefügt, um die Berechnung von Wasserbedarf, fügen Sie ihn in die Tabellen ein und aktualisieren Sie ggf. die bereits vorhandenen</string>
     <string name="drink_all">Alles trinken</string>
     <string name="str_clicked">ContainerModel</string>
     <string name="opt_max">Meistgeklickter ContainerModel</string>
@@ -268,6 +268,22 @@
     <string name="str_reached_floz_error">Die getrunkene Menge muss zwischen 84,54 fl oz und 270 fl oz liegen</string>
     <string name="str_just_reached">Zum ausgewählten Datum existiert bereits ein Datensatz</string>
     <string name="str_just_drink_all">Diese Option kann nur einmal pro Tag angeklickt werden und wenn Sie den Tagesrekord noch nicht erreicht haben</string>
-    <string name="drink">Drink</string>
+    <string name="drink">Trinken</string>
+    <string name="str_type">Wofür verwenden Sie Water Diary?</string>
+    <string name="str_type_info">Wenn Sie Ihr Gewicht überwachen möchten (Trinken ist wichtig für die Ernährung), aktivieren Sie den BMI-Modus. Wenn Sie nur an die Flüssigkeitszufuhr erinnert werden möchten, wählen Sie den Trinkmodus.</string>
+    <string name="str_water">Trinken</string>
+    <string name="str_bmi">BMI</string>
+    <string name="bmi_cat_1">Starkes Untergewicht</string>
+    <string name="bmi_cat_2">Starkes Untergewicht</string>
+    <string name="bmi_cat_3">Untergewicht</string>
+    <string name="bmi_cat_4">Normalgewicht (gesundes Gewicht)</string>
+    <string name="bmi_cat_5">Übergewicht</string>
+    <string name="bmi_cat_6">Adipositas Klasse I (mäßig Adipositas)</string>
+    <string name="bmi_cat_7">Adipositas Klasse II (Starke Adipositas)</string>
+    <string name="bmi_cat_8">Adipositas Klasse III (Sehr starke Adipositas)</string>
+    <string name="bmi_cat_9">Adipositas Klasse IV (Krankhaft Adipositas)</string>
+    <string name="bmi_cat_10">Adipositas Klasse V (Extrem Adipositas)</string>
+    <string name="bmi_cat_11">Adipositas Klasse VI (Hyper Adipositas)</string>
+    <string name="str_activate_bmi_system">Trinken ist wichtig, um sich fit zu fühlen oder Gewicht zu verlieren. Möchten Sie die Aufzeichnung und Überwachung Ihres BMI aktivieren?</string>
 
 </resources>
