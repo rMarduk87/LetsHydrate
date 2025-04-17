@@ -20,7 +20,6 @@ import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentStatsWeekBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
@@ -56,7 +55,6 @@ class WeekStatsFragment : BaseFragment<FragmentStatsWeekBinding>(FragmentStatsWe
     var current_end_calendar: Calendar? = null
     var start_calendarN: Calendar? = null
     var end_calendarN: Calendar? = null
-    var stringHelper: StringHelper? = null
     var sqliteHelper: SqliteHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -105,8 +103,7 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
     }
 
     private fun body() {
-
-        stringHelper = StringHelper(requireContext(),requireActivity())
+        
         sqliteHelper = SqliteHelper(requireContext())
         
         start_calendarN = if(isUS)Calendar.getInstance(Locale.US) else
@@ -183,15 +180,15 @@ current_start_calendar : ${current_start_calendar!!.timeInMillis}
         do {
             d(
                 "DATE2 : ",
-                (("" + stringHelper!!.get_2_point("" + 
-                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + stringHelper!!.get_2_point(
+                (("" + AppUtils!!.get_2_point("" + 
+                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + AppUtils!!.get_2_point(
                     "" + (start_calendar[Calendar.MONTH] + 1)
                 )) + "-" + start_calendar[Calendar.YEAR]
             )
 
             lst_date.add(
-                (("" + stringHelper!!.get_2_point("" + 
-                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + stringHelper!!.get_2_point(
+                (("" + AppUtils!!.get_2_point("" + 
+                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + AppUtils!!.get_2_point(
                     "" + (start_calendar[Calendar.MONTH] + 1)
                 )) + "-" + start_calendar[Calendar.YEAR]
             )

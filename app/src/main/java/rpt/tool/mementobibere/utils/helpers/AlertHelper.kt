@@ -20,8 +20,6 @@ import rpt.tool.mementobibere.utils.view.custom.MaterialProgressBar
 
 class AlertHelper
     (var mContext: Context) {
-    var pDialog: ProgressDialog? = null
-    var dialog1: Dialog? = null
 
     fun Show_Alert_Dialog(msg: String?) {
         val ad = AlertDialog.Builder(mContext)
@@ -54,46 +52,6 @@ class AlertHelper
         toast.show()
     }
 
-
-    fun Show_Progress_Dialog(msg: String?) {
-        pDialog = ProgressDialog(mContext, 0)
-        pDialog!!.setMessage(msg)
-        pDialog!!.isIndeterminate = false
-        pDialog!!.setCancelable(false)
-        pDialog!!.show()
-    }
-
-    //    public void Close_Progress_Dialog()
-    //    {
-    //        if(pDialog!=null)
-    //        pDialog.dismiss();
-    //    }
-    fun Show_Custom_Progress_Dialog() {
-        dialog1 = Dialog(mContext, R.style.AppDialogTheme)
-        dialog1!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog1!!.setContentView(R.layout.custom_progress_dialog)
-        dialog1!!.setCancelable(false)
-
-        val width = mContext.resources.displayMetrics.widthPixels - 80
-        val height = mContext.resources.displayMetrics.heightPixels - 100
-
-        dialog1!!.window!!.setLayout(width, height)
-        val progress_wheel = dialog1!!.findViewById<MaterialProgressBar>(R.id.progress_wheel)
-        //progress_wheel.setBarColor(mContext.getResources().getColor(R.color.colorPrimary));
-        progress_wheel.setBarColor(Color.parseColor("#3D6B70"))
-
-        dialog1!!.show()
-    }
-
-    fun Close_Custom_Progress_Dialog() {
-        dialog1!!.dismiss()
-    }
-
-    fun is_show_Custom_Progress_Dialog(): Boolean {
-        if (dialog1 != null) return dialog1!!.isShowing
-
-        return false
-    }
 
     fun Show_Error_Dialog(msg: String?) {
         if (AppUtils.DEVELOPER_MODE) Show_Alert_Dialog(msg)

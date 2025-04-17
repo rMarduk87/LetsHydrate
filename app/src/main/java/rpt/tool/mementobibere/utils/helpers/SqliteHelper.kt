@@ -536,42 +536,12 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
         }
     }
 
-    fun insert(table_name: String?, fields: HashMap<String?, String?>,db: SQLiteDatabase?) {
-
-        val initialValues = ContentValues()
-
-        val myVeryOwnIterator: Iterator<*> = fields.keys.iterator()
-        while (myVeryOwnIterator.hasNext()) {
-            val key = myVeryOwnIterator.next() as String
-            val value = fields[key]
-            initialValues.put(key, value)
-        }
-
-        if (table_name != null) {
-            db!!.insert(table_name, null, initialValues)
-        }
-    }
-
     @SuppressLint("Recycle")
     fun totalRow(table_name: String, db: SQLiteDatabase?): Int {
         val query = "SELECT * FROM $table_name"
         val c: Cursor = db!!.rawQuery(query, null)
 
         return c.count
-    }
-
-    fun totalRow(table_name: String, where_con: String,db: SQLiteDatabase?): Int {
-        var query = "SELECT * FROM $table_name"
-
-        if (!AppUtils.checkBlankData(where_con)) query += " WHERE $where_con"
-
-        val c: Cursor = db!!.rawQuery(query, null)
-
-        val count = c.count
-
-        c.close()
-
-        return count
     }
 
     @SuppressLint("Recycle")
@@ -771,22 +741,6 @@ class SqliteHelper(val context: Context) : SQLiteOpenHelper(
 
     fun getMax(query: String): Cursor {
         return this.readableDatabase.rawQuery(query,null)
-    }
-
-    fun update(table_name: String?, fields: HashMap<String?, String?>, where_con: String?) {
-
-        val initialValues = ContentValues()
-
-        val myVeryOwnIterator: Iterator<*> = fields.keys.iterator()
-        while (myVeryOwnIterator.hasNext()) {
-            val key = myVeryOwnIterator.next() as String
-            val value = fields[key]
-            initialValues.put(key, value)
-        }
-
-        if (table_name != null) {
-            this.writableDatabase.update(table_name, initialValues, where_con, null)
-        }
     }
 
     fun update(table_name: String?, fields: ContentValues?, where_con: String?) {

@@ -2,11 +2,7 @@ package rpt.tool.mementobibere.ui.statistics.stats
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.DashPathEffect
 import android.graphics.RectF
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +10,6 @@ import android.view.Window
 import android.view.WindowManager.LayoutParams.*
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -22,29 +17,21 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.utils.Utils
 import com.google.gson.Gson
 import rpt.tool.mementobibere.BaseFragment
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.databinding.FragmentStatsMonthBinding
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
-import rpt.tool.mementobibere.utils.log.i
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
-import rpt.tool.mementobibere.utils.view.adapters.HistoryAdapter
 import java.util.Calendar
 import java.util.Locale
-import java.util.Random
 
 class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStatsMonthBinding::inflate) {
     
@@ -56,7 +43,6 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
     var current_end_calendar: Calendar? = null
     var start_calendarN: Calendar? = null
     var end_calendarN: Calendar? = null
-    var stringHelper: StringHelper? = null
     var sqliteHelper: SqliteHelper? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,8 +78,6 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
     }
 
     private fun body() {
-        
-        stringHelper = StringHelper(requireContext(),requireActivity())
         sqliteHelper = SqliteHelper(requireContext())
         
         start_calendarN = Calendar.getInstance(Locale.getDefault())
@@ -193,15 +177,15 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
         do {
             d(
                 "DATE2 : ",
-                (("" + stringHelper!!.get_2_point("" + 
-                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + stringHelper!!.get_2_point(
+                (("" + AppUtils.get_2_point("" + 
+                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + AppUtils.get_2_point(
                     "" + (start_calendar[Calendar.MONTH] + 1)
                 )).toString() + "-" + start_calendar[Calendar.YEAR]
             )
 
             lst_date.add(
-                (("" + stringHelper!!.get_2_point("" +
-                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + stringHelper!!.get_2_point(
+                (("" + AppUtils.get_2_point("" +
+                        start_calendar[Calendar.DAY_OF_MONTH])) + "-" + AppUtils.get_2_point(
                     "" + (start_calendar[Calendar.MONTH] + 1)
                 )) + "-" + start_calendar[Calendar.YEAR]
             )
@@ -262,23 +246,23 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
             val avg_fre = Math.round(f)
 
             val str: String =
-                if (avg_fre > 1) stringHelper!!.get_string(R.string.times) else 
-                    stringHelper!!.get_string(R.string.time)
+                if (avg_fre > 1) AppUtils.get_string(R.string.times,requireContext()) else
+                    AppUtils.get_string(R.string.time,requireContext())
 
             binding.txtAvgIntake.text = ("" + avg + " " + AppUtils.WATER_UNIT_VALUE) + "/" + 
-                    stringHelper!!.get_string(
-                R.string.day
+                    AppUtils.get_string(
+                R.string.day,requireContext()
             )
             binding.txtDrinkFre.text = "" + avg_fre + " " + str + "/" +
-                    stringHelper!!.get_string(R.string.day)
+                    AppUtils.get_string(R.string.day,requireContext())
         } catch (e: Exception) {
             binding.txtAvgIntake.text = ("0 " + AppUtils.WATER_UNIT_VALUE) + "/" +
-                    stringHelper!!.get_string(
-                        R.string.day
+                    AppUtils.get_string(
+                        R.string.day,requireContext()
                     )
-            binding.txtDrinkFre.text = ("0 " + stringHelper!!.get_string(R.string.time)) + "/" +
-                    stringHelper!!.get_string(
-                R.string.day
+            binding.txtDrinkFre.text = ("0 " + AppUtils.get_string(R.string.time,requireContext())) + "/" +
+                    AppUtils.get_string(
+                R.string.day,requireContext()
             )
         }
 
@@ -528,8 +512,8 @@ class MonthStatsFragment : BaseFragment<FragmentStatsMonthBinding>(FragmentStats
         val arr_data: ArrayList<HashMap<String, String>> =
             sqliteHelper!!.getdata("stats", "n_date ='" + lst_date[position] + "'")
         val str: String =
-            if (arr_data.size > 1) stringHelper!!.get_string(R.string.times) else 
-                stringHelper!!.get_string(R.string.time)
+            if (arr_data.size > 1) AppUtils.get_string(R.string.times,requireContext()) else
+                AppUtils.get_string(R.string.time,requireContext())
         txt_frequency.text = arr_data.size.toString() + " " + str
 
         img_cancel.setOnClickListener { dialog.dismiss() }
