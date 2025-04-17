@@ -21,7 +21,6 @@ import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.extensions.toCalendar
 import rpt.tool.mementobibere.utils.extensions.toExtractIntookOption
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import java.util.Calendar
@@ -34,7 +33,6 @@ class ContainerCounterFragment :
     var current_calendar: Calendar? = null
     var start_calendarN: Calendar? = null
     var sqliteHelper: SqliteHelper? = null
-    var stringHelper: StringHelper? = null
     var lst_opt: MutableList<String> = ArrayList()
     var lst_opt_OZ: MutableList<String> = ArrayList()
 
@@ -82,8 +80,7 @@ class ContainerCounterFragment :
 
     @SuppressLint("SetTextI18n")
     private fun body() {
-
-        stringHelper = StringHelper(requireContext(),requireActivity())
+        
         sqliteHelper = SqliteHelper(requireContext())
 
         binding.include1.lblToolbarTitle.text = requireContext().getString(R.string.str_counter)
@@ -134,8 +131,8 @@ class ContainerCounterFragment :
         binding.include2.lblTitle.text = (AppUtils.getDate(start_calendar.timeInMillis,
             AppUtils.DATE_FORMAT))
 
-        val date = (("" + stringHelper!!.get_2_point("" +
-                start_calendar[Calendar.DAY_OF_MONTH])) + "-" + stringHelper!!.get_2_point(
+        val date = (("" + AppUtils.get_2_point("" +
+                start_calendar[Calendar.DAY_OF_MONTH])) + "-" + AppUtils.get_2_point(
             "" + (start_calendar[Calendar.MONTH] + 1)
         )) + "-" + start_calendar[Calendar.YEAR]
 

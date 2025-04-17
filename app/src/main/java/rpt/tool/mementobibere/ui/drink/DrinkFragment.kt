@@ -475,7 +475,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                         val str: String = requireContext().getString(R.string.app_share_txt)
                             .replace("#1", AppUtils.APP_SHARE_URL)
 
-                        val ih = IntentHelper(requireContext(),requireActivity())
+                        val ih = IntentHelper(requireContext())
 
                         ih.ShareText(getApplicationName(requireContext()), str)
                     }
@@ -896,7 +896,7 @@ class DrinkFragment : BaseFragment<FragmentDrinkBinding>(FragmentDrinkBinding::i
                         AppUtils.WATER_UNIT_VALUE)
 
             share_text = share_text.replace("$2", "@ " + AppUtils.APP_SHARE_URL)
-            val ih = IntentHelper(requireContext(),requireActivity())
+            val ih = IntentHelper(requireContext())
             ih.ShareText(getApplicationName(requireContext()), share_text)
         }
 

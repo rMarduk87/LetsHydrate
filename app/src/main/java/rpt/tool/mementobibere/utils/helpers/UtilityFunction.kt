@@ -9,7 +9,6 @@ import android.os.StrictMode.ThreadPolicy
 
 class UtilityFunction
     (var mContext: Context, var act: Activity) {
-    var sh: StringHelper = StringHelper(mContext, act)
 
     fun permission_StrictMode() {
         val policy = ThreadPolicy.Builder().permitAll().build()

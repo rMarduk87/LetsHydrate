@@ -104,7 +104,3 @@ fun Int.toExtractIntookOption(unit: String): String {
 
     return result;
 }
-
-fun Float?.toDefaultFloatIfNull(): Float {
-    return this ?: 0F
-}

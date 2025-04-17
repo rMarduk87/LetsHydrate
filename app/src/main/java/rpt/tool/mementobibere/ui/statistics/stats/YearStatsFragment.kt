@@ -22,7 +22,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import rpt.tool.mementobibere.R
 import rpt.tool.mementobibere.utils.AppUtils
 import rpt.tool.mementobibere.utils.helpers.SqliteHelper
-import rpt.tool.mementobibere.utils.helpers.StringHelper
 import rpt.tool.mementobibere.utils.log.d
 import rpt.tool.mementobibere.utils.log.e
 import rpt.tool.mementobibere.utils.managers.SharedPreferencesManager
@@ -57,7 +56,6 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
     var current_end_calendar: Calendar? = null
     var start_calendarN: Calendar? = null
     var end_calendarN: Calendar? = null
-    var stringHelper: StringHelper? = null
     var sqliteHelper: SqliteHelper? = null
 
 
@@ -88,8 +86,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
     }
 
     private fun body() {
-
-        stringHelper = StringHelper(requireContext(),requireActivity())
+        
         sqliteHelper = SqliteHelper(requireContext())
         
         start_calendarN = Calendar.getInstance(Locale.getDefault())
@@ -107,8 +104,8 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         end_calendarN!!.set(Calendar.SECOND, 59)
         end_calendarN!!.set(Calendar.MILLISECOND, 999)
 
-        lst_month = stringHelper!!.get_arraylist(R.array.month_list2)
-        lst_month_display = stringHelper!!.get_arraylist(R.array.month_list2)
+        lst_month = AppUtils.get_arraylist(R.array.month_list2,requireContext())
+        lst_month_display = AppUtils.get_arraylist(R.array.month_list2,requireContext())
 
         loadData(start_calendarN!!, end_calendarN!!)
 
@@ -165,7 +162,7 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
 
         do {
             lst_date.add("" + lst_month[start_calendar[Calendar.MONTH]] + "-" + start_calendar[Calendar.YEAR])
-            lst_date2.add(stringHelper!!.get_2_point("" + (start_calendar[Calendar.MONTH] + 1)) 
+            lst_date2.add(AppUtils.get_2_point("" + (start_calendar[Calendar.MONTH] + 1)) 
                     + "-" + start_calendar[Calendar.YEAR])
 
             start_calendar.add(Calendar.MONTH, 1)
@@ -260,23 +257,23 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
             val avg_fre = Math.round(f)
 
             val str: String =
-                if (avg_fre > 1) stringHelper!!.get_string(R.string.times) else
-                    stringHelper!!.get_string(R.string.time)
+                if (avg_fre > 1) AppUtils.get_string(R.string.times,requireContext()) else
+                    AppUtils.get_string(R.string.time,requireContext())
 
             binding.txtAvgIntake.text =
-                ("" + avg + " " + AppUtils.WATER_UNIT_VALUE) + "/" + stringHelper!!.get_string(
-                R.string.day
+                ("" + avg + " " + AppUtils.WATER_UNIT_VALUE) + "/" + AppUtils.get_string(
+                R.string.day,requireContext()
             )
             binding.txtDrinkFre.text = "" + avg_fre + " " + str + "/" +
-                    stringHelper!!.get_string(R.string.day)
+                    AppUtils.get_string(R.string.day,requireContext())
         } catch (e: Exception) {
             binding.txtAvgIntake.text = ("0 " + AppUtils.WATER_UNIT_VALUE) + "/" + 
-                    stringHelper!!.get_string(
-                R.string.day
+                    AppUtils.get_string(
+                R.string.day,requireContext()
             )
-            binding.txtDrinkFre.text = ("0 " + stringHelper!!.get_string(R.string.time)) + 
-                    "/" + stringHelper!!.get_string(
-                R.string.day
+            binding.txtDrinkFre.text = ("0 " + AppUtils.get_string(R.string.time,requireContext())) +
+                    "/" + AppUtils.get_string(
+                R.string.day,requireContext()
             )
         }
 
@@ -515,12 +512,12 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
         txt_date.text = AppUtils.FormateDateFromString("MMM-yyyy", 
             "MMM yyyy", lst_date[position])
         txt_goal.text = ("" + lst_date_goal_val_2[position] + " " +
-                AppUtils.WATER_UNIT_VALUE) + "/" + stringHelper!!.get_string(
-            R.string.day
+                AppUtils.WATER_UNIT_VALUE) + "/" + AppUtils.get_string(
+            R.string.day,requireContext()
         )
         txt_consumed.text = ("" + lst_date_val[position] + " " +
-                AppUtils.WATER_UNIT_VALUE) + "/" + stringHelper!!.get_string(
-            R.string.day
+                AppUtils.WATER_UNIT_VALUE) + "/" + AppUtils.get_string(
+            R.string.day,requireContext()
         )
         val arr_data: ArrayList<HashMap<String, String>> =
             sqliteHelper!!.getdata("stats", "n_date like '%" + lst_date2[position] + "%'")
@@ -550,14 +547,14 @@ class YearStatsFragment : BaseFragment<FragmentStatsYearBinding>(FragmentStatsYe
             val avg_fre = Math.round(f)
 
             val str: String =
-                if (avg_fre > 1) stringHelper!!.get_string(R.string.times) else
-                    stringHelper!!.get_string(R.string.time)
+                if (avg_fre > 1) AppUtils.get_string(R.string.times,requireContext()) else
+                    AppUtils.get_string(R.string.time,requireContext())
             txt_frequency.text = avg_fre.toString() + " " + str + "/" + 
-                    stringHelper!!.get_string(R.string.day)
+                    AppUtils.get_string(R.string.day,requireContext())
         } else {
             txt_frequency.text = (0.toString() + " " + 
-                    stringHelper!!.get_string(R.string.time)) + "/" + stringHelper!!.get_string(
-                R.string.day
+                    AppUtils.get_string(R.string.time,requireContext())) + "/" + AppUtils.get_string(
+                R.string.day,requireContext()
             )
         }
 
